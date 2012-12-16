@@ -1,9 +1,9 @@
  ------
- Multicolor Layout for LOG4J
+ Process That Logs And Consumes Output
  ------
  Yegor Bugayenko
  ------
- 2012-08-30
+ 2012-12-16
  ------
 
 ~~
@@ -36,37 +36,32 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-Multicolor Layout for LOG4J
+Process That Logs And Consumes Output
 
-  Configure it in your <<<log4j.properties>>>:
-
-+--
-log4j.rootLogger=INFO, CONSOLE
-log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
-log4j.appender.CONSOLE.layout=com.jcabi.log.MulticolorLayout
-log4j.appender.CONSOLE.layout.ConversionPattern=[%color{%-5p}] %c: %m%n
-+--
-
-  Or in XML config:
+  {{{./apidocs-${project.version}/com/jcabi/log/VerboseProcess.html}<<<VerboseProcess>>>}}
+  logs output of a java
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Process.html}<<<Process>>>}}
+  and consumes its output at the same time, for example:
 
 +--
-<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
-    <layout class="com.jcabi.log.MulticolorLayout">
-        <param name="ConversionPattern" value="[%color{%p}] %m%m" />
-    </layout>
-</appender>
+String name = new VerboseProcess(
+  new ProcessBuilder("who", "am", "i")
+).stdout();
 +--
 
-  Read JavaDoc of
-  {{{./apidocs-${project.version}/com/jcabi/log/MulticolorLayout.html}com.jcabi.log.MulticolorLayout}}.
+  {{{./apidocs-${project.version}/com/jcabi/log/VerboseProcess.html}<<<VerboseProcess>>>}}
+  throws an exception if the process returns a non-zero exit code.
 
-  The only dependency you need is:
+  The only dependency you need is
+  (you can also download
+  {{{http://repo1.maven.org/maven2/com/jcabi/jcabi-log/${project.version}/jcabi-log-${project.version}.jar}<<<jcabi-log-${project.version}.jar>>>}}
+  and add it to the classpath):
 
 +--
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-log</artifactId>
-  <version>${releasedVersion}</version>
+  <version>${project.version}</version>
 </dependency>
 +--
 

@@ -1,9 +1,9 @@
  ------
- Multicolor Layout for LOG4J
+ Runnable That Logs Runtime Exceptions
  ------
  Yegor Bugayenko
  ------
- 2012-08-30
+ 2012-12-16
  ------
 
 ~~
@@ -36,37 +36,47 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-Multicolor Layout for LOG4J
+Runnable That Logs Runtime Exceptions
 
-  Configure it in your <<<log4j.properties>>>:
-
-+--
-log4j.rootLogger=INFO, CONSOLE
-log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
-log4j.appender.CONSOLE.layout=com.jcabi.log.MulticolorLayout
-log4j.appender.CONSOLE.layout.ConversionPattern=[%color{%-5p}] %c: %m%n
-+--
-
-  Or in XML config:
+  You can use
+  {{{./apidocs-${project.version}/com/jcabi/log/VerboseRunnable.html}<<<VerboseRunnable>>>}}:
+  with scheduled executor, for example:
 
 +--
-<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
-    <layout class="com.jcabi.log.MulticolorLayout">
-        <param name="ConversionPattern" value="[%color{%p}] %m%m" />
-    </layout>
-</appender>
+Executors.newScheduledThreadPool(2).scheduleAtFixedRate(
+  new VerboseRunnable(
+    new Runnable() {
+      @Override
+      public void run() {
+        // some operation that may lead to a runtime
+        // exception, which we want to log through SLF4J
+      }
+    }
+  ),
+  1L, 1L, TimeUnit.SECONDS
+)
 +--
 
-  Read JavaDoc of
-  {{{./apidocs-${project.version}/com/jcabi/log/MulticolorLayout.html}com.jcabi.log.MulticolorLayout}}.
+  Now, every runtime exception that is not caught inside your
+  {{{http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html}<<<Runnable>>>}}
+  will be reported to log (using
+  {{{./apidocs-${project.version}/com/jcabi/log/Logger.html}<<<Logger>>>}}).
 
-  The only dependency you need is:
+  Two-arguments constructor can be used when you need to instruct the class
+  about what to do with the exception: either swallow it or escalate.
+  Sometimes it's very important to swallow exceptions. Otherwise an entire
+  thread may get stuck (like in the example above).
+
+  The only dependency you need is
+  (you can also download
+  {{{http://repo1.maven.org/maven2/com/jcabi/jcabi-log/${project.version}/jcabi-log-${project.version}.jar}<<<jcabi-log-${project.version}.jar>>>}}
+  and add it to the classpath):
 
 +--
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-log</artifactId>
-  <version>${releasedVersion}</version>
+  <version>${project.version}</version>
 </dependency>
 +--
 
