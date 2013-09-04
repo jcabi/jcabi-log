@@ -20,7 +20,7 @@ You need just this dependency:
 ```xml
 <dependency>
   <groupId>com.jcabi</groupId>
-  <artifactId>jcabi-manifests</artifactId>
+  <artifactId>jcabi-log</artifactId>
   <version>0.8</version>
 </dependency>
 ```
