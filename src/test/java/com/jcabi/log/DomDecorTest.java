@@ -32,6 +32,7 @@ package com.jcabi.log;
 import java.util.Formattable;
 import java.util.Formatter;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.w3c.dom.Document;
@@ -57,8 +58,7 @@ public final class DomDecorTest {
         final Formatter fmt = new Formatter(dest);
         decor.formatTo(fmt, 0, 0, 0);
         Mockito.verify(dest).append(
-            // @checkstyle LineLength (1 line)
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<root/>\n"
+            Mockito.argThat(Matchers.containsString("<root/>"))
         );
     }
 
