@@ -29,9 +29,11 @@
  */
 package com.jcabi.log;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Test;
 
 /**
@@ -47,6 +49,7 @@ public final class VerboseProcessTest {
      */
     @Test
     public void runsACommandLineScript() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("echo", "hello, world!")
         );
@@ -62,6 +65,7 @@ public final class VerboseProcessTest {
      */
     @Test
     public void runsACommandLineScriptWithException() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
         );
@@ -82,6 +86,7 @@ public final class VerboseProcessTest {
      */
     @Test
     public void handlesLongRunningCommand() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("sleep", "2")
         );
