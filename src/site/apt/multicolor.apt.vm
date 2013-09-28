@@ -45,6 +45,7 @@ log4j.rootLogger=INFO, CONSOLE
 log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
 log4j.appender.CONSOLE.layout=com.jcabi.log.MulticolorLayout
 log4j.appender.CONSOLE.layout.ConversionPattern=[%color{%-5p}] %c: %m%n
+log4j.appender.CONSOLE.layout.Levels=INFO:2;10,WARN:2;32
 +--
 
   Or in XML config:
@@ -53,9 +54,23 @@ log4j.appender.CONSOLE.layout.ConversionPattern=[%color{%-5p}] %c: %m%n
 <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
   <layout class="com.jcabi.log.MulticolorLayout">
     <param name="ConversionPattern" value="[%color{%-5p}] %c: %m%n" />
+    <param name="Levels" value="INFO:2;10" />
   </layout>
 </appender>
 +--
+
+  In version 0.9 there is an ability to re-defined standard colors for 
+  logging levels, for example:
+
++--
+log4j.appender.CONSOLE.layout.Levels=INFO:2;10,WARN:2;32
++--
+
+ Or:
+
++--
+    <param name="Levels" value="INFO:2;10" />
++-- 
 
   Read JavaDoc of
   {{{./apidocs-${project.version}/com/jcabi/log/MulticolorLayout.html}<<<MulticolorLayout>>>}}.

@@ -45,13 +45,18 @@ import org.mockito.Mockito;
 public final class MulticolorLayoutTest {
 
     /**
+     * Conversation pattern for test case.
+     */
+    private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
+
+    /**
      * MulticolorLayout can transform event to text.
      * @throws Exception If something goes wrong
      */
     @Test
     public void transformsLoggingEventToText() throws Exception {
         final MulticolorLayout layout = new MulticolorLayout();
-        layout.setConversionPattern("[%color{%p}] %color{%m}");
+        layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("hello").when(event).getRenderedMessage();
@@ -59,6 +64,26 @@ public final class MulticolorLayoutTest {
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mhello\\u001B[m"
+            )
+        );
+    }
+
+    /**
+     * MulticolorLayout can transform event to text.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void overwriteDefaultColor() throws Exception {
+        final MulticolorLayout layout = new MulticolorLayout();
+        layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
+        layout.setLevels("INFO:2;10");
+        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
+        Mockito.doReturn(Level.INFO).when(event).getLevel();
+        Mockito.doReturn("change").when(event).getRenderedMessage();
+        MatcherAssert.assertThat(
+            StringEscapeUtils.escapeJava(layout.format(event)),
+            Matchers.equalTo(
+                "[\\u001B[2;10mINFO\\u001B[m] \\u001B[2;10mchange\\u001B[m"
             )
         );
     }

@@ -29,7 +29,7 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Immutable;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
@@ -53,7 +53,7 @@ import org.apache.log4j.spi.LoggingEvent;
  * <p>The part of the message wrapped with {@code %color{...}}
  * will change its color according to the logging level of the event. Without
  * this highlighting the behavior of the layout is identical to
- * {@link PatternLayout}. You can use {@code %color-red{...}} if you
+ * {@link EnhancedPatternLayout}. You can use {@code %color-red{...}} if you
  * want to use specifically red color for the wrapped piece of text. Supported
  * colors are: {@code red}, {@code blue}, {@code yellow}, {@code cyan},
  * {@code black}, and {@code white}.
@@ -64,6 +64,8 @@ import org.apache.log4j.spi.LoggingEvent;
  * {@code <bg>} is a background color, and
  * {@code <fg>} is a foreground color. Read more about
  * <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>.
+ *
+ * <p>This class or its parents are <b>not</b> serializable.
  *
  * <p>Maven dependency for this class is
  * (see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How
@@ -81,7 +83,6 @@ import org.apache.log4j.spi.LoggingEvent;
  * @see <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">PatternLayout from LOG4J</a>
  * @see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How to use with Maven</a>
  */
-@Immutable
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("PMD.NonStaticInitializer")
@@ -91,6 +92,23 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Control sequence indicator.
      */
     private static final String CSI = "\u001b[";
+
+    /**
+     * To split strings with javascript like map syntax.
+     */
+    private static final String SPLIT_ITEMS = ",";
+
+    /**
+     * To split key:value pairs.
+     */
+    private static final String SPLIT_VALUES = ":";
+
+    /**
+     * Regular expression for all matches.
+     */
+    private static final Pattern METAS = Pattern.compile(
+        "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
+    );
 
     /**
      * Colors with names.
@@ -113,7 +131,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Colors of levels.
      */
-    private static final ConcurrentMap<String, String> LEVELS =
+    private final transient ConcurrentMap<String, String> levels =
         new ConcurrentHashMap<String, String>() {
             private static final long serialVersionUID = 0x7526FF78EEDFC465L;
             {
@@ -127,11 +145,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         };
 
     /**
-     * Regular expression for all matches.
      */
-    private static final Pattern METAS = Pattern.compile(
-        "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
-    );
 
     /**
      * {@inheritDoc}
@@ -154,6 +168,26 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     }
 
     /**
+     * Allow to overwrite the ANSI color values for the log levels
+     * in a javascript map like format.
+     *
+     * @param lev JavaScript like map of levels
+     * @since 0.9
+     */
+    public void setLevels(final String lev) {
+        for (final String item : lev.split(MulticolorLayout.SPLIT_ITEMS)) {
+            final String[] values = item.split(MulticolorLayout.SPLIT_VALUES);
+            final String level = values[0].toUpperCase(Locale.ENGLISH);
+            if (Level.toLevel(level, null) == null) {
+                throw new IllegalArgumentException(
+                    String.format(Locale.ENGLISH, "Unknown level '%s'", level)
+                );
+            }
+            this.levels.put(level, values[1]);
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -163,7 +197,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
             String.format(
                 "%s%sm",
                 MulticolorLayout.CSI,
-                MulticolorLayout.LEVELS.get(event.getLevel().toString())
+                this.levels.get(event.getLevel().toString())
             )
         );
     }
