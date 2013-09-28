@@ -106,6 +106,24 @@ public final class MulticolorLayoutTest {
     }
 
     /**
+     * MulticolorLayout can render custom color.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void overwriteCustomConstantColor() throws Exception {
+        final MulticolorLayout layout = new MulticolorLayout();
+        layout.setConversionPattern("%color-white{%p} %m");
+        layout.setColors("white:10");
+        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
+        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
+        Mockito.doReturn("const").when(event).getRenderedMessage();
+        MatcherAssert.assertThat(
+            StringEscapeUtils.escapeJava(layout.format(event)),
+            Matchers.equalTo("\\u001B[10mDEBUG\\u001B[m const")
+        );
+    }
+
+    /**
      * MulticolorLayout can render any ANSI color.
      * @throws Exception If something goes wrong
      */

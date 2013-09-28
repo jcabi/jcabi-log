@@ -113,7 +113,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Colors with names.
      */
-    private static final ConcurrentMap<String, String> COLORS =
+    private final transient ConcurrentMap<String, String> colors =
         new ConcurrentHashMap<String, String>() {
             private static final long serialVersionUID = 0x7526EF78EEDFE465L;
             {
@@ -145,13 +145,17 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         };
 
     /**
+     * Store original conversation pattern to be able
+     * to recalculate it, if new colors are provided.
      */
+    private transient String basePattern;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void setConversionPattern(final String pattern) {
+        this.basePattern = pattern;
         final Matcher matcher = MulticolorLayout.METAS.matcher(pattern);
         final StringBuffer buf = new StringBuffer();
         while (matcher.find()) {
@@ -165,6 +169,28 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         }
         matcher.appendTail(buf);
         super.setConversionPattern(buf.toString());
+    }
+
+    /**
+     * Allow to overwrite or specify new ANSI color names
+     * in a javascript map like format.
+     *
+     * @param cols JavaScript like map of color names
+     * @since 0.9
+     */
+    public void setColors(final String cols) {
+        for (final String item : cols.split(MulticolorLayout.SPLIT_ITEMS)) {
+            final String[] values = item.split(MulticolorLayout.SPLIT_VALUES);
+            this.colors.put(values[0], values[1]);
+        }
+        /**
+         * If setConversionPattern was called before me must call again
+         * to be sure to replace all custom color constants with
+         * new values.
+         */
+        if (this.basePattern != null) {
+            this.setConversionPattern(this.basePattern);
+        }
     }
 
     /**
@@ -212,7 +238,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         if (meta == null) {
             ansi = "?";
         } else if (meta.matches("[a-z]+")) {
-            ansi = MulticolorLayout.COLORS.get(meta);
+            ansi = this.colors.get(meta);
             if (ansi == null) {
                 throw new IllegalArgumentException(
                     String.format("unknown color '%s'", meta)
