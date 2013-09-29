@@ -57,6 +57,22 @@ log4j.appender.CONSOLE.layout.ConversionPattern=[%color{%-5p}] %c: %m%n
 </appender>
 +--
 
+  In version 0.9 there is an ability to re-defined standard colors for 
+  logging levels. Besides that, it's possible to re-define numeric values
+  of standard colors, for example:
+
++--
+log4j.appender.CONSOLE.layout.Levels=INFO:2;10,WARN:2;32
+log4j.appender.CONSOLE.layout.Colors=white:10
++--
+
+ Or:
+
++--
+    <param name="Levels" value="INFO:2;10" />
+    <param name="Colors" value="white:10" />
++-- 
+
   Read JavaDoc of
   {{{./apidocs-${project.version}/com/jcabi/log/MulticolorLayout.html}<<<MulticolorLayout>>>}}.
 
