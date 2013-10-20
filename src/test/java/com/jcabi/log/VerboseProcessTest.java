@@ -53,11 +53,11 @@ public final class VerboseProcessTest {
     public void runsACommandLineScript() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("echo", "hello, world!")
+            new ProcessBuilder("echo", "hey \u20ac!")
         );
         MatcherAssert.assertThat(
             process.stdout(),
-            Matchers.containsString("hello")
+            Matchers.containsString("\u20ac!")
         );
     }
 
@@ -90,6 +90,7 @@ public final class VerboseProcessTest {
     public void handlesLongRunningCommand() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
+            // @checkstyle MultipleStringLiterals (1 line)
             new ProcessBuilder("sleep", "2")
         );
         MatcherAssert.assertThat(
@@ -113,6 +114,7 @@ public final class VerboseProcessTest {
      * @throws Exception If something goes wrong
      */
     @Test
+    @SuppressWarnings("PMD.DoNotUseThreads")
     public void quietlyTerminatesLongRunningProcess() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final Process proc = new ProcessBuilder("sleep", "10000").start();

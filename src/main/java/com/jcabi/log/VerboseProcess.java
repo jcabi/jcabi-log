@@ -30,13 +30,16 @@
 package com.jcabi.log;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.CharEncoding;
 
 /**
  * Utility class for getting {@code stdout} from a running process
@@ -159,11 +162,14 @@ public final class VerboseProcess {
     @SuppressWarnings("PMD.DoNotUseThreads")
     private String waitFor() throws InterruptedException {
         final BufferedReader reader = new BufferedReader(
-            new InputStreamReader(this.process.getInputStream())
+            new InputStreamReader(
+                this.process.getInputStream(),
+                Charset.forName(CharEncoding.UTF_8)
+            )
         );
         final CountDownLatch done = new CountDownLatch(1);
         final StringBuffer stdout = new StringBuffer();
-        new Thread(
+        final Thread thread = new Thread(
             new VerboseRunnable(
                 new Callable<Void>() {
                     @Override
@@ -182,24 +188,23 @@ public final class VerboseProcess {
                 },
                 false
             )
-        ).start();
+        );
+        thread.setName("VerboseProcess");
+        thread.setDaemon(true);
+        thread.start();
         Logger.debug(
             this,
-            "#waitFor(): waiting for stdout of %s...",
-            this.process
+            "#waitFor(): waiting for stdout of %s in %s...",
+            this.process, thread
         );
         try {
             this.process.waitFor();
         } finally {
-            Logger.debug(
-                this,
-                "#waitFor(): process finished",
-                this.process
-            );
+            Logger.debug(this, "#waitFor(): process finished", this.process);
             done.await(1, TimeUnit.SECONDS);
             try {
                 reader.close();
-            } catch (java.io.IOException ex) {
+            } catch (IOException ex) {
                 Logger.error(this, "failed to close reader: %[exception]s", ex);
             }
         }

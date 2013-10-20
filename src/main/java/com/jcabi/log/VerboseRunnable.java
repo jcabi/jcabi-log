@@ -202,33 +202,17 @@ public final class VerboseRunnable implements Runnable {
         // @checkstyle IllegalCatch (1 line)
         } catch (RuntimeException ex) {
             if (!this.swallow) {
-                Logger.warn(
-                    this,
-                    "escalated exception: %s",
-                    this.tail(ex)
-                );
+                Logger.warn(this, "escalated exception: %s", this.tail(ex));
                 throw ex;
             }
-            Logger.warn(
-                this,
-                "swallowed exception: %s",
-                this.tail(ex)
-            );
+            Logger.warn(this, "swallowed exception: %s", this.tail(ex));
         // @checkstyle IllegalCatch (1 line)
         } catch (Error error) {
             if (!this.swallow) {
-                Logger.error(
-                    this,
-                    "escalated error: %s",
-                    this.tail(error)
-                );
+                Logger.error(this, "escalated error: %s", this.tail(error));
                 throw error;
             }
-            Logger.error(
-                this,
-                "swallowed error: %s",
-                this.tail(error)
-            );
+            Logger.error(this, "swallowed error: %s", this.tail(error));
         }
         if (this.swallow) {
             try {
