@@ -117,18 +117,21 @@ public final class VerboseProcessTest {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final Process proc = new ProcessBuilder("sleep", "10000").start();
         final VerboseProcess process = new VerboseProcess(proc);
+        final CountDownLatch start = new CountDownLatch(1);
         final CountDownLatch done = new CountDownLatch(1);
         new Thread(
             new VerboseRunnable(
                 new Runnable() {
                     @Override
                     public void run() {
-                        process.stdout();
+                        start.countDown();
+                        process.stdoutQuietly();
                         done.countDown();
                     }
                 }
             )
         ).start();
+        start.await();
         TimeUnit.SECONDS.sleep(1);
         proc.destroy();
         MatcherAssert.assertThat(
