@@ -29,6 +29,8 @@
  */
 package com.jcabi.log;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -104,6 +106,35 @@ public final class VerboseProcessTest {
     public void rejectsNullProcesses() throws Exception {
         final ProcessBuilder builder = null;
         new VerboseProcess(builder);
+    }
+
+    /**
+     * VerboseProcess can quietly terminate a long-running process.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void quietlyTerminatesLongRunningProcess() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final Process proc = new ProcessBuilder("sleep", "10000").start();
+        final VerboseProcess process = new VerboseProcess(proc);
+        final CountDownLatch done = new CountDownLatch(1);
+        new Thread(
+            new VerboseRunnable(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        process.stdout();
+                        done.countDown();
+                    }
+                }
+            )
+        ).start();
+        TimeUnit.SECONDS.sleep(1);
+        proc.destroy();
+        MatcherAssert.assertThat(
+            done.await(1, TimeUnit.MINUTES),
+            Matchers.is(true)
+        );
     }
 
 }
