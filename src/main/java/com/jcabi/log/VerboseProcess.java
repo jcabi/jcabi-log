@@ -92,9 +92,42 @@ public final class VerboseProcess {
     /**
      * Get {@code stdout} from the process, after its finish (the method will
      * wait for the process and log its output).
+     *
+     * <p>The method will check process exit code, and if it won't be equal
+     * to zero a runtime exception will be thrown. A non-zero exit code
+     * usually is an indicator of problem. If you want to ignore this code,
+     * use {@link #stdoutQuietly()} instead.
+     *
      * @return Full {@code stdout} of the process
      */
     public String stdout() {
+        return this.stdout(true);
+    }
+
+    /**
+     * Get {@code stdout} from the process, after its finish (the method will
+     * wait for the process and log its output).
+     *
+     * <p>This method ignores exit code of the process. Even if it is
+     * not equal to zero (which usually is an indicator of an error), the
+     * method will quietly return its output. The method is useful when
+     * you're running a background process. You will kill it with
+     * {@link Process#destroy()}, which usually will lead to a non-zero
+     * exit code, which you want to ignore.
+     *
+     * @return Full {@code stdout} of the process
+     * @since 0.10
+     */
+    public String stdoutQuietly() {
+        return this.stdout(false);
+    }
+
+    /**
+     * Get standard output and check for non-zero exit code (if required).
+     * @param check TRUE if we should check for non-zero exit code
+     * @return Full {@code stdout} of the process
+     */
+    private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
         String stdout;
         try {
@@ -107,18 +140,12 @@ public final class VerboseProcess {
         Logger.debug(
             this,
             "#stdout(): process %s completed (code=%d, size=%d) in %[ms]s",
-            this.process,
-            code,
-            stdout.length(),
+            this.process, code, stdout.length(),
             System.currentTimeMillis() - start
         );
-        if (code != 0) {
+        if (check && code != 0) {
             throw new IllegalArgumentException(
-                Logger.format(
-                    "Non-zero exit code %d: %[text]s",
-                    code,
-                    stdout
-                )
+                Logger.format("Non-zero exit code %d: %[text]s", code, stdout)
             );
         }
         return stdout;
