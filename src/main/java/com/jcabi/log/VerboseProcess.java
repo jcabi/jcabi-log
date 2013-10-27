@@ -72,11 +72,21 @@ public final class VerboseProcess {
     private final transient Process process;
 
     /**
+     * Log level for stdout.
+     */
+    private final transient Level out;
+
+    /**
+     * Log level for stderr.
+     */
+    private final transient Level err;
+
+    /**
      * Public ctor.
      * @param prc The process to work with
      */
-    public VerboseProcess(@NotNull final Process prc) {
-        this.process = prc;
+    public VerboseProcess(final Process prc) {
+        this(prc, Level.INFO, Level.WARNING);
     }
 
     /**
@@ -84,14 +94,27 @@ public final class VerboseProcess {
      * the {@code stdout} and will receive an empty {@code stdin}).
      * @param builder Process builder to work with
      */
-    public VerboseProcess(@NotNull final ProcessBuilder builder) {
-        builder.redirectErrorStream(true);
-        try {
-            this.process = builder.start();
-            this.process.getOutputStream().close();
-        } catch (IOException ex) {
-            throw new IllegalStateException(ex);
-        }
+    public VerboseProcess(
+        @NotNull(message = "process builder can't be NULL")
+        final ProcessBuilder builder) {
+        this(VerboseProcess.start(builder));
+    }
+
+    /**
+     * Public ctor, with a given process and logging levels for {@code stdout}
+     * and {@code stderr}.
+     * @param prc Process to execute and monitor
+     * @param stdout Log level for stdout
+     * @param stderr Log level for stderr
+     * @since 0.11
+     */
+    public VerboseProcess(
+        @NotNull(message = "process can't be NULL") final Process prc,
+        @NotNull(message = "stdout level can't be NULL") final Level stdout,
+        @NotNull(message = "stderr level can't be NULL") final Level stderr) {
+        this.process = prc;
+        this.out = stdout;
+        this.err = stderr;
     }
 
     /**
@@ -125,6 +148,22 @@ public final class VerboseProcess {
      */
     public String stdoutQuietly() {
         return this.stdout(false);
+    }
+
+    /**
+     * Start a process from the given builder.
+     * @param builder Process builder to work with
+     * @return Process started
+     */
+    private static Process start(@NotNull final ProcessBuilder builder) {
+        builder.redirectErrorStream(true);
+        try {
+            final Process process = builder.start();
+            process.getOutputStream().close();
+            return process;
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     /**
@@ -171,7 +210,7 @@ public final class VerboseProcess {
             this.process,
             this.monitor(
                 this.process.getInputStream(),
-                done, stdout, Level.INFO
+                done, stdout, this.out
             )
         );
         Logger.debug(
@@ -180,7 +219,7 @@ public final class VerboseProcess {
             this.process,
             this.monitor(
                 this.process.getErrorStream(),
-                done, stderr, Level.WARNING
+                done, stderr, this.err
             )
         );
         try {

@@ -31,6 +31,7 @@ package com.jcabi.log;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.SystemUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -103,7 +104,7 @@ public final class VerboseProcessTest {
      * VerboseProcess can reject NULL.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = javax.validation.ConstraintViolationException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void rejectsNullProcesses() throws Exception {
         final ProcessBuilder builder = null;
         new VerboseProcess(builder);
