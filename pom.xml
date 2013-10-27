@@ -33,7 +33,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
-        <version>0.11</version>
+        <version>0.12</version>
     </parent>
     <artifactId>jcabi-log</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -54,8 +54,8 @@
     </scm>
     <distributionManagement>
         <site>
-            <id>www.jcabi.com</id>
-            <url>s3://www.jcabi.com/jcabi-log</url>
+            <id>github-pages</id>
+            <url>http://log.jcabi.com/</url>
         </site>
     </distributionManagement>
     <dependencies>
@@ -103,4 +103,14 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <!-- https://github.com/github/maven-plugins/issues/54 -->
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.8</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

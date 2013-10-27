@@ -31,11 +31,13 @@ package com.jcabi.log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -87,7 +89,7 @@ public final class VerboseProcess {
         try {
             this.process = builder.start();
             this.process.getOutputStream().close();
-        } catch (java.io.IOException ex) {
+        } catch (IOException ex) {
             throw new IllegalStateException(ex);
         }
     }
@@ -132,7 +134,7 @@ public final class VerboseProcess {
      */
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
-        String stdout;
+        final String stdout;
         try {
             stdout = this.waitFor();
         } catch (InterruptedException ex) {
@@ -159,30 +161,84 @@ public final class VerboseProcess {
      * @return Stdout produced by the process
      * @throws InterruptedException If interrupted in between
      */
-    @SuppressWarnings("PMD.DoNotUseThreads")
     private String waitFor() throws InterruptedException {
-        final BufferedReader reader = new BufferedReader(
-            new InputStreamReader(
+        final CountDownLatch done = new CountDownLatch(2);
+        final StringBuffer stdout = new StringBuffer(0);
+        final StringBuffer stderr = new StringBuffer(0);
+        Logger.debug(
+            this,
+            "#waitFor(): waiting for stdout of %s in %s...",
+            this.process,
+            this.monitor(
                 this.process.getInputStream(),
-                Charset.forName(CharEncoding.UTF_8)
+                done, stdout, Level.INFO
             )
         );
-        final CountDownLatch done = new CountDownLatch(1);
-        final StringBuffer stdout = new StringBuffer();
+        Logger.debug(
+            this,
+            "#waitFor(): waiting for stderr of %s in %s...",
+            this.process,
+            this.monitor(
+                this.process.getErrorStream(),
+                done, stderr, Level.WARNING
+            )
+        );
+        try {
+            this.process.waitFor();
+        } finally {
+            Logger.debug(this, "#waitFor(): process finished", this.process);
+            done.await(2L, TimeUnit.SECONDS);
+        }
+        return stdout.toString();
+    }
+
+    /**
+     * Monitor this input stream.
+     * @param stream Stream to monitor
+     * @param done Count down latch to signal when done
+     * @param buffer Buffer to write to
+     * @param level Logging level
+     * @return Thread which is monitoring
+     * @checkstyle ParameterNumber (5 lines)
+     */
+    @SuppressWarnings("PMD.DoNotUseThreads")
+    private Thread monitor(final InputStream stream, final CountDownLatch done,
+        final StringBuffer buffer, final Level level) {
         final Thread thread = new Thread(
             new VerboseRunnable(
+                // @checkstyle AnonInnerLength (100 lines)
                 new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        while (true) {
-                            final String line = reader.readLine();
-                            if (line == null) {
-                                break;
+                        final BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(
+                                stream,
+                                Charset.forName(CharEncoding.UTF_8)
+                            )
+                        );
+                        try {
+                            while (true) {
+                                final String line = reader.readLine();
+                                if (line == null) {
+                                    break;
+                                }
+                                Logger.log(
+                                    level, VerboseProcess.class,
+                                    ">> %s", line
+                                );
+                                buffer.append(line);
                             }
-                            Logger.info(VerboseProcess.class, ">> %s", line);
-                            stdout.append(line);
+                            done.countDown();
+                        } finally {
+                            try {
+                                reader.close();
+                            } catch (IOException ex) {
+                                Logger.error(
+                                    this,
+                                    "failed to close reader: %[exception]s", ex
+                                );
+                            }
                         }
-                        done.countDown();
                         return null;
                     }
                 },
@@ -192,23 +248,7 @@ public final class VerboseProcess {
         thread.setName("VerboseProcess");
         thread.setDaemon(true);
         thread.start();
-        Logger.debug(
-            this,
-            "#waitFor(): waiting for stdout of %s in %s...",
-            this.process, thread
-        );
-        try {
-            this.process.waitFor();
-        } finally {
-            Logger.debug(this, "#waitFor(): process finished", this.process);
-            done.await(1, TimeUnit.SECONDS);
-            try {
-                reader.close();
-            } catch (IOException ex) {
-                Logger.error(this, "failed to close reader: %[exception]s", ex);
-            }
-        }
-        return stdout.toString();
+        return thread;
     }
 
 }
