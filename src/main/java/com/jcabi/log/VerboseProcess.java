@@ -118,6 +118,21 @@ public final class VerboseProcess {
     }
 
     /**
+     * Public ctor, with a given process and logging levels for {@code stdout}
+     * and {@code stderr}.
+     * @param bdr Process builder to execute and monitor
+     * @param stdout Log level for stdout
+     * @param stderr Log level for stderr
+     * @since 0.12
+     */
+    public VerboseProcess(
+        @NotNull(message = "process can't be NULL") final ProcessBuilder bdr,
+        @NotNull(message = "stdout level can't be NULL") final Level stdout,
+        @NotNull(message = "stderr level can't be NULL") final Level stderr) {
+        this(VerboseProcess.start(bdr), stdout, stderr);
+    }
+
+    /**
      * Get {@code stdout} from the process, after its finish (the method will
      * wait for the process and log its output).
      *

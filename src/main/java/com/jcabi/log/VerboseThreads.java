@@ -57,7 +57,7 @@ import lombok.ToString;
  *
  * <p>The exception in this example will never be caught by nobody. It will
  * just terminate current execution of the {@link Runnable} task. Moreover,
- * it won't reach any {@link java.lang.Thread.UncaughtExceptionHandler},
+ * it won't reach any {@link Thread.UncaughtExceptionHandler},
  * because this
  * is how {@link java.util.concurrent.ScheduledExecutorService}
  * is behaving. This is how we solve
@@ -170,9 +170,6 @@ public final class VerboseThreads implements ThreadFactory {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     @Loggable(Loggable.DEBUG)
     public Thread newThread(final Runnable runnable) {

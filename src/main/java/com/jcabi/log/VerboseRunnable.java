@@ -192,7 +192,7 @@ public final class VerboseRunnable implements Runnable {
      *
      * <p>We catch {@link RuntimeException} and {@link Error} here. All other
      * types of exceptions are "checked exceptions" and won't be thrown out
-     * of {@link Runnable#run()} method.
+     * of {@code Runnable#run()} method.
      */
     @Override
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
@@ -216,12 +216,12 @@ public final class VerboseRunnable implements Runnable {
         }
         if (this.swallow) {
             try {
-                Thread.sleep(1);
+                Thread.sleep(1L);
             } catch (InterruptedException ex) {
                 Logger.debug(
                     this,
-                    "interrupted status cleared of %s",
-                    Thread.currentThread().getName()
+                    "interrupted status cleared of %s: %s",
+                    Thread.currentThread().getName(), ex
                 );
             }
         }
@@ -233,7 +233,7 @@ public final class VerboseRunnable implements Runnable {
      * @return The message to show in logs
      */
     private String tail(final Throwable throwable) {
-        String tail;
+        final String tail;
         if (this.verbose) {
             tail = Logger.format("%[exception]s", throwable);
         } else {
