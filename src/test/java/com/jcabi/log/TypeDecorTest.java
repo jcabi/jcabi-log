@@ -74,9 +74,6 @@ public final class TypeDecorTest extends AbstractDecorTest {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected Formattable decor() {
         return new TypeDecor(this.object());

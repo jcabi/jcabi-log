@@ -150,9 +150,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      */
     private transient String basePattern;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setConversionPattern(final String pattern) {
         this.basePattern = pattern;
@@ -213,9 +210,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String format(final LoggingEvent event) {
         return super.format(event).replace(

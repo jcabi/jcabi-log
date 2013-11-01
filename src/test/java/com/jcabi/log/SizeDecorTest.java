@@ -87,9 +87,6 @@ public final class SizeDecorTest extends AbstractDecorTest {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected Formattable decor() {
         return new SizeDecor((Long) this.object());

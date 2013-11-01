@@ -82,9 +82,6 @@ public final class ListDecorTest extends AbstractDecorTest {
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected Formattable decor() throws Exception {
         return new ListDecor(this.object());
