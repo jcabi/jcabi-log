@@ -54,7 +54,7 @@ final class ObjectDecor implements Formattable {
      * Public ctor.
      * @param obj The object to format
      */
-    public ObjectDecor(final Object obj) {
+    ObjectDecor(final Object obj) {
         this.object = obj;
     }
 

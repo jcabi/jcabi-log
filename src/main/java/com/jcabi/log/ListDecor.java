@@ -56,9 +56,9 @@ final class ListDecor implements Formattable {
      * @param obj The object to format
      * @throws DecorException If some problem with it
      */
-    public ListDecor(final Object obj) throws DecorException {
+    ListDecor(final Object obj) throws DecorException {
         if (obj == null || obj instanceof Collection) {
-            this.list = (Collection) obj;
+            this.list = Collection.class.cast(obj);
         } else if (obj instanceof Object[]) {
             this.list = Arrays.asList((Object[]) obj);
         } else {
@@ -78,13 +78,13 @@ final class ListDecor implements Formattable {
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("[");
+        final StringBuilder builder = new StringBuilder(0);
+        builder.append('[');
         if (this.list == null) {
             builder.append("NULL");
         } else {
             boolean first = true;
-            for (Object item : this.list) {
+            for (final Object item : this.list) {
                 if (!first) {
                     builder.append(", ");
                 }
@@ -92,7 +92,7 @@ final class ListDecor implements Formattable {
                 first = false;
             }
         }
-        builder.append("]");
+        builder.append(']');
         formatter.format("%s", builder.toString());
     }
 

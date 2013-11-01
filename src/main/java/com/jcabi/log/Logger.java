@@ -93,6 +93,11 @@ import org.slf4j.LoggerFactory;
 public final class Logger {
 
     /**
+     * Empty array of objects.
+     */
+    private static final Object[] EMPTY = {};
+
+    /**
      * This is utility class.
      */
     private Logger() {
@@ -106,7 +111,7 @@ public final class Logger {
      * @return Formatted string
      */
     public static String format(final String fmt, final Object... args) {
-        String result;
+        final String result;
         if (args.length == 0) {
             result = fmt;
         } else {
@@ -123,7 +128,7 @@ public final class Logger {
      * @since 0.7.11
      */
     public static void trace(final Object source, final String msg) {
-        Logger.trace(source, msg, new Object[] {});
+        Logger.trace(source, msg, Logger.EMPTY);
     }
 
     /**
@@ -148,7 +153,7 @@ public final class Logger {
      * @since 0.7.11
      */
     public static void debug(final Object source, final String msg) {
-        Logger.debug(source, msg, new Object[] {});
+        Logger.debug(source, msg, Logger.EMPTY);
     }
 
     /**
@@ -173,7 +178,7 @@ public final class Logger {
      * @since 0.7.11
      */
     public static void info(final Object source, final String msg) {
-        Logger.info(source, msg, new Object[] {});
+        Logger.info(source, msg, Logger.EMPTY);
     }
 
     /**
@@ -198,7 +203,7 @@ public final class Logger {
      * @since 0.7.11
      */
     public static void warn(final Object source, final String msg) {
-        Logger.warn(source, msg, new Object[] {});
+        Logger.warn(source, msg, Logger.EMPTY);
     }
 
     /**
@@ -223,7 +228,7 @@ public final class Logger {
      * @since 0.7.11
      */
     public static void error(final Object source, final String msg) {
-        Logger.error(source, msg, new Object[] {});
+        Logger.error(source, msg, Logger.EMPTY);
     }
 
     /**
@@ -331,12 +336,12 @@ public final class Logger {
     /**
      * Get the instance of the logger for this particular caller.
      * @param source Source of the logging operation
-     * @return The instance of {@link Logger} class
+     * @return The instance of {@code Logger} class
      */
     private static org.slf4j.Logger logger(final Object source) {
-        org.slf4j.Logger logger;
+        final org.slf4j.Logger logger;
         if (source instanceof Class) {
-            logger = LoggerFactory.getLogger((Class) source);
+            logger = LoggerFactory.getLogger((Class<?>) source);
         } else {
             logger = LoggerFactory.getLogger(source.getClass());
         }

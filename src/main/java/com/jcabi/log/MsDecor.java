@@ -66,7 +66,7 @@ final class MsDecor implements Formattable {
      * @param msec The interval in milliseconds
      */
     @SuppressWarnings("PMD.NullAssignment")
-    public MsDecor(final Long msec) {
+    MsDecor(final Long msec) {
         if (msec == null) {
             this.millis = null;
         } else {
@@ -84,7 +84,7 @@ final class MsDecor implements Formattable {
         if (this.millis == null) {
             formatter.format("NULL");
         } else {
-            final StringBuilder format = new StringBuilder();
+            final StringBuilder format = new StringBuilder(0);
             format.append('%');
             if ((flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
                 .LEFT_JUSTIFY) {
@@ -131,11 +131,11 @@ final class MsDecor implements Formattable {
             number = this.millis / (1000L * 60 * 60 * 24 * 30);
             title = "mon";
         }
-        String format;
+        final String format;
         if (precision >= 0) {
             format = String.format("%%.%df%%s", precision);
         } else {
-            format = String.format("%%.0f%%s");
+            format = "%.0f%s";
         }
         return String.format(format, number, title);
     }

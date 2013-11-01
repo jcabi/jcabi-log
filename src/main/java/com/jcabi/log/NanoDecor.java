@@ -67,7 +67,7 @@ final class NanoDecor implements Formattable {
      * @param nan The interval in nanoseconds
      */
     @SuppressWarnings("PMD.NullAssignment")
-    public NanoDecor(final Long nan) {
+    NanoDecor(final Long nan) {
         if (nan == null) {
             this.nano = null;
         } else {
@@ -85,7 +85,7 @@ final class NanoDecor implements Formattable {
         if (this.nano == null) {
             formatter.format("NULL");
         } else {
-            final StringBuilder format = new StringBuilder();
+            final StringBuilder format = new StringBuilder(0);
             format.append('%');
             if ((flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
                 .LEFT_JUSTIFY) {
@@ -111,7 +111,7 @@ final class NanoDecor implements Formattable {
      */
     private String toText(final int precision) {
         double number;
-        String title;
+        final String title;
         // @checkstyle MagicNumber (15 lines)
         if (this.nano < 1000L) {
             number = this.nano;
@@ -129,11 +129,11 @@ final class NanoDecor implements Formattable {
             number = this.nano / (1000L * 1000 * 1000 * 60);
             title = "min";
         }
-        String format;
+        final String format;
         if (precision >= 0) {
             format = String.format("%%.%df%%s", precision);
         } else {
-            format = String.format("%%.0f%%s");
+            format = "%.0f%s";
         }
         return String.format(format, number, title);
     }

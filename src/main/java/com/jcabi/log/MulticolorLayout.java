@@ -148,13 +148,13 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Store original conversation pattern to be able
      * to recalculate it, if new colors are provided.
      */
-    private transient String basePattern;
+    private transient String base;
 
     @Override
     public void setConversionPattern(final String pattern) {
-        this.basePattern = pattern;
+        this.base = pattern;
         final Matcher matcher = MulticolorLayout.METAS.matcher(pattern);
-        final StringBuffer buf = new StringBuffer();
+        final StringBuffer buf = new StringBuffer(0);
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
             buf.append(MulticolorLayout.CSI)
@@ -185,8 +185,8 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
          * to be sure to replace all custom color constants with
          * new values.
          */
-        if (this.basePattern != null) {
-            this.setConversionPattern(this.basePattern);
+        if (this.base != null) {
+            this.setConversionPattern(this.base);
         }
     }
 
@@ -228,7 +228,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @return ANSI color
      */
     private String ansi(final String meta) {
-        String ansi;
+        final String ansi;
         if (meta == null) {
             ansi = "?";
         } else if (meta.matches("[a-z]+")) {

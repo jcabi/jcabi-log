@@ -34,6 +34,8 @@ import java.util.Formattable;
 import java.util.Formatter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -68,7 +70,7 @@ final class DomDecor implements Formattable {
      * @param doc The document
      * @throws DecorException If some problem with it
      */
-    public DomDecor(final Object doc) throws DecorException {
+    DomDecor(final Object doc) throws DecorException {
         if (doc != null && !(doc instanceof Node)) {
             throw new DecorException(
                 String.format(
@@ -99,9 +101,9 @@ final class DomDecor implements Formattable {
                     new DOMSource(this.node),
                     new StreamResult(writer)
                 );
-            } catch (javax.xml.transform.TransformerConfigurationException ex) {
+            } catch (TransformerConfigurationException ex) {
                 throw new IllegalStateException(ex);
-            } catch (javax.xml.transform.TransformerException ex) {
+            } catch (TransformerException ex) {
                 throw new IllegalStateException(ex);
             }
         }

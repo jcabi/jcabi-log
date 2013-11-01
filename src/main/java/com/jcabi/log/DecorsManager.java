@@ -30,6 +30,7 @@
 package com.jcabi.log;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Formattable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -87,7 +88,7 @@ final class DecorsManager {
     public static Formattable decor(final String key, final Object arg)
         throws DecorException {
         final Class<? extends Formattable> type = DecorsManager.find(key);
-        Formattable decor;
+        final Formattable decor;
         try {
             decor = (Formattable) DecorsManager.ctor(type).newInstance(arg);
         } catch (InstantiationException ex) {
@@ -104,7 +105,7 @@ final class DecorsManager {
                 type.getName(),
                 arg.getClass().getName()
             );
-        } catch (java.lang.reflect.InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             throw new DecorException(
                 ex,
                 "Can't invoke %s(%s)",
@@ -124,12 +125,12 @@ final class DecorsManager {
     @SuppressWarnings("unchecked")
     private static Class<? extends Formattable> find(final String key)
         throws DecorException {
-        Class<? extends Formattable> type;
+        final Class<? extends Formattable> type;
         if (DecorsManager.DECORS.containsKey(key)) {
             type = DecorsManager.DECORS.get(key);
         } else {
             try {
-                type = (Class) Class.forName(key);
+                type = (Class<Formattable>) Class.forName(key);
             } catch (ClassNotFoundException ex) {
                 throw new DecorException(
                     ex,
@@ -149,10 +150,10 @@ final class DecorsManager {
      */
     private static Constructor<?> ctor(final Class<? extends Formattable> type)
         throws DecorException {
-        final Constructor[] ctors = type.getConstructors();
+        final Constructor<?>[] ctors = type.getDeclaredConstructors();
         if (ctors.length != 1) {
             throw new DecorException(
-                "%s should have just one public one-arg ctor, but there are %d",
+                "%s should have just one one-arg ctor, but there are %d",
                 type.getName(),
                 ctors.length
             );

@@ -68,7 +68,7 @@ final class ExceptionDecor implements Formattable {
      * Public ctor.
      * @param thr The exception
      */
-    public ExceptionDecor(final Throwable thr) {
+    ExceptionDecor(final Throwable thr) {
         this.throwable = thr;
     }
 
@@ -79,7 +79,7 @@ final class ExceptionDecor implements Formattable {
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
-        String text;
+        final String text;
         if (this.throwable == null) {
             text = "NULL";
         } else if ((flags & FormattableFlags.ALTERNATE) == 0) {
