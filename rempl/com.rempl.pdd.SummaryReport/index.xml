@@ -6,7 +6,7 @@
       <prefix> * </prefix>
       <body>The class has to be @Immutable, but with ConcurrentMap it's impossible to do. Let's refactor.</body>
       <estimate>0</estimate>
-      <lines>46-47</lines>
+      <lines>47-48</lines>
       <owner>someone</owner>
    </puzzle>
    <puzzle>
