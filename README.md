@@ -1,6 +1,6 @@
 <img src="http://img.jcabi.com/logo.png" width="200px" height="48px" />
 
-More details are here: [www.jcabi.com/jcabi-log](http://www.jcabi.com/jcabi-log/index.html)
+More details are here: [log.jcabi.com](http://log.jcabi.com/index.html)
 
 `Logger` is a convenient static wrapper of [slf4j](http://www.slf4j.org/)
 (don't forget to include one of [SLF4J Bindings](http://www.slf4j.org/manual.html#binding)
@@ -21,14 +21,14 @@ You need just this dependency:
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-log</artifactId>
-  <version>0.8</version>
+  <version>0.12.1</version>
 </dependency>
 ```
 
 ## Questions?
 
 If you have any questions about the framework, or something doesn't work as expected,
-please [submit an issue here](https://github.com/yegor256/jcabi/issues/new).
+please [submit an issue here](https://github.com/jcabi/jcabi-log/issues/new).
 If you want to discuss, please use our [Google Group](https://groups.google.com/forum/#!forum/jcabi).
 
 ## How to contribute?
