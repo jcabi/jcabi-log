@@ -74,11 +74,20 @@ public final class LoggerTest {
      * Logger can not format arrays since they are interpreted as varags.
      * @throws Exception If something goes wrong
      */
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void doesntFormatArraysSinceTheyAreVarArgs() throws Exception {
+        Logger.format("array: %[list]s", new Object[] {"hi", 1});
+    }
+
+    /**
+     * Logger formats arrays as if they were separate arguments as they are
+     * interpreted as varargs.
+     */
+    @Test
+    public void interpretsArraysAsVarArgs() {
         MatcherAssert.assertThat(
-            Logger.format("array: %[list]s", new Object[] {"hi", 1}),
-            Matchers.not(Matchers.equalTo("array: [\"hi\", \"1\"]"))
+            Logger.format("array: %s : %d", new Object[] {"hello", 2}),
+            Matchers.is("array: hello : 2")
         );
     }
 
@@ -90,9 +99,28 @@ public final class LoggerTest {
     public void providesOutputStream() throws Exception {
         final OutputStream stream = Logger.stream(Level.INFO, this);
         final PrintWriter writer = new PrintWriter(stream);
+        // @checkstyle LineLength (1 line)
         writer.print("hello, \u20ac, how're\u040a?\nI'm fine, thanks, друг!\n");
         writer.flush();
         writer.close();
+    }
+
+    /**
+     * Logger throws an exception when there are less parameters than there
+     * are format args.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void throwsWhenParamsLessThanFormatArgs() {
+        Logger.format("String %s Char %c Number %d", "howdy", 'x');
+    }
+
+    /**
+     * Logger throws an exception when there are more parameters than there
+     * are format args.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsWhenParamsMoreThanFormatArgs() {
+        Logger.format("String %s Number %d Char %c", "hey", 1, 'x', 2);
     }
 
 }
