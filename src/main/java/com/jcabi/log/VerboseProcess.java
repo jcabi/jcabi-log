@@ -176,7 +176,7 @@ public final class VerboseProcess {
             final Process process = builder.start();
             process.getOutputStream().close();
             return process;
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         }
     }
@@ -191,7 +191,7 @@ public final class VerboseProcess {
         final String stdout;
         try {
             stdout = this.waitFor();
-        } catch (InterruptedException ex) {
+        } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException(ex);
         }
@@ -240,7 +240,9 @@ public final class VerboseProcess {
         try {
             this.process.waitFor();
         } finally {
-            Logger.debug(this, "#waitFor(): process finished", this.process);
+            Logger.debug(
+                this, "#waitFor(): process finished : %s", this.process
+            );
             done.await(2L, TimeUnit.SECONDS);
         }
         return stdout.toString();
@@ -286,7 +288,7 @@ public final class VerboseProcess {
                         } finally {
                             try {
                                 reader.close();
-                            } catch (IOException ex) {
+                            } catch (final IOException ex) {
                                 Logger.error(
                                     this,
                                     "failed to close reader: %[exception]s", ex
