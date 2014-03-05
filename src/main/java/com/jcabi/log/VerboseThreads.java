@@ -161,13 +161,7 @@ public final class VerboseThreads implements ThreadFactory {
         this.prefix = pfx;
         this.daemon = dmn;
         this.priority = prt;
-        this.group = new ThreadGroup(pfx) {
-            @Override
-            public void uncaughtException(final Thread thread,
-                final Throwable throwable) {
-                Logger.warn(this, "%[exception]s", throwable);
-            }
-        };
+        this.group = new VerboseThreads.Group(pfx);
     }
 
     @Override
@@ -175,34 +169,7 @@ public final class VerboseThreads implements ThreadFactory {
     public Thread newThread(final Runnable runnable) {
         final Thread thread = new Thread(
             this.group,
-            // @checkstyle AnonInnerLength (50 lines)
-            new Runnable() {
-                @Override
-                @SuppressWarnings("PMD.AvoidCatchingGenericException")
-                public void run() {
-                    try {
-                        runnable.run();
-                    // @checkstyle IllegalCatch (1 line)
-                    } catch (RuntimeException ex) {
-                        Logger.warn(
-                            this,
-                            "%s: %[exception]s",
-                            Thread.currentThread().getName(),
-                            ex
-                        );
-                        throw ex;
-                    // @checkstyle IllegalCatch (1 line)
-                    } catch (Error error) {
-                        Logger.error(
-                            this,
-                            "%s (error): %[exception]s",
-                            Thread.currentThread().getName(),
-                            error
-                        );
-                        throw error;
-                    }
-                }
-            }
+            new VerboseThreads.Wrap(runnable)
         );
         thread.setName(
             String.format(
@@ -214,6 +181,66 @@ public final class VerboseThreads implements ThreadFactory {
         thread.setDaemon(this.daemon);
         thread.setPriority(this.priority);
         return thread;
+    }
+
+    /**
+     * Group to use.
+     */
+    private static final class Group extends ThreadGroup {
+        /**
+         * Ctor.
+         * @param name Name of it
+         */
+        Group(final String name) {
+            super(name);
+        }
+        @Override
+        public void uncaughtException(final Thread thread,
+            final Throwable throwable) {
+            Logger.warn(this, "%[exception]s", throwable);
+        }
+    }
+
+    /**
+     * Runnable decorator.
+     */
+    private static final class Wrap implements Runnable {
+        /**
+         * Origin runnable.
+         */
+        private final transient Runnable origin;
+        /**
+         * Ctor.
+         * @param runnable Origin runnable
+         */
+        Wrap(final Runnable runnable) {
+            this.origin = runnable;
+        }
+        @Override
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
+        public void run() {
+            try {
+                this.origin.run();
+                // @checkstyle IllegalCatch (1 line)
+            } catch (RuntimeException ex) {
+                Logger.warn(
+                    this,
+                    "%s: %[exception]s",
+                    Thread.currentThread().getName(),
+                    ex
+                );
+                throw ex;
+                // @checkstyle IllegalCatch (1 line)
+            } catch (Error error) {
+                Logger.error(
+                    this,
+                    "%s (error): %[exception]s",
+                    Thread.currentThread().getName(),
+                    error
+                );
+                throw error;
+            }
+        }
     }
 
 }

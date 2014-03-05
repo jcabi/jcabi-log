@@ -30,9 +30,14 @@
 package com.jcabi.log;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -74,12 +79,12 @@ public final class VerboseProcess {
     /**
      * Log level for stdout.
      */
-    private final transient Level out;
+    private final transient Level olevel;
 
     /**
      * Log level for stderr.
      */
-    private final transient Level err;
+    private final transient Level elevel;
 
     /**
      * Public ctor.
@@ -90,7 +95,7 @@ public final class VerboseProcess {
     }
 
     /**
-     * Public ctor (builder will be configured to redirect error stream to
+     * Public ctor (builder will be configured to redirect error input to
      * the {@code stdout} and will receive an empty {@code stdin}).
      * @param builder Process builder to work with
      */
@@ -113,8 +118,8 @@ public final class VerboseProcess {
         @NotNull(message = "stdout level can't be NULL") final Level stdout,
         @NotNull(message = "stderr level can't be NULL") final Level stderr) {
         this.process = prc;
-        this.out = stdout;
-        this.err = stderr;
+        this.olevel = stdout;
+        this.elevel = stderr;
     }
 
     /**
@@ -217,15 +222,14 @@ public final class VerboseProcess {
      */
     private String waitFor() throws InterruptedException {
         final CountDownLatch done = new CountDownLatch(2);
-        final StringBuffer stdout = new StringBuffer(0);
-        final StringBuffer stderr = new StringBuffer(0);
+        final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         Logger.debug(
             this,
             "#waitFor(): waiting for stdout of %s in %s...",
             this.process,
             this.monitor(
                 this.process.getInputStream(),
-                done, stdout, this.out
+                done, stdout, this.olevel
             )
         );
         Logger.debug(
@@ -234,7 +238,7 @@ public final class VerboseProcess {
             this.process,
             this.monitor(
                 this.process.getErrorStream(),
-                done, stderr, this.err
+                done, new ByteArrayOutputStream(), this.elevel
             )
         );
         try {
@@ -243,61 +247,32 @@ public final class VerboseProcess {
             Logger.debug(
                 this, "#waitFor(): process finished : %s", this.process
             );
-            done.await(2L, TimeUnit.SECONDS);
+            if (!done.await(2L, TimeUnit.SECONDS)) {
+                Logger.error(this, "#wait() failed");
+            }
         }
-        return stdout.toString();
+        try {
+            return stdout.toString("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            throw new IllegalStateException(ex);
+        }
     }
 
     /**
-     * Monitor this input stream.
-     * @param stream Stream to monitor
+     * Monitor this input input.
+     * @param input Stream to monitor
      * @param done Count down latch to signal when done
-     * @param buffer Buffer to write to
+     * @param output Buffer to write to
      * @param level Logging level
      * @return Thread which is monitoring
      * @checkstyle ParameterNumber (5 lines)
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
-    private Thread monitor(final InputStream stream, final CountDownLatch done,
-        final StringBuffer buffer, final Level level) {
+    private Thread monitor(final InputStream input, final CountDownLatch done,
+        final OutputStream output, final Level level) {
         final Thread thread = new Thread(
             new VerboseRunnable(
-                // @checkstyle AnonInnerLength (100 lines)
-                new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        final BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(
-                                stream,
-                                Charset.forName(CharEncoding.UTF_8)
-                            )
-                        );
-                        try {
-                            while (true) {
-                                final String line = reader.readLine();
-                                if (line == null) {
-                                    break;
-                                }
-                                Logger.log(
-                                    level, VerboseProcess.class,
-                                    ">> %s", line
-                                );
-                                buffer.append(line);
-                            }
-                            done.countDown();
-                        } finally {
-                            try {
-                                reader.close();
-                            } catch (final IOException ex) {
-                                Logger.error(
-                                    this,
-                                    "failed to close reader: %[exception]s", ex
-                                );
-                            }
-                        }
-                        return null;
-                    }
-                },
+                new VerboseProcess.Monitor(input, done, output, level),
                 false
             )
         );
@@ -305,6 +280,84 @@ public final class VerboseProcess {
         thread.setDaemon(true);
         thread.start();
         return thread;
+    }
+
+    /**
+     * Stream monitor.
+     */
+    private static final class Monitor implements Callable<Void> {
+        /**
+         * Stream to read.
+         */
+        private final transient InputStream input;
+        /**
+         * Latch to count down when done.
+         */
+        private final transient CountDownLatch done;
+        /**
+         * Buffer to save output.
+         */
+        private final transient OutputStream output;
+        /**
+         * Log level.
+         */
+        private final transient Level level;
+        /**
+         * Ctor.
+         * @param inp Stream to monitor
+         * @param latch Count down latch to signal when done
+         * @param out Buffer to write to
+         * @param lvl Logging level
+         * @checkstyle ParameterNumber (5 lines)
+         */
+        Monitor(final InputStream inp, final CountDownLatch latch,
+            final OutputStream out, final Level lvl) {
+            this.input = inp;
+            this.done = latch;
+            this.output = out;
+            this.level = lvl;
+        }
+        @Override
+        public Void call() throws Exception {
+            final BufferedReader reader = new BufferedReader(
+                new InputStreamReader(
+                    this.input,
+                    Charset.forName(CharEncoding.UTF_8)
+                )
+            );
+            final BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(
+                    this.output,
+                    Charset.forName(CharEncoding.UTF_8)
+                )
+            );
+            try {
+                while (true) {
+                    final String line = reader.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    Logger.log(
+                        this.level, VerboseProcess.class,
+                        ">> %s", line
+                    );
+                    writer.write(line);
+                    writer.newLine();
+                }
+                this.done.countDown();
+            } finally {
+                try {
+                    reader.close();
+                    writer.close();
+                } catch (final IOException ex) {
+                    Logger.error(
+                        this,
+                        "failed to close reader: %[exception]s", ex
+                    );
+                }
+            }
+            return null;
+        }
     }
 
 }

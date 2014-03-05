@@ -30,6 +30,7 @@
 package com.jcabi.log;
 
 import com.jcabi.aspects.Immutable;
+import com.jcabi.aspects.Tv;
 import java.util.Formattable;
 import java.util.FormattableFlags;
 import java.util.Formatter;
@@ -57,9 +58,10 @@ final class SecretDecor implements Formattable {
      * Public ctor.
      * @param scrt The secret
      */
-    public SecretDecor(final Object scrt) {
+    @SuppressWarnings("PMD.NullAssignment")
+    SecretDecor(final Object scrt) {
         if (scrt == null) {
-            this.secret = (String) scrt;
+            this.secret = null;
         } else {
             this.secret = scrt.toString();
         }
@@ -75,7 +77,7 @@ final class SecretDecor implements Formattable {
         if (this.secret == null) {
             formatter.format("NULL");
         } else {
-            final StringBuilder fmt = new StringBuilder();
+            final StringBuilder fmt = new StringBuilder(Tv.TEN);
             fmt.append('%');
             if ((flags & FormattableFlags.LEFT_JUSTIFY) != 0) {
                 fmt.append('-');
@@ -101,7 +103,7 @@ final class SecretDecor implements Formattable {
      * @return The result
      */
     private static String scramble(final String text) {
-        final StringBuilder out = new StringBuilder();
+        final StringBuilder out = new StringBuilder(Tv.TEN);
         if (text.isEmpty()) {
             out.append('?');
         } else {

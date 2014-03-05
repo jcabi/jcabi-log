@@ -90,7 +90,7 @@ final class PreFormatter {
      * @return The list of arguments
      */
     public Object[] getArguments() {
-        return this.arguments.toArray(new Object[]{});
+        return this.arguments.toArray(new Object[this.arguments.size()]);
     }
 
     /**

@@ -114,35 +114,13 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Colors with names.
      */
     private final transient ConcurrentMap<String, String> colors =
-        new ConcurrentHashMap<String, String>() {
-            private static final long serialVersionUID = 0x7526EF78EEDFE465L;
-            {
-                this.put("black", "30");
-                this.put("blue", "34");
-                this.put("cyan", "36");
-                this.put("green", "32");
-                this.put("magenta", "35");
-                this.put("red", "31");
-                this.put("yellow", "33");
-                this.put("white", "37");
-            }
-        };
+        MulticolorLayout.colorMap();
 
     /**
      * Colors of levels.
      */
     private final transient ConcurrentMap<String, String> levels =
-        new ConcurrentHashMap<String, String>() {
-            private static final long serialVersionUID = 0x7526FF78EEDFC465L;
-            {
-                this.put(Level.TRACE.toString(), "2;33");
-                this.put(Level.DEBUG.toString(), "2;37");
-                this.put(Level.INFO.toString(), "0;37");
-                this.put(Level.WARN.toString(), "0;33");
-                this.put(Level.ERROR.toString(), "0;31");
-                this.put(Level.FATAL.toString(), "0;35");
-            }
-        };
+        MulticolorLayout.levelMap();
 
     /**
      * Store original conversation pattern to be able
@@ -242,6 +220,40 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
             ansi = meta;
         }
         return ansi;
+    }
+
+    /**
+     * Color map.
+     * @return Map of colors
+     */
+    private static ConcurrentMap<String, String> colorMap() {
+        final ConcurrentMap<String, String> map =
+            new ConcurrentHashMap<String, String>();
+        map.put("black", "30");
+        map.put("blue", "34");
+        map.put("cyan", "36");
+        map.put("green", "32");
+        map.put("magenta", "35");
+        map.put("red", "31");
+        map.put("yellow", "33");
+        map.put("white", "37");
+        return map;
+    }
+
+    /**
+     * Level map.
+     * @return Map of levels
+     */
+    private static ConcurrentMap<String, String> levelMap() {
+        final ConcurrentMap<String, String> map =
+            new ConcurrentHashMap<String, String>();
+        map.put(Level.TRACE.toString(), "2;33");
+        map.put(Level.DEBUG.toString(), "2;37");
+        map.put(Level.INFO.toString(), "0;37");
+        map.put(Level.WARN.toString(), "0;33");
+        map.put(Level.ERROR.toString(), "0;31");
+        map.put(Level.FATAL.toString(), "0;35");
+        return map;
     }
 
 }
