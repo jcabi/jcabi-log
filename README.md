@@ -21,7 +21,7 @@ You need just this dependency:
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-log</artifactId>
-  <version>0.12.1</version>
+  <version>0.12.2</version>
 </dependency>
 ```
 
