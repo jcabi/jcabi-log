@@ -51,6 +51,14 @@ import lombok.EqualsAndHashCode;
 final class PreFormatter {
 
     /**
+     * Pattern used for matching format string arguments.
+     */
+    private static final Pattern PATTERN = Pattern.compile(
+        // @checkstyle LineLength (1 line)
+        "%(?:\\d+\\$)?(\\[([A-Za-z\\-\\.0-9]+)\\])?[\\+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
+    );
+
+    /**
      * The formatting string.
      */
     private transient String format;
@@ -93,11 +101,7 @@ final class PreFormatter {
     private void process(final String fmt, final Object[] args) {
         this.arguments = new CopyOnWriteArrayList<Object>();
         final StringBuffer buf = new StringBuffer();
-        final Pattern pattern = Pattern.compile(
-            // @checkstyle LineLength (1 line)
-            "%(?:\\d+\\$)?(\\[([A-Za-z\\-\\.0-9]+)\\])?[\\+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
-        );
-        final Matcher matcher = pattern.matcher(fmt);
+        final Matcher matcher = PATTERN.matcher(fmt);
         int pos = 0;
         while (matcher.find()) {
             final String decor = matcher.group(2);
@@ -116,11 +120,21 @@ final class PreFormatter {
                 );
                 try {
                     this.arguments.add(DecorsManager.decor(decor, args[pos]));
-                } catch (DecorException ex) {
+                } catch (final DecorException ex) {
                     this.arguments.add(String.format("[%s]", ex.getMessage()));
                 }
             }
             pos += 1;
+        }
+        if (pos < args.length) {
+            throw new IllegalArgumentException(
+                String.format(
+                    // @checkstyle LineLength (1 line)
+                    "There are %d parameter(s) but only %d format argument(s) were provided.",
+                    args.length,
+                    pos
+                )
+            );
         }
         matcher.appendTail(buf);
         this.format = buf.toString();
