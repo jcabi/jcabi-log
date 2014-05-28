@@ -222,7 +222,7 @@ public final class VerboseThreads implements ThreadFactory {
             try {
                 this.origin.run();
                 // @checkstyle IllegalCatch (1 line)
-            } catch (RuntimeException ex) {
+            } catch (final RuntimeException ex) {
                 Logger.warn(
                     this,
                     "%s: %[exception]s",
@@ -231,7 +231,7 @@ public final class VerboseThreads implements ThreadFactory {
                 );
                 throw ex;
                 // @checkstyle IllegalCatch (1 line)
-            } catch (Error error) {
+            } catch (final Error error) {
                 Logger.error(
                     this,
                     "%s (error): %[exception]s",

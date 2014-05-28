@@ -82,7 +82,7 @@ public final class SecretDecorTest extends AbstractDecorTest {
     }
 
     @Override
-    protected Formattable decor() {
+    public Formattable decor() {
         return new SecretDecor((String) this.object());
     }
 

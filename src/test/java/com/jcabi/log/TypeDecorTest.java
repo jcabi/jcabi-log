@@ -69,13 +69,13 @@ public final class TypeDecorTest extends AbstractDecorTest {
             new Object[][] {
                 {"testing", "java.lang.String", 0, 0, 0},
                 {null, "NULL", 0, 0, 0},
-                {1d, "java.lang.Double", 0, 0, 0},
+                {1.0d, "java.lang.Double", 0, 0, 0},
             }
         );
     }
 
     @Override
-    protected Formattable decor() {
+    public Formattable decor() {
         return new TypeDecor(this.object());
     }
 

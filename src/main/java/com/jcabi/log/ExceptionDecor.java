@@ -45,7 +45,7 @@ import lombok.ToString;
  * <pre>
  * try {
  *   // ...
- * } catch (IOException ex) {
+ * } catch (final IOException ex) {
  *   Logger.error("failed to open file: %[exception]s", ex);
  *   throw new IllegalArgumentException(ex);
  * }

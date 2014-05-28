@@ -75,7 +75,7 @@ public final class ListDecorTest extends AbstractDecorTest {
                 {new Long[] {2L, 1L}, "[\"2\", \"1\"]", 0, 0, 0},
                 {new Object[] {"b", "c"}, "[\"b\", \"c\"]", 0, 0, 0},
                 {new Object[] {"foo", 2L}, "[\"foo\", \"2\"]", 0, 0, 0},
-                {new ArrayList<String>(), "[]", 0, 0, 0},
+                {new ArrayList<String>(0), "[]", 0, 0, 0},
                 {Arrays.asList(new String[] {"x"}), "[\"x\"]", 0, 0, 0},
                 {Arrays.asList(new Long[] {1L, 2L}), "[\"1\", \"2\"]", 0, 0, 0},
             }
@@ -83,7 +83,7 @@ public final class ListDecorTest extends AbstractDecorTest {
     }
 
     @Override
-    protected Formattable decor() throws Exception {
+    public Formattable decor() throws Exception {
         return new ListDecor(this.object());
     }
 

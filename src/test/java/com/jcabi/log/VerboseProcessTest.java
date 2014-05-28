@@ -75,7 +75,7 @@ public final class VerboseProcessTest {
         try {
             process.stdout();
             Assert.fail("exception expected");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
                 Matchers.containsString("No such file or directory")

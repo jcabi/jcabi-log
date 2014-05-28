@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+import com.jcabi.aspects.Tv;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Formattable;
@@ -88,10 +89,10 @@ public final class TextDecorTest extends AbstractDecorTest {
         final int len = 1000;
         final String text = StringUtils.repeat('x', len);
         final Formattable fmt = new TextDecor(text);
-        final StringBuilder output = new StringBuilder();
+        final StringBuilder output = new StringBuilder(Tv.HUNDRED);
         fmt.formatTo(new Formatter(output), 0, 0, 0);
         MatcherAssert.assertThat(
-            output.toString().length(),
+            output.length(),
             Matchers.describedAs(
                 output.toString(),
                 Matchers.equalTo(TextDecor.MAX)
@@ -100,7 +101,7 @@ public final class TextDecorTest extends AbstractDecorTest {
     }
 
     @Override
-    protected Formattable decor() {
+    public Formattable decor() {
         return new TextDecor(this.object());
     }
 

@@ -191,6 +191,7 @@ public final class VerboseProcess {
      * @param check TRUE if we should check for non-zero exit code
      * @return Full {@code stdout} of the process
      */
+    @SuppressWarnings("PMD.PrematureDeclaration")
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
         final String stdout;
@@ -253,7 +254,7 @@ public final class VerboseProcess {
         }
         try {
             return stdout.toString("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
+        } catch (final UnsupportedEncodingException ex) {
             throw new IllegalStateException(ex);
         }
     }

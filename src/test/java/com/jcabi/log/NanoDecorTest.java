@@ -95,7 +95,7 @@ public final class NanoDecorTest extends AbstractDecorTest {
     }
 
     @Override
-    protected Formattable decor() {
+    public Formattable decor() {
         return new NanoDecor((Long) this.object());
     }
 

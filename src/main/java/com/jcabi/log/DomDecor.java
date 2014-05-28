@@ -101,9 +101,9 @@ final class DomDecor implements Formattable {
                     new DOMSource(this.node),
                     new StreamResult(writer)
                 );
-            } catch (TransformerConfigurationException ex) {
+            } catch (final TransformerConfigurationException ex) {
                 throw new IllegalStateException(ex);
-            } catch (TransformerException ex) {
+            } catch (final TransformerException ex) {
                 throw new IllegalStateException(ex);
             }
         }

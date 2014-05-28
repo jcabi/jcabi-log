@@ -91,21 +91,21 @@ final class DecorsManager {
         final Formattable decor;
         try {
             decor = (Formattable) DecorsManager.ctor(type).newInstance(arg);
-        } catch (InstantiationException ex) {
+        } catch (final InstantiationException ex) {
             throw new DecorException(
                 ex,
                 "Can't instantiate %s(%s)",
                 type.getName(),
                 arg.getClass().getName()
             );
-        } catch (IllegalAccessException ex) {
+        } catch (final IllegalAccessException ex) {
             throw new DecorException(
                 ex,
                 "Can't access %s(%s)",
                 type.getName(),
                 arg.getClass().getName()
             );
-        } catch (InvocationTargetException ex) {
+        } catch (final InvocationTargetException ex) {
             throw new DecorException(
                 ex,
                 "Can't invoke %s(%s)",
@@ -131,7 +131,7 @@ final class DecorsManager {
         } else {
             try {
                 type = (Class<Formattable>) Class.forName(key);
-            } catch (ClassNotFoundException ex) {
+            } catch (final ClassNotFoundException ex) {
                 throw new DecorException(
                     ex,
                     "Decor '%s' not found and class can't be instantiated",

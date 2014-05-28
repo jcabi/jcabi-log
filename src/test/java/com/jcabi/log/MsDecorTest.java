@@ -84,7 +84,7 @@ public final class MsDecorTest extends AbstractDecorTest {
     }
 
     @Override
-    protected Formattable decor() {
+    public Formattable decor() {
         return new MsDecor((Long) this.object());
     }
 
