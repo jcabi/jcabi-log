@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<!--
- * Copyright (c) 2012-2013, JCabi.com
- * All rights reserved.
- -->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>jcabi-log - Static Wrapper of SLF4J</title>
+        <link media="all" rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
         <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
                     <meta name="author" content="Yegor Bugayenko" />
                             <script>
@@ -24,19 +21,10 @@
 <link rel="shortcut icon" href="http://img.jcabi.com/favicon.ico"/>
                                                                                                                 
 <link rel="author" href="https://plus.google.com/u/0/114792568016408327418?rel=author"/>
-                                            <link rel="stylesheet" href="./css/highlight.css" />
-        <script src="./js/jquery-1.8.3.min.js"></script>
-        <script src="./js/highlight-7.3.min.js"></script>
-        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
-        <link href="./css/jcabi.css" rel="stylesheet"/>
+                                            <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
         <script>
             $(document).ready(
                 function() {
-                    $('div.source pre').each(
-                        function (idx, element) {
-                            hljs.highlightBlock(element);
-                        }
-                    );
                     $(".menu-button").click(
                         function() {
                             if ($("#here-goes-menu").attr("class") == "menu-off") {
@@ -53,41 +41,34 @@
         </script>
     </head>
     <body>
-                <div class="page">
-            <div class="menu-section">
-                <ul id="menu">
+                <section class="page" itemscope="" itemtype="http://schema.org/BlogPosting">
+            <nav class="menu-section" role="navigation">
+                <ul class="menu">
                                                                                     <li>
-                            Parent Project
-                                                            <ul>
-                                                                                                    <li>
-                                                                                    <a href="../www.jcabi.com/index.html" title="jcabi">jcabi</a>
-                                                                                                                                                                        <ul>
-                                                                    </ul>
-                                                    </li>
-                                                                                        </ul>
-                                                    </li>
-                                            <li>
                             Overview
                                                             <ul>
-                                                                                                    <li>
-                                                            <strong>                        <a href="index.html" title="Introduction">Introduction</a>
-        </strong>
+                                                                                                    <li  class='active' >
+                            <span>                        <a href="index.html" title="Introduction">Introduction</a>
+        </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
                                                     </li>
-                                                                                                                        <li>
-                                                                                    <a href="apidocs-0.12.2/index.html" title="API 0.12.2 (JavaDoc)">API 0.12.2 (JavaDoc)</a>
-                                                                                                                                                                        <ul>
+                                                                                                                        <li >
+                            <span>                        <a href="apidocs-0.12.3/index.html" title="JavaDoc 0.12.3">JavaDoc 0.12.3</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
-                                                                                                                        <li>
-                                                                                    <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
-                                                                                                                                                                        <ul>
+                                                                                                                        <li >
+                            <span>                        <a href="cobertura/index.html" title="Test coverage">Test coverage</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
-                                                                                                                        <li>
-                                                                                    <a href="changes-report.html" title="Release History">Release History</a>
-                                                                                                                                                                        <ul>
+                                                                                                                        <li >
+                            <span>                        <a href="https://github.com/jcabi/jcabi-log/releases" title="Release History">Release History</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
                                                                                         </ul>
@@ -95,14 +76,16 @@
                                             <li>
                             Logging
                                                             <ul>
-                                                                                                    <li>
-                                                                                    <a href="decors.html" title="Logging Decors">Logging Decors</a>
-                                                                                                                                                                        <ul>
+                                                                                                    <li >
+                            <span>                        <a href="decors.html" title="Logging Decors">Logging Decors</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
-                                                                                                                        <li>
-                                                                                    <a href="multicolor.html" title="Multicolor Layout for LOG4J">Multicolor Layout for LOG4J</a>
-                                                                                                                                                                        <ul>
+                                                                                                                        <li >
+                            <span>                        <a href="multicolor.html" title="Multicolor Layout for LOG4J">Multicolor Layout for LOG4J</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
                                                                                         </ul>
@@ -110,19 +93,22 @@
                                             <li>
                             Verbose Threads
                                                             <ul>
-                                                                                                    <li>
-                                                                                    <a href="threads-VerboseThreads.html" title="VerboseThreads">VerboseThreads</a>
-                                                                                                                                                                        <ul>
+                                                                                                    <li >
+                            <span>                        <a href="threads-VerboseThreads.html" title="VerboseThreads">VerboseThreads</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
-                                                                                                                        <li>
-                                                                                    <a href="threads-VerboseRunnable.html" title="VerboseRunnable">VerboseRunnable</a>
-                                                                                                                                                                        <ul>
+                                                                                                                        <li >
+                            <span>                        <a href="threads-VerboseRunnable.html" title="VerboseRunnable">VerboseRunnable</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
-                                                                                                                        <li>
-                                                                                    <a href="threads-VerboseProcess.html" title="VerboseProcess">VerboseProcess</a>
-                                                                                                                                                                        <ul>
+                                                                                                                        <li >
+                            <span>                        <a href="threads-VerboseProcess.html" title="VerboseProcess">VerboseProcess</a>
+        </span>
+                                                                                                                                                                <ul>
                                                                     </ul>
                                                     </li>
                                                                                         </ul>
@@ -130,61 +116,55 @@
                                             <li>
                             Project Documentation
                                                             <ul>
-                                                                                                    <li>
-                                                                                    <a href="project-info.html" title="Project Information">Project Information</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
-                                                                                                                        <li>
-                                                                                    <a href="project-reports.html" title="Project Reports">Project Reports</a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                                    <li >
+                            <span>                        <a href="project-info.html" title="Project Information">Project Information</a>
+        </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="project-reports.html" title="Project Reports">Project Reports</a>
+        </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
                                                                                         </ul>
                                                     </li>
                                     </ul>
-            </div>
-            <div id="right-side">
-                <div id="content">
-                    <i class="menu-button fa fa-align-justify"></i>
-                    <div class="logo-section">
-                        <a href="../" title="${decoration.bannerLeft.title}">
-                            <img src="http://img.jcabi.com/logo.png"
-                                alt="jcabi"
-                                                                    width="200"
-                                                                                                    height="48"
-                                                            />
-                        </a>
-                    </div>
-                    <div class="date">
-                        <div class="date-numbers">
-                            <strong>0.12.2</strong>
-                            
-                            09-Mar-2014
-                        </div>
-                                                                            <div class="github">
-                                <iframe
-                                    class="github-large"
-                                    src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-log&amp;type=watch&amp;count=true&amp;size=large"
-                                    allowtransparency="true"
-                                    frameborder="0"
-                                    scrolling="0"
-                                    width="170"
-                                    height="30">
-                                </iframe>
-                                <iframe
-                                    class="github-small"
-                                    src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-log&amp;type=watch&amp;count=true&amp;size=small"
-                                    allowtransparency="true"
-                                    frameborder="0"
-                                    scrolling="0"
-                                    width="170"
-                                    height="30">
-                                </iframe>
+            </nav>
+            <div class="right-side">
+                <main role="main">
+                    <div class="content">
+                        <header>
+                            <i class="menu-button fa fa-align-justify"></i>
+                            <div class="logo">
+                                <a href="../"
+                                    title=" logo ">
+                                    <img src="http://img.jcabi.com/logo-square.png"
+                                        alt="jcabi"
+                                                                                    width="64"
+                                                                                                                            height="64"
+                                                                                itemprop="image"
+                                    />
+                                </a>
                             </div>
-                                            </div>
-                    <div id="here-goes-menu" class="menu-off"></div>
-                    <article>
-                        <div class="section">
-                            <!--  --><!-- Copyright (c) 2012-2013, JCabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
+                            <div class="date">
+                                <div class="date-numbers">
+                                    <strong itemprop="version">0.12.3</strong>
+                                    
+                                    <time itemprop="datePublished" datetime="2014-05-28T04:29:16Z">
+                                        
+                                        28-May-2014
+                                    </time>
+                                </div>
+                                                                                                    <div>
+                                        <iframe src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-log&amp;type=watch&amp;count=true&amp;size=large"
+                                            style="border-width:0px;overflow:hidden;width:170px;height:30px;">
+                                        </iframe>
+                                    </div>
+                                                            </div>
+                            <div id="here-goes-menu" class="menu-off"></div>
+                        </header>
+                        <article role="article" itemprop="articleBody">
+                            <!--  --><!-- Copyright (c) 2012-2014, jcabi.com --><!-- All rights reserved. --><!--  --><!-- Redistribution and use in source and binary forms, with or without --><!-- modification, are permitted provided that the following conditions --><!-- are met: 1) Redistributions of source code must retain the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer. 2) Redistributions in binary form must reproduce the above --><!-- copyright notice, this list of conditions and the following --><!-- disclaimer in the documentation and/or other materials provided --><!-- with the distribution. 3) Neither the name of the jcabi.com nor --><!-- the names of its contributors may be used to endorse or promote --><!-- products derived from this software without specific prior written --><!-- permission. --><!--  --><!-- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS --><!-- "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT --><!-- NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND --><!-- FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL --><!-- THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, --><!-- INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES --><!-- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR --><!-- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) --><!-- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, --><!-- STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) --><!-- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED --><!-- OF THE POSSIBILITY OF SUCH DAMAGE. --><!--  --><div class="section">
 <h2>Static Wrapper of SLF4J<a name="Static_Wrapper_of_SLF4J"></a></h2>
-<p><a href="./apidocs-0.12.2/com/jcabi/log/Logger.html"><tt>Logger</tt></a> is a convenient static wrapper of <a class="externalLink" href="http://www.slf4j.org/">slf4j</a> (don't forget to include one of <a class="externalLink" href="http://www.slf4j.org/manual.html#binding">SLF4J Bindings</a> into the project):</p>
+<p><a href="./apidocs-0.12.3/com/jcabi/log/Logger.html"><tt>Logger</tt></a> is a convenient static wrapper of <a class="externalLink" href="http://www.slf4j.org/">slf4j</a> (don't forget to include one of <a class="externalLink" href="http://www.slf4j.org/manual.html#binding">SLF4J Bindings</a> into the project):</p>
 <div class="source">
 <pre>import com.jcabi.log.Logger;
 class Foo {
@@ -195,15 +175,15 @@ class Foo {
 <p>Read also about log <a href="./decors.html">decors</a> and a convenient AOP annotation <a href="../jcabi-aspects/annotation-loggable.html"><tt>@Loggable</tt></a> from <a href="../jcabi-aspects/index.html">jcabi-aspects</a>.</p>
 <p>There are a few other convenient classes in this package:</p>
 <ul>
-<li><a href="./apidocs-0.12.2/com/jcabi/log/VerboseRunnable.html"><tt>VerboseRunnable</tt></a>: wrapper around <tt>java.lang.Runnable</tt> that swallows all runtime exceptions and logs them to SLF4J.</li>
-<li><a href="./apidocs-0.12.2/com/jcabi/log/VerboseProcess.html"><tt>VerboseProcess</tt></a>: wrapper around <tt>java.lang.Process</tt> that monitors process executions, collects its output into a <tt>String</tt> and logs everything through SLF4J.</li>
-<li><a href="./apidocs-0.12.2/com/jcabi/log/VerboseThreads.html"><tt>VerboseThreads</tt></a>: an implementation of <tt>java.util.concurrent.ThreadFactory</tt> that instantiates threads that log all runtime exceptions through SLF4J.</li></ul>
-<p>The only dependency you need is (you can also download <a class="externalLink" href="http://repo1.maven.org/maven2/com/jcabi/jcabi-log/0.12.2/jcabi-log-0.12.2.jar"><tt>jcabi-log-0.12.2.jar</tt></a> and add it to the classpath):</p>
+<li><a href="./apidocs-0.12.3/com/jcabi/log/VerboseRunnable.html"><tt>VerboseRunnable</tt></a>: wrapper around <tt>java.lang.Runnable</tt> that swallows all runtime exceptions and logs them to SLF4J.</li>
+<li><a href="./apidocs-0.12.3/com/jcabi/log/VerboseProcess.html"><tt>VerboseProcess</tt></a>: wrapper around <tt>java.lang.Process</tt> that monitors process executions, collects its output into a <tt>String</tt> and logs everything through SLF4J.</li>
+<li><a href="./apidocs-0.12.3/com/jcabi/log/VerboseThreads.html"><tt>VerboseThreads</tt></a>: an implementation of <tt>java.util.concurrent.ThreadFactory</tt> that instantiates threads that log all runtime exceptions through SLF4J.</li></ul>
+<p>The only dependency you need is (you can also download <a class="externalLink" href="http://repo1.maven.org/maven2/com/jcabi/jcabi-log/0.12.3/jcabi-log-0.12.3.jar"><tt>jcabi-log-0.12.3.jar</tt></a> and add it to the classpath):</p>
 <div class="source">
 <pre>&lt;dependency&gt;
   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
   &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
-  &lt;version&gt;0.12.2&lt;/version&gt;
+  &lt;version&gt;0.12.3&lt;/version&gt;
 &lt;/dependency&gt;</pre></div>
 <div class="section">
 <h3>Cutting Edge Version<a name="Cutting_Edge_Version"></a></h3>
@@ -222,22 +202,19 @@ class Foo {
     &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
   &lt;/dependency&gt;
 &lt;/dependencies&gt;</pre></div></div></div>
-                        </div>
-                    </article>
-                    <img class="maven-mobile" src="./images/built-by-maven.png"
-                        alt="built by maven" style="float:right" width="80"/>
-                </div>
-                <div class="legal-notes">
-                    <div class="copyright">
+                            <img class="maven-logo" src="//img.jcabi.com/built-by-maven.png" alt="built by maven"/>
+                        </article>
+                    </div>
+                </main>
+                <footer class="legal-notes">
+                    <div>
                         Copyright &#169;
                                                                             2012-2014
-                                                <br/>
-                        jcabi.com, All Rights Reserved.
-                        <br/>
-                        <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
-                    </div>
-                </div>
+                                            </div>
+                    <div>jcabi.com, All Rights Reserved.</div>
+                    <div><a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.</div>
+                </footer>
             </div>
-        </div>
+        </section>
     </body>
 </html>
