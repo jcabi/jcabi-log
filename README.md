@@ -1,6 +1,7 @@
 <img src="http://img.jcabi.com/logo-square.png" width="64px" height="64px" />
- 
+
 [![Build Status](https://travis-ci.org/jcabi/jcabi-log.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-log)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log)
 
 More details are here: [log.jcabi.com](http://log.jcabi.com/index.html)
 
@@ -15,16 +16,6 @@ class Foo {
     Logger.debug(this, "method #bar(%d) was called", value);
   }
 }
-```
-
-You need just this dependency:
-
-```xml
-<dependency>
-  <groupId>com.jcabi</groupId>
-  <artifactId>jcabi-log</artifactId>
-  <version>0.12.2</version>
-</dependency>
 ```
 
 ## Questions?
