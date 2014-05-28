@@ -55,8 +55,8 @@ class Foo {
 
   Read also about log {{{./decors.html}decors}} and a convenient
   AOP annotation
-  {{{../jcabi-aspects/annotation-loggable.html}<<<@Loggable>>>}} from
-  {{{../jcabi-aspects/index.html}jcabi-aspects}}.
+  {{{http://aspects.jcabi.com/annotation-loggable.html}<<<@Loggable>>>}} from
+  {{{http://aspects.jcabi.com/index.html}jcabi-aspects}}.
 
   There are a few other convenient classes in this package:
 

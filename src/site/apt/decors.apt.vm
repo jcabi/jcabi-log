@@ -80,7 +80,8 @@ class Foo {
 
    * <<<type>>> -- type name of the object.
 
-  In order to use your own decor just implement <<<java.util.Formattable>>>:
+  In order to use your own decor just implement
+  {{{<<<java.util.Formattable>>>}http://docs.oracle.com/javase/7/docs/api/java/util/Formattable.html}}:
 
 +--
 import com.jcabi.log.Decor;
