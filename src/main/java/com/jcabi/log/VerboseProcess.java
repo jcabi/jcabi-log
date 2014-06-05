@@ -176,7 +176,6 @@ public final class VerboseProcess {
      * @return Process started
      */
     private static Process start(@NotNull final ProcessBuilder builder) {
-        builder.redirectErrorStream(true);
         try {
             final Process process = builder.start();
             process.getOutputStream().close();
