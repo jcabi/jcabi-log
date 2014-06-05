@@ -60,7 +60,7 @@ public final class VerboseProcessTest {
     public void runsACommandLineScript() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("echo", "hey \u20ac!")
+            new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
         );
         MatcherAssert.assertThat(
             process.stdout(),
