@@ -77,6 +77,7 @@ public final class VerboseProcessTest {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
+                .redirectErrorStream(true)
         );
         try {
             process.stdout();
