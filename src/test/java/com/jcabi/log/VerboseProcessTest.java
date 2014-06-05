@@ -164,7 +164,9 @@ public final class VerboseProcessTest {
         if (SystemUtils.IS_OS_WINDOWS) {
             builder = new ProcessBuilder("cmd", "/c", "echo", message, "1>&2");
         } else {
-            builder = new ProcessBuilder("echo", message, "1>&2");
+            builder = new ProcessBuilder(
+                "echo", String.format("%s 1>&2", message)
+            );
         }
         final VerboseProcess process = new VerboseProcess(
             builder, Level.OFF, Level.ALL
