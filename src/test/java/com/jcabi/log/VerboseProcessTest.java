@@ -165,7 +165,7 @@ public final class VerboseProcessTest {
             builder = new ProcessBuilder("cmd", "/c", "echo", message, "1>&2");
         } else {
             builder = new ProcessBuilder(
-                "echo", String.format("%s 1>&2", message)
+                "cat", String.format("/non-existing-file-%s ", message)
             );
         }
         final VerboseProcess process = new VerboseProcess(
