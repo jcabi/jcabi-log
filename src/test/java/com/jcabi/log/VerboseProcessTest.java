@@ -29,10 +29,14 @@
  */
 package com.jcabi.log;
 
+import java.io.StringWriter;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.log4j.SimpleLayout;
+import org.apache.log4j.WriterAppender;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -43,6 +47,8 @@ import org.junit.Test;
  * Test case for {@link VerboseProcess}.
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
+ * @checkstyle MultipleStringLiterals (200 lines)
+ * @checkstyle ClassDataAbstractionCoupling (200 lines)
  */
 public final class VerboseProcessTest {
 
@@ -54,7 +60,7 @@ public final class VerboseProcessTest {
     public void runsACommandLineScript() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("echo", "hey \u20ac!")
+            new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
         );
         MatcherAssert.assertThat(
             process.stdout(),
@@ -71,6 +77,7 @@ public final class VerboseProcessTest {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
+                .redirectErrorStream(true)
         );
         try {
             process.stdout();
@@ -91,7 +98,6 @@ public final class VerboseProcessTest {
     public void handlesLongRunningCommand() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
-            // @checkstyle MultipleStringLiterals (1 line)
             new ProcessBuilder("sleep", "2")
         );
         MatcherAssert.assertThat(
@@ -140,6 +146,35 @@ public final class VerboseProcessTest {
         MatcherAssert.assertThat(
             done.await(1, TimeUnit.MINUTES),
             Matchers.is(true)
+        );
+    }
+
+    /**
+     * VerboseProcess.stdoutQuietly() should log stderr messages.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void stdoutQuietlyLogsErrors() throws Exception {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        final ProcessBuilder builder;
+        final String message = "hello";
+        if (SystemUtils.IS_OS_WINDOWS) {
+            builder = new ProcessBuilder("cmd", "/c", "echo", message, "1>&2");
+        } else {
+            builder = new ProcessBuilder(
+                "cat", String.format("/non-existing-file-%s ", message)
+            );
+        }
+        final VerboseProcess process = new VerboseProcess(
+            builder, Level.OFF, Level.ALL
+        );
+        process.stdoutQuietly();
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.containsString(message)
         );
     }
 
