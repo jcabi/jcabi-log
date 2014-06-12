@@ -352,17 +352,17 @@
 <a class="jxr_linenumber" name="L344" href="#L344">344</a>                     writer.write(line);
 <a class="jxr_linenumber" name="L345" href="#L345">345</a>                     writer.newLine();
 <a class="jxr_linenumber" name="L346" href="#L346">346</a>                 }
-<a class="jxr_linenumber" name="L347" href="#L347">347</a>                 <strong class="jxr_keyword">this</strong>.done.countDown();
-<a class="jxr_linenumber" name="L348" href="#L348">348</a>             } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L349" href="#L349">349</a>                 <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L350" href="#L350">350</a>                     reader.close();
-<a class="jxr_linenumber" name="L351" href="#L351">351</a>                     writer.close();
-<a class="jxr_linenumber" name="L352" href="#L352">352</a>                 } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException ex) {
-<a class="jxr_linenumber" name="L353" href="#L353">353</a>                     Logger.error(
-<a class="jxr_linenumber" name="L354" href="#L354">354</a>                         <strong class="jxr_keyword">this</strong>,
-<a class="jxr_linenumber" name="L355" href="#L355">355</a>                         <span class="jxr_string">"failed to close reader: %[exception]s"</span>, ex
-<a class="jxr_linenumber" name="L356" href="#L356">356</a>                     );
-<a class="jxr_linenumber" name="L357" href="#L357">357</a>                 }
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>             } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>                 <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L349" href="#L349">349</a>                     reader.close();
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>                     writer.close();
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>                 } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException ex) {
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>                     Logger.error(
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>                         <strong class="jxr_keyword">this</strong>,
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>                         <span class="jxr_string">"failed to close reader: %[exception]s"</span>, ex
+<a class="jxr_linenumber" name="L355" href="#L355">355</a>                     );
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>                 }
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>                 <strong class="jxr_keyword">this</strong>.done.countDown();
 <a class="jxr_linenumber" name="L358" href="#L358">358</a>             }
 <a class="jxr_linenumber" name="L359" href="#L359">359</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L360" href="#L360">360</a>         }
