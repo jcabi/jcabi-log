@@ -32,6 +32,7 @@ package com.jcabi.log;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.logging.Level;
+import org.apache.log4j.LogManager;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -121,6 +122,22 @@ public final class LoggerTest {
     @Test(expected = IllegalArgumentException.class)
     public void throwsWhenParamsMoreThanFormatArgs() {
         Logger.format("String %s Number %d Char %c", "hey", 1, 'x', 2);
+    }
+
+    /**
+     * Logger can correctly check the current logging level.
+     */
+    @Test
+    public void checksLogLevel() {
+        LogManager.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
+        MatcherAssert.assertThat(
+            Logger.isEnabled(Level.INFO, LogManager.getRootLogger()),
+            Matchers.is(true)
+        );
+        MatcherAssert.assertThat(
+            Logger.isEnabled(Level.FINEST, LogManager.getRootLogger()),
+            Matchers.is(false)
+        );
     }
 
 }

@@ -285,6 +285,29 @@ public final class Logger {
     }
 
     /**
+     * Is the given logging level enabled?
+     * @param level The level of logging
+     * @param source The source of the logging operation
+     * @return Is it enabled?
+     * @since 0.13
+     */
+    public static boolean isEnabled(final Level level, final Object source) {
+        boolean enabled = false;
+        if (level.equals(Level.SEVERE)) {
+            enabled = Logger.logger(source).isErrorEnabled();
+        } else if (level.equals(Level.WARNING)) {
+            enabled = Logger.logger(source).isWarnEnabled();
+        } else if (level.equals(Level.INFO) || level.equals(Level.CONFIG)) {
+            enabled = Logger.logger(source).isInfoEnabled();
+        } else if (level.equals(Level.FINE) || level.equals(Level.ALL)) {
+            enabled = Logger.logger(source).isDebugEnabled();
+        } else if (level.equals(Level.FINER) || level.equals(Level.FINEST)) {
+            enabled = Logger.logger(source).isTraceEnabled();
+        }
+        return enabled;
+    }
+
+    /**
      * Log one line using the logging level specified.
      * @param level The level of logging
      * @param source The source of the logging operation
