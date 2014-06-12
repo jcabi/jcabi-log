@@ -33,7 +33,6 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -319,12 +318,7 @@ public final class VerboseProcess {
         }
         @Override
         public Void call() throws Exception {
-            final Scanner reader = new Scanner(
-                new InputStreamReader(
-                    this.input,
-                    Charset.forName(CharEncoding.UTF_8)
-                )
-            );
+            final Scanner scanner = new Scanner(this.input, CharEncoding.UTF_8);
             final BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(
                     this.output,
@@ -332,8 +326,8 @@ public final class VerboseProcess {
                 )
             );
             try {
-                while (reader.hasNextLine()) {
-                    final String line = reader.nextLine();
+                while (scanner.hasNextLine()) {
+                    final String line = scanner.nextLine();
                     Logger.log(
                         this.level, VerboseProcess.class,
                         ">> %s", line
@@ -344,7 +338,7 @@ public final class VerboseProcess {
                 this.done.countDown();
             } finally {
                 try {
-                    reader.close();
+                    scanner.close();
                     writer.close();
                 } catch (final IOException ex) {
                     Logger.error(
@@ -356,5 +350,4 @@ public final class VerboseProcess {
             return null;
         }
     }
-
 }
