@@ -29,7 +29,6 @@
  */
 package com.jcabi.log;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -39,6 +38,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -319,7 +319,7 @@ public final class VerboseProcess {
         }
         @Override
         public Void call() throws Exception {
-            final BufferedReader reader = new BufferedReader(
+            final Scanner reader = new Scanner(
                 new InputStreamReader(
                     this.input,
                     Charset.forName(CharEncoding.UTF_8)
@@ -332,11 +332,8 @@ public final class VerboseProcess {
                 )
             );
             try {
-                while (true) {
-                    final String line = reader.readLine();
-                    if (line == null) {
-                        break;
-                    }
+                while (reader.hasNextLine()) {
+                    final String line = reader.nextLine();
                     Logger.log(
                         this.level, VerboseProcess.class,
                         ">> %s", line
