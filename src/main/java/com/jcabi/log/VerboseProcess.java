@@ -344,7 +344,6 @@ public final class VerboseProcess {
                     writer.write(line);
                     writer.newLine();
                 }
-                this.done.countDown();
             } finally {
                 try {
                     reader.close();
@@ -355,6 +354,7 @@ public final class VerboseProcess {
                         "failed to close reader: %[exception]s", ex
                     );
                 }
+                this.done.countDown();
             }
             return null;
         }
