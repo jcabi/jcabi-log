@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+import com.jcabi.aspects.Tv;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -246,7 +247,7 @@ public final class VerboseProcess {
             Logger.debug(
                 this, "#waitFor(): process finished : %s", this.process
             );
-            if (!done.await(2L, TimeUnit.SECONDS)) {
+            if (!done.await(Tv.TEN, TimeUnit.SECONDS)) {
                 Logger.error(this, "#wait() failed");
             }
         }
