@@ -29,16 +29,16 @@
  */
 package com.jcabi.log;
 
-import java.io.BufferedReader;
+import com.jcabi.aspects.Tv;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -247,7 +247,7 @@ public final class VerboseProcess {
             Logger.debug(
                 this, "#waitFor(): process finished : %s", this.process
             );
-            if (!done.await(2L, TimeUnit.SECONDS)) {
+            if (!done.await(Tv.TEN, TimeUnit.SECONDS)) {
                 Logger.error(this, "#wait() failed");
             }
         }
@@ -319,12 +319,7 @@ public final class VerboseProcess {
         }
         @Override
         public Void call() throws Exception {
-            final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                    this.input,
-                    Charset.forName(CharEncoding.UTF_8)
-                )
-            );
+            final Scanner scanner = new Scanner(this.input, CharEncoding.UTF_8);
             final BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(
                     this.output,
@@ -332,11 +327,8 @@ public final class VerboseProcess {
                 )
             );
             try {
-                while (true) {
-                    final String line = reader.readLine();
-                    if (line == null) {
-                        break;
-                    }
+                while (scanner.hasNextLine()) {
+                    final String line = scanner.nextLine();
                     Logger.log(
                         this.level, VerboseProcess.class,
                         ">> %s", line
@@ -347,7 +339,7 @@ public final class VerboseProcess {
                 this.done.countDown();
             } finally {
                 try {
-                    reader.close();
+                    scanner.close();
                     writer.close();
                 } catch (final IOException ex) {
                     Logger.error(
@@ -359,5 +351,4 @@ public final class VerboseProcess {
             return null;
         }
     }
-
 }
