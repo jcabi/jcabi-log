@@ -74,10 +74,17 @@ public final class VerboseProcessTest {
      */
     @Test
     public void runsACommandLineScriptWithException() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final ProcessBuilder builder;
+        final String message;
+        if (SystemUtils.IS_OS_WINDOWS) {
+            builder = new ProcessBuilder("cmd", "/c", "type non-existing.txt");
+            message = "The system cannot find the file specified";
+        } else {
+            builder = new ProcessBuilder("cat", "/non-existing-file.txt");
+            message = "No such file or directory";
+        }
         final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("cat", "/non-existing-file.txt")
-                .redirectErrorStream(true)
+            builder.redirectErrorStream(true), Level.ALL, Level.ALL
         );
         try {
             process.stdout();
@@ -85,7 +92,7 @@ public final class VerboseProcessTest {
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
-                Matchers.containsString("No such file or directory")
+                Matchers.containsString(message)
             );
         }
     }
