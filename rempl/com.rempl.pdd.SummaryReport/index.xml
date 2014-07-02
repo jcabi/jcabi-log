@@ -3,46 +3,41 @@
 <puzzle>
 <ticket>143</ticket>
 <file>src/main/java/com/jcabi/log/DecorsManager.java</file>
-<prefix> * </prefix>
 <body>The class has to be @Immutable, but with ConcurrentMap it's impossible to do. Let's refactor.</body>
+<role>IMP</role>
 <estimate>0</estimate>
 <lines>47-48</lines>
-<owner>someone</owner>
 </puzzle>
 <puzzle>
 <ticket>143</ticket>
 <file>src/main/java/com/jcabi/log/PreFormatter.java</file>
-<prefix> * </prefix>
 <body>The class has to be annotated with @ToString, but we can't do it at the moment: https://code.google.com/p/projectlombok/issues/detail?id=457</body>
+<role>IMP</role>
 <estimate>0</estimate>
 <lines>46-48</lines>
-<owner>someone</owner>
 </puzzle>
 <puzzle>
 <ticket>26</ticket>
 <file>src/test/java/com/jcabi/log/ObjectDecorTest.java</file>
-<prefix>     * </prefix>
 <body>The ObjectDecor class is not implemented yet, that's why the test is not enabled at the moment. You should uncomment the lines below and make sure the test passes.</body>
+<role>IMP</role>
 <estimate>0</estimate>
 <lines>66-68</lines>
-<owner>someone</owner>
 </puzzle>
 <puzzle>
 <ticket>26</ticket>
 <file>src/test/java/com/jcabi/log/SecretDecorTest.java</file>
-<prefix>     * </prefix>
 <body>The SecretDecor class is not implemented yet, that's why the test is not enabled at the moment. You should uncomment the lines below and make sure the test passes.</body>
+<role>IMP</role>
 <estimate>0</estimate>
 <lines>67-69</lines>
-<owner>someone</owner>
 </puzzle>
 <puzzle>
 <ticket>26</ticket>
 <file>src/test/java/com/jcabi/log/SizeDecorTest.java</file>
-<prefix>     * </prefix>
 <body>The SizeDecor class is not implemented yet, that's why the test is not enabled at the moment. You should uncomment the lines below and make sure the test passes.</body>
+<role>IMP</role>
 <estimate>0</estimate>
 <lines>66-68</lines>
-<owner>someone</owner>
 </puzzle>
 </puzzles>
