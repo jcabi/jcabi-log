@@ -5,6 +5,8 @@
 
 More details are here: [log.jcabi.com](http://log.jcabi.com/index.html)
 
+Read this blog post: [Get Rid of Java Static Loggers](http://www.yegor256.com/2014/05/23/avoid-java-static-logger.html)
+
 `Logger` is a convenient static wrapper of [slf4j](http://www.slf4j.org/)
 (don't forget to include one of [SLF4J Bindings](http://www.slf4j.org/manual.html#binding)
 into the project):
