@@ -29,7 +29,6 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Tv;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Formattable;
@@ -76,7 +75,8 @@ public final class TextDecorTest extends AbstractDecorTest {
                 // @checkstyle MultipleStringLiterals (1 line)
                 {"simple text", "simple text", 0, 0, 0},
                 {null, "NULL", 0, 0, 0},
-                {"\u0433!", "\\u0433!", 0, 0, 0},
+                // @checkstyle MultipleStringLiteralsCheck (1 line)
+                {"\u0433!", "\u0433!", 0, 0, 0},
             }
         );
     }
@@ -89,7 +89,7 @@ public final class TextDecorTest extends AbstractDecorTest {
         final int len = 1000;
         final String text = StringUtils.repeat('x', len);
         final Formattable fmt = new TextDecor(text);
-        final StringBuilder output = new StringBuilder(Tv.HUNDRED);
+        final StringBuilder output = new StringBuilder(100);
         fmt.formatTo(new Formatter(output), 0, 0, 0);
         MatcherAssert.assertThat(
             output.length(),

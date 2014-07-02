@@ -29,7 +29,6 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Immutable;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -86,7 +85,6 @@ import org.slf4j.LoggerFactory;
  * @version $Id$
  * @since 0.1
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 @SuppressWarnings("PMD.TooManyMethods")

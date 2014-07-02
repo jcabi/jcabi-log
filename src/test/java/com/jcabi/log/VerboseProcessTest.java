@@ -33,7 +33,6 @@ import java.io.StringWriter;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
@@ -110,7 +109,7 @@ public final class VerboseProcessTest {
      * VerboseProcess can reject NULL.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = ConstraintViolationException.class)
+    @Test(expected = RuntimeException.class)
     public void rejectsNullProcesses() throws Exception {
         final ProcessBuilder builder = null;
         new VerboseProcess(builder);

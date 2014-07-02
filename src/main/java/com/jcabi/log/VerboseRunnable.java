@@ -30,7 +30,6 @@
 package com.jcabi.log;
 
 import java.util.concurrent.Callable;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -87,7 +86,7 @@ public final class VerboseRunnable implements Runnable {
      * Default constructor, doesn't swallow exceptions.
      * @param runnable Runnable to wrap
      */
-    public VerboseRunnable(@NotNull final Runnable runnable) {
+    public VerboseRunnable(final Runnable runnable) {
         this(runnable, false);
     }
 
@@ -96,7 +95,7 @@ public final class VerboseRunnable implements Runnable {
      * @param callable Callable to wrap
      * @since 0.7.17
      */
-    public VerboseRunnable(@NotNull final Callable<?> callable) {
+    public VerboseRunnable(final Callable<?> callable) {
         this(callable, false);
     }
 
@@ -110,7 +109,7 @@ public final class VerboseRunnable implements Runnable {
      *  using {@link Logger}.
      * @since 0.1.10
      */
-    public VerboseRunnable(@NotNull final Callable<?> callable,
+    public VerboseRunnable(final Callable<?> callable,
         final boolean swallowexceptions) {
         this(callable, swallowexceptions, true);
     }
@@ -129,7 +128,7 @@ public final class VerboseRunnable implements Runnable {
      * @since 0.7.17
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public VerboseRunnable(@NotNull final Callable<?> callable,
+    public VerboseRunnable(final Callable<?> callable,
         final boolean swallowexceptions, final boolean fullstacktrace) {
         this(
             new Runnable() {
@@ -162,7 +161,7 @@ public final class VerboseRunnable implements Runnable {
      *  using {@link Logger}.
      * @since 0.1.4
      */
-    public VerboseRunnable(@NotNull final Runnable runnable,
+    public VerboseRunnable(final Runnable runnable,
         final boolean swallowexceptions) {
         this(runnable, swallowexceptions, true);
     }
@@ -180,7 +179,7 @@ public final class VerboseRunnable implements Runnable {
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
      * @since 0.7.17
      */
-    public VerboseRunnable(@NotNull final Runnable runnable,
+    public VerboseRunnable(final Runnable runnable,
         final boolean swallowexceptions, final boolean fullstacktrace) {
         this.origin = runnable;
         this.swallow = swallowexceptions;

@@ -29,10 +29,8 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Loggable;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -128,7 +126,7 @@ public final class VerboseThreads implements ThreadFactory {
      * default thread priority is {@code 1}).
      * @param pfx Prefix for thread names
      */
-    public VerboseThreads(@NotNull final String pfx) {
+    public VerboseThreads(final String pfx) {
         this(pfx, true, 1);
     }
 
@@ -137,7 +135,7 @@ public final class VerboseThreads implements ThreadFactory {
      * default thread priority is {@code 1}).
      * @param type Prefix will be build from this type name
      */
-    public VerboseThreads(@NotNull final Object type) {
+    public VerboseThreads(final Object type) {
         this(type.getClass().getSimpleName(), true, 1);
     }
 
@@ -146,7 +144,7 @@ public final class VerboseThreads implements ThreadFactory {
      * default thread priority is {@code 1}).
      * @param type Prefix will be build from this type name
      */
-    public VerboseThreads(@NotNull final Class<?> type) {
+    public VerboseThreads(final Class<?> type) {
         this(type.getSimpleName(), true, 1);
     }
 
@@ -156,7 +154,7 @@ public final class VerboseThreads implements ThreadFactory {
      * @param dmn Threads should be daemons?
      * @param prt Default priority for all threads
      */
-    public VerboseThreads(@NotNull final String pfx, final boolean dmn,
+    public VerboseThreads(final String pfx, final boolean dmn,
         final int prt) {
         this.prefix = pfx;
         this.daemon = dmn;
@@ -165,7 +163,6 @@ public final class VerboseThreads implements ThreadFactory {
     }
 
     @Override
-    @Loggable(Loggable.DEBUG)
     public Thread newThread(final Runnable runnable) {
         final Thread thread = new Thread(
             this.group,

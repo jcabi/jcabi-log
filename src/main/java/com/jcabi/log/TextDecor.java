@@ -33,7 +33,6 @@ import java.util.Formattable;
 import java.util.Formatter;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * Decorator of a text.
@@ -66,7 +65,7 @@ final class TextDecor implements Formattable {
      * Public ctor.
      * @param obj The object
      */
-    public TextDecor(final Object obj) {
+    TextDecor(final Object obj) {
         this.object = obj;
     }
 
@@ -90,7 +89,7 @@ final class TextDecor implements Formattable {
      * @return The result
      */
     private static String pretty(final String text) {
-        String result;
+        final String result;
         if (text.length() < TextDecor.MAX) {
             result = text;
         } else {
@@ -106,7 +105,7 @@ final class TextDecor implements Formattable {
             );
             result = output.toString();
         }
-        return StringEscapeUtils.escapeJava(result);
+        return result.replace("\n", "\\n");
     }
 
 }

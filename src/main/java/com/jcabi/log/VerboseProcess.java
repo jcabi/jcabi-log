@@ -43,10 +43,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.lang3.CharEncoding;
 
 /**
  * Utility class for getting {@code stdout} from a running process
@@ -99,9 +97,7 @@ public final class VerboseProcess {
      * the {@code stdout} and will receive an empty {@code stdin}).
      * @param builder Process builder to work with
      */
-    public VerboseProcess(
-        @NotNull(message = "process builder can't be NULL")
-        final ProcessBuilder builder) {
+    public VerboseProcess(final ProcessBuilder builder) {
         this(VerboseProcess.start(builder));
     }
 
@@ -113,10 +109,17 @@ public final class VerboseProcess {
      * @param stderr Log level for stderr
      * @since 0.11
      */
-    public VerboseProcess(
-        @NotNull(message = "process can't be NULL") final Process prc,
-        @NotNull(message = "stdout level can't be NULL") final Level stdout,
-        @NotNull(message = "stderr level can't be NULL") final Level stderr) {
+    public VerboseProcess(final Process prc, final Level stdout,
+        final Level stderr) {
+        if (prc == null) {
+            throw new IllegalArgumentException("process can't be NULL");
+        }
+        if (stdout == null) {
+            throw new IllegalArgumentException("stdout LEVEL can't be NULL");
+        }
+        if (stderr == null) {
+            throw new IllegalArgumentException("stderr LEVEL can't be NULL");
+        }
         this.process = prc;
         this.olevel = stdout;
         this.elevel = stderr;
@@ -130,10 +133,8 @@ public final class VerboseProcess {
      * @param stderr Log level for stderr
      * @since 0.12
      */
-    public VerboseProcess(
-        @NotNull(message = "process can't be NULL") final ProcessBuilder bdr,
-        @NotNull(message = "stdout level can't be NULL") final Level stdout,
-        @NotNull(message = "stderr level can't be NULL") final Level stderr) {
+    public VerboseProcess(final ProcessBuilder bdr, final Level stdout,
+        final Level stderr) {
         this(VerboseProcess.start(bdr), stdout, stderr);
     }
 
@@ -175,7 +176,10 @@ public final class VerboseProcess {
      * @param builder Process builder to work with
      * @return Process started
      */
-    private static Process start(@NotNull final ProcessBuilder builder) {
+    private static Process start(final ProcessBuilder builder) {
+        if (builder == null) {
+            throw new IllegalArgumentException("builder can't be NULL");
+        }
         try {
             final Process process = builder.start();
             process.getOutputStream().close();
@@ -252,6 +256,7 @@ public final class VerboseProcess {
             }
         }
         try {
+            // @checkstyle MultipleStringLiteralsCheck (1 line)
             return stdout.toString("UTF-8");
         } catch (final UnsupportedEncodingException ex) {
             throw new IllegalStateException(ex);
@@ -319,17 +324,12 @@ public final class VerboseProcess {
         }
         @Override
         public Void call() throws Exception {
+            final Charset charset = Charset.forName("UTF-8");
             final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                    this.input,
-                    Charset.forName(CharEncoding.UTF_8)
-                )
+                new InputStreamReader(this.input, charset)
             );
             final BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(
-                    this.output,
-                    Charset.forName(CharEncoding.UTF_8)
-                )
+                new OutputStreamWriter(this.output, charset)
             );
             try {
                 while (true) {

@@ -29,8 +29,6 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Immutable;
-import com.jcabi.aspects.Tv;
 import java.util.Formattable;
 import java.util.FormattableFlags;
 import java.util.Formatter;
@@ -44,7 +42,6 @@ import lombok.ToString;
  * @version $Id$
  * @since 0.1
  */
-@Immutable
 @ToString
 @EqualsAndHashCode(of = "secret")
 final class SecretDecor implements Formattable {
@@ -67,17 +64,14 @@ final class SecretDecor implements Formattable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
         if (this.secret == null) {
             formatter.format("NULL");
         } else {
-            final StringBuilder fmt = new StringBuilder(Tv.TEN);
+            final StringBuilder fmt = new StringBuilder(10);
             fmt.append('%');
             if ((flags & FormattableFlags.LEFT_JUSTIFY) != 0) {
                 fmt.append('-');
@@ -103,7 +97,7 @@ final class SecretDecor implements Formattable {
      * @return The result
      */
     private static String scramble(final String text) {
-        final StringBuilder out = new StringBuilder(Tv.TEN);
+        final StringBuilder out = new StringBuilder(10);
         if (text.isEmpty()) {
             out.append('?');
         } else {

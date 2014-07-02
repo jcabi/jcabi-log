@@ -29,7 +29,6 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Immutable;
 import java.util.Formattable;
 import java.util.Formatter;
 import lombok.EqualsAndHashCode;
@@ -42,7 +41,6 @@ import lombok.ToString;
  * @version $Id$
  * @since 0.1
  */
-@Immutable
 @ToString
 @EqualsAndHashCode(of = "size")
 final class SizeDecor implements Formattable {
