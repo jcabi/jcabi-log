@@ -32,6 +32,7 @@ package com.jcabi.log;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -235,7 +236,7 @@ public final class VerboseProcess {
             this,
             "#waitFor(): waiting for stdout of %s in %s...",
             this.process,
-            this.monitor(
+            VerboseProcess.monitor(
                 this.process.getInputStream(),
                 done, stdout, this.olevel
             )
@@ -244,7 +245,7 @@ public final class VerboseProcess {
             this,
             "#waitFor(): waiting for stderr of %s in %s...",
             this.process,
-            this.monitor(
+            VerboseProcess.monitor(
                 this.process.getErrorStream(),
                 done, new ByteArrayOutputStream(), this.elevel
             )
@@ -273,10 +274,11 @@ public final class VerboseProcess {
      * @param output Buffer to write to
      * @param level Logging level
      * @return Thread which is monitoring
-     * @checkstyle ParameterNumber (5 lines)
+     * @checkstyle ParameterNumber (6 lines)
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
-    private Thread monitor(final InputStream input, final CountDownLatch done,
+    private static Thread monitor(final InputStream input,
+        final CountDownLatch done,
         final OutputStream output, final Level level) {
         final Thread thread = new Thread(
             new VerboseRunnable(
@@ -330,35 +332,47 @@ public final class VerboseProcess {
             final BufferedReader reader = new BufferedReader(
                 new InputStreamReader(this.input, VerboseProcess.UTF_8)
             );
-            final BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
-            );
             try {
-                while (true) {
-                    final String line = reader.readLine();
-                    if (line == null) {
-                        break;
+                final BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
+                );
+                try {
+                    while (true) {
+                        final String line = reader.readLine();
+                        if (line == null) {
+                            break;
+                        }
+                        Logger.log(
+                            this.level, VerboseProcess.class,
+                            ">> %s", line
+                        );
+                        writer.write(line);
+                        writer.newLine();
                     }
-                    Logger.log(
-                        this.level, VerboseProcess.class,
-                        ">> %s", line
-                    );
-                    writer.write(line);
-                    writer.newLine();
+                } finally {
+                    this.done.countDown();
+                    VerboseProcess.close(writer);
                 }
             } finally {
-                try {
-                    reader.close();
-                    writer.close();
-                } catch (final IOException ex) {
-                    Logger.error(
-                        this,
-                        "failed to close reader: %[exception]s", ex
-                    );
-                }
-                this.done.countDown();
+                VerboseProcess.close(reader);
             }
             return null;
+        }
+    }
+
+    /**
+     * Close quietly.
+     * @param res Resource to close
+     */
+    private static void close(final Closeable res) {
+        try {
+            res.close();
+        } catch (final IOException ex) {
+            Logger.error(
+                VerboseProcess.class,
+                "failed to close resource: %[exception]s",
+                ex
+            );
         }
     }
 
