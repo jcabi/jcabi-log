@@ -197,4 +197,29 @@ public final class VerboseRunnableTest {
         MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(false));
     }
 
+    /**
+     * VerboseRunnable can preserve interrupted status.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void preservesInterruptedStatus() throws Exception {
+        final Thread thread = new Thread(
+            new VerboseRunnable(
+                new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        TimeUnit.HOURS.sleep(1L);
+                        return null;
+                    }
+                },
+                false
+            )
+        );
+        thread.start();
+        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(false));
+        thread.interrupt();
+        thread.join();
+        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(true));
+    }
+
 }
