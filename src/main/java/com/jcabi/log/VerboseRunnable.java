@@ -49,11 +49,6 @@ import lombok.ToString;
  * Sometimes it's very important to swallow exceptions. Otherwise an entire
  * thread may get stuck (like in the example above).
  *
- * <p>Since version 0.7.16, besides just swallowing exceptions
- * the class also clears the interrupted status. That means that the thread
- * with the runnable can be interrupted but will never expose its interrupted
- * status.
- *
  * <p>This class is thread-safe.
  *
  * @author Yegor Bugayenko (yegor@tpc2.com)
@@ -63,7 +58,7 @@ import lombok.ToString;
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
 @ToString
-@EqualsAndHashCode(of = { "origin", "swallow" })
+@EqualsAndHashCode(of = { "origin", "rethrow", "verbose" })
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseRunnable implements Runnable {
 
@@ -73,9 +68,9 @@ public final class VerboseRunnable implements Runnable {
     private final transient Runnable origin;
 
     /**
-     * Swallow exceptions?
+     * Rethrow exceptions (TRUE) or swallow them?
      */
-    private final transient boolean swallow;
+    private final transient boolean rethrow;
 
     /**
      * Shall we report a full stacktrace?
@@ -102,34 +97,33 @@ public final class VerboseRunnable implements Runnable {
     /**
      * Default constructor, doesn't swallow exceptions.
      * @param callable Callable to wrap
-     * @param swallowexceptions Shall we swallow exceptions
+     * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
      *  using {@link Logger}.
      * @since 0.1.10
      */
-    public VerboseRunnable(final Callable<?> callable,
-        final boolean swallowexceptions) {
-        this(callable, swallowexceptions, true);
+    public VerboseRunnable(final Callable<?> callable, final boolean swallow) {
+        this(callable, swallow, true);
     }
 
     /**
      * Default constructor.
      * @param callable Callable to wrap
-     * @param swallowexceptions Shall we swallow exceptions
+     * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
      *  using {@link Logger}.
-     * @param fullstacktrace Shall we report the entire
+     * @param vrbs Shall we report the entire
      *  stacktrace of the exception
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
      * @since 0.7.17
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public VerboseRunnable(final Callable<?> callable,
-        final boolean swallowexceptions, final boolean fullstacktrace) {
+        final boolean swallow, final boolean vrbs) {
         this(
             new Runnable() {
                 @Override
@@ -138,7 +132,7 @@ public final class VerboseRunnable implements Runnable {
                         callable.call();
                     // @checkstyle IllegalCatch (1 line)
                     } catch (final Exception ex) {
-                        throw new IllegalArgumentException(ex);
+                        throw new IllegalStateException(ex);
                     }
                 }
                 @Override
@@ -146,44 +140,43 @@ public final class VerboseRunnable implements Runnable {
                     return callable.toString();
                 }
             },
-            swallowexceptions,
-            fullstacktrace
+            swallow,
+            vrbs
         );
     }
 
     /**
      * Default constructor, with configurable behavior for exceptions.
      * @param runnable Runnable to wrap
-     * @param swallowexceptions Shall we swallow exceptions
+     * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
      *  using {@link Logger}.
      * @since 0.1.4
      */
-    public VerboseRunnable(final Runnable runnable,
-        final boolean swallowexceptions) {
-        this(runnable, swallowexceptions, true);
+    public VerboseRunnable(final Runnable runnable, final boolean swallow) {
+        this(runnable, swallow, true);
     }
 
     /**
      * Default constructor, with fully configurable behavior.
      * @param runnable Runnable to wrap
-     * @param swallowexceptions Shall we swallow exceptions
+     * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
      *  using {@link Logger}.
-     * @param fullstacktrace Shall we report the entire
+     * @param vrbs Shall we report the entire
      *  stacktrace of the exception
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
      * @since 0.7.17
      */
     public VerboseRunnable(final Runnable runnable,
-        final boolean swallowexceptions, final boolean fullstacktrace) {
+        final boolean swallow, final boolean vrbs) {
         this.origin = runnable;
-        this.swallow = swallowexceptions;
-        this.verbose = fullstacktrace;
+        this.rethrow = !swallow;
+        this.verbose = vrbs;
     }
 
     /**
@@ -200,29 +193,18 @@ public final class VerboseRunnable implements Runnable {
             this.origin.run();
         // @checkstyle IllegalCatch (1 line)
         } catch (final RuntimeException ex) {
-            if (!this.swallow) {
+            if (this.rethrow) {
                 Logger.warn(this, "escalated exception: %s", this.tail(ex));
                 throw ex;
             }
             Logger.warn(this, "swallowed exception: %s", this.tail(ex));
         // @checkstyle IllegalCatch (1 line)
         } catch (final Error error) {
-            if (!this.swallow) {
+            if (this.rethrow) {
                 Logger.error(this, "escalated error: %s", this.tail(error));
                 throw error;
             }
             Logger.error(this, "swallowed error: %s", this.tail(error));
-        }
-        if (this.swallow) {
-            try {
-                Thread.sleep(1L);
-            } catch (final InterruptedException ex) {
-                Logger.debug(
-                    this,
-                    "interrupted status cleared of %s: %s",
-                    Thread.currentThread().getName(), ex
-                );
-            }
         }
     }
 

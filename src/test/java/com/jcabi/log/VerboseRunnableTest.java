@@ -30,7 +30,11 @@
 package com.jcabi.log;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -147,79 +151,44 @@ public final class VerboseRunnableTest {
     }
 
     /**
-     * VerboseRunnable can swallow interrupted exceptions.
-     * @throws Exception If something goes wrong
-     */
-    @Test
-    public void swallowsInterruptedExceptions() throws Exception {
-        final Thread thread = new Thread(
-            new VerboseRunnable(
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        TimeUnit.MINUTES.sleep(1);
-                        return null;
-                    }
-                },
-                true
-            )
-        );
-        thread.start();
-        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(false));
-        thread.interrupt();
-        thread.join();
-        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(false));
-    }
-
-    /**
-     * VerboseRunnable can swallow interrupted exceptions, with Runnable.
-     * @throws Exception If something goes wrong
-     */
-    @Test
-    public void swallowsInterruptedExceptionsWithRunnable() throws Exception {
-        final Thread thread = new Thread(
-            new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        while (!Thread.interrupted()) {
-                            assert true;
-                        }
-                    }
-                },
-                true
-            )
-        );
-        thread.start();
-        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(false));
-        thread.interrupt();
-        thread.join();
-        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(false));
-    }
-
-    /**
      * VerboseRunnable can preserve interrupted status.
      * @throws Exception If something goes wrong
+     * @since 0.14
      */
     @Test
     public void preservesInterruptedStatus() throws Exception {
-        final Thread thread = new Thread(
+        final ScheduledExecutorService svc =
+            Executors.newSingleThreadScheduledExecutor();
+        final AtomicReference<Thread> thread = new AtomicReference<Thread>();
+        final AtomicInteger runs = new AtomicInteger();
+        svc.scheduleWithFixedDelay(
             new VerboseRunnable(
                 new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
+                        runs.addAndGet(1);
+                        thread.set(Thread.currentThread());
                         TimeUnit.HOURS.sleep(1L);
                         return null;
                     }
                 },
+                true,
                 false
-            )
+            ),
+            1L, 1L,
+            TimeUnit.MICROSECONDS
         );
-        thread.start();
-        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(false));
-        thread.interrupt();
-        thread.join();
-        MatcherAssert.assertThat(thread.isInterrupted(), Matchers.is(true));
+        while (thread.get() == null) {
+            TimeUnit.MILLISECONDS.sleep(1L);
+        }
+        thread.get().interrupt();
+        TimeUnit.SECONDS.sleep(1L);
+        svc.shutdown();
+        MatcherAssert.assertThat(
+            svc.awaitTermination(1L, TimeUnit.SECONDS),
+            Matchers.is(true)
+        );
+        MatcherAssert.assertThat(runs.get(), Matchers.is(1));
     }
 
 }
