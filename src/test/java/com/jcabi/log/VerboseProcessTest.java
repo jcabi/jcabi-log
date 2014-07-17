@@ -68,6 +68,24 @@ public final class VerboseProcessTest {
     }
 
     /**
+     * VerboseProcess can run a command line script.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void echosUnicodeCorrectly() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        MatcherAssert.assertThat(
+            new VerboseProcess(
+                new ProcessBuilder(
+                    "/bin/bash", "-c",
+                    "echo -n тест | hexdump"
+                )
+            ).stdout(),
+            Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
+        );
+    }
+
+    /**
      * VerboseProcess can run a command line script with exception.
      * @throws Exception If something goes wrong
      */

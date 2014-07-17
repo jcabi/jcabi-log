@@ -254,7 +254,7 @@ public final class VerboseProcess {
             this.process.waitFor();
         } finally {
             Logger.debug(
-                this, "#waitFor(): process finished : %s", this.process
+                this, "#waitFor(): process finished: %s", this.process
             );
             if (!done.await(2L, TimeUnit.SECONDS)) {
                 Logger.error(this, "#wait() failed");
