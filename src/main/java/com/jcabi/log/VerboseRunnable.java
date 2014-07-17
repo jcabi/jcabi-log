@@ -30,6 +30,7 @@
 package com.jcabi.log;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -130,6 +131,9 @@ public final class VerboseRunnable implements Runnable {
                 public void run() {
                     try {
                         callable.call();
+                    } catch (final InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                        throw new IllegalStateException(ex);
                     // @checkstyle IllegalCatch (1 line)
                     } catch (final Exception ex) {
                         throw new IllegalStateException(ex);
@@ -205,6 +209,12 @@ public final class VerboseRunnable implements Runnable {
                 throw error;
             }
             Logger.error(this, "swallowed error: %s", this.tail(error));
+        }
+        try {
+            TimeUnit.MICROSECONDS.sleep(1L);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ex);
         }
     }
 
