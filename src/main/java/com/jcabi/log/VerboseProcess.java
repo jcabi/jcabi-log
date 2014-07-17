@@ -293,6 +293,22 @@ public final class VerboseProcess {
     }
 
     /**
+     * Close quietly.
+     * @param res Resource to close
+     */
+    private static void close(final Closeable res) {
+        try {
+            res.close();
+        } catch (final IOException ex) {
+            Logger.error(
+                VerboseProcess.class,
+                "failed to close resource: %[exception]s",
+                ex
+            );
+        }
+    }
+
+    /**
      * Stream monitor.
      */
     private static final class Monitor implements Callable<Void> {
@@ -357,22 +373,6 @@ public final class VerboseProcess {
                 VerboseProcess.close(reader);
             }
             return null;
-        }
-    }
-
-    /**
-     * Close quietly.
-     * @param res Resource to close
-     */
-    private static void close(final Closeable res) {
-        try {
-            res.close();
-        } catch (final IOException ex) {
-            Logger.error(
-                VerboseProcess.class,
-                "failed to close resource: %[exception]s",
-                ex
-            );
         }
     }
 
