@@ -78,7 +78,7 @@ public final class VerboseProcessTest {
             new VerboseProcess(
                 new ProcessBuilder(
                     "/bin/bash", "-c",
-                    "echo -n тест | hexdump"
+                    "echo -n \u0442\u0435\u0441\u0442 | hexdump"
                 )
             ).stdout(),
             Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
