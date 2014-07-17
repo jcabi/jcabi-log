@@ -176,6 +176,7 @@ public final class VerboseRunnable implements Runnable {
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
      * @since 0.7.17
      */
+    @SuppressWarnings("PMD.BooleanInversion")
     public VerboseRunnable(final Runnable runnable,
         final boolean swallow, final boolean vrbs) {
         this.origin = runnable;
