@@ -38,7 +38,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -68,6 +67,11 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode(of = "process")
 public final class VerboseProcess {
+
+    /**
+     * Charset.
+     */
+    private static final String UTF_8 = "UTF-8";
 
     /**
      * The process we're working with.
@@ -256,8 +260,7 @@ public final class VerboseProcess {
             }
         }
         try {
-            // @checkstyle MultipleStringLiteralsCheck (1 line)
-            return stdout.toString("UTF-8");
+            return stdout.toString(VerboseProcess.UTF_8);
         } catch (final UnsupportedEncodingException ex) {
             throw new IllegalStateException(ex);
         }
@@ -324,12 +327,11 @@ public final class VerboseProcess {
         }
         @Override
         public Void call() throws Exception {
-            final Charset charset = Charset.forName("UTF-8");
             final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(this.input, charset)
+                new InputStreamReader(this.input, VerboseProcess.UTF_8)
             );
             final BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(this.output, charset)
+                new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
             );
             try {
                 while (true) {

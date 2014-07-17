@@ -140,10 +140,10 @@ public final class VerboseProcessTest {
             )
         ).start();
         start.await();
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1L);
         proc.destroy();
         MatcherAssert.assertThat(
-            done.await(1, TimeUnit.MINUTES),
+            done.await(1L, TimeUnit.MINUTES),
             Matchers.is(true)
         );
     }
@@ -159,7 +159,7 @@ public final class VerboseProcessTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         final ProcessBuilder builder;
-        final String message = "hello";
+        final String message = "hello \u20ac";
         if (SystemUtils.IS_OS_WINDOWS) {
             builder = new ProcessBuilder("cmd", "/c", "echo", message, "1>&2");
         } else {
