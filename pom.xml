@@ -36,7 +36,7 @@
         <version>1.14</version>
     </parent>
     <artifactId>jcabi-log</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.14.2</version>
     <name>jcabi-log</name>
     <description>Wrapper of SLF4J and a few supplementary logging classes</description>
     <issueManagement>
