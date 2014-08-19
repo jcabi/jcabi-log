@@ -134,8 +134,7 @@ final class SizeDecor implements Formattable {
         } else {
             format = "%.0f%s";
         }
-        final String output = String.format(format, number, suffix);
-        return output;
+        return String.format(format, number, suffix);
     }
 
 }
