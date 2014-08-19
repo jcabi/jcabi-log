@@ -30,7 +30,10 @@
 package com.jcabi.log;
 
 import java.util.Formattable;
+import java.util.FormattableFlags;
 import java.util.Formatter;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -38,6 +41,7 @@ import lombok.ToString;
  * Size decorator.
  * @author Marina Kosenko (marina.kosenko@gmail.com)
  * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.1
  */
@@ -46,9 +50,33 @@ import lombok.ToString;
 final class SizeDecor implements Formattable {
 
     /**
+     * Highest power supported by this SizeDecor.
+     */
+    private static final int MAX_POWER = 8;
+
+    /**
+     * Map of prefixes for powers of 1024.
+     */
+    private static final ConcurrentMap<Integer, String> SUFFIXES =
+        new ConcurrentHashMap<Integer, String>();
+
+    /**
      * The size to work with.
      */
     private final transient Long size;
+
+    static {
+        // @checkstyle MagicNumber (9 lines)
+        SizeDecor.SUFFIXES.put(0, "b");
+        SizeDecor.SUFFIXES.put(1, "Kb");
+        SizeDecor.SUFFIXES.put(2, "Mb");
+        SizeDecor.SUFFIXES.put(3, "Gb");
+        SizeDecor.SUFFIXES.put(4, "Tb");
+        SizeDecor.SUFFIXES.put(5, "Pb");
+        SizeDecor.SUFFIXES.put(6, "Eb");
+        SizeDecor.SUFFIXES.put(7, "Zb");
+        SizeDecor.SUFFIXES.put(8, "Yb");
+    }
 
     /**
      * Public ctor.
@@ -65,7 +93,55 @@ final class SizeDecor implements Formattable {
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
-        formatter.format("%s", this.size.toString());
+        if (this.size == null) {
+            formatter.format("NULL");
+        } else {
+            final StringBuilder format = new StringBuilder().append('%');
+            if ((flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
+                .LEFT_JUSTIFY) {
+                format.append('-');
+            }
+            if (width > 0) {
+                format.append(Integer.toString(width));
+            }
+            if ((flags & FormattableFlags.UPPERCASE) == FormattableFlags
+                .UPPERCASE) {
+                format.append('S');
+            } else {
+                format.append('s');
+            }
+            formatter.format(
+                format.toString(), this.formatSizeWithSuffix(precision)
+            );
+        }
+    }
+
+    /**
+     * Format the size, with suffix.
+     * @param precision The precision to use
+     * @return The formatted size
+     */
+    private String formatSizeWithSuffix(final int precision) {
+        int power = 0;
+        final StringBuilder format = new StringBuilder().append('%');
+        format.append('.');
+        if (precision > 0) {
+            format.append(precision);
+        } else {
+            format.append(0);
+        }
+        format.append("f%s");
+        double displayed = this.size;
+        // @checkstyle MagicNumber (2 lines)
+        while (displayed / 1024 >= 1 && power < MAX_POWER) {
+            displayed = displayed / 1024;
+            power += 1;
+        }
+        final String suffix = SUFFIXES.get(power);
+        final String output = String.format(
+            format.toString(), displayed, suffix
+        );
+        return output;
     }
 
 }
