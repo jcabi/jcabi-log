@@ -69,7 +69,7 @@ public final class SizeDecorTest extends AbstractDecorTest {
     public static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
-                // @checkstyle MagicNumber (12 lines)
+                // @checkstyle MagicNumber (14 lines)
                 {null, "NULL", 0, 0, 0},
                 {1L, "1b", 0, 0, 0},
                 {123L, "  123b", 0, 6, 0},
@@ -81,6 +81,8 @@ public final class SizeDecorTest extends AbstractDecorTest {
                 {98765432L, "94.190Mb", 0, 0, 3},
                 {90L * 1024 * 1024 * 1024, "90Gb", 0, 0, 0},
                 {13L * 1024 * 1024 * 1024 * 1024, "13Tb", 0, 0, 0},
+                {33L * 1024 * 1024 * 1024 * 1024 * 1024, "33Pb", 0, 0, 0},
+                {3L * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, "3Eb", 0, 0, 0},
             }
         );
     }

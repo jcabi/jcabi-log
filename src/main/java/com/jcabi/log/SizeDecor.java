@@ -52,7 +52,7 @@ final class SizeDecor implements Formattable {
     /**
      * Highest power supported by this SizeDecor.
      */
-    private static final int MAX_POWER = 8;
+    private static final int MAX_POWER = 6;
 
     /**
      * Map of prefixes for powers of 1024.
@@ -74,8 +74,6 @@ final class SizeDecor implements Formattable {
         SizeDecor.SUFFIXES.put(4, "Tb");
         SizeDecor.SUFFIXES.put(5, "Pb");
         SizeDecor.SUFFIXES.put(6, "Eb");
-        SizeDecor.SUFFIXES.put(7, "Zb");
-        SizeDecor.SUFFIXES.put(8, "Yb");
     }
 
     /**
@@ -133,11 +131,11 @@ final class SizeDecor implements Formattable {
         format.append("f%s");
         double displayed = this.size;
         // @checkstyle MagicNumber (2 lines)
-        while (displayed / 1024 >= 1 && power < MAX_POWER) {
+        while (displayed / 1024 >= 1 && power < SizeDecor.MAX_POWER) {
             displayed = displayed / 1024;
             power += 1;
         }
-        final String suffix = SUFFIXES.get(power);
+        final String suffix = SizeDecor.SUFFIXES.get(power);
         final String output = String.format(
             format.toString(), displayed, suffix
         );
