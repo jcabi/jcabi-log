@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+import com.jcabi.aspects.Immutable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Formattable;
@@ -44,9 +45,8 @@ import lombok.ToString;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
- * @todo #143 The class has to be @Immutable, but with ConcurrentMap it's
- *  impossible to do. Let's refactor.
  */
+@Immutable
 @ToString
 @EqualsAndHashCode
 final class DecorsManager {

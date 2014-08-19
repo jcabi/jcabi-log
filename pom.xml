@@ -81,6 +81,16 @@
             <version>1.7.5</version>
         </dependency>
         <dependency>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-aspects</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.jcabi</groupId>
+                    <artifactId>jcabi-log</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <scope>test</scope>
