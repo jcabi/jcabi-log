@@ -121,24 +121,20 @@ final class SizeDecor implements Formattable {
      */
     private String formatSizeWithSuffix(final int precision) {
         int power = 0;
-        final StringBuilder format = new StringBuilder().append('%');
-        format.append('.');
-        if (precision > 0) {
-            format.append(precision);
-        } else {
-            format.append(0);
-        }
-        format.append("f%s");
-        double displayed = this.size;
+        double number = this.size;
         // @checkstyle MagicNumber (2 lines)
-        while (displayed / 1024 >= 1 && power < SizeDecor.MAX_POWER) {
-            displayed = displayed / 1024;
+        while (number / 1024 >= 1 && power < SizeDecor.MAX_POWER) {
+            number = number / 1024;
             power += 1;
         }
         final String suffix = SizeDecor.SUFFIXES.get(power);
-        final String output = String.format(
-            format.toString(), displayed, suffix
-        );
+        final String format;
+        if (precision >= 0) {
+            format = String.format("%%.%df%%s", precision);
+        } else {
+            format = "%.0f%s";
+        }
+        final String output = String.format(format, number, suffix);
         return output;
     }
 
