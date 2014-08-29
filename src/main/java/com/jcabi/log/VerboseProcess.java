@@ -366,8 +366,8 @@ public final class VerboseProcess {
                         writer.newLine();
                     }
                 } finally {
-                    this.done.countDown();
                     VerboseProcess.close(writer);
+                    this.done.countDown();
                 }
             } finally {
                 VerboseProcess.close(reader);

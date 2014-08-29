@@ -124,11 +124,11 @@ public final class VerboseProcessTest {
     public void handlesLongRunningCommand() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("sleep", "2")
+            new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
         );
         MatcherAssert.assertThat(
             process.stdout(),
-            Matchers.equalTo("")
+            Matchers.startsWith("done")
         );
     }
 
