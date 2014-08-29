@@ -34,6 +34,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * Processor of formatting string and arguments, before sending it to
@@ -43,10 +44,8 @@ import lombok.EqualsAndHashCode;
  * @author Yegor Bugayenko (yegor@tpc2.com)
  * @version $Id$
  * @since 0.1
- * @todo #143 The class has to be annotated with @ToString, but we can't
- *  do it at the moment:
- *  https://code.google.com/p/projectlombok/issues/detail?id=457
  */
+@ToString
 @EqualsAndHashCode(of = { "format", "arguments" })
 final class PreFormatter {
 
