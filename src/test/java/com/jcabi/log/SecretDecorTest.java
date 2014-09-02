@@ -64,9 +64,6 @@ public final class SecretDecorTest extends AbstractDecorTest {
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
-     * @todo #26 The SecretDecor class is not implemented yet, that's why
-     *  the test is not enabled at the moment. You should uncomment the
-     *  lines below and make sure the test passes.
      */
     @Parameters
     public static Collection<Object[]> params() {
@@ -83,7 +80,7 @@ public final class SecretDecorTest extends AbstractDecorTest {
 
     @Override
     public Formattable decor() {
-        return new SecretDecor((String) this.object());
+        return new SecretDecor(this.object());
     }
 
 }
