@@ -63,17 +63,14 @@ public final class ObjectDecorTest extends AbstractDecorTest {
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
-     * @todo #26 The ObjectDecor class is not implemented yet, that's why
-     *  the test is not enabled at the moment. You should uncomment the
-     *  lines below and make sure the test passes.
      */
     @Parameters
     public static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
-                // @checkstyle MethodBodyComments (2 lines)
-                // { null, "NULL", 0, 0, 0 },
-                // { new SecretDecor("x"), "{secret: \"x\"}", 0, 0, 0 }
+                {null, "NULL", 0, 0, 0},
+                {new SecretDecor("x"), "{secret: \"x\"}", 0, 0, 0},
+                {new Foo(1, "one"), "{num: \"1\", name: \"one\"}", 0, 0, 0},
             }
         );
     }
@@ -81,6 +78,31 @@ public final class ObjectDecorTest extends AbstractDecorTest {
     @Override
     public Formattable decor() {
         return new ObjectDecor(this.object());
+    }
+
+    /**
+     * Test class for displaying object contents.
+     */
+    private static final class Foo {
+        /**
+         * The number.
+         */
+        @SuppressWarnings("unused")
+        private final transient int num;
+        /**
+         * The name.
+         */
+        @SuppressWarnings("unused")
+        private final transient String name;
+        /**
+         * Ctor.
+         * @param number The number
+         * @param nme The name
+         */
+        public Foo(final int number, final String nme) {
+            this.num = number;
+            this.name = nme;
+        }
     }
 
 }
