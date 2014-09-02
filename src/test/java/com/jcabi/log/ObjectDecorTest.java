@@ -63,6 +63,12 @@ public final class ObjectDecorTest extends AbstractDecorTest {
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
+     * @todo #31 Let's handle arrays. For now, ObjectDecor only does a
+     *  deepToString of array contents. Let's make it so that each of its
+     *  members will also show its internal contents. Ensure that this is
+     *  handled in a "deep" fashion; that is, if its members are also arrays,
+     *  then print the contents of the members of that array member (and so on).
+     *  When done, uncomment the last test case below.
      */
     @Parameters
     public static Collection<Object[]> params() {
@@ -71,6 +77,13 @@ public final class ObjectDecorTest extends AbstractDecorTest {
                 {null, "NULL", 0, 0, 0},
                 {new SecretDecor("x"), "{secret: \"x\"}", 0, 0, 0},
                 {new Foo(1, "one"), "{num: \"1\", name: \"one\"}", 0, 0, 0},
+            //  @checkstyle MethodBodyComments (6 lines)
+            //  @checkstyle LineLength (3 lines)
+            //  {
+            //      new Object[]{new Foo(0, "zero"), new Foo(2, "two")},
+            //      "[{num: \"0\", name: \"zero\"}, \"{num: \"2\", name: \"two\"}]",
+            //      0, 0, 0
+            //  },
             }
         );
     }

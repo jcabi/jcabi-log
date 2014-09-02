@@ -32,6 +32,7 @@ package com.jcabi.log;
 import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.Arrays;
 import java.util.Formattable;
 import java.util.Formatter;
 import lombok.EqualsAndHashCode;
@@ -70,6 +71,8 @@ final class ObjectDecor implements Formattable {
         final int width, final int precision) {
         if (this.object == null) {
             formatter.format("NULL");
+        } else if (this.object.getClass().isArray()) {
+            formatter.format(Arrays.deepToString((Object[]) this.object));
         } else {
             final String output =
                 AccessController.doPrivileged(new ObjectContentsFormatAction());
