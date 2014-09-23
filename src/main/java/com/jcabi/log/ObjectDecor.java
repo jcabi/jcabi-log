@@ -29,6 +29,10 @@
  */
 package com.jcabi.log;
 
+import java.lang.reflect.Field;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Arrays;
 import java.util.Formattable;
 import java.util.Formatter;
 import lombok.EqualsAndHashCode;
@@ -65,7 +69,44 @@ final class ObjectDecor implements Formattable {
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
-        formatter.format("%s", this.object.getClass().getName());
+        if (this.object == null) {
+            formatter.format("NULL");
+        } else if (this.object.getClass().isArray()) {
+            formatter.format(Arrays.deepToString((Object[]) this.object));
+        } else {
+            final String output =
+                AccessController.doPrivileged(new ObjectContentsFormatAction());
+            formatter.format(output);
+        }
+    }
+
+    /**
+     * {@link PrivilegedAction} for obtaining object contents.
+     */
+    private final class ObjectContentsFormatAction
+        implements PrivilegedAction<String> {
+        @Override
+        public String run() {
+            final StringBuilder builder = new StringBuilder("{");
+            for (final Field field
+                : ObjectDecor.this.object.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                try {
+                    builder.append(
+                        String.format(
+                            "%s: \"%s\"",
+                            field.getName(),
+                            field.get(ObjectDecor.this.object)
+                        )
+                    );
+                } catch (final IllegalAccessException ex) {
+                    throw new IllegalStateException(ex);
+                }
+                builder.append(", ");
+            }
+            builder.replace(builder.length() - 2, builder.length(), "}");
+            return builder.toString();
+        };
     }
 
 }
