@@ -363,6 +363,8 @@ public final class Logger {
         final org.slf4j.Logger logger;
         if (source instanceof Class) {
             logger = LoggerFactory.getLogger((Class<?>) source);
+        } else if (source instanceof String) {
+            logger = LoggerFactory.getLogger(String.class.cast(source));
         } else {
             logger = LoggerFactory.getLogger(source.getClass());
         }

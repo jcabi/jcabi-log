@@ -140,4 +140,12 @@ public final class LoggerTest {
         );
     }
 
+    /**
+     * Logger can use String as a logger name.
+     */
+    @Test
+    public void usesStringAsLoggerName() {
+        Logger.info("com.jcabi.log...why.not", "hello, %s!", "world!");
+    }
+
 }
