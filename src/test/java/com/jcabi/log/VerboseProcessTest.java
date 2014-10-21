@@ -212,7 +212,7 @@ public final class VerboseProcessTest {
     /**
      * VerboseProcess exits "gracefully" when it can't read from the process
      * stream, and logs the error that is thrown.
-     * @throws Exception
+     * @throws Exception If something goes wrong
      */
     @Test
     public void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
@@ -231,9 +231,7 @@ public final class VerboseProcessTest {
         new VerboseProcess(prc, Level.ALL, Level.ALL).stdout();
         MatcherAssert.assertThat(
             writer.toString(),
-            Matchers.containsString("underlying process stream was closed")
+            Matchers.containsString("Error reading from process stream")
         );
     }
-
 }
-;
