@@ -373,18 +373,24 @@
 <a class="jxr_linenumber" name="L365" href="#L365">365</a>                         writer.write(line);
 <a class="jxr_linenumber" name="L366" href="#L366">366</a>                         writer.newLine();
 <a class="jxr_linenumber" name="L367" href="#L367">367</a>                     }
-<a class="jxr_linenumber" name="L368" href="#L368">368</a>                 } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L369" href="#L369">369</a>                     VerboseProcess.close(writer);
-<a class="jxr_linenumber" name="L370" href="#L370">370</a>                     <strong class="jxr_keyword">this</strong>.done.countDown();
-<a class="jxr_linenumber" name="L371" href="#L371">371</a>                 }
-<a class="jxr_linenumber" name="L372" href="#L372">372</a>             } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L373" href="#L373">373</a>                 VerboseProcess.close(reader);
-<a class="jxr_linenumber" name="L374" href="#L374">374</a>             }
-<a class="jxr_linenumber" name="L375" href="#L375">375</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L376" href="#L376">376</a>         }
-<a class="jxr_linenumber" name="L377" href="#L377">377</a>     }
-<a class="jxr_linenumber" name="L378" href="#L378">378</a> 
-<a class="jxr_linenumber" name="L379" href="#L379">379</a> }
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>                 } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException ex) {
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>                     Logger.error(
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>                         VerboseProcess.<strong class="jxr_keyword">class</strong>,
+<a class="jxr_linenumber" name="L371" href="#L371">371</a>                         <span class="jxr_string">"Error reading from process stream: %[exception]s"</span>,
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>                         ex
+<a class="jxr_linenumber" name="L373" href="#L373">373</a>                     );
+<a class="jxr_linenumber" name="L374" href="#L374">374</a>                 } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L375" href="#L375">375</a>                     VerboseProcess.close(writer);
+<a class="jxr_linenumber" name="L376" href="#L376">376</a>                     <strong class="jxr_keyword">this</strong>.done.countDown();
+<a class="jxr_linenumber" name="L377" href="#L377">377</a>                 }
+<a class="jxr_linenumber" name="L378" href="#L378">378</a>             } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>                 VerboseProcess.close(reader);
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>             }
+<a class="jxr_linenumber" name="L381" href="#L381">381</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L382" href="#L382">382</a>         }
+<a class="jxr_linenumber" name="L383" href="#L383">383</a>     }
+<a class="jxr_linenumber" name="L384" href="#L384">384</a> 
+<a class="jxr_linenumber" name="L385" href="#L385">385</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2012&#x2013;2014 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
