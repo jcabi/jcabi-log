@@ -29,6 +29,10 @@
  */
 package com.jcabi.log;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +46,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * Test case for {@link VerboseProcess}.
@@ -204,4 +209,29 @@ public final class VerboseProcessTest {
         );
     }
 
+    /**
+     * VerboseProcess exits "gracefully" when it can't read from the process
+     * stream, and logs the error that is thrown.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
+        final StringWriter writer = new StringWriter();
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            new WriterAppender(new SimpleLayout(), writer)
+        );
+        final Process prc = Mockito.mock(Process.class);
+        final InputStream stdout = new FileInputStream(
+            File.createTempFile("temp", "test")
+        );
+        stdout.close();
+        Mockito.doReturn(stdout).when(prc).getInputStream();
+        Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
+            .when(prc).getErrorStream();
+        new VerboseProcess(prc, Level.ALL, Level.ALL).stdout();
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.containsString("Error reading from process stream")
+        );
+    }
 }

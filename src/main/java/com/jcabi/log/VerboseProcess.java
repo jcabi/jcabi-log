@@ -365,6 +365,12 @@ public final class VerboseProcess {
                         writer.write(line);
                         writer.newLine();
                     }
+                } catch (final IOException ex) {
+                    Logger.error(
+                        VerboseProcess.class,
+                        "Error reading from process stream: %[exception]s",
+                        ex
+                    );
                 } finally {
                     VerboseProcess.close(writer);
                     this.done.countDown();
