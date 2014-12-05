@@ -58,9 +58,8 @@ public class Main {
         public void run() {
           // some sensitive operation that may throw
           // a runtime exception
-        },
-        1L, 1L, TimeUnit.SECONDS
-      }
+        }
+      }, 1L, 1L, TimeUnit.SECONDS
     );
   }
 }
@@ -87,9 +86,8 @@ public class Main {
         public void run() {
           // the same sensitive operation that may throw
           // a runtime exception
-        },
-        1L, 1L, TimeUnit.SECONDS
-      }
+        }
+      }, 1L, 1L, TimeUnit.SECONDS
     );
   }
 }
