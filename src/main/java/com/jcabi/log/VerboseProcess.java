@@ -67,7 +67,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(of = "process")
-public final class VerboseProcess {
+public final class VerboseProcess implements Closeable {
 
     /**
      * Charset.
@@ -174,6 +174,16 @@ public final class VerboseProcess {
      */
     public String stdoutQuietly() {
         return this.stdout(false);
+    }
+
+    // @todo #38:30min When VerboseProcess is closed, we should also shut down
+    //  the monitor threads and prevent them trying to obtain the output from
+    //  the process. It should be done before destroy() is called. See the
+    //  following for more details: https://github.com/jcabi/jcabi-log/issues/38
+    //  http://www.java2s.com/Code/Java/Threads/Thesafewaytostopathread.htm
+    @Override
+    public void close() {
+        this.process.destroy();
     }
 
     /**

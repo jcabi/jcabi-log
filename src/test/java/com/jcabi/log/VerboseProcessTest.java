@@ -234,4 +234,16 @@ public final class VerboseProcessTest {
             Matchers.containsString("Error reading from process stream")
         );
     }
+
+    /**
+     * VerboseProcess calls destroy() on the underlying Process when it is
+     * closed.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void destroysUnderlyingProcessWhenClosed() throws Exception {
+        final Process prc = Mockito.mock(Process.class);
+        new VerboseProcess(prc).close();
+        Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
+    }
 }
