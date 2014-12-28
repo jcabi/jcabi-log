@@ -106,9 +106,13 @@ public final class VerboseProcessTest {
     @Test
     public void runsACommandLineScriptWithException() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final ProcessBuilder builder = new ProcessBuilder(
+            "cat", "/non-existing-file.txt"
+        );
+        builder.environment().clear();
+        builder.environment().put("LC_ALL", "C");
         final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("cat", "/non-existing-file.txt")
-                .redirectErrorStream(true)
+            builder.redirectErrorStream(true)
         );
         try {
             process.stdout();
