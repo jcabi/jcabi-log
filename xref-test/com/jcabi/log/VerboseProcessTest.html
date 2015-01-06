@@ -242,9 +242,21 @@
 <a class="jxr_linenumber" name="L234" href="#L234">234</a>             Matchers.containsString(<span class="jxr_string">"Error reading from process stream"</span>)
 <a class="jxr_linenumber" name="L235" href="#L235">235</a>         );
 <a class="jxr_linenumber" name="L236" href="#L236">236</a>     }
-<a class="jxr_linenumber" name="L237" href="#L237">237</a> }
+<a class="jxr_linenumber" name="L237" href="#L237">237</a> 
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> <em class="jxr_javadoccomment">     * VerboseProcess calls destroy() on the underlying Process when it is</em>
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> <em class="jxr_javadoccomment">     * closed.</em>
+<a class="jxr_linenumber" name="L241" href="#L241">241</a> <em class="jxr_javadoccomment">     * @throws Exception If something goes wrong</em>
+<a class="jxr_linenumber" name="L242" href="#L242">242</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>     @Test
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> destroysUnderlyingProcessWhenClosed() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>         <strong class="jxr_keyword">final</strong> Process prc = Mockito.mock(Process.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>         <strong class="jxr_keyword">new</strong> VerboseProcess(prc).close();
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>     }
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2014 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2015 <a href="http://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>
