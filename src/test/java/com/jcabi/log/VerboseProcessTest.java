@@ -254,13 +254,14 @@ public final class VerboseProcessTest {
         org.apache.log4j.Logger.getRootLogger().addAppender(
             appender);
 
-        final InputStream is = new InfiniteInput();
+        final InputStream inputStream = new InfiniteInput('i');
+        final InputStream errorStream = new InfiniteInput('e');
         final Process prc = Mockito.mock(Process.class);
         Mockito.doReturn(
-            is).when(
+            inputStream).when(
             prc).getInputStream();
         Mockito.doReturn(
-            is).when(
+            errorStream).when(
             prc).getErrorStream();
 
         Mockito.doAnswer(
@@ -268,7 +269,8 @@ public final class VerboseProcessTest {
                 @Override
                 public Void answer(InvocationOnMock invocation)
                         throws Throwable {
-                    is.close();
+                    inputStream.close();
+                    errorStream.close();
                     return null;
                 }
             }).when(
@@ -282,7 +284,7 @@ public final class VerboseProcessTest {
                     verboseProcess.close();
                 }
             },
-            100);
+            50);
 
         verboseProcess.stdoutQuietly();
 
@@ -290,13 +292,18 @@ public final class VerboseProcessTest {
         Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
         MatcherAssert.assertThat(
             writer.toString(),
-            Matchers.not(Matchers
-                    .containsString("Error reading from process stream")));
+            Matchers.not(Matchers.containsString("Error reading from process stream"))
+       );
     }
 
     private final class InfiniteInput extends InputStream {
+        private char ch;
         private boolean isFeed = false;
         private boolean isClosed = false;
+        
+        public InfiniteInput(char inputChar) {
+            this.ch = inputChar;
+        }
 
         @Override
         public int read() throws IOException {
@@ -308,7 +315,7 @@ public final class VerboseProcessTest {
                 return 0xA;
             } else {
                 isFeed = true;
-                return 'a';
+                return ch;
             }
         }
 

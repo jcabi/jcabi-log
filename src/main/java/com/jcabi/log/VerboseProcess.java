@@ -35,10 +35,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.channels.Channels;
+import java.nio.channels.ClosedByInterruptException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -88,6 +89,8 @@ public final class VerboseProcess implements Closeable {
      * Log level for stderr.
      */
     private final transient Level elevel;
+
+    private Thread[] monitors = new Thread[2]; //TODO magic num
 
     /**
      * Public ctor.
@@ -183,6 +186,18 @@ public final class VerboseProcess implements Closeable {
     //  http://www.java2s.com/Code/Java/Threads/Thesafewaytostopathread.htm
     @Override
     public void close() {
+        for (Thread monitor : monitors) {
+            if (monitor != null) {
+                monitor.interrupt();
+                monitor = null;
+            }
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         this.process.destroy();
     }
 
@@ -242,23 +257,25 @@ public final class VerboseProcess implements Closeable {
     private String waitFor() throws InterruptedException {
         final CountDownLatch done = new CountDownLatch(2);
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+        monitors[0] = VerboseProcess.monitor(
+            this.process.getInputStream(),
+            done, stdout, this.olevel
+        );
         Logger.debug(
             this,
             "#waitFor(): waiting for stdout of %s in %s...",
             this.process,
-            VerboseProcess.monitor(
-                this.process.getInputStream(),
-                done, stdout, this.olevel
-            )
+            monitors[0]
+        );
+        monitors[1] = VerboseProcess.monitor(
+            this.process.getErrorStream(),
+            done, new ByteArrayOutputStream(), this.elevel
         );
         Logger.debug(
             this,
             "#waitFor(): waiting for stderr of %s in %s...",
             this.process,
-            VerboseProcess.monitor(
-                this.process.getErrorStream(),
-                done, new ByteArrayOutputStream(), this.elevel
-            )
+            monitors[1]
         );
         try {
             this.process.waitFor();
@@ -356,7 +373,7 @@ public final class VerboseProcess implements Closeable {
         @Override
         public Void call() throws Exception {
             final BufferedReader reader = new BufferedReader(
-                new InputStreamReader(this.input, VerboseProcess.UTF_8)
+                Channels.newReader(Channels.newChannel(input), VerboseProcess.UTF_8)
             );
             try {
                 final BufferedWriter writer = new BufferedWriter(
@@ -375,6 +392,11 @@ public final class VerboseProcess implements Closeable {
                         writer.write(line);
                         writer.newLine();
                     }
+                } catch(final ClosedByInterruptException ex) {
+                    Thread.interrupted(); // to clear the interrupted status
+                    Logger.debug(
+                        VerboseProcess.class,
+                        "Monitor is interrupted in the expected way");
                 } catch (final IOException ex) {
                     Logger.error(
                         VerboseProcess.class,
