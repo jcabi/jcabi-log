@@ -32,8 +32,11 @@ package com.jcabi.log;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -47,6 +50,8 @@ import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  * Test case for {@link VerboseProcess}.
@@ -242,8 +247,74 @@ public final class VerboseProcessTest {
      */
     @Test
     public void destroysUnderlyingProcessWhenClosed() throws Exception {
+        final StringWriter writer = new StringWriter();
+        final WriterAppender appender = new WriterAppender(new SimpleLayout(),
+                writer);
+        appender.setThreshold(org.apache.log4j.Level.ERROR);
+        org.apache.log4j.Logger.getRootLogger().addAppender(
+            appender);
+
+        final InputStream is = new InfiniteInput();
         final Process prc = Mockito.mock(Process.class);
-        new VerboseProcess(prc).close();
+        Mockito.doReturn(
+            is).when(
+            prc).getInputStream();
+        Mockito.doReturn(
+            is).when(
+            prc).getErrorStream();
+
+        Mockito.doAnswer(
+            new Answer<Void>() {
+                @Override
+                public Void answer(InvocationOnMock invocation)
+                        throws Throwable {
+                    is.close();
+                    return null;
+                }
+            }).when(
+            prc).destroy();
+
+        final VerboseProcess verboseProcess = new VerboseProcess(prc);
+
+        new Timer(true).schedule(
+            new TimerTask() {
+                public void run() {
+                    verboseProcess.close();
+                }
+            },
+            100);
+
+        verboseProcess.stdoutQuietly();
+
+        TimeUnit.MILLISECONDS.sleep(500);
         Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
+        MatcherAssert.assertThat(
+            writer.toString(),
+            Matchers.not(Matchers
+                    .containsString("Error reading from process stream")));
+    }
+
+    private final class InfiniteInput extends InputStream {
+        private boolean isFeed = false;
+        private boolean isClosed = false;
+
+        @Override
+        public int read() throws IOException {
+            if (isClosed) {
+                throw new IOException("Stream closed");
+            }
+            if (isFeed) {
+                isFeed = false;
+                return 0xA;
+            } else {
+                isFeed = true;
+                return 'a';
+            }
+        }
+
+        @Override
+        public void close() throws IOException {
+            isClosed = true;
+        }
     }
 }
