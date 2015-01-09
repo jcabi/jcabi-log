@@ -49,7 +49,6 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -331,6 +330,7 @@ public final class VerboseProcessTest {
     }
     
     private final class VerboseProcessFilter extends Filter {
+        private final static String THREADNAME_START = "^VerboseProcess\\.Monitor-";
 
         private int hash;
 
@@ -341,8 +341,8 @@ public final class VerboseProcessTest {
         @Override
         public int decide(LoggingEvent event) {
             Logger.debug(this, event.getThreadName());
-            if (event.getThreadName().matches("^VerboseProcess\\.Monitor-.+")) {
-                if (event.getThreadName().matches("^VerboseProcess\\.Monitor-"+ hash)) {
+            if (event.getThreadName().matches(THREADNAME_START + ".+")) {
+                if (event.getThreadName().matches(THREADNAME_START+ hash)) {
                     return Filter.ACCEPT;
                 } else {
                     return Filter.DENY;
