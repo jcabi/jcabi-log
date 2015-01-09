@@ -244,6 +244,7 @@ public final class VerboseProcessTest {
      * VerboseProcess calls destroy() on the underlying Process when it is
      * closed.
      * @throws Exception If something goes wrong
+     * anaktodo rename maybe
      */
     @Test
     public void destroysUnderlyingProcessWhenClosed() throws Exception {
