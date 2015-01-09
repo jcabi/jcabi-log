@@ -43,10 +43,13 @@ import java.util.logging.Level;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
+import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -239,22 +242,16 @@ public final class VerboseProcessTest {
             Matchers.containsString("Error reading from process stream")
         );
     }
-
+    
     /**
      * VerboseProcess calls destroy() on the underlying Process when it is
      * closed.
      * @throws Exception If something goes wrong
      * anaktodo rename maybe
+     * anaktodo maybe leave the initial test
      */
     @Test
     public void destroysUnderlyingProcessWhenClosed() throws Exception {
-        final StringWriter writer = new StringWriter();
-        final WriterAppender appender = new WriterAppender(new SimpleLayout(),
-                writer);
-        appender.setThreshold(org.apache.log4j.Level.ERROR);
-        org.apache.log4j.Logger.getRootLogger().addAppender(
-            appender);
-
         final InputStream inputStream = new InfiniteInput('i');
         final InputStream errorStream = new InfiniteInput('e');
         final Process prc = Mockito.mock(Process.class);
@@ -277,7 +274,14 @@ public final class VerboseProcessTest {
             }).when(
             prc).destroy();
 
-        final VerboseProcess verboseProcess = new VerboseProcess(prc);
+        final VerboseProcess verboseProcess = new VerboseProcess(prc, Level.FINEST, Level.FINEST);
+        
+        final StringWriter writer = new StringWriter();
+        final WriterAppender appender = new WriterAppender(new SimpleLayout(),
+                writer);
+        appender.addFilter(new VerboseProcessFilter(verboseProcess));
+        org.apache.log4j.Logger.getLogger(VerboseProcess.class).addAppender(
+            appender);
 
         new Timer(true).schedule(
             new TimerTask() {
@@ -324,5 +328,29 @@ public final class VerboseProcessTest {
         public void close() throws IOException {
             isClosed = true;
         }
+    }
+    
+    private final class VerboseProcessFilter extends Filter {
+
+        private int hash;
+
+        public VerboseProcessFilter(VerboseProcess prc) {
+            this.hash = prc.hashCode();
+        }
+
+        @Override
+        public int decide(LoggingEvent event) {
+            Logger.debug(this, event.getThreadName());
+            if (event.getThreadName().matches("^VerboseProcess\\.Monitor-.+")) {
+                if (event.getThreadName().matches("^VerboseProcess\\.Monitor-"+ hash)) {
+                    return Filter.ACCEPT;
+                } else {
+                    return Filter.DENY;
+                }
+            } else {
+                return Filter.NEUTRAL;
+            }
+        }
+        
     }
 }

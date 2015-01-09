@@ -251,7 +251,7 @@ public final class VerboseProcess implements Closeable {
     private String waitFor() throws InterruptedException {
         final CountDownLatch done = new CountDownLatch(2);
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-        monitors[0] = VerboseProcess.monitor(
+        monitors[0] = monitor(
             this.process.getInputStream(),
             done, stdout, this.olevel
         );
@@ -261,7 +261,7 @@ public final class VerboseProcess implements Closeable {
             this.process,
             monitors[0]
         );
-        monitors[1] = VerboseProcess.monitor(
+        monitors[1] = monitor(
             this.process.getErrorStream(),
             done, new ByteArrayOutputStream(), this.elevel
         );
@@ -298,7 +298,7 @@ public final class VerboseProcess implements Closeable {
      * @checkstyle ParameterNumber (6 lines)
      */
     @SuppressWarnings("PMD.DoNotUseThreads")
-    private static Thread monitor(final InputStream input,
+    private Thread monitor(final InputStream input,
         final CountDownLatch done,
         final OutputStream output, final Level level) {
         final Thread thread = new Thread(
@@ -307,7 +307,7 @@ public final class VerboseProcess implements Closeable {
                 false
             )
         );
-        thread.setName("VerboseProcess");
+        thread.setName("VerboseProcess.Monitor-" + hashCode());
         thread.setDaemon(true);
         thread.start();
         return thread;
@@ -379,10 +379,10 @@ public final class VerboseProcess implements Closeable {
                         if (line == null) {
                             break;
                         }
-                        /*Logger.log(
+                        Logger.log(
                             this.level, VerboseProcess.class,
                             ">> %s", line
-                        );*/
+                        );
                         writer.write(line);
                         writer.newLine();
                     }
