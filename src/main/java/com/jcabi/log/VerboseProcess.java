@@ -90,7 +90,7 @@ public final class VerboseProcess implements Closeable {
      */
     private final transient Level elevel;
 
-    private Thread[] monitors = new Thread[2]; //TODO magic num
+    private Thread[] monitors = new Thread[2]; //anakTODO magic num ?transient
 
     /**
      * Public ctor.
@@ -191,12 +191,6 @@ public final class VerboseProcess implements Closeable {
                 monitor.interrupt();
                 monitor = null;
             }
-        }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         this.process.destroy();
     }
@@ -385,10 +379,10 @@ public final class VerboseProcess implements Closeable {
                         if (line == null) {
                             break;
                         }
-                        Logger.log(
+                        /*Logger.log(
                             this.level, VerboseProcess.class,
                             ">> %s", line
-                        );
+                        );*/
                         writer.write(line);
                         writer.newLine();
                     }
