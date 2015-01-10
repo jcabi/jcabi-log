@@ -243,16 +243,13 @@ public final class VerboseProcessTest {
     }
     
     /**
-     * VerboseProcess calls destroy() on the underlying Process when it is
-     * closed.
+     * VerboseProcess can terminate its monitors and underlying Process when closed.
      * @throws Exception If something goes wrong
-     * anaktodo rename maybe
-     * anaktodo maybe leave the initial test
      */
     @Test
-    public void destroysUnderlyingProcessWhenClosed() throws Exception {
-        final InputStream inputStream = new InfiniteInput('i');
-        final InputStream errorStream = new InfiniteInput('e');
+    public void terminatesMonitorsAndUnderlyingProcessWhenClosed() throws Exception {
+        final InputStream inputStream = new InfiniteInputStream('i');
+        final InputStream errorStream = new InfiniteInputStream('e');
         final Process prc = Mockito.mock(Process.class);
         Mockito.doReturn(
             inputStream).when(
@@ -292,6 +289,8 @@ public final class VerboseProcessTest {
 
         verboseProcess.stdoutQuietly();
 
+        // allow monitor threads to terminate cos they can write err msg, we are
+        // checking below
         TimeUnit.MILLISECONDS.sleep(500);
         Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
         MatcherAssert.assertThat(
@@ -300,12 +299,12 @@ public final class VerboseProcessTest {
        );
     }
 
-    private final class InfiniteInput extends InputStream {
+    private final class InfiniteInputStream extends InputStream {
         private char ch;
         private boolean isFeed = false;
         private boolean isClosed = false;
         
-        public InfiniteInput(char inputChar) {
+        public InfiniteInputStream(char inputChar) {
             this.ch = inputChar;
         }
 
@@ -330,7 +329,7 @@ public final class VerboseProcessTest {
     }
     
     private final class VerboseProcessFilter extends Filter {
-        private final static String THREADNAME_START = "^VerboseProcess\\.Monitor-";
+        private final static String THREADNAME_START = "^VrbPrc\\.Monitor-";
 
         private int hash;
 
@@ -340,9 +339,8 @@ public final class VerboseProcessTest {
 
         @Override
         public int decide(LoggingEvent event) {
-            Logger.debug(this, event.getThreadName());
             if (event.getThreadName().matches(THREADNAME_START + ".+")) {
-                if (event.getThreadName().matches(THREADNAME_START+ hash)) {
+                if (event.getThreadName().matches(THREADNAME_START + hash)) {
                     return Filter.ACCEPT;
                 } else {
                     return Filter.DENY;

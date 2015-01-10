@@ -74,6 +74,8 @@ public final class VerboseProcess implements Closeable {
      * Charset.
      */
     private static final String UTF_8 = "UTF-8";
+    
+    private static final int N_MONITORS = 2;
 
     /**
      * The process we're working with.
@@ -90,7 +92,7 @@ public final class VerboseProcess implements Closeable {
      */
     private final transient Level elevel;
 
-    private Thread[] monitors = new Thread[2]; //anakTODO magic num ?transient
+    private final transient Thread[] monitors = new Thread[N_MONITORS];
 
     /**
      * Public ctor.
@@ -179,11 +181,6 @@ public final class VerboseProcess implements Closeable {
         return this.stdout(false);
     }
 
-    // @todo #38:30min When VerboseProcess is closed, we should also shut down
-    //  the monitor threads and prevent them trying to obtain the output from
-    //  the process. It should be done before destroy() is called. See the
-    //  following for more details: https://github.com/jcabi/jcabi-log/issues/38
-    //  http://www.java2s.com/Code/Java/Threads/Thesafewaytostopathread.htm
     @Override
     public void close() {
         for (Thread monitor : monitors) {
@@ -249,7 +246,7 @@ public final class VerboseProcess implements Closeable {
      * @throws InterruptedException If interrupted in between
      */
     private String waitFor() throws InterruptedException {
-        final CountDownLatch done = new CountDownLatch(2);
+        final CountDownLatch done = new CountDownLatch(N_MONITORS);
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         monitors[0] = monitor(
             this.process.getInputStream(),
@@ -277,7 +274,7 @@ public final class VerboseProcess implements Closeable {
             Logger.debug(
                 this, "#waitFor(): process finished: %s", this.process
             );
-            if (!done.await(2L, TimeUnit.SECONDS)) {
+            if (!done.await(N_MONITORS, TimeUnit.SECONDS)) {
                 Logger.error(this, "#wait() failed");
             }
         }
@@ -307,7 +304,7 @@ public final class VerboseProcess implements Closeable {
                 false
             )
         );
-        thread.setName("VerboseProcess.Monitor-" + hashCode());
+        thread.setName("VrbPrc.Monitor-" + hashCode());
         thread.setDaemon(true);
         thread.start();
         return thread;
@@ -367,7 +364,9 @@ public final class VerboseProcess implements Closeable {
         @Override
         public Void call() throws Exception {
             final BufferedReader reader = new BufferedReader(
-                Channels.newReader(Channels.newChannel(input), VerboseProcess.UTF_8)
+                    Channels.newReader(
+                        Channels.newChannel(input),
+                        VerboseProcess.UTF_8)
             );
             try {
                 final BufferedWriter writer = new BufferedWriter(
