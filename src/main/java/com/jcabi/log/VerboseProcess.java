@@ -68,13 +68,17 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(of = "process")
+@SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseProcess implements Closeable {
 
     /**
      * Charset.
      */
     private static final String UTF_8 = "UTF-8";
-    
+
+    /**
+     * Num of stream monitors.
+     */
     private static final int N_MONITORS = 2;
 
     /**
@@ -92,6 +96,9 @@ public final class VerboseProcess implements Closeable {
      */
     private final transient Level elevel;
 
+    /**
+     * Stream monitors.
+     */
     private final transient Thread[] monitors = new Thread[N_MONITORS];
 
     /**
@@ -183,10 +190,9 @@ public final class VerboseProcess implements Closeable {
 
     @Override
     public void close() {
-        for (Thread monitor : monitors) {
+        for (final Thread monitor : this.monitors) {
             if (monitor != null) {
                 monitor.interrupt();
-                monitor = null;
             }
         }
         this.process.destroy();
@@ -248,7 +254,7 @@ public final class VerboseProcess implements Closeable {
     private String waitFor() throws InterruptedException {
         final CountDownLatch done = new CountDownLatch(N_MONITORS);
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-        monitors[0] = monitor(
+        this.monitors[0] = this.monitor(
             this.process.getInputStream(),
             done, stdout, this.olevel
         );
@@ -256,9 +262,9 @@ public final class VerboseProcess implements Closeable {
             this,
             "#waitFor(): waiting for stdout of %s in %s...",
             this.process,
-            monitors[0]
+            this.monitors[0]
         );
-        monitors[1] = monitor(
+        this.monitors[1] = this.monitor(
             this.process.getErrorStream(),
             done, new ByteArrayOutputStream(), this.elevel
         );
@@ -266,7 +272,7 @@ public final class VerboseProcess implements Closeable {
             this,
             "#waitFor(): waiting for stderr of %s in %s...",
             this.process,
-            monitors[1]
+            this.monitors[1]
         );
         try {
             this.process.waitFor();
@@ -294,7 +300,6 @@ public final class VerboseProcess implements Closeable {
      * @return Thread which is monitoring
      * @checkstyle ParameterNumber (6 lines)
      */
-    @SuppressWarnings("PMD.DoNotUseThreads")
     private Thread monitor(final InputStream input,
         final CountDownLatch done,
         final OutputStream output, final Level level) {
@@ -304,7 +309,12 @@ public final class VerboseProcess implements Closeable {
                 false
             )
         );
-        thread.setName("VrbPrc.Monitor-" + hashCode());
+        thread.setName(
+            String.format(
+                "VrbPrc.Monitor-%d",
+                this.hashCode()
+            )
+        );
         thread.setDaemon(true);
         thread.start();
         return thread;
@@ -364,9 +374,10 @@ public final class VerboseProcess implements Closeable {
         @Override
         public Void call() throws Exception {
             final BufferedReader reader = new BufferedReader(
-                    Channels.newReader(
-                        Channels.newChannel(input),
-                        VerboseProcess.UTF_8)
+                Channels.newReader(
+                    Channels.newChannel(this.input),
+                    VerboseProcess.UTF_8
+                )
             );
             try {
                 final BufferedWriter writer = new BufferedWriter(
@@ -385,11 +396,12 @@ public final class VerboseProcess implements Closeable {
                         writer.write(line);
                         writer.newLine();
                     }
-                } catch(final ClosedByInterruptException ex) {
-                    Thread.interrupted(); // to clear the interrupted status
+                } catch (final ClosedByInterruptException ex) {
+                    Thread.interrupted();
                     Logger.debug(
                         VerboseProcess.class,
-                        "Monitor is interrupted in the expected way");
+                        "Monitor is interrupted in the expected way"
+                    );
                 } catch (final IOException ex) {
                     Logger.error(
                         VerboseProcess.class,

@@ -66,6 +66,7 @@ import org.mockito.stubbing.Answer;
  *  machines, while run perfectly on others. They also fail when being
  *  executed from IntelliJ.
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class VerboseProcessTest {
 
     /**
@@ -241,114 +242,165 @@ public final class VerboseProcessTest {
             Matchers.containsString("Error reading from process stream")
         );
     }
-    
+
     /**
-     * VerboseProcess can terminate its monitors and underlying Process when closed.
+     * VerboseProcess can terminate its monitors and underlying Process when
+     * closed.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void terminatesMonitorsAndUnderlyingProcessWhenClosed() throws Exception {
+    public void terminatesMonitorsAndUnderlyingProcessWhenClosed()
+        throws Exception {
         final InputStream inputStream = new InfiniteInputStream('i');
         final InputStream errorStream = new InfiniteInputStream('e');
         final Process prc = Mockito.mock(Process.class);
-        Mockito.doReturn(
-            inputStream).when(
-            prc).getInputStream();
-        Mockito.doReturn(
-            errorStream).when(
-            prc).getErrorStream();
-
+        Mockito.doReturn(inputStream).when(prc).getInputStream();
+        Mockito.doReturn(errorStream).when(prc).getErrorStream();
         Mockito.doAnswer(
             new Answer<Void>() {
                 @Override
-                public Void answer(InvocationOnMock invocation)
-                        throws Throwable {
+                public Void answer(final InvocationOnMock invocation)
+                    throws Exception {
                     inputStream.close();
                     errorStream.close();
                     return null;
                 }
-            }).when(
-            prc).destroy();
-
-        final VerboseProcess verboseProcess = new VerboseProcess(prc, Level.FINEST, Level.FINEST);
-        
+            }
+        ).when(prc).destroy();
+        final VerboseProcess verboseProcess = new VerboseProcess(
+            prc,
+            Level.FINEST,
+            Level.FINEST
+        );
         final StringWriter writer = new StringWriter();
-        final WriterAppender appender = new WriterAppender(new SimpleLayout(),
-                writer);
-        appender.addFilter(new VerboseProcessFilter(verboseProcess));
-        org.apache.log4j.Logger.getLogger(VerboseProcess.class).addAppender(
-            appender);
-
+        final WriterAppender appender = new WriterAppender(
+            new SimpleLayout(),
+            writer
+        );
+        appender.addFilter(new VrbPrcMonitorFilter(verboseProcess));
+        org.apache.log4j.Logger.getLogger(
+            VerboseProcess.class
+        ).addAppender(appender);
+        final int readInterval = 50;
         new Timer(true).schedule(
             new TimerTask() {
+                @Override
                 public void run() {
                     verboseProcess.close();
                 }
             },
-            50);
-
+            readInterval
+        );
         verboseProcess.stdoutQuietly();
-
-        // allow monitor threads to terminate cos they can write err msg, we are
-        // checking below
-        TimeUnit.MILLISECONDS.sleep(500);
-        Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
+        final int monitorsInterval = 500;
+        TimeUnit.MILLISECONDS.sleep(monitorsInterval);
+        Mockito.verify(
+            prc,
+            Mockito.atLeastOnce()
+        ).destroy();
         MatcherAssert.assertThat(
             writer.toString(),
-            Matchers.not(Matchers.containsString("Error reading from process stream"))
-       );
+            Matchers.not(Matchers
+                    .containsString("Error reading from process stream")
+            )
+        );
     }
 
+    /**
+     * {@link InputStream} returning endless flow of characters.
+     */
     private final class InfiniteInputStream extends InputStream {
-        private char ch;
-        private boolean isFeed = false;
-        private boolean isClosed = false;
-        
-        public InfiniteInputStream(char inputChar) {
-            this.ch = inputChar;
+        /**
+         * End of line.
+         */
+        private static final int LINE_FEED = 0xA;
+
+        /**
+         * Character, endlessly repeated in the stream.
+         */
+        private final transient char chr;
+        /**
+         * Whether the next char in the stream should be EOL.
+         */
+        private transient boolean feed;
+        /**
+         * Whether this stream is closed.
+         */
+        private transient boolean closed;
+
+        /**
+         * Construct an InputStream returning endless combination of this
+         * character and end of line.
+         * @param character Character to return in the stream
+         */
+        public InfiniteInputStream(final char character) {
+            super();
+            this.chr = character;
         }
 
         @Override
         public int read() throws IOException {
-            if (isClosed) {
+            if (this.closed) {
                 throw new IOException("Stream closed");
             }
-            if (isFeed) {
-                isFeed = false;
-                return 0xA;
+            final int next;
+            if (this.feed) {
+                this.feed = false;
+                next = LINE_FEED;
             } else {
-                isFeed = true;
-                return ch;
+                this.feed = true;
+                next = this.chr;
             }
+            return next;
         }
 
         @Override
         public void close() throws IOException {
-            isClosed = true;
+            this.closed = true;
         }
     }
-    
-    private final class VerboseProcessFilter extends Filter {
-        private final static String THREADNAME_START = "^VrbPrc\\.Monitor-";
 
-        private int hash;
+    /**
+     * Filter of log messages of {@link VerboseProcess}'s monitor threads.<br/>
+     * It filters out messages of monitor threads, that doesn't belong to
+     * specific {@link VerboseProcess}.
+     */
+    private final class VrbPrcMonitorFilter extends Filter {
+        /**
+         * Monitor's log message start.
+         */
+        private static final String THREADNAME_START = "VrbPrc.Monitor-";
 
-        public VerboseProcessFilter(VerboseProcess prc) {
+        /**
+         * HashCode of {@link VerboseProcess} to filter.
+         */
+        private final transient int hash;
+
+        /**
+         * Create filter for this process.<br/>
+         * The messages from its monitor threads will be filtered in.
+         * @param prc Process
+         */
+        public VrbPrcMonitorFilter(final VerboseProcess prc) {
+            super();
             this.hash = prc.hashCode();
         }
 
         @Override
-        public int decide(LoggingEvent event) {
-            if (event.getThreadName().matches(THREADNAME_START + ".+")) {
-                if (event.getThreadName().matches(THREADNAME_START + hash)) {
-                    return Filter.ACCEPT;
+        public int decide(final LoggingEvent event) {
+            final String thread = event.getThreadName();
+            final int decision;
+            if (thread.startsWith(THREADNAME_START)) {
+                if (thread.equals(THREADNAME_START + this.hash)) {
+                    decision = Filter.ACCEPT;
                 } else {
-                    return Filter.DENY;
+                    decision = Filter.DENY;
                 }
             } else {
-                return Filter.NEUTRAL;
+                decision = Filter.NEUTRAL;
             }
+            return decision;
         }
-        
+
     }
 }
