@@ -6,6 +6,7 @@ assets:
 
 env:
   MAVEN_OPTS: "-XX:MaxPermSize=256m -Xmx1g"
+  LC_ALL: en_US.UTF-8
 
 install:
   - "sudo gem install pdd"
