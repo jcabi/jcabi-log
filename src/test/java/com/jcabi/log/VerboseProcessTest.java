@@ -36,8 +36,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -255,7 +253,9 @@ public final class VerboseProcessTest {
     /**
      * VerboseProcess can terminate its monitors and underlying Process when
      * closed.
-     * @throws Exception If something goes wrong
+     * @throws Exception If something goes wrong 
+     * 
+     * anaktodo use timeouts to call close(): 0,50,500.
      */
     @Test
     public void terminatesMonitorsAndUnderlyingProcessWhenClosed()
@@ -294,15 +294,7 @@ public final class VerboseProcessTest {
         org.apache.log4j.Logger.getLogger(
             VerboseProcess.class
         ).addAppender(appender);
-        new Timer(true).schedule(
-            new TimerTask() {
-                @Override
-                public void run() {
-                    verboseProcess.close();
-                }
-            },
-            Tv.FIFTY
-        );
+        verboseProcess.close();
         verboseProcess.stdoutQuietly();
         TimeUnit.MILLISECONDS.sleep(Tv.THOUSAND);
         Mockito.verify(

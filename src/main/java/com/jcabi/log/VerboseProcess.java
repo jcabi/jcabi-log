@@ -190,6 +190,7 @@ public final class VerboseProcess implements Closeable {
 
     @Override
     public void close() {
+        // anaktodo set class synced flag
         for (final Thread monitor : this.monitors) {
             if (monitor != null) {
                 monitor.interrupt();
@@ -197,9 +198,7 @@ public final class VerboseProcess implements Closeable {
             }
         }
         this.process.destroy();
-        Logger.debug(
-            this,
-            "***DESTROYED");
+        Logger.debug(this, "***DESTROYED");
     }
 
     /**
@@ -396,6 +395,7 @@ public final class VerboseProcess implements Closeable {
                 );
                 try {
                     while (true) {
+                        // anaktodo read class flag, dont read isInterrupted()
                         Logger.debug(this, "***isInterrupted=" + Thread.currentThread().isInterrupted());
                         if (Thread.currentThread().isInterrupted()) {
                             Logger.debug(
