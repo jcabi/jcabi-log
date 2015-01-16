@@ -193,9 +193,13 @@ public final class VerboseProcess implements Closeable {
         for (final Thread monitor : this.monitors) {
             if (monitor != null) {
                 monitor.interrupt();
+                Logger.debug(this, "***interrupt");
             }
         }
         this.process.destroy();
+        Logger.debug(
+            this,
+            "***DESTROYED");
     }
 
     /**
@@ -256,7 +260,10 @@ public final class VerboseProcess implements Closeable {
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         this.monitors[0] = this.monitor(
             this.process.getInputStream(),
-            done, stdout, this.olevel
+            done,
+            stdout,
+            this.olevel,
+            "out"
         );
         Logger.debug(
             this,
@@ -266,7 +273,10 @@ public final class VerboseProcess implements Closeable {
         );
         this.monitors[1] = this.monitor(
             this.process.getErrorStream(),
-            done, new ByteArrayOutputStream(), this.elevel
+            done,
+            new ByteArrayOutputStream(),
+            this.elevel,
+            "err"
         );
         Logger.debug(
             this,
@@ -302,7 +312,7 @@ public final class VerboseProcess implements Closeable {
      */
     private Thread monitor(final InputStream input,
         final CountDownLatch done,
-        final OutputStream output, final Level level) {
+        final OutputStream output, final Level level, final String name) {
         final Thread thread = new Thread(
             new VerboseRunnable(
                 new VerboseProcess.Monitor(input, done, output, level),
@@ -311,8 +321,9 @@ public final class VerboseProcess implements Closeable {
         );
         thread.setName(
             String.format(
-                "VrbPrc.Monitor-%d",
-                this.hashCode()
+                "VrbPrc.Monitor-%d-%s",
+                this.hashCode(),
+                name
             )
         );
         thread.setDaemon(true);
@@ -385,6 +396,13 @@ public final class VerboseProcess implements Closeable {
                 );
                 try {
                     while (true) {
+                        Logger.debug(this, "***isInterrupted=" + Thread.currentThread().isInterrupted());
+                        if (Thread.currentThread().isInterrupted()) {
+                            Logger.debug(
+                                this,
+                                "explicitly interrupting read from buffer");
+                            throw new ClosedByInterruptException();
+                        }
                         final String line = reader.readLine();
                         if (line == null) {
                             break;

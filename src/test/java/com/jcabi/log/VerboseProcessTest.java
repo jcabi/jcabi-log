@@ -237,7 +237,15 @@ public final class VerboseProcessTest {
         Mockito.doReturn(stdout).when(prc).getInputStream();
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
-        new VerboseProcess(prc, Level.ALL, Level.ALL).stdout();
+        final VerboseProcess verboseProcess = new VerboseProcess(
+            prc,
+            Level.ALL,
+            Level.ALL);
+        Logger.debug(
+            this,
+            "logsErrorWhenUnderlyingStreamIsClosed.verboseProcess.hashCode="
+                    + verboseProcess.hashCode());
+        verboseProcess.stdout();
         MatcherAssert.assertThat(
             writer.toString(),
             Matchers.containsString("Error reading from process stream")
@@ -273,6 +281,10 @@ public final class VerboseProcessTest {
             Level.FINEST,
             Level.FINEST
         );
+        Logger.debug(
+            this,
+            "terminatesMonitorsAndUnderlyingProcessWhenClosed.verboseProcess.hashCode="
+                    + verboseProcess.hashCode());
         final StringWriter writer = new StringWriter();
         final WriterAppender appender = new WriterAppender(
             new SimpleLayout(),
@@ -391,19 +403,13 @@ public final class VerboseProcessTest {
         public int decide(final LoggingEvent event) {
             final String thread = event.getThreadName();
             final int decision;
-            if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START)) {
-                if (thread.equals(VrbPrcMonitorFilter.THREADNAME_START
-                        + this.hash
-                )) {
-                    decision = Filter.ACCEPT;
-                } else {
-                    decision = Filter.DENY;
-                }
+            if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START
+                    + this.hash)) {
+                decision = Filter.ACCEPT;
             } else {
-                decision = Filter.NEUTRAL;
+                decision = Filter.DENY;
             }
             return decision;
         }
-
     }
 }
