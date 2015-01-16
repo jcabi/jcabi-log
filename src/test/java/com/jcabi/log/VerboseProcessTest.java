@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+import com.jcabi.aspects.Tv;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -281,7 +282,6 @@ public final class VerboseProcessTest {
         org.apache.log4j.Logger.getLogger(
             VerboseProcess.class
         ).addAppender(appender);
-        final int readInterval = 50;
         new Timer(true).schedule(
             new TimerTask() {
                 @Override
@@ -289,11 +289,10 @@ public final class VerboseProcessTest {
                     verboseProcess.close();
                 }
             },
-            readInterval
+            Tv.FIFTY
         );
         verboseProcess.stdoutQuietly();
-        final int monitorsInterval = 500;
-        TimeUnit.MILLISECONDS.sleep(monitorsInterval);
+        TimeUnit.MILLISECONDS.sleep(Tv.THOUSAND);
         Mockito.verify(
             prc,
             Mockito.atLeastOnce()
@@ -346,7 +345,7 @@ public final class VerboseProcessTest {
             final int next;
             if (this.feed) {
                 this.feed = false;
-                next = LINE_FEED;
+                next = InfiniteInputStream.LINE_FEED;
             } else {
                 this.feed = true;
                 next = this.chr;
@@ -361,8 +360,9 @@ public final class VerboseProcessTest {
     }
 
     /**
-     * Filter of log messages of {@link VerboseProcess}'s monitor threads.<br/>
-     * It filters out messages of monitor threads, that doesn't belong to
+     * Filter of log messages of {@link VerboseProcess}'s monitor threads.
+     *
+     * <p>It filters out messages of monitor threads, that doesn't belong to
      * specific {@link VerboseProcess}.
      */
     private final class VrbPrcMonitorFilter extends Filter {
@@ -377,8 +377,9 @@ public final class VerboseProcessTest {
         private final transient int hash;
 
         /**
-         * Create filter for this process.<br/>
-         * The messages from its monitor threads will be filtered in.
+         * Create filter for this process.
+         *
+         * <p>The messages from its monitor threads will be filtered in.
          * @param prc Process
          */
         public VrbPrcMonitorFilter(final VerboseProcess prc) {
@@ -390,8 +391,10 @@ public final class VerboseProcessTest {
         public int decide(final LoggingEvent event) {
             final String thread = event.getThreadName();
             final int decision;
-            if (thread.startsWith(THREADNAME_START)) {
-                if (thread.equals(THREADNAME_START + this.hash)) {
+            if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START)) {
+                if (thread.equals(VrbPrcMonitorFilter.THREADNAME_START
+                        + this.hash
+                )) {
                     decision = Filter.ACCEPT;
                 } else {
                     decision = Filter.DENY;

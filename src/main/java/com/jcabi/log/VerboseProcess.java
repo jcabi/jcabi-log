@@ -77,7 +77,7 @@ public final class VerboseProcess implements Closeable {
     private static final String UTF_8 = "UTF-8";
 
     /**
-     * Num of stream monitors.
+     * Number of stream monitors.
      */
     private static final int N_MONITORS = 2;
 
@@ -280,7 +280,7 @@ public final class VerboseProcess implements Closeable {
             Logger.debug(
                 this, "#waitFor(): process finished: %s", this.process
             );
-            if (!done.await(N_MONITORS, TimeUnit.SECONDS)) {
+            if (!done.await(2L, TimeUnit.SECONDS)) {
                 Logger.error(this, "#wait() failed");
             }
         }
