@@ -101,6 +101,8 @@ public final class VerboseProcess implements Closeable {
      */
     private final transient Thread[] monitors = new Thread[N_MONITORS];
 
+    private transient boolean closed = false;
+
     /**
      * Public ctor.
      * @param prc The process to work with
@@ -190,7 +192,7 @@ public final class VerboseProcess implements Closeable {
 
     @Override
     public void close() {
-        // anaktodo set class synced flag
+        this.markClosed();
         for (final Thread monitor : this.monitors) {
             if (monitor != null) {
                 monitor.interrupt();
@@ -199,6 +201,10 @@ public final class VerboseProcess implements Closeable {
         }
         this.process.destroy();
         Logger.debug(this, "***DESTROYED");
+    }
+
+    private synchronized void markClosed() {
+        this.closed = true;
     }
 
     /**
@@ -257,46 +263,58 @@ public final class VerboseProcess implements Closeable {
     private String waitFor() throws InterruptedException {
         final CountDownLatch done = new CountDownLatch(N_MONITORS);
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-        this.monitors[0] = this.monitor(
-            this.process.getInputStream(),
-            done,
-            stdout,
-            this.olevel,
-            "out"
-        );
-        Logger.debug(
-            this,
-            "#waitFor(): waiting for stdout of %s in %s...",
-            this.process,
-            this.monitors[0]
-        );
-        this.monitors[1] = this.monitor(
-            this.process.getErrorStream(),
-            done,
-            new ByteArrayOutputStream(),
-            this.elevel,
-            "err"
-        );
-        Logger.debug(
-            this,
-            "#waitFor(): waiting for stderr of %s in %s...",
-            this.process,
-            this.monitors[1]
-        );
+        this.monitors(done, stdout);
         try {
             this.process.waitFor();
         } finally {
             Logger.debug(
-                this, "#waitFor(): process finished: %s", this.process
-            );
-            if (!done.await(2L, TimeUnit.SECONDS)) {
-                Logger.error(this, "#wait() failed");
+                this,
+                "#waitFor(): process finished: %s",
+                this.process);
+            if (!done.await(
+                2L,
+                TimeUnit.SECONDS)) {
+                Logger.error(
+                    this,
+                    "#wait() failed");
             }
         }
         try {
             return stdout.toString(VerboseProcess.UTF_8);
         } catch (final UnsupportedEncodingException ex) {
-            throw new IllegalStateException(ex);
+            throw new IllegalStateException(
+                ex);
+        }
+    }
+
+    private synchronized void monitors(final CountDownLatch done,
+            final ByteArrayOutputStream stdout) {
+        if (!this.closed) {
+            this.monitors[0] = this.monitor(
+                this.process.getInputStream(),
+                done,
+                stdout,
+                this.olevel,
+                "out");
+            Logger.debug(
+                this,
+                "#waitFor(): waiting for stdout of %s in %s...",
+                this.process,
+                this.monitors[0]);
+            this.monitors[1] = this.monitor(
+                this.process.getErrorStream(),
+                done,
+                new ByteArrayOutputStream(),
+                this.elevel,
+                "err");
+            Logger.debug(
+                this,
+                "#waitFor(): waiting for stderr of %s in %s...",
+                this.process,
+                this.monitors[1]);
+        } else {
+            done.countDown();
+            done.countDown();
         }
     }
 
@@ -395,8 +413,6 @@ public final class VerboseProcess implements Closeable {
                 );
                 try {
                     while (true) {
-                        // anaktodo read class flag, dont read isInterrupted()
-                        Logger.debug(this, "***isInterrupted=" + Thread.currentThread().isInterrupted());
                         if (Thread.currentThread().isInterrupted()) {
                             Logger.debug(
                                 this,
