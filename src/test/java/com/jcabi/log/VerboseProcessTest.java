@@ -240,11 +240,13 @@ public final class VerboseProcessTest {
         final VerboseProcess verboseProcess = new VerboseProcess(
             prc,
             Level.ALL,
-            Level.ALL);
+            Level.ALL
+        );
         Logger.debug(
             this,
             "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
-            verboseProcess.hashCode());
+            verboseProcess.hashCode()
+        );
         verboseProcess.stdout();
         MatcherAssert.assertThat(
             writer.toString(),
@@ -253,39 +255,47 @@ public final class VerboseProcessTest {
     }
 
     /**
-     * VerboseProcess can terminate its monitors and underlying Process when
+     * VerboseProcess can terminate its monitors and underlying Process if
      * closed before real usage.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void terminatesMonitorsAndProcessWhenClosedInstantly()
-            throws Exception {
-        this.terminatesMonitorsAndProcessWhenClosed_intrnl(0);
+    public void terminatesMonitorsAndProcessIfClosedInstantly()
+        throws Exception {
+        this.terminatesMonitorsAndProcessIfClosed(0);
     }
 
     /**
-     * VerboseProcess can terminate its monitors and underlying Process when
+     * VerboseProcess can terminate its monitors and underlying Process if
      * closed shortly after real usage.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void terminatesMonitorsAndProcessWhenClosedShortly()
-            throws Exception {
-        this.terminatesMonitorsAndProcessWhenClosed_intrnl(Tv.FIFTY);
+    public void terminatesMonitorsAndProcessIfClosedShortly()
+        throws Exception {
+        this.terminatesMonitorsAndProcessIfClosed(Tv.FIFTY);
     }
 
     /**
-     * VerboseProcess can terminate its monitors and underlying Process when
+     * VerboseProcess can terminate its monitors and underlying Process if
      * closed after longer time since real usage.
      * @throws Exception If something goes wrong
      */
     @Test
-    public void terminatesMonitorsAndProcessWhenClosedNormal() throws Exception {
-        this.terminatesMonitorsAndProcessWhenClosed_intrnl(4 * Tv.HUNDRED);
+    public void terminatesMonitorsAndProcessIfClosedNormal() throws Exception {
+        final long delay = 400;
+        this.terminatesMonitorsAndProcessIfClosed(delay);
     }
 
-    private void terminatesMonitorsAndProcessWhenClosed_intrnl(final long delay)
-            throws Exception {
+    /**
+     * VerboseProcess can terminate its monitors and underlying Process if
+     * closed after specified time since real usage.
+     * @param delay Time in milliseconds between usage of vrbcPrc starts and
+     *  its close() issued
+     * @throws Exception If something goes wrong
+     */
+    private void terminatesMonitorsAndProcessIfClosed(final long delay)
+        throws Exception {
         final InputStream inputStream = new InfiniteInputStream('i');
         final InputStream errorStream = new InfiniteInputStream('e');
         final Process prc = Mockito.mock(Process.class);
@@ -309,9 +319,10 @@ public final class VerboseProcessTest {
         );
         Logger.debug(
             this,
-            "#terminatesMonitorsAndProcessWhenClosed_intrnl(): delay=%d vrbPrc.hashCode=%s",
+            "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
             delay,
-            verboseProcess.hashCode());
+            verboseProcess.hashCode()
+        );
         final StringWriter writer = new StringWriter();
         final WriterAppender appender = new WriterAppender(
             new SimpleLayout(),
@@ -435,7 +446,8 @@ public final class VerboseProcessTest {
             final String thread = event.getThreadName();
             final int decision;
             if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START
-                    + this.hash)) {
+                    + this.hash
+            )) {
                 decision = Filter.ACCEPT;
             } else {
                 decision = Filter.DENY;

@@ -101,7 +101,10 @@ public final class VerboseProcess implements Closeable {
      */
     private final transient Thread[] monitors = new Thread[N_MONITORS];
 
-    private transient boolean closed = false;
+    /**
+     * Flag to indicate the closure of this process.
+     */
+    private transient boolean closed;
 
     /**
      * Public ctor.
@@ -192,7 +195,9 @@ public final class VerboseProcess implements Closeable {
 
     @Override
     public void close() {
-        this.markClosed();
+        synchronized (this.monitors) {
+            this.closed = true;
+        }
         for (final Thread monitor : this.monitors) {
             if (monitor != null) {
                 monitor.interrupt();
@@ -201,10 +206,6 @@ public final class VerboseProcess implements Closeable {
         }
         this.process.destroy();
         Logger.debug(this, "underlying process destroyed");
-    }
-
-    private synchronized void markClosed() {
-        this.closed = true;
     }
 
     /**
@@ -263,58 +264,65 @@ public final class VerboseProcess implements Closeable {
     private String waitFor() throws InterruptedException {
         final CountDownLatch done = new CountDownLatch(N_MONITORS);
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-        this.monitors(done, stdout);
+        this.launchMonitors(done, stdout);
         try {
             this.process.waitFor();
         } finally {
             Logger.debug(
                 this,
                 "#waitFor(): process finished: %s",
-                this.process);
-            if (!done.await(
-                2L,
-                TimeUnit.SECONDS)) {
-                Logger.error(
-                    this,
-                    "#wait() failed");
+                this.process
+            );
+            if (!done.await(2L, TimeUnit.SECONDS)) {
+                Logger.error(this, "#wait() failed");
             }
         }
         try {
             return stdout.toString(VerboseProcess.UTF_8);
         } catch (final UnsupportedEncodingException ex) {
-            throw new IllegalStateException(
-                ex);
+            throw new IllegalStateException(ex);
         }
     }
 
-    private synchronized void monitors(final CountDownLatch done,
+    /**
+     * Launch monitors for the underlying process.
+     * @param done Latch that signals termination of all monitors
+     * @param stdout Stream to write the underlying process's output
+     */
+    private void launchMonitors(final CountDownLatch done,
             final ByteArrayOutputStream stdout) {
-        if (!this.closed) {
-            this.monitors[0] = this.monitor(
-                this.process.getInputStream(),
-                done,
-                stdout,
-                this.olevel,
-                "out");
-            Logger.debug(
-                this,
-                "#waitFor(): waiting for stdout of %s in %s...",
-                this.process,
-                this.monitors[0]);
-            this.monitors[1] = this.monitor(
-                this.process.getErrorStream(),
-                done,
-                new ByteArrayOutputStream(),
-                this.elevel,
-                "err");
-            Logger.debug(
-                this,
-                "#waitFor(): waiting for stderr of %s in %s...",
-                this.process,
-                this.monitors[1]);
-        } else {
-            done.countDown();
-            done.countDown();
+        synchronized (this.monitors) {
+            if (this.closed) {
+                done.countDown();
+                done.countDown();
+            } else {
+                this.monitors[0] = this.monitor(
+                    this.process.getInputStream(),
+                    done,
+                    stdout,
+                    this.olevel,
+                    "out"
+                );
+                Logger.debug(
+                    this,
+                    "#waitFor(): waiting for stdout of %s in %s...",
+                    this.process,
+                    this.monitors[0]
+                );
+                this.monitors[1] = this.monitor(
+                    this.process.getErrorStream(),
+                    done,
+                    new ByteArrayOutputStream(),
+                    this.elevel,
+                    "err"
+                );
+                Logger.debug(
+                    this,
+                    "#waitFor(): waiting for stderr of %s in %s...",
+                    this.process,
+                    this.monitors[1]
+                );
+            }
         }
     }
 
@@ -324,6 +332,7 @@ public final class VerboseProcess implements Closeable {
      * @param done Count down latch to signal when done
      * @param output Buffer to write to
      * @param level Logging level
+     * @param name Name of this monitor. Used in logging as part of threadname
      * @return Thread which is monitoring
      * @checkstyle ParameterNumber (6 lines)
      */
@@ -413,11 +422,12 @@ public final class VerboseProcess implements Closeable {
                 );
                 try {
                     while (true) {
-                        if (Thread.currentThread().isInterrupted()) {
+                        if (Thread.interrupted()) {
                             Logger.debug(
-                                this,
-                                "explicitly interrupting read from buffer");
-                            throw new ClosedByInterruptException();
+                                VerboseProcess.class,
+                                "explicitly interrupting read from buffer"
+                            );
+                            break;
                         }
                         final String line = reader.readLine();
                         if (line == null) {
