@@ -243,8 +243,8 @@ public final class VerboseProcessTest {
             Level.ALL);
         Logger.debug(
             this,
-            "logsErrorWhenUnderlyingStreamIsClosed.verboseProcess.hashCode="
-                    + verboseProcess.hashCode());
+            "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
+            verboseProcess.hashCode());
         verboseProcess.stdout();
         MatcherAssert.assertThat(
             writer.toString(),
@@ -260,7 +260,7 @@ public final class VerboseProcessTest {
     @Test
     public void terminatesMonitorsAndProcessWhenClosedInstantly()
             throws Exception {
-        this.terminatesMonitorsAndUnderlyingProcessWhenClosed_intrnl(0);
+        this.terminatesMonitorsAndProcessWhenClosed_intrnl(0);
     }
 
     /**
@@ -271,7 +271,7 @@ public final class VerboseProcessTest {
     @Test
     public void terminatesMonitorsAndProcessWhenClosedShortly()
             throws Exception {
-        this.terminatesMonitorsAndUnderlyingProcessWhenClosed_intrnl(Tv.FIFTY);
+        this.terminatesMonitorsAndProcessWhenClosed_intrnl(Tv.FIFTY);
     }
 
     /**
@@ -281,10 +281,10 @@ public final class VerboseProcessTest {
      */
     @Test
     public void terminatesMonitorsAndProcessWhenClosedNormal() throws Exception {
-        this.terminatesMonitorsAndUnderlyingProcessWhenClosed_intrnl(4 * Tv.HUNDRED);
+        this.terminatesMonitorsAndProcessWhenClosed_intrnl(4 * Tv.HUNDRED);
     }
 
-    private void terminatesMonitorsAndUnderlyingProcessWhenClosed_intrnl(final long delay)
+    private void terminatesMonitorsAndProcessWhenClosed_intrnl(final long delay)
             throws Exception {
         final InputStream inputStream = new InfiniteInputStream('i');
         final InputStream errorStream = new InfiniteInputStream('e');
@@ -309,8 +309,9 @@ public final class VerboseProcessTest {
         );
         Logger.debug(
             this,
-            "terminatesMonitorsAndUnderlyingProcessWhenClosed.verboseProcess.hashCode="
-                    + verboseProcess.hashCode());
+            "#terminatesMonitorsAndProcessWhenClosed_intrnl(): delay=%d vrbPrc.hashCode=%s",
+            delay,
+            verboseProcess.hashCode());
         final StringWriter writer = new StringWriter();
         final WriterAppender appender = new WriterAppender(
             new SimpleLayout(),

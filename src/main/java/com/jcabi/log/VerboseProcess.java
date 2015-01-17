@@ -196,11 +196,11 @@ public final class VerboseProcess implements Closeable {
         for (final Thread monitor : this.monitors) {
             if (monitor != null) {
                 monitor.interrupt();
-                Logger.debug(this, "***interrupt");
+                Logger.debug(this, "monitor interrupted");
             }
         }
         this.process.destroy();
-        Logger.debug(this, "***DESTROYED");
+        Logger.debug(this, "underlying process destroyed");
     }
 
     private synchronized void markClosed() {
