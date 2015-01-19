@@ -67,13 +67,17 @@ public final class ObjectDecorTest extends AbstractDecorTest {
     @Parameters
     public static Collection<Object[]> params() {
         return Arrays.asList(
-            new Object[][] {
-              {
-                  new Object[]{new Foo(0, "zero"), new Foo(2, "two")},
-                  "[{num: \"0\", name: \"zero\"}, {num: \"2\", name: \"two\"}]",
-                  0, 0, 0
-              },
-            }
+              new Object[][] {
+                  {
+                      new Object[]{
+                          new Foo(0, "zero"),
+                          new Foo(2, "two"),
+                      },
+                      // @checkstyle LineLength (1 line)
+                      "[{num: \"0\", name: \"zero\"}, {num: \"2\", name: \"two\"}]",
+                      0, 0, 0,
+                  },
+              }
         );
     }
 

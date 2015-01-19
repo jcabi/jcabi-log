@@ -69,8 +69,10 @@ final class ObjectDecor implements Formattable {
         if (this.object == null) {
             formatter.format("NULL");
         } else if (this.object.getClass().isArray()) {
-            formatter.format(AccessController.doPrivileged(
-                new ArrayContentsFormatAction((Object [])this.object))
+            formatter.format(
+                AccessController.doPrivileged(
+                    new ArrayFormatAction((Object[]) this.object)
+                )
             );
         } else {
             final String output =

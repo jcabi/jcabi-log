@@ -30,51 +30,43 @@
 package com.jcabi.log;
 
 import com.jcabi.aspects.Immutable;
-import java.lang.reflect.Field;
 import java.security.PrivilegedAction;
+import java.util.Arrays;
+import java.util.Formatter;
 
 /**
- * {@link PrivilegedAction} for obtaining object contents.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * {@link PrivilegedAction} for obtaining array contents.
+ * @author Aleksey Popov (alopen@yandex.ru)
  * @version $Id$
  */
 @Immutable
-final class ObjectContentsFormatAction
-    implements PrivilegedAction<String> {
+final class ArrayFormatAction
+    implements PrivilegedAction<String>  {
     /**
-     * Object to format.
+     * Array to format.
      */
-    private final transient Object object;
+    private final transient Object[] array;
 
     /**
      * Constructor.
-     * @param obj Object to format
+     * @param arr Array to format
      */
-    ObjectContentsFormatAction(final Object obj) {
-        this.object = obj;
+    ArrayFormatAction(final Object[] arr) {
+        this.array = Arrays.copyOf(arr, arr.length);
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     public String run() {
-        final StringBuilder builder = new StringBuilder("{");
-        for (final Field field
-            : this.object.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            try {
-                builder.append(
-                    String.format(
-                        "%s: \"%s\"",
-                        field.getName(),
-                        field.get(this.object)
-                    )
-                );
-            } catch (final IllegalAccessException ex) {
-                throw new IllegalStateException(ex);
+        final StringBuilder builder = new StringBuilder("[");
+        final Formatter formatter = new Formatter(builder);
+        for (int index = 0; index < this.array.length; index += 1) {
+            new ObjectDecor(this.array[index]).formatTo(formatter, 0, 0, 0);
+            if (index < this.array.length - 1) {
+                builder.append(", ");
             }
-            builder.append(", ");
         }
-        builder.replace(builder.length() - 2, builder.length(), "}");
+        builder.append(']');
         return builder.toString();
-    };
+    }
 }
