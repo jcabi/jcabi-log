@@ -60,13 +60,11 @@ final class ArrayFormatAction
     public String run() {
         final StringBuilder builder = new StringBuilder("[");
         final Formatter formatter = new Formatter(builder);
-        for (int index = 0; index < this.array.length; index += 1) {
-            new ObjectDecor(this.array[index]).formatTo(formatter, 0, 0, 0);
-            if (index < this.array.length - 1) {
-                builder.append(", ");
-            }
+        for (final Object obj : this.array) {
+            new ObjectDecor(obj).formatTo(formatter, 0, 0, 0);
+            builder.append(", ");
         }
-        builder.append(']');
+        builder.replace(builder.length() - 2, builder.length(), "]");
         return builder.toString();
     }
 }
