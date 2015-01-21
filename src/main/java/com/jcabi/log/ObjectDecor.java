@@ -29,7 +29,11 @@
  */
 package com.jcabi.log;
 
+import com.jcabi.aspects.Immutable;
+import java.lang.reflect.Field;
 import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Arrays;
 import java.util.Formattable;
 import java.util.Formatter;
 import lombok.EqualsAndHashCode;
@@ -77,10 +81,92 @@ final class ObjectDecor implements Formattable {
         } else {
             final String output =
                 AccessController.doPrivileged(
-                    new ObjectContentsFormatAction(this.object)
+                    new ObjectDecor.ObjectContentsFormatAction(this.object)
                 );
             formatter.format(output);
         }
     }
 
+    /**
+     * {@link PrivilegedAction} for obtaining array contents.
+     * @author Aleksey Popov (alopen@yandex.ru)
+     * @version $Id$
+     */
+    @Immutable
+    static final class ArrayFormatAction
+        implements PrivilegedAction<String>  {
+        /**
+         * Array to format.
+         */
+        private final transient Object[] array;
+
+        /**
+         * Constructor.
+         * @param arr Array to format
+         */
+        ArrayFormatAction(final Object[] arr) {
+            this.array = Arrays.copyOf(arr, arr.length);
+        }
+
+        @Override
+        @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+        public String run() {
+            final StringBuilder builder = new StringBuilder("[");
+            final Formatter formatter = new Formatter(builder);
+            for (final Object obj : this.array) {
+                new ObjectDecor(obj).formatTo(formatter, 0, 0, 0);
+                // @checkstyle MultipleStringLiteralsCheck (1 line)
+                builder.append(", ");
+            }
+            builder.replace(builder.length() - 2, builder.length(), "]");
+            return builder.toString();
+        }
+    }
+
+    /**
+     * {@link PrivilegedAction} for obtaining object contents.
+     * @author Marina Kosenko (marina.kosenko@gmail.com)
+     * @author Yegor Bugayenko (yegor@tpc2.com)
+     * @version $Id$
+     */
+    @Immutable
+    static final class ObjectContentsFormatAction
+        implements PrivilegedAction<String> {
+        /**
+         * Object to format.
+         */
+        private final transient Object object;
+
+        /**
+         * Constructor.
+         * @param obj Object to format
+         */
+        ObjectContentsFormatAction(final Object obj) {
+            this.object = obj;
+        }
+
+        @Override
+        public String run() {
+            final StringBuilder builder = new StringBuilder("{");
+            for (final Field field
+                : this.object.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                try {
+                    builder.append(
+                        String.format(
+                            "%s: \"%s\"",
+                            field.getName(),
+                            field.get(this.object)
+                        )
+                    );
+                } catch (final IllegalAccessException ex) {
+                    throw new IllegalStateException(ex);
+                }
+                // @checkstyle MultipleStringLiteralsCheck (1 line)
+                builder.append(", ");
+            }
+            builder.replace(builder.length() - 2, builder.length(), "}");
+            return builder.toString();
+        };
+    }
 }

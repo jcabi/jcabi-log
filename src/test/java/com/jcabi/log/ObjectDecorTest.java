@@ -76,7 +76,7 @@ public final class ObjectDecorTest extends AbstractDecorTest {
                 {
                     new Object[]{new Foo(0, "zero"), new Foo(2, "two")},
                     "[{num: \"0\", name: \"zero\"}, {num: \"2\", name: \"two\"}]",
-                    0, 0, 0
+                    0, 0, 0,
                 },
             }
         );
