@@ -93,7 +93,7 @@ final class ObjectDecor implements Formattable {
      * @version $Id$
      */
     @Immutable
-    static final class ArrayFormatAction
+    private static final class ArrayFormatAction
         implements PrivilegedAction<String>  {
         /**
          * Array to format.
@@ -130,7 +130,7 @@ final class ObjectDecor implements Formattable {
      * @version $Id$
      */
     @Immutable
-    static final class ObjectContentsFormatAction
+    private static final class ObjectContentsFormatAction
         implements PrivilegedAction<String> {
         /**
          * Object to format.
