@@ -50,7 +50,6 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -76,7 +75,6 @@ public final class VerboseProcessTest {
      * @link http://stackoverflow.com/questions/24802042
      */
     @Test
-    @Ignore
     public void runsACommandLineScript() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         final VerboseProcess process = new VerboseProcess(
@@ -94,17 +92,16 @@ public final class VerboseProcessTest {
      * @link http://stackoverflow.com/questions/24802042
      */
     @Test
-    @Ignore
     public void echosUnicodeCorrectly() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
         MatcherAssert.assertThat(
             new VerboseProcess(
                 new ProcessBuilder(
                     "/bin/bash", "-c",
-                    "echo -n \u0442\u0435\u0441\u0442 | hexdump"
+                    "echo -n \u0442\u0435\u0441\u0442 | hexdump -C"
                 )
             ).stdout(),
-            Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
+            Matchers.containsString("0000000  d1 82 d0 b5 d1 81 d1 82")
         );
     }
 
@@ -115,9 +112,13 @@ public final class VerboseProcessTest {
     @Test
     public void runsACommandLineScriptWithException() throws Exception {
         Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final ProcessBuilder builder = new ProcessBuilder(
+            "cat", "/non-existing-file.txt"
+        );
+        builder.environment().clear();
+        builder.environment().put("LC_ALL", "C");
         final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("cat", "/non-existing-file.txt")
-                .redirectErrorStream(true)
+            builder.redirectErrorStream(true)
         );
         try {
             process.stdout();
