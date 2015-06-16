@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2014, jcabi.com
+ * Copyright (c) 2012-2015, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,7 @@ import lombok.ToString;
  * Manager of all decors.
  *
  * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1
  */

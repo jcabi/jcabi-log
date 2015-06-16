@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2014, jcabi.com
+ * Copyright (c) 2012-2015, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,7 @@ import org.mockito.stubbing.Answer;
 
 /**
  * Test case for {@link VerboseProcess}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @checkstyle MultipleStringLiterals (200 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)

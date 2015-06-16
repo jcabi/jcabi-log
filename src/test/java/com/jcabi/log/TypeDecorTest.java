@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2014, jcabi.com
+ * Copyright (c) 2012-2015, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Test case for {@link TypeDecor}.
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  */
 @RunWith(Parameterized.class)

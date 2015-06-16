@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2014, jcabi.com
+ * Copyright (c) 2012-2015, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -76,7 +76,7 @@ import org.apache.log4j.spi.LoggingEvent;
  *  &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
+ * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1.10
  * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
