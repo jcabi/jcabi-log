@@ -41,6 +41,19 @@ import org.mockito.Mockito;
  * Test case for {@link MulticolorLayout}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @todo #54:30min Create an integration test for testing if MulticolorLayout
+ *  will disable text coloring when an application is run with
+ *  `-Dcom.jcabi.log.coloring=false`.
+ *  ...
+ *  Intergration testing is required because this can't be done in a unit test:
+ *  ...
+ *  - We can't just pass a parameter to `MulticolorLayout` that determines if
+ *  the layout should color its output, because Log4J requires
+ *  EnhancedPatternLayout to have a 0-arguments constructor.
+ *  - We can't disable coloring with something like
+ *  `MulticolorLayout#setColoring(boolean)`, too, (that would be unit-testable)
+ *  because Log4J won't know how to call that.
+ *  - `System.getProperty(String)` is not mockable for obvious reasons.
  */
 public final class MulticolorLayoutTest {
 
