@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
@@ -56,6 +57,12 @@ final class PreFormatter {
         // @checkstyle LineLength (1 line)
         "%(?:\\d+\\$)?(\\[([A-Za-z\\-\\.0-9]+)\\])?[\\+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
     );
+
+    /**
+     * List of no argument specifier.
+     */
+    private static final List<String> NO_ARG_SPECIFIERS =
+        Arrays.asList("%n", "%%");
 
     /**
      * The formatting string.
@@ -103,27 +110,39 @@ final class PreFormatter {
         final Matcher matcher = PATTERN.matcher(fmt);
         int pos = 0;
         while (matcher.find()) {
-            final String decor = matcher.group(2);
-            if (decor == null) {
+            final String group = matcher.group();
+            if (NO_ARG_SPECIFIERS.contains(group)) {
                 matcher.appendReplacement(
                     buf,
-                    Matcher.quoteReplacement(matcher.group())
+                    Matcher.quoteReplacement(group)
                 );
-                this.arguments.add(args[pos]);
             } else {
-                matcher.appendReplacement(
-                    buf,
-                    Matcher.quoteReplacement(
-                        matcher.group().replace(matcher.group(1), "")
-                    )
-                );
-                try {
-                    this.arguments.add(DecorsManager.decor(decor, args[pos]));
-                } catch (final DecorException ex) {
-                    this.arguments.add(String.format("[%s]", ex.getMessage()));
+                final String decor = matcher.group(2);
+                if (decor == null) {
+                    matcher.appendReplacement(
+                        buf,
+                        Matcher.quoteReplacement(group)
+                    );
+                    this.arguments.add(args[pos]);
+                } else {
+                    matcher.appendReplacement(
+                        buf,
+                        Matcher.quoteReplacement(
+                            group.replace(matcher.group(1), "")
+                        )
+                    );
+                    try {
+                        this.arguments.add(
+                            DecorsManager.decor(decor, args[pos])
+                        );
+                    } catch (final DecorException ex) {
+                        this.arguments.add(
+                            String.format("[%s]", ex.getMessage())
+                        );
+                    }
                 }
+                pos += 1;
             }
-            pos += 1;
         }
         if (pos < args.length) {
             throw new IllegalArgumentException(
