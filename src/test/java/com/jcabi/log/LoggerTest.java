@@ -148,4 +148,27 @@ public final class LoggerTest {
         Logger.info("com.jcabi.log...why.not", "hello, %s!", "world!");
     }
 
+    /**
+     * See <a href="https://github.com/jcabi/jcabi-log/issues/20">https://github.com/jcabi/jcabi-log/issues/20</a>
+     */
+    @Test
+    public void handleNewLine() {
+        final String fmt = "%s%n%s";
+        final Object[] args = { "new", "line" };
+        MatcherAssert.assertThat(
+                Logger.format(fmt, args),
+                Matchers.is(String.format(fmt, args))
+        );
+    }
+
+    @Test
+    public void handlePercent() {
+        final String fmt = "%s%%";
+        final Object[] args = { "percent: " };
+        MatcherAssert.assertThat(
+                Logger.format(fmt, args),
+                Matchers.is(String.format(fmt, args))
+        );
+    }
+
 }
