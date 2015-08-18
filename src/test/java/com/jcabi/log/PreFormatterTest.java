@@ -95,4 +95,30 @@ public final class PreFormatterTest {
         );
     }
 
+    /**
+     * PreFormatter can handle new line specifier.
+     */
+    @Test
+    public void handleNewLineSpecifier() {
+        final String fmt = "%s%n%s";
+        final Object[] args = {"new", "line"};
+        MatcherAssert.assertThat(
+            Logger.format(fmt, args),
+            Matchers.is(String.format(fmt, args))
+        );
+    }
+
+    /**
+     * PreFormatter can handle percent specifier.
+     */
+    @Test
+    public void handlePercentSpecifier() {
+        final String fmt = "%s%%";
+        final Object[] args = {"percent: "};
+        MatcherAssert.assertThat(
+            Logger.format(fmt, args),
+            Matchers.is(String.format(fmt, args))
+        );
+    }
+
 }
