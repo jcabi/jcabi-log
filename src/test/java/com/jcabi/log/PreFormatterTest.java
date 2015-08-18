@@ -102,9 +102,14 @@ public final class PreFormatterTest {
     public void handleNewLineSpecifier() {
         final String fmt = "%s%n%s";
         final Object[] args = {"new", "line"};
+        final PreFormatter pre = new PreFormatter(fmt, args);
         MatcherAssert.assertThat(
-            Logger.format(fmt, args),
-            Matchers.is(String.format(fmt, args))
+            pre.getFormat(),
+            Matchers.is(fmt)
+        );
+        MatcherAssert.assertThat(
+            pre.getArguments(),
+            Matchers.is(args)
         );
     }
 
@@ -115,9 +120,14 @@ public final class PreFormatterTest {
     public void handlePercentSpecifier() {
         final String fmt = "%s%%";
         final Object[] args = {"percent: "};
+        final PreFormatter pre = new PreFormatter(fmt, args);
         MatcherAssert.assertThat(
-            Logger.format(fmt, args),
-            Matchers.is(String.format(fmt, args))
+            pre.getFormat(),
+            Matchers.is(fmt)
+        );
+        MatcherAssert.assertThat(
+            pre.getArguments(),
+            Matchers.is(args)
         );
     }
 
