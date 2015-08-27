@@ -87,7 +87,6 @@ import org.apache.log4j.spi.LoggingEvent;
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("PMD.NonStaticInitializer")
 public final class MulticolorLayout extends EnhancedPatternLayout {
-
     /**
      * Control sequence indicator.
      */
@@ -109,6 +108,16 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     private static final Pattern METAS = Pattern.compile(
         "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
     );
+
+    /**
+     * A format string for a color placeholder.
+     */
+    private static final String COLOR_PLACEHOLDER = "%s?m";
+
+    /**
+     * Name of the property that is used to disable log coloring.
+     */
+    private static final String COLORING_PROPERY = "com.jcabi.log.coloring";
 
     /**
      * Colors with names.
@@ -190,13 +199,56 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
 
     @Override
     public String format(final LoggingEvent event) {
+        final String answer;
+        if (this.isColoringEnabled()) {
+            answer = this.colorfulFormatting(event);
+        } else {
+            answer = this.dullFormatting(event);
+        }
+        return answer;
+    }
+
+    /**
+     * Formats a log event without using ANSI color codes.
+     * @param event Log event
+     * @return Text of a log event, not colored with ANSI color codes even
+     *  if there is markup that tells to color it.
+     */
+    private String dullFormatting(final LoggingEvent event) {
+        return super.format(event)
+            .replace(
+                String.format(
+                    MulticolorLayout.COLOR_PLACEHOLDER,
+                    MulticolorLayout.CSI
+                ),
+                ""
+            )
+            .replace(String.format("%sm", MulticolorLayout.CSI), "");
+    }
+
+    /**
+     * Formats a log event using ANSI color codes.
+     * @param event Log event
+     * @return Text of a log event, probably colored with ANSI color codes.
+     */
+    private String colorfulFormatting(final LoggingEvent event) {
         return super.format(event).replace(
-            String.format("%s?m", MulticolorLayout.CSI),
+            String.format(COLOR_PLACEHOLDER, MulticolorLayout.CSI),
             String.format(
                 "%s%sm",
                 MulticolorLayout.CSI,
                 this.levels.get(event.getLevel().toString())
             )
+        );
+    }
+
+    /**
+     * Checks if coloring is enabled.
+     * @return True iff coloring is enabled.
+     */
+    private boolean isColoringEnabled() {
+        return !"false".equals(
+            System.getProperty(MulticolorLayout.COLORING_PROPERY)
         );
     }
 
