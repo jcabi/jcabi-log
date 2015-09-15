@@ -68,7 +68,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(of = "process")
-@SuppressWarnings("PMD.DoNotUseThreads")
+@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
 public final class VerboseProcess implements Closeable {
 
     /**
@@ -193,6 +193,40 @@ public final class VerboseProcess implements Closeable {
         return this.stdout(false);
     }
 
+    /**
+     * Wait for the process to stop, logging its output in parallel.
+     * @return Stdout produced by the process
+     * @throws InterruptedException If interrupted in between
+     */
+    public Result waitFor() throws InterruptedException {
+        final CountDownLatch done = new CountDownLatch(N_MONITORS);
+        final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+        final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
+        this.launchMonitors(done, stdout, stderr);
+        int code = 0;
+        try {
+            code = this.process.waitFor();
+        } finally {
+            Logger.debug(
+                this,
+                "#waitFor(): process finished: %s",
+                this.process
+            );
+            if (!done.await(2L, TimeUnit.SECONDS)) {
+                Logger.error(this, "#wait() failed");
+            }
+        }
+        try {
+            return new Result(
+                code,
+                stdout.toString(VerboseProcess.UTF_8),
+                stderr.toString(VerboseProcess.UTF_8)
+            );
+        } catch (final UnsupportedEncodingException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
     @Override
     public void close() {
         synchronized (this.monitors) {
@@ -234,63 +268,41 @@ public final class VerboseProcess implements Closeable {
     @SuppressWarnings("PMD.PrematureDeclaration")
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
-        final String stdout;
+        final Result result;
         try {
-            stdout = this.waitFor();
+            result = this.waitFor();
         } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException(ex);
         }
-        final int code = this.process.exitValue();
         Logger.debug(
             this,
             "#stdout(): process %s completed (code=%d, size=%d) in %[ms]s",
-            this.process, code, stdout.length(),
+            this.process, result.code(), result.stdout().length(),
             System.currentTimeMillis() - start
         );
-        if (check && code != 0) {
+        if (check && result.code() != 0) {
             throw new IllegalArgumentException(
-                Logger.format("Non-zero exit code %d: %[text]s", code, stdout)
+                Logger.format(
+                    "Non-zero exit code %d: %[text]s",
+                    result.code(),
+                    result.stdout()
+                )
             );
         }
-        return stdout;
-    }
-
-    /**
-     * Wait for the process to stop, logging its output in parallel.
-     * @return Stdout produced by the process
-     * @throws InterruptedException If interrupted in between
-     */
-    private String waitFor() throws InterruptedException {
-        final CountDownLatch done = new CountDownLatch(N_MONITORS);
-        final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-        this.launchMonitors(done, stdout);
-        try {
-            this.process.waitFor();
-        } finally {
-            Logger.debug(
-                this,
-                "#waitFor(): process finished: %s",
-                this.process
-            );
-            if (!done.await(2L, TimeUnit.SECONDS)) {
-                Logger.error(this, "#wait() failed");
-            }
-        }
-        try {
-            return stdout.toString(VerboseProcess.UTF_8);
-        } catch (final UnsupportedEncodingException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return result.stdout();
     }
 
     /**
      * Launch monitors for the underlying process.
      * @param done Latch that signals termination of all monitors
      * @param stdout Stream to write the underlying process's output
+     * @param stderr Stream to wrint the underlying process's error output
      */
-    private void launchMonitors(final CountDownLatch done,
-            final ByteArrayOutputStream stdout) {
+    private void launchMonitors(
+        final CountDownLatch done,
+        final ByteArrayOutputStream stdout,
+        final ByteArrayOutputStream stderr) {
         synchronized (this.monitors) {
             if (this.closed) {
                 done.countDown();
@@ -312,7 +324,7 @@ public final class VerboseProcess implements Closeable {
                 this.monitors[1] = this.monitor(
                     this.process.getErrorStream(),
                     done,
-                    new ByteArrayOutputStream(),
+                    stderr,
                     this.elevel,
                     "err"
                 );
@@ -463,4 +475,60 @@ public final class VerboseProcess implements Closeable {
         }
     }
 
+    /**
+     * Class representing the result of a process.
+     */
+    public static final class Result {
+
+        /**
+         * Returned code from the process.
+         */
+        private final transient int exit;
+
+        /**
+         * {@code stdout} from the process.
+         */
+        private final transient String out;
+
+        /**
+         * {@code stderr} from the process.
+         */
+        private final transient String err;
+
+        /**
+         * Result class constructor.
+         * @param code The exit code.
+         * @param stdout The {@code stdout} from the process.
+         * @param stderr The {@code stderr} from the process.
+         */
+        Result(final int code, final String stdout, final String stderr) {
+            this.exit = code;
+            this.out = stdout;
+            this.err = stderr;
+        }
+
+        /**
+         * Get {@code code} from the process.
+         * @return Full {@code code} of the process
+         */
+        public int code() {
+            return this.exit;
+        }
+
+        /**
+         * Get {@code stdout} from the process.
+         * @return Full {@code stdout} of the process
+         */
+        public String stdout() {
+            return this.out;
+        }
+
+        /**
+         * Get {@code stderr} from the process.
+         * @return Full {@code stderr} of the process
+         */
+        public String stderr() {
+            return this.err;
+        }
+    }
 }
