@@ -32,6 +32,8 @@ package com.jcabi.log;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.logging.Level;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -87,7 +89,7 @@ import org.slf4j.LoggerFactory;
  */
 @ToString
 @EqualsAndHashCode
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.GodClass" })
 public final class Logger {
 
     /**
@@ -355,6 +357,23 @@ public final class Logger {
     }
 
     /**
+     * Set final static field in order to fix the %L log4j parameter.
+     * @param field Field
+     * @param value New value
+     * @throws NoSuchFieldException If some problem
+     * @throws IllegalAccessException If some problem
+     * @checkstyle ThrowsCountCheck (4 lines)
+     */
+    private static void setFinalStatic(final Field field, final Object value)
+        throws NoSuchFieldException, IllegalAccessException {
+        field.setAccessible(true);
+        final Field modifiers = Field.class.getDeclaredField("modifiers");
+        modifiers.setAccessible(true);
+        modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        field.set(null, value);
+    }
+
+    /**
      * Get the instance of the logger for this particular caller.
      * @param source Source of the logging operation
      * @return The instance of {@code Logger} class
@@ -367,6 +386,18 @@ public final class Logger {
             logger = LoggerFactory.getLogger(String.class.cast(source));
         } else {
             logger = LoggerFactory.getLogger(source.getClass());
+        }
+        if ("org.slf4j.impl.Log4jLoggerAdapter"
+            .equals(logger.getClass().getName())) {
+            try {
+                final Field fqcn = logger.getClass()
+                    .getDeclaredField("FQCN");
+                setFinalStatic(fqcn, Logger.class.getName());
+            } catch (final NoSuchFieldException ex) {
+                throw new IllegalStateException(ex);
+            } catch (final IllegalAccessException ex) {
+                throw new IllegalStateException(ex);
+            }
         }
         return logger;
     }
