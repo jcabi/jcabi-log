@@ -6,7 +6,9 @@
 [![Build Status](https://travis-ci.org/jcabi/jcabi-log.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-log)
 [![Build status](https://ci.appveyor.com/api/projects/status/tk5nksux8peh2n8o/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-log/branch/master)
 [![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-log/badge.svg?branch=master&service=github)](https://coveralls.io/github/jcabi/jcabi-log?branch=master)
+
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log)
+[![Dependencies](https://www.versioneye.com/user/projects/561ac156a193340f280010de/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac156a193340f280010de)
 
 More details are here: [log.jcabi.com](http://log.jcabi.com/index.html)
 
