@@ -1,6 +1,6 @@
 ## Puzzles
 
-There are 2 active puzzles (13 total), updated on 2015-12-09T12:02:28Z:
+There are 2 active puzzles (13 total), updated on 2015-12-09T12:13:52Z:
 
 unknown ?
 &nbsp;143-44bd09d0 src/main/java/com/jcabi/log/DecorsManager.java:47-48
