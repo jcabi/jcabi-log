@@ -60,7 +60,7 @@ import org.mockito.stubbing.Answer;
  * Test case for {@link VerboseProcess}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @checkstyle MultipleStringLiterals (200 lines)
+ * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
  *  sure how to fix them, but they should be fixed. They fail on some
@@ -128,6 +128,28 @@ public final class VerboseProcessTest {
                 Matchers.containsString("No such file or directory")
             );
         }
+    }
+
+    /**
+     * VerboseProcess can run a command line script with exception, without
+     * errorStream redirection.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
+        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        final VerboseProcess process = new VerboseProcess(
+            new ProcessBuilder("cat", "/non-existing-file.txt")
+        );
+        final VerboseProcess.Result result = process.waitFor();
+        MatcherAssert.assertThat(
+            result.code(),
+            Matchers.equalTo(1)
+        );
+        MatcherAssert.assertThat(
+            result.stderr(),
+            Matchers.containsString("No such file or directory")
+        );
     }
 
     /**
