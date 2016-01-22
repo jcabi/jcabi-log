@@ -30,6 +30,7 @@
 package com.jcabi.log;
 
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import org.apache.log4j.LogManager;
@@ -99,9 +100,11 @@ public final class LoggerTest {
     @Test
     public void providesOutputStream() throws Exception {
         final OutputStream stream = Logger.stream(Level.INFO, this);
-        final PrintWriter writer = new PrintWriter(stream);
+        final PrintWriter writer = new PrintWriter(
+            new OutputStreamWriter(stream, "UTF-8")
+        );
         // @checkstyle LineLength (1 line)
-        writer.print("hello, \u20ac, how're\u040a?\nI'm fine, thanks, друг!\n");
+        writer.print("hello, \u20ac, how're\u040a?\nI'm fine, \u0000\u0007!\n");
         writer.flush();
         writer.close();
     }

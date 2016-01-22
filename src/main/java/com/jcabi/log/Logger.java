@@ -98,6 +98,11 @@ public final class Logger {
     private static final Object[] EMPTY = {};
 
     /**
+     * UTF-8.
+     */
+    private static final String UTF_8 = "UTF-8";
+
+    /**
      * This is utility class.
      */
     private Logger() {
@@ -339,18 +344,29 @@ public final class Logger {
      * @return Output stream directly pointed to the logging facility
      * @since 0.8
      * @see <a href="http://stackoverflow.com/questions/17258325">some discussion</a>
+     * @checkstyle MagicNumberCheck (20 lines)
      */
     public static OutputStream stream(final Level level, final Object source) {
+        // @checkstyle AnonInnerLengthCheck (50 lines)
         return new OutputStream() {
             private final transient ByteArrayOutputStream buffer =
                 new ByteArrayOutputStream();
             @Override
             public void write(final int data) throws IOException {
                 if (data == '\n') {
-                    Logger.log(level, source, this.buffer.toString("UTF-8"));
+                    Logger.log(
+                        level, source,
+                        this.buffer.toString(Logger.UTF_8)
+                    );
                     this.buffer.reset();
-                } else {
+                } else if (data >= 0x20 && data <= 0x7f) {
                     this.buffer.write(data);
+                } else {
+                    this.buffer.write(
+                        String.format(
+                            "\\x%02x", data & 0xff
+                        ).getBytes(Logger.UTF_8)
+                    );
                 }
             }
         };
