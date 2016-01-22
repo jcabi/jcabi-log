@@ -35,6 +35,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.hamcrest.MockitoHamcrest;
 import org.w3c.dom.Document;
 
 /**
@@ -58,7 +59,7 @@ public final class DomDecorTest {
         final Formatter fmt = new Formatter(dest);
         decor.formatTo(fmt, 0, 0, 0);
         Mockito.verify(dest).append(
-            Mockito.argThat(Matchers.containsString("<root/>"))
+            MockitoHamcrest.argThat(Matchers.containsString("<root/>"))
         );
     }
 

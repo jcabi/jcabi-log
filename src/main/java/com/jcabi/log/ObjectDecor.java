@@ -63,10 +63,7 @@ final class ObjectDecor implements Formattable {
         this.object = obj;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
@@ -104,7 +101,7 @@ final class ObjectDecor implements Formattable {
          * Constructor.
          * @param arr Array to format
          */
-        ArrayFormatAction(final Object[] arr) {
+        ArrayFormatAction(final Object... arr) {
             this.array = Arrays.copyOf(arr, arr.length);
         }
 

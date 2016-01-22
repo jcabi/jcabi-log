@@ -88,18 +88,17 @@ final class TextDecor implements Formattable {
      * @param text The text to prettify
      * @return The result
      */
+    @SuppressWarnings("PMD.ConsecutiveAppendsShouldReuse")
     private static String pretty(final String text) {
         final String result;
         if (text.length() < TextDecor.MAX) {
             result = text;
         } else {
             final int skip = text.length() - TextDecor.MAX;
-            final StringBuilder output = new StringBuilder()
-                .append(text.substring(0, (text.length() - skip) / 2))
-                // @checkstyle MultipleStringLiterals (1 line)
-                .append("..")
-                .append(skip)
-                .append("..");
+            final StringBuilder output = new StringBuilder(text.length());
+            output.append(text.substring(0, (text.length() - skip) / 2));
+            // @checkstyle MultipleStringLiterals (1 line)
+            output.append("..").append(Integer.toString(skip)).append("..");
             output.append(
                 text.substring(text.length() - TextDecor.MAX + output.length())
             );

@@ -35,6 +35,7 @@ import java.util.Formatter;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.hamcrest.MockitoHamcrest;
 
 /**
  * Test case for {@link ExceptionDecor}.
@@ -54,7 +55,7 @@ public final class ExceptionDecorTest {
         final Formatter fmt = new Formatter(dest);
         decor.formatTo(fmt, 0, 0, 0);
         Mockito.verify(dest).append(
-            Mockito.argThat(
+            MockitoHamcrest.argThat(
                 Matchers.allOf(
                     Matchers.containsString(
                         "java.io.IOException: ouch!"

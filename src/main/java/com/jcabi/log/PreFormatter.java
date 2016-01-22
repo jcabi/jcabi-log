@@ -104,7 +104,7 @@ final class PreFormatter {
      * @param fmt The formatting string
      * @param args The list of arguments
      */
-    private void process(final String fmt, final Object[] args) {
+    private void process(final String fmt, final Object... args) {
         this.arguments = new CopyOnWriteArrayList<Object>();
         final StringBuffer buf = new StringBuffer();
         final Matcher matcher = PATTERN.matcher(fmt);
