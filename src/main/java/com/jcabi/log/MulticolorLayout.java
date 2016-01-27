@@ -134,7 +134,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Helper class to store color data.
      */
-    private final ColorManager colorer = new ColorManager();
+    private final transient ColorManager colorer = new ColorManager();
 
     @Override
     public void setConversionPattern(final String pattern) {
