@@ -36,20 +36,26 @@ import java.util.concurrent.ConcurrentMap;
  * Color manager to store color data.
  * @author Igor Piddubnyi (igor.piddubnyi@gmail.com)
  * @version $Id$
- * @since 1.0
+ * @since 0.18
  */
 public class ColorManager {
 
     /**
      * Colors with names.
      */
-    private final transient ConcurrentMap<String, String> colors =
-        ColorManager.colorMap();
+    private transient ConcurrentMap<String, String> colors;
+
+    /**
+     * Public ctor.
+     */
+    public ColorManager() {
+        this.colors = ColorManager.colorMap();
+    }
 
     /**
      * Add color to color map.
-     * @param key Key to add.
-     * @param value Value to add.
+     * @param key Key to add
+     * @param value Value to add
      */
     public final void addColor(final String key, final String value) {
         this.colors.put(key, value);
