@@ -75,14 +75,14 @@ import org.apache.log4j.spi.LoggingEvent;
  *  &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
  *  &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
- * @todo #59:30min This class is still handling multiple responsibilities like
- *  formatting, parsing and coloring and should be refactored.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1.10
  * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
  * @see <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">PatternLayout from LOG4J</a>
  * @see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How to use with Maven</a>
+ * @todo #59:30min This class is still handling multiple responsibilities like
+ *  formatting, parsing and coloring and should be refactored.
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
@@ -133,9 +133,9 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     private transient String base;
 
     /**
-     * Helper class to store color data.
+     * Color human readable data.
      */
-    private final transient Colors colrs = new Colors();
+    private final transient Colors colors = new Colors();
 
     @Override
     public void setConversionPattern(final String pattern) {
@@ -145,7 +145,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
             buf.append(MulticolorLayout.CSI)
-                .append(this.colrs.ansi(matcher.group(1)))
+                .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
                 .append(matcher.group(2))
                 .append(MulticolorLayout.CSI)
@@ -165,7 +165,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setColors(final String cols) {
         for (final String item : cols.split(MulticolorLayout.SPLIT_ITEMS)) {
             final String[] values = item.split(MulticolorLayout.SPLIT_VALUES);
-            this.colrs.addColor(values[0], values[1]);
+            this.colors.addColor(values[0], values[1]);
         }
         /**
          * If setConversionPattern was called before me must call again

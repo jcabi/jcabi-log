@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Color manager to store color data.
+ * Store human readable color data.
  * @author Igor Piddubnyi (igor.piddubnyi@gmail.com)
  * @version $Id$
  * @since 0.18
