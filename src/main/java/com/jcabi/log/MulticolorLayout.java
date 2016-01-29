@@ -135,7 +135,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Helper class to store color data.
      */
-    private final transient Colors colors = new Colors();
+    private final transient Colors colrs = new Colors();
 
     @Override
     public void setConversionPattern(final String pattern) {
@@ -145,7 +145,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
             buf.append(MulticolorLayout.CSI)
-                .append(this.colors.ansi(matcher.group(1)))
+                .append(this.colrs.ansi(matcher.group(1)))
                 .append('m')
                 .append(matcher.group(2))
                 .append(MulticolorLayout.CSI)
@@ -165,7 +165,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setColors(final String cols) {
         for (final String item : cols.split(MulticolorLayout.SPLIT_ITEMS)) {
             final String[] values = item.split(MulticolorLayout.SPLIT_VALUES);
-            this.colors.addColor(values[0], values[1]);
+            this.colrs.addColor(values[0], values[1]);
         }
         /**
          * If setConversionPattern was called before me must call again
