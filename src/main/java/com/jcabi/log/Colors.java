@@ -38,18 +38,18 @@ import java.util.concurrent.ConcurrentMap;
  * @version $Id$
  * @since 0.18
  */
-public class ColorManager {
+public class Colors {
 
     /**
      * Colors with names.
      */
-    private transient ConcurrentMap<String, String> colors;
+    private final transient ConcurrentMap<String, String> colors;
 
     /**
      * Public ctor.
      */
-    public ColorManager() {
-        this.colors = ColorManager.colorMap();
+    public Colors() {
+        this.colors = Colors.colorMap();
     }
 
     /**

@@ -75,7 +75,8 @@ import org.apache.log4j.spi.LoggingEvent;
  *  &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
  *  &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
- * @todo #59:30min Continue refactoring of the class started in #51.
+ * @todo #59:30min This class is still handling multiple responsibilities like
+ *   formatting, parsing and coloring and should be refactored.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1.10
@@ -134,7 +135,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Helper class to store color data.
      */
-    private final transient ColorManager colorer = new ColorManager();
+    private final transient Colors colors = new Colors();
 
     @Override
     public void setConversionPattern(final String pattern) {
@@ -144,7 +145,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
             buf.append(MulticolorLayout.CSI)
-                .append(this.colorer.ansi(matcher.group(1)))
+                .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
                 .append(matcher.group(2))
                 .append(MulticolorLayout.CSI)
@@ -164,7 +165,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setColors(final String cols) {
         for (final String item : cols.split(MulticolorLayout.SPLIT_ITEMS)) {
             final String[] values = item.split(MulticolorLayout.SPLIT_VALUES);
-            this.colorer.addColor(values[0], values[1]);
+            this.colors.addColor(values[0], values[1]);
         }
         /**
          * If setConversionPattern was called before me must call again
