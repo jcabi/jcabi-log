@@ -76,7 +76,7 @@ import org.apache.log4j.spi.LoggingEvent;
  *  &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
  * @todo #59:30min This class is still handling multiple responsibilities like
- *   formatting, parsing and coloring and should be refactored.
+ *  formatting, parsing and coloring and should be refactored.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
  * @since 0.1.10
