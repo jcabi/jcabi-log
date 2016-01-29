@@ -43,13 +43,13 @@ public class Colors {
     /**
      * Colors with names.
      */
-    private final transient ConcurrentMap<String, String> colors;
+    private final transient ConcurrentMap<String, String> map;
 
     /**
      * Public ctor.
      */
     public Colors() {
-        this.colors = Colors.colorMap();
+        this.map = Colors.colorMap();
     }
 
     /**
@@ -58,7 +58,7 @@ public class Colors {
      * @param value Value to add
      */
     public final void addColor(final String key, final String value) {
-        this.colors.put(key, value);
+        this.map.put(key, value);
     }
 
     /**
@@ -71,7 +71,7 @@ public class Colors {
         if (meta == null) {
             ansi = "?";
         } else if (meta.matches("[a-z]+")) {
-            ansi = this.colors.get(meta);
+            ansi = this.map.get(meta);
             if (ansi == null) {
                 throw new IllegalArgumentException(
                     String.format("unknown color '%s'", meta)
