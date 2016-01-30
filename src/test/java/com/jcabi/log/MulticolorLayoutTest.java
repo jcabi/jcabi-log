@@ -34,6 +34,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -61,7 +62,10 @@ public final class MulticolorLayoutTest {
      * Conversation pattern for test case.
      */
     private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
-
+    /**
+     * Property that dictates wheter the text should be coloured or not.
+     */
+    private static final String COLORING_PROPERTY = "com.jcabi.log.coloring";
     /**
      * MulticolorLayout can transform event to text.
      * @throws Exception If something goes wrong
@@ -165,6 +169,148 @@ public final class MulticolorLayoutTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("text").when(event).getRenderedMessage();
         layout.format(event);
+    }
+
+    /**
+     * MulticolorLayout disables default color
+     * when -Dcom.jcabi.log.coloring=false.
+     * @throws Exception - if something goes wrong.
+     */
+    @Test
+    public void disablesDefaultColor() throws Exception {
+        final MulticolorLayout layout = new MulticolorLayout();
+        layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
+        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
+        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
+        Mockito.doReturn("no color").when(event).getRenderedMessage();
+        MatcherAssert.assertThat(
+            StringEscapeUtils.escapeJava(layout.format(event)),
+            Matchers.equalTo(
+                "[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mno color\\u001B[m"
+            )
+        );
+        System.getProperties().setProperty(
+            COLORING_PROPERTY, Boolean.FALSE.toString()
+        );
+        try {
+            MatcherAssert.assertThat(
+                StringEscapeUtils.escapeJava(layout.format(event)),
+                Matchers.equalTo(
+                    "[DEBUG] no color"
+                )
+            );
+        } finally {
+            System.getProperties().setProperty(
+                COLORING_PROPERTY, Boolean.TRUE.toString()
+            );
+        }
+    }
+
+    /**
+     * MulticolorLayout disables the color that overwrites the default one.
+     * @throws Exception - if something goes wrong.
+     */
+    @Test
+    public void disablesOverridenDefaultColor() throws Exception {
+        final MulticolorLayout layout = new MulticolorLayout();
+        layout.setConversionPattern("[%color{%p}] %m");
+        layout.setLevels("DEBUG:2;10");
+        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
+        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
+        Mockito.doReturn("no colour text").when(event).getRenderedMessage();
+        MatcherAssert.assertThat(
+            StringEscapeUtils.escapeJava(layout.format(event)),
+            Matchers.equalTo(
+                "[\\u001B[2;10mDEBUG\\u001B[m] no colour text"
+            )
+        );
+        System.getProperties().setProperty(
+            COLORING_PROPERTY, Boolean.FALSE.toString()
+        );
+        try {
+            MatcherAssert.assertThat(
+                StringEscapeUtils.escapeJava(layout.format(event)),
+                Matchers.equalTo(
+                    "[DEBUG] no colour text"
+                )
+            );
+        } finally {
+            System.getProperties().setProperty(
+                COLORING_PROPERTY, Boolean.TRUE.toString()
+            );
+        }
+    }
+
+    /**
+     * MulticolorLayout disables constant color
+     * when -Dcom.jcabi.log.coloring=false.
+     * @throws Exception - if something goes wrong.
+     */
+    @Test
+    @Ignore
+    public void disablesConstantColor() throws Exception {
+        final MulticolorLayout layout = new MulticolorLayout();
+        layout.setConversionPattern("[%color-blue{%p}] %color-blue{%m}");
+        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
+        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
+        Mockito.doReturn("no color text").when(event).getRenderedMessage();
+        MatcherAssert.assertThat(
+            StringEscapeUtils.escapeJava(layout.format(event)),
+            Matchers.equalTo(
+                "[\\u001B[34mDEBUG\\u001B[m] \\u001B[34mno color text\\u001B[m"
+            )
+        );
+        System.getProperties().setProperty(
+            COLORING_PROPERTY, Boolean.FALSE.toString()
+        );
+        try {
+            MatcherAssert.assertThat(
+                    StringEscapeUtils.escapeJava(layout.format(event)),
+                    Matchers.equalTo(
+                        "[DEBUG] no color text"
+                    )
+            );
+        } finally {
+            System.getProperties().setProperty(
+                COLORING_PROPERTY, Boolean.TRUE.toString()
+            );
+        }
+    }
+
+    /**
+     * MulticolorLayout disables the color that overwrites the constant one.
+     * @throws Exception - if something goes wrong.
+     */
+    @Test
+    @Ignore
+    public void disablesOverridenConstantColor() throws Exception {
+        final MulticolorLayout layout = new MulticolorLayout();
+        layout.setConversionPattern("[%color-red{%p}] %color-red{%m}");
+        layout.setColors("red:12");
+        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
+        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
+        Mockito.doReturn("test").when(event).getRenderedMessage();
+        MatcherAssert.assertThat(
+            StringEscapeUtils.escapeJava(layout.format(event)),
+            Matchers.equalTo(
+                "[\\u001B[12mDEBUG\\u001B[m] \\u001B[12mtest\\u001B[m"
+            )
+        );
+        System.getProperties().setProperty(
+            COLORING_PROPERTY, Boolean.FALSE.toString()
+        );
+        try {
+            MatcherAssert.assertThat(
+                    StringEscapeUtils.escapeJava(layout.format(event)),
+                    Matchers.equalTo(
+                        "[DEBUG] test"
+                    )
+            );
+        } finally {
+            System.getProperties().setProperty(
+                COLORING_PROPERTY, Boolean.TRUE.toString()
+            );
+        }
     }
 
 }
