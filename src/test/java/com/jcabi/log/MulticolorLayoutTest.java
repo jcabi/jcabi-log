@@ -42,6 +42,11 @@ import org.mockito.Mockito;
  * Test case for {@link MulticolorLayout}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @todo #63:30min Fix bug in method format(LoggingEvent).
+ * The tests disablesOverridenConstantColor() and 
+ * disablesConstantColor() are currently failing and are ignored. 
+ * Problem is that the text isn't decolored correctly when the color
+ * is specified in the conversion pattern. E.g. "[%color-blue{%p}] %color-blue{%m}" .
  */
 public final class MulticolorLayoutTest {
 
