@@ -145,10 +145,10 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     }
 
     /**
-     * Constructor that allos to specify the decolorant type.
+     * Constructor that allows to specify the decolorant type.
      * @param dclrnt The given decolorant.
      */
-    public MulticolorLayout(final TextDecolorant dclrnt) {
+    MulticolorLayout(final TextDecolorant dclrnt) {
         super();
         this.decolorant = dclrnt;
     }
