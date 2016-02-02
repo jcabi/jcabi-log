@@ -116,11 +116,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     private static final String COLOR_PLACEHOLDER = "%s?m";
 
     /**
-     * Name of the property that is used to disable log coloring.
-     */
-    private static final String COLORING_PROPERY = "com.jcabi.log.coloring";
-
-    /**
      * Colors of levels.
      */
     private final transient ConcurrentMap<String, String> levels =
@@ -136,6 +131,27 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Color human readable data.
      */
     private final transient Colors colors = new Colors();
+
+    /**
+     * Used to decide whether the logged text should be colored or not.
+     */
+    private final transient TextDecolorant decolorant;
+
+    /**
+     * Simple constructor.
+     */
+    public MulticolorLayout() {
+        this(new RtTextDecolorant());
+    }
+
+    /**
+     * Constructor that allos to specify the decolorant type.
+     * @param dclrnt The given decolorant.
+     */
+    public MulticolorLayout(final TextDecolorant dclrnt) {
+        super();
+        this.decolorant = dclrnt;
+    }
 
     @Override
     public void setConversionPattern(final String pattern) {
@@ -200,7 +216,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     @Override
     public String format(final LoggingEvent event) {
         final String answer;
-        if (this.isColoringEnabled()) {
+        if (this.decolorant.isColoringEnabled()) {
             answer = this.colorfulFormatting(event);
         } else {
             answer = this.dullFormatting(event);
@@ -239,16 +255,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
                 MulticolorLayout.CSI,
                 this.levels.get(event.getLevel().toString())
             )
-        );
-    }
-
-    /**
-     * Checks if coloring is enabled.
-     * @return True iff coloring is enabled.
-     */
-    private boolean isColoringEnabled() {
-        return !"false".equals(
-            System.getProperty(MulticolorLayout.COLORING_PROPERY)
         );
     }
 
