@@ -44,7 +44,7 @@ public final class RtTextDecolorant implements TextDecolorant {
     @Override
     public boolean isColoringEnabled() {
         return !"false".equals(
-                     System.getProperty(RtTextDecolorant.COLORING_PROPERY)
-                 );
+            System.getProperty(RtTextDecolorant.COLORING_PROPERY)
+        );
     }
 }
