@@ -27,24 +27,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.log.mocks;
-
-import com.jcabi.log.TextDecolorant;
 
 /**
- * Mock implementation of TextDecolorant that always <b>disables</b> color.
+ * Integration tests.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  */
-public final class MkTextDecolorantEnabled implements TextDecolorant {
-
-    /**
-     * This mock is used when decoloring should be <b>enabled.</b>
-     * @return Always returns false. This mock is used in
-     *  tests where coloring is disabled.
-     */
-    public boolean isColoringEnabled() {
-        return false;
-    }
-
-}
+package com.jcabi.log.test;

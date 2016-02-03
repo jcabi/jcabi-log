@@ -27,10 +27,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.jcabi.log;
 
 /**
- * Mocks for unit tests.
+ * Integration tests for MulticolorLayout. These have to
+ * be run with maven-invoker-plugin because they set the system property
+ * com.jcabi.log.coloring, which interferes with other tests (tests are run
+ * by multiple threads at once)
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  */
-package com.jcabi.log.mocks;
+public final class MulticolorLayoutIntegration {
+
+}

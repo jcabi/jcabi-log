@@ -27,24 +27,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.log;
 
 /**
- * Actual implementation of {@link TextDecolorant}
- * used in {@link MultiColorLayout}.
+ * Integration tests.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  */
-public final class RtTextDecolorant implements TextDecolorant {
-    /**
-     * Name of the property that is used to disable log coloring.
-     */
-    private static final String COLORING_PROPERY = "com.jcabi.log.coloring";
-
-    @Override
-    public boolean isColoringEnabled() {
-        return !"false".equals(
-            System.getProperty(RtTextDecolorant.COLORING_PROPERY)
-        );
-    }
-}
+package com.jcabi.log;

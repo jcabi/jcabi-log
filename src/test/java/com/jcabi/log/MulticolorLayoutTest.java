@@ -29,13 +29,11 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.log.mocks.MkTextDecolorantEnabled;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -45,7 +43,9 @@ import org.mockito.Mockito;
  * @version $Id$
  * @todo #63:30min Fix bug in method format(LoggingEvent).
  *  The tests disablesOverridenConstantColor() and
- *  disablesConstantColor() are currently failing and are ignored.
+ *  disablesConstantColor() from
+ *  /src/it/it-decoloring/.../MulticolorLayoutITCase
+ *  are currently failing and are ignored.
  *  Problem is that the text isn't decolored correctly when the color
  *  is specified in the conversion pattern.
  *  E.g. "[%color-blue{%p}] %color-blue{%m}" .
@@ -159,92 +159,6 @@ public final class MulticolorLayoutTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("text").when(event).getRenderedMessage();
         layout.format(event);
-    }
-
-    /**
-     * MulticolorLayout disables default color
-     * when -Dcom.jcabi.log.coloring=false.
-     * @throws Exception - if something goes wrong.
-     */
-    @Test
-    public void disablesDefaultColor() throws Exception {
-        final MulticolorLayout layout =
-                new MulticolorLayout(new MkTextDecolorantEnabled());
-        layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
-        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
-        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
-        Mockito.doReturn("no color").when(event).getRenderedMessage();
-        MatcherAssert.assertThat(
-            StringEscapeUtils.escapeJava(layout.format(event)),
-            Matchers.equalTo(
-                "[DEBUG] no color"
-            )
-        );
-    }
-
-    /**
-     * MulticolorLayout disables the color that overwrites the default one.
-     * @throws Exception - if something goes wrong.
-     */
-    @Test
-    public void disablesOverridenDefaultColor() throws Exception {
-        final MulticolorLayout layout =
-                new MulticolorLayout(new MkTextDecolorantEnabled());
-        layout.setConversionPattern("[%color{%p}] %m");
-        layout.setLevels("DEBUG:2;10");
-        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
-        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
-        Mockito.doReturn("no colour text").when(event).getRenderedMessage();
-        MatcherAssert.assertThat(
-            StringEscapeUtils.escapeJava(layout.format(event)),
-            Matchers.equalTo(
-                "[DEBUG] no colour text"
-            )
-        );
-    }
-
-    /**
-     * MulticolorLayout disables constant color
-     * when -Dcom.jcabi.log.coloring=false.
-     * @throws Exception - if something goes wrong.
-     */
-    @Test
-    @Ignore
-    public void disablesConstantColor() throws Exception {
-        final MulticolorLayout layout =
-                new MulticolorLayout(new MkTextDecolorantEnabled());
-        layout.setConversionPattern("[%color-blue{%p}] %color-blue{%m}");
-        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
-        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
-        Mockito.doReturn("no color text").when(event).getRenderedMessage();
-        MatcherAssert.assertThat(
-            StringEscapeUtils.escapeJava(layout.format(event)),
-                Matchers.equalTo(
-                    "[DEBUG] no color text"
-                )
-        );
-    }
-
-    /**
-     * MulticolorLayout disables the color that overwrites the constant one.
-     * @throws Exception - if something goes wrong.
-     */
-    @Test
-    @Ignore
-    public void disablesOverridenConstantColor() throws Exception {
-        final MulticolorLayout layout =
-                new MulticolorLayout(new MkTextDecolorantEnabled());
-        layout.setConversionPattern("[%color-red{%p}] %color-red{%m}");
-        layout.setColors("red:12");
-        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
-        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
-        Mockito.doReturn("test").when(event).getRenderedMessage();
-        MatcherAssert.assertThat(
-            StringEscapeUtils.escapeJava(layout.format(event)),
-            Matchers.equalTo(
-                "[DEBUG] test"
-            )
-        );
     }
 
 }
