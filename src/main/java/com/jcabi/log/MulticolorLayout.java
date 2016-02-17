@@ -29,7 +29,6 @@
  */
 package com.jcabi.log;
 
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -129,7 +128,9 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @since 0.9
      */
     public void setColors(final String cols) {
-        final Map<String, String> parsed = new ParseInformation(cols).parse();
+        final ConcurrentHashMap<String, String> parsed = new ParseInformation(
+            cols
+        ).parse();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             this.colors.addColor(entry.getKey(), entry.getValue());
         }
@@ -151,9 +152,8 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @since 0.9
      */
     public void setLevels(final String lev) {
-        final Map<String, String> parsed = new ParseLevelInformation(
-            lev
-        ).parse();
+        final ConcurrentHashMap<String, String> parsed =
+            new ParseLevelInformation(lev).parse();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             this.levels.put(entry.getKey(), entry.getValue());
         }

@@ -32,6 +32,12 @@ package com.jcabi.log;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Generates the convertion pattern.
+ * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
+ * @version $Id$
+ *
+ */
 class GenerateConvertionPattern {
 
     /**
@@ -40,27 +46,40 @@ class GenerateConvertionPattern {
     private static final Pattern METAS = Pattern.compile(
         "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
     );
-    
+
     /**
      * Pattern to be validated.
      */
-    private final CharSequence pattern;
+    private final transient String pattern;
 
-    private final Colors colors;
-    
-    
-    public GenerateConvertionPattern(CharSequence pat, Colors col) {
+    /**
+     * Colors to be used.
+     */
+    private final transient Colors colors;
+
+    /**
+     * Constructor.
+     * @param pat Pattern to be used.
+     * @param col Colors to be used.
+     */
+    public GenerateConvertionPattern(final String pat, final Colors col) {
         this.pattern = pat;
         this.colors = col;
     }
 
-    public String generate(){
-        final Matcher matcher = GenerateConvertionPattern.METAS.matcher(pattern);
+    /**
+     * Generates the conversion pattern.
+     * @return Conversion pattern.
+     */
+    public String generate() {
+        final Matcher matcher = GenerateConvertionPattern.METAS.matcher(
+            this.pattern
+        );
         final StringBuffer buf = new StringBuffer(0);
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
             buf.append(Constants.CSI)
-                .append(colors.ansi(matcher.group(1)))
+                .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
                 .append(matcher.group(2))
                 .append(Constants.CSI)

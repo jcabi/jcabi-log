@@ -29,8 +29,7 @@
  */
 package com.jcabi.log;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Converts items inside a string like K1:V1,K2:V2. - where K is for key and v
@@ -55,7 +54,7 @@ class ParseInformation {
     /**
      * Information to be parsed.
      */
-    private final String information;
+    private final transient String information;
 
     /**
      * Construtor.
@@ -70,10 +69,11 @@ class ParseInformation {
     /**
      * Parse the information.
      *
-     * @return A {@link Map} with a key,value pair os strings.
+     * @return A {@link ConcurrentHashMap} with a key,value pair os strings.
      */
-    public final Map<String, String> parse() {
-        final Map<String, String> parsed = new HashMap<String, String>();
+    public final ConcurrentHashMap<String, String> parse() {
+        final ConcurrentHashMap<String, String> parsed =
+            new ConcurrentHashMap<String, String>();
         for (final String item : this.items()) {
             final String[] values = item.split(ParseInformation.SPLIT_VALUES);
             parsed.put(values[0], values[1]);

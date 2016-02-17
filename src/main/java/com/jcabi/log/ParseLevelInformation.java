@@ -29,10 +29,9 @@
  */
 package com.jcabi.log;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.log4j.Level;
 
 /**
@@ -47,7 +46,7 @@ class ParseLevelInformation  {
     /**
      * Information to be parsed.
      */
-    private final String information;
+    private final transient String information;
 
     /**
      * Construtor.
@@ -59,13 +58,14 @@ class ParseLevelInformation  {
 
     /**
      * Parse the level information.
-     * @return A {@link Map} with key,value pair of strings.
+     * @return A {@link ConcurrentHashMap} with key,value pair of strings.
      */
-    public final Map<String, String> parse() {
-        final Map<String, String> parsed = new ParseInformation(
+    public final ConcurrentHashMap<String, String> parse() {
+        final ConcurrentHashMap<String, String> parsed = new ParseInformation(
             this.information
         ).parse();
-        final Map<String, String> converted = new HashMap<String, String>();
+        final ConcurrentHashMap<String, String> converted =
+            new ConcurrentHashMap<String, String>();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
             if (Level.toLevel(level, null) == null) {
