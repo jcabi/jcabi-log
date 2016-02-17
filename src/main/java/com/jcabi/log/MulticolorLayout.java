@@ -29,11 +29,10 @@
  */
 package com.jcabi.log;
 
-import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.log4j.EnhancedPatternLayout;
@@ -88,32 +87,6 @@ import org.apache.log4j.spi.LoggingEvent;
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("PMD.NonStaticInitializer")
 public final class MulticolorLayout extends EnhancedPatternLayout {
-    /**
-     * Control sequence indicator.
-     */
-    private static final String CSI = "\u001b[";
-
-    /**
-     * To split strings with javascript like map syntax.
-     */
-    private static final String SPLIT_ITEMS = ",";
-
-    /**
-     * To split key:value pairs.
-     */
-    private static final String SPLIT_VALUES = ":";
-
-    /**
-     * Regular expression for all matches.
-     */
-    private static final Pattern METAS = Pattern.compile(
-        "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
-    );
-
-    /**
-     * A format string for a color placeholder.
-     */
-    private static final String COLOR_PLACEHOLDER = "%s?m";
 
     /**
      * Name of the property that is used to disable log coloring.
@@ -140,19 +113,12 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     @Override
     public void setConversionPattern(final String pattern) {
         this.base = pattern;
-        final Matcher matcher = MulticolorLayout.METAS.matcher(pattern);
-        final StringBuffer buf = new StringBuffer(0);
-        while (matcher.find()) {
-            matcher.appendReplacement(buf, "");
-            buf.append(MulticolorLayout.CSI)
-                .append(this.colors.ansi(matcher.group(1)))
-                .append('m')
-                .append(matcher.group(2))
-                .append(MulticolorLayout.CSI)
-                .append('m');
-        }
-        matcher.appendTail(buf);
-        super.setConversionPattern(buf.toString());
+        super.setConversionPattern(
+            new GenerateConvertionPattern(
+                this.base,
+                this.colors
+            ).generate()
+        );
     }
 
     /**
@@ -163,9 +129,9 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @since 0.9
      */
     public void setColors(final String cols) {
-        for (final String item : cols.split(MulticolorLayout.SPLIT_ITEMS)) {
-            final String[] values = item.split(MulticolorLayout.SPLIT_VALUES);
-            this.colors.addColor(values[0], values[1]);
+        final Map<String, String> parsed = new ParseInformation(cols).parse();
+        for (final Entry<String, String> entry : parsed.entrySet()) {
+            this.colors.addColor(entry.getKey(), entry.getValue());
         }
         /**
          * If setConversionPattern was called before me must call again
@@ -185,60 +151,44 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @since 0.9
      */
     public void setLevels(final String lev) {
-        for (final String item : lev.split(MulticolorLayout.SPLIT_ITEMS)) {
-            final String[] values = item.split(MulticolorLayout.SPLIT_VALUES);
-            final String level = values[0].toUpperCase(Locale.ENGLISH);
-            if (Level.toLevel(level, null) == null) {
-                throw new IllegalArgumentException(
-                    String.format(Locale.ENGLISH, "Unknown level '%s'", level)
-                );
-            }
-            this.levels.put(level, values[1]);
+        final Map<String, String> parsed = new ParseLevelInformation(
+            lev
+        ).parse();
+        for (final Entry<String, String> entry : parsed.entrySet()) {
+            this.levels.put(entry.getKey(), entry.getValue());
         }
     }
 
     @Override
     public String format(final LoggingEvent event) {
-        final String answer;
+        final Formatter formatter;
         if (this.isColoringEnabled()) {
-            answer = this.colorfulFormatting(event);
+            formatter = this.colorful(event);
         } else {
-            answer = this.dullFormatting(event);
+            formatter = this.dull(event);
         }
-        return answer;
+        return formatter.format();
     }
 
     /**
-     * Formats a log event without using ANSI color codes.
-     * @param event Log event
-     * @return Text of a log event, not colored with ANSI color codes even
-     *  if there is markup that tells to color it.
+     * Generate a dull {@link Formatter}.
+     *
+     * @param event Event to be formatted.
+     * @return A {@link Formatter} to format the event.
      */
-    private String dullFormatting(final LoggingEvent event) {
-        return super.format(event)
-            .replace(
-                String.format(
-                    MulticolorLayout.COLOR_PLACEHOLDER,
-                    MulticolorLayout.CSI
-                ),
-                ""
-            )
-            .replace(String.format("%sm", MulticolorLayout.CSI), "");
+    private Formatter dull(final LoggingEvent event) {
+        return new DullFormatter(super.format(event));
     }
 
     /**
-     * Formats a log event using ANSI color codes.
-     * @param event Log event
+     * Generate a colorful {@link Formatter}.
+     * @param event Event to be formatted.
      * @return Text of a log event, probably colored with ANSI color codes.
      */
-    private String colorfulFormatting(final LoggingEvent event) {
-        return super.format(event).replace(
-            String.format(COLOR_PLACEHOLDER, MulticolorLayout.CSI),
-            String.format(
-                "%s%sm",
-                MulticolorLayout.CSI,
-                this.levels.get(event.getLevel().toString())
-            )
+    private Formatter colorful(final LoggingEvent event) {
+        return new ColorfulFormatter(
+            super.format(event),
+            this.levels.get(event.getLevel().toString())
         );
     }
 
