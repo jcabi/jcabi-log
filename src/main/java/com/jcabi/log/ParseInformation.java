@@ -52,6 +52,12 @@ class ParseInformation {
     public static final String SPLIT_VALUES = ":";
 
     /**
+     * Constant for exception when information not follow the pattern.
+     */
+    private static final String EXCEPTION_INFO =
+        "Information is not using the pattern KEY1:VALUE,KEY2:VALUE %1s";
+
+    /**
      * Information to be parsed.
      */
     private final transient String information;
@@ -74,9 +80,18 @@ class ParseInformation {
     public final ConcurrentHashMap<String, String> parse() {
         final ConcurrentHashMap<String, String> parsed =
             new ConcurrentHashMap<String, String>();
-        for (final String item : this.items()) {
-            final String[] values = item.split(ParseInformation.SPLIT_VALUES);
-            parsed.put(values[0], values[1]);
+        try {
+            for (final String item : this.items()) {
+                final String[] values = item.split(
+                    ParseInformation.SPLIT_VALUES
+                );
+                parsed.put(values[0], values[1]);
+            }
+        } catch (final ArrayIndexOutOfBoundsException ex) {
+            throw new IllegalStateException(
+                String.format(EXCEPTION_INFO, this.information),
+                ex
+            );
         }
         return parsed;
     }
