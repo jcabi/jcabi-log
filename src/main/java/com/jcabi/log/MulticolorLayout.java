@@ -79,8 +79,6 @@ import org.apache.log4j.spi.LoggingEvent;
  * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
  * @see <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">PatternLayout from LOG4J</a>
  * @see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How to use with Maven</a>
- * @todo #59:30min This class is still handling multiple responsibilities like
- *  formatting, parsing and coloring and should be refactored.
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
