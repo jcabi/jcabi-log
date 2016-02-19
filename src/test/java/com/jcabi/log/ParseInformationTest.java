@@ -63,7 +63,11 @@ public class ParseInformationTest {
         try {
             final ConcurrentHashMap<String, String> parsed =
                  new ParseInformation("white").parse();
-            Assert.assertThat(parsed, Matchers.notNullValue());
+            Assert.assertThat(
+                "Never should enter this assert!",
+                parsed,
+                Matchers.nullValue()
+            );
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
                 ex.getMessage(), Matchers.equalToIgnoringCase(
