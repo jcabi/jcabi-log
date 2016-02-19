@@ -69,7 +69,7 @@ class ParseLevelInformation  {
         for (final Entry<String, String> entry : parsed.entrySet()) {
             final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
             if (Level.toLevel(level, null) == null) {
-                throw new IllegalArgumentException(
+                throw new IllegalStateException(
                     String.format(Locale.ENGLISH, "Unknown level '%s'", level)
                 );
             }
