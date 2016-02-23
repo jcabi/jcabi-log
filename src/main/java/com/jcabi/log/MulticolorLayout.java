@@ -191,16 +191,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     }
 
     /**
-     * Checks if coloring is enabled.
-     * @return True iff coloring is enabled.
-     */
-    private boolean isColoringEnabled() {
-        return !"false".equals(
-            System.getProperty(MulticolorLayout.COLORING_PROPERY)
-        );
-    }
-
-    /**
      * Level map.
      * @return Map of levels
      */
@@ -214,6 +204,16 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         map.put(Level.ERROR.toString(), "0;31");
         map.put(Level.FATAL.toString(), "0;35");
         return map;
+    }
+
+    /**
+     * Should the logged text be colored or not.
+     * @return True if the coloring is enabled, or false otherwise.
+     */
+    private boolean isColoringEnabled() {
+        return !"false".equals(
+            System.getProperty(MulticolorLayout.COLORING_PROPERY)
+        );
     }
 
 }
