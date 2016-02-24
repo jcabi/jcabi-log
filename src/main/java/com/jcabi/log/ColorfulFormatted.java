@@ -71,6 +71,7 @@ class ColorfulFormatted implements Formatted {
     public String format() {
         return this.basic.replace(
             String.format("%s?m", ColorfulFormatted.CSI),
-            String.format("%s%sm", ColorfulFormatted.CSI, this.color));
+            String.format("%s%sm", ColorfulFormatted.CSI, this.color)
+        );
     }
 }
