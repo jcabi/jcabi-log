@@ -29,64 +29,49 @@
  */
 package com.jcabi.log;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
- * Generates the convertion pattern.
+ * Formats a log event without using ANSI color codes.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
+ * @since 0.17.1
  *
  */
-class GenerateConvertionPattern {
+class DullFormatted implements Formatted {
 
     /**
-     * Regular expression for all matches.
+     * Control sequence indicator.
      */
-    private static final Pattern METAS = Pattern.compile(
-        "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
-    );
+    private static final String CSI = "\u001b[";
 
     /**
-     * Pattern to be validated.
+     * A format string for a color placeholder.
      */
-    private final transient String pattern;
+    private static final String COLOR_PLACEHOLDER = "%s?m";
 
     /**
-     * Colors to be used.
+     * String to be formatted.
      */
-    private final transient Colors colors;
+    private final transient String basic;
 
     /**
-     * Constructor.
-     * @param pat Pattern to be used.
-     * @param col Colors to be used.
+     * Contructor.
+     * @param basic String to be formatted
      */
-    public GenerateConvertionPattern(final String pat, final Colors col) {
-        this.pattern = pat;
-        this.colors = col;
+    public DullFormatted(final String basic) {
+        this.basic = basic;
     }
 
     /**
-     * Generates the conversion pattern.
-     * @return Conversion pattern.
+     * Gets formatted log event without using ANSI color codes.
+     * @return Text of a log event, not colored with ANSI color codes even
+     *  if there is markup that tells to color it.
      */
-    public String generate() {
-        final Matcher matcher = GenerateConvertionPattern.METAS.matcher(
-            this.pattern
-        );
-        final StringBuffer buf = new StringBuffer(0);
-        while (matcher.find()) {
-            matcher.appendReplacement(buf, "");
-            buf.append(Constants.CSI)
-                .append(this.colors.ansi(matcher.group(1)))
-                .append('m')
-                .append(matcher.group(2))
-                .append(Constants.CSI)
-                .append('m');
-        }
-        matcher.appendTail(buf);
-        return buf.toString();
+    @Override
+    public String format() {
+        return this.basic.replace(
+            String.format(DullFormatted.COLOR_PLACEHOLDER, DullFormatted.CSI),
+            ""
+        ).replace(String.format("%sm", DullFormatted.CSI), "");
     }
 
 }

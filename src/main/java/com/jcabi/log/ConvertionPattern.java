@@ -29,41 +29,70 @@
  */
 package com.jcabi.log;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
- * Formats a log event without using ANSI color codes.
+ * Generates the convertion pattern.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
+ * @since 0.17.1
  *
  */
-class DullFormatter implements Formatter {
+class ConvertionPattern {
 
     /**
-     * String to be formatted.
+     * Control sequence indicator.
      */
-    private final transient String basic;
+    private static final String CSI = "\u001b[";
 
     /**
-     * Contructor.
-     * @param bas String to be formatted.
+     * Regular expression for all matches.
      */
-    public DullFormatter(final String bas) {
-        this.basic = bas;
+    private static final Pattern METAS = Pattern.compile(
+        "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
+    );
+
+    /**
+     * Pattern to be validated.
+     */
+    private final transient String pattern;
+
+    /**
+     * Colors to be used.
+     */
+    private final transient Colors colors;
+
+    /**
+     * Constructor.
+     * @param pat Pattern to be used
+     * @param col Colors to be used
+     */
+    public ConvertionPattern(final String pat, final Colors col) {
+        this.pattern = pat;
+        this.colors = col;
     }
 
     /**
-     * Formats a log event without using ANSI color codes.
-     * @return Text of a log event, not colored with ANSI color codes even
-     *  if there is markup that tells to color it.
+     * Generates the conversion pattern.
+     * @return Conversion pattern
      */
-    @Override
-    public String format() {
-        return this.basic.replace(
-            String.format(
-                Constants.COLOR_PLACEHOLDER,
-                Constants.CSI
-            ),
-            ""
-        ).replace(String.format("%sm", Constants.CSI), "");
+    public String generate() {
+        final Matcher matcher = ConvertionPattern.METAS.matcher(
+            this.pattern
+        );
+        final StringBuffer buf = new StringBuffer(0);
+        while (matcher.find()) {
+            matcher.appendReplacement(buf, "");
+            buf.append(ConvertionPattern.CSI)
+                .append(this.colors.ansi(matcher.group(1)))
+                .append('m')
+                .append(matcher.group(2))
+                .append(ConvertionPattern.CSI)
+                .append('m');
+        }
+        matcher.appendTail(buf);
+        return buf.toString();
     }
 
 }

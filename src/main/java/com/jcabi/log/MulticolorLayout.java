@@ -111,7 +111,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setConversionPattern(final String pattern) {
         this.base = pattern;
         super.setConversionPattern(
-            new GenerateConvertionPattern(
+            new ConvertionPattern(
                 this.base,
                 this.colors
             ).generate()
@@ -159,32 +159,32 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
 
     @Override
     public String format(final LoggingEvent event) {
-        final Formatter formatter;
+        final Formatted formatted;
         if (this.isColoringEnabled()) {
-            formatter = this.colorful(event);
+            formatted = this.colorful(event);
         } else {
-            formatter = this.dull(event);
+            formatted = this.dull(event);
         }
-        return formatter.format();
+        return formatted.format();
     }
 
     /**
-     * Generate a dull {@link Formatter}.
+     * Generate a dull {@link Formatted}.
      *
      * @param event Event to be formatted.
-     * @return A {@link Formatter} to format the event.
+     * @return A {@link Formatted} to format the event.
      */
-    private Formatter dull(final LoggingEvent event) {
-        return new DullFormatter(super.format(event));
+    private Formatted dull(final LoggingEvent event) {
+        return new DullFormatted(super.format(event));
     }
 
     /**
-     * Generate a colorful {@link Formatter}.
+     * Generate a colorful {@link Formatted}.
      * @param event Event to be formatted.
      * @return Text of a log event, probably colored with ANSI color codes.
      */
-    private Formatter colorful(final LoggingEvent event) {
-        return new ColorfulFormatter(
+    private Formatted colorful(final LoggingEvent event) {
+        return new ColorfulFormatted(
             super.format(event),
             this.levels.get(event.getLevel().toString())
         );

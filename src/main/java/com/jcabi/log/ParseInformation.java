@@ -34,22 +34,21 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Converts items inside a string like K1:V1,K2:V2. - where K is for key and v
  * is for value - to a {@link Map} of string key and string value.
- *
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- *
+ * @since 0.17.1
  */
 class ParseInformation {
 
     /**
      * To split strings with javascript like map syntax.
      */
-    public static final String SPLIT_ITEMS = ",";
+    private static final String SPLIT_ITEMS = ",";
 
     /**
      * To split key:value pairs.
      */
-    public static final String SPLIT_VALUES = ":";
+    private static final String SPLIT_VALUES = ":";
 
     /**
      * Constant for exception when information not follow the pattern.
@@ -74,7 +73,6 @@ class ParseInformation {
 
     /**
      * Parse the information.
-     *
      * @return A {@link ConcurrentHashMap} with a key,value pair os strings.
      */
     public final ConcurrentHashMap<String, String> parse() {
@@ -97,7 +95,7 @@ class ParseInformation {
     }
 
     /**
-     * Spring the information using {@link ParseInformation#SPLIT_ITEMS}
+     * Split the information using {@link ParseInformation#SPLIT_ITEMS}
      * pattern.
      *
      * @return An array of items.

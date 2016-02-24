@@ -30,26 +30,53 @@
 package com.jcabi.log;
 
 /**
- * Concentrates constants used by several classes.
+ * Formats a log event using ANSI color codes.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- *
+ * @since 0.17.1
  */
-final class Constants {
+class ColorfulFormatted implements Formatted {
 
     /**
      * Control sequence indicator.
      */
-    public static final String CSI = "\u001b[";
+    private static final String CSI = "\u001b[";
 
     /**
      * A format string for a color placeholder.
      */
-    public static final String COLOR_PLACEHOLDER = "%s?m";
+    private static final String COLOR_PLACEHOLDER = "%s?m";
 
     /**
-     * No access constructor.
+     * The basic information to be formatted with colors.
      */
-    private Constants() {
+    private final transient String basic;
+
+    /**
+     * Color used as the replacement.
+     */
+    private final transient String color;
+
+    /**
+     * Constructor.
+     * @param basic Basic string to be formatted
+     * @param color Color to be used to paint the output
+     */
+    public ColorfulFormatted(final String basic, final String color) {
+        super();
+        this.basic = basic;
+        this.color = color;
+    }
+
+    /**
+     * Gets the formatted log event using ANSI color codes.
+     * @return Text of a log event, probably colored with ANSI color codes
+     */
+    @Override
+    public String format() {
+        return this.basic.replace(
+            String.format(ColorfulFormatted.COLOR_PLACEHOLDER, ColorfulFormatted.CSI),
+            String.format("%s%sm", ColorfulFormatted.CSI, this.color)
+        );
     }
 }

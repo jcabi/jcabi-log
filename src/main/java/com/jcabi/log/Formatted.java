@@ -33,9 +33,9 @@ package com.jcabi.log;
  * Contract for a class that know how to format something.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- *
+ * @since 0.17.1
  */
-interface Formatter {
+interface Formatted {
 
     /**
      * Return something formatted.
