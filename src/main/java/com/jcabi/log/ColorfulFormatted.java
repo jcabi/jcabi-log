@@ -43,11 +43,6 @@ class ColorfulFormatted implements Formatted {
     private static final String CSI = "\u001b[";
 
     /**
-     * A format string for a color placeholder.
-     */
-    private static final String COLOR_PLACEHOLDER = "%s?m";
-
-    /**
      * The basic information to be formatted with colors.
      */
     private final transient String basic;
@@ -75,8 +70,7 @@ class ColorfulFormatted implements Formatted {
     @Override
     public String format() {
         return this.basic.replace(
-            String.format(ColorfulFormatted.COLOR_PLACEHOLDER, ColorfulFormatted.CSI),
-            String.format("%s%sm", ColorfulFormatted.CSI, this.color)
-        );
+            String.format("%s?m", ColorfulFormatted.CSI),
+            String.format("%s%sm", ColorfulFormatted.CSI, this.color));
     }
 }
