@@ -36,8 +36,7 @@ import java.util.regex.Pattern;
  * Generates the convertion pattern.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.1
- *
+ * @since 0.17.2
  */
 class ConvertionPattern {
 

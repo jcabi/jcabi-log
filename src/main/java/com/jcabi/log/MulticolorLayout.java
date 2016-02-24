@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -125,8 +126,9 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @param cols JavaScript like map of color names
      * @since 0.9
      */
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setColors(final String cols) {
-        final ConcurrentHashMap<String, String> parsed = new ParseInformation(
+        final Map<String, String> parsed = new ParseInformation(
             cols
         ).parse();
         for (final Entry<String, String> entry : parsed.entrySet()) {
@@ -149,9 +151,11 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @param lev JavaScript like map of levels
      * @since 0.9
      */
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setLevels(final String lev) {
-        final ConcurrentHashMap<String, String> parsed =
-            new ParseLevelInformation(lev).parse();
+        final Map<String, String> parsed = new ParseLevelInformation(
+            lev
+        ).parse();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             this.levels.put(entry.getKey(), entry.getValue());
         }
@@ -175,7 +179,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @return A {@link Formatted} to format the event.
      */
     private Formatted dull(final LoggingEvent event) {
-        return new DullFormatted(super.format(event));
+        return new DullyFormatted(super.format(event));
     }
 
     /**
@@ -184,7 +188,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @return Text of a log event, probably colored with ANSI color codes.
      */
     private Formatted colorful(final LoggingEvent event) {
-        return new ColorfulFormatted(
+        return new ColorfullyFormatted(
             super.format(event),
             this.levels.get(event.getLevel().toString())
         );

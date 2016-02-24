@@ -29,14 +29,15 @@
  */
 package com.jcabi.log;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Converts items inside a string like K1:V1,K2:V2. - where K is for key and v
- * is for value - to a {@link Map} of string key and string value.
+ * is for value - to a {@code Map} of string key and string value.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.1
+ * @since 0.17.2
  */
 class ParseInformation {
 
@@ -75,9 +76,9 @@ class ParseInformation {
      * Parse the information.
      * @return A {@link ConcurrentHashMap} with a key,value pair os strings.
      */
-    public final ConcurrentHashMap<String, String> parse() {
-        final ConcurrentHashMap<String, String> parsed =
-            new ConcurrentHashMap<String, String>();
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    public final Map<String, String> parse() {
+        final Map<String, String> parsed = new HashMap<String, String>();
         try {
             for (final String item : this.items()) {
                 final String[] values = item.split(
@@ -87,8 +88,7 @@ class ParseInformation {
             }
         } catch (final ArrayIndexOutOfBoundsException ex) {
             throw new IllegalStateException(
-                String.format(EXCEPTION_INFO, this.information),
-                ex
+                String.format(EXCEPTION_INFO, this.information), ex
             );
         }
         return parsed;

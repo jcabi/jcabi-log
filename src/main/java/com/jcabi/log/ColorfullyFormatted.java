@@ -33,9 +33,9 @@ package com.jcabi.log;
  * Formats a log event using ANSI color codes.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.1
+ * @since 0.17.2
  */
-class ColorfulFormatted implements Formatted {
+class ColorfullyFormatted implements Formatted {
 
     /**
      * Control sequence indicator.
@@ -57,21 +57,20 @@ class ColorfulFormatted implements Formatted {
      * @param bas Basic string to be formatted
      * @param col Color to be used to paint the output
      */
-    public ColorfulFormatted(final String bas, final String col) {
-        super();
+    public ColorfullyFormatted(final String bas, final String col) {
         this.basic = bas;
         this.color = col;
     }
 
     /**
      * Gets the formatted log event using ANSI color codes.
-     * @return Text of a log event, probably colored with ANSI color codes
+     * @return Text of a log event, colored with ANSI color codes
      */
     @Override
     public String format() {
         return this.basic.replace(
-            String.format("%s?m", ColorfulFormatted.CSI),
-            String.format("%s%sm", ColorfulFormatted.CSI, this.color)
+            String.format("%s?m", ColorfullyFormatted.CSI),
+            String.format("%s%sm", ColorfullyFormatted.CSI, this.color)
         );
     }
 }

@@ -29,54 +29,50 @@
  */
 package com.jcabi.log;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ParseInformation}.
- *
+ * Test case.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
+ * @since 0.17.2
  * @checkstyle MultipleStringLiteralsCheck (80 lines)
  */
 public class ParseInformationTest {
 
     /**
-     * Test that except everything to goes fine.
+     * ParseInformation must parse if the information correctly if is using
+     * the right pattern.
      */
     @Test
-    public final void mustParseTheInformationCorrectly() {
-        final ConcurrentHashMap<String, String> parsed =
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    public final void parsesTheInformationCorrectly() {
+        final Map<String, String> parsed =
             new ParseInformation("white:10,black:20").parse();
         Assert.assertThat(parsed, Matchers.hasEntry("white", "10"));
         Assert.assertThat(parsed, Matchers.hasEntry("black", "20"));
     }
 
     /**
-     * Test that assert that an exception should be throwed.
+     * ParseInformation must throws an an exception when parsing wrong info.
      */
     @Test
-    public final void mustThrowAnIllegalStateExceptionWhenPassSomethingWrong() {
+    public final void throwsAnExceptionWhenParsingSomethingWrong() {
         try {
-            final ConcurrentHashMap<String, String> parsed =
-                 new ParseInformation("white").parse();
-            Assert.assertThat(
-                "Never should enter this assert!",
-                parsed,
-                Matchers.nullValue()
-            );
+            new ParseInformation("white").parse();
+            Assert.fail("Should never enter this assert!");
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
                 ex.getMessage(), Matchers.equalToIgnoringCase(
                     String.format(
                         StringUtils.join(
                             "Information is not using the pattern ",
-                            "KEY1:VALUE,KEY2:VALUE %1s"
-                        ),
-                        "white"
+                            "KEY1:VALUE,KEY2:VALUE"
+                        ), "white"
                     )
                 )
             );

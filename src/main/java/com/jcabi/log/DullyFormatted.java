@@ -33,10 +33,9 @@ package com.jcabi.log;
  * Formats a log event without using ANSI color codes.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.1
- *
+ * @since 0.17.2
  */
-class DullFormatted implements Formatted {
+class DullyFormatted implements Formatted {
 
     /**
      * Control sequence indicator.
@@ -57,7 +56,7 @@ class DullFormatted implements Formatted {
      * Contructor.
      * @param bas String to be formatted
      */
-    public DullFormatted(final String bas) {
+    public DullyFormatted(final String bas) {
         this.basic = bas;
     }
 
@@ -69,9 +68,9 @@ class DullFormatted implements Formatted {
     @Override
     public String format() {
         return this.basic.replace(
-            String.format(DullFormatted.COLOR_PLACEHOLDER, DullFormatted.CSI),
+            String.format(DullyFormatted.COLOR_PLACEHOLDER, DullyFormatted.CSI),
             ""
-        ).replace(String.format("%sm", DullFormatted.CSI), "");
+        ).replace(String.format("%sm", DullyFormatted.CSI), "");
     }
 
 }

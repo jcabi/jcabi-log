@@ -29,17 +29,19 @@
  */
 package com.jcabi.log;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import org.apache.log4j.Level;
 
 /**
- * Parse information like {@link ParseInformation} does, but increments with
- * some extra checks for {@link Level}s.
+ * Parse information like {@code ParseInformation} does, but increments with
+ * some extra checks for {@code Level}s.
  *
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
+ * @since 0.17.2
  */
 class ParseLevelInformation  {
 
@@ -60,12 +62,12 @@ class ParseLevelInformation  {
      * Parse the level information.
      * @return A {@link ConcurrentHashMap} with key,value pair of strings.
      */
-    public final ConcurrentHashMap<String, String> parse() {
-        final ConcurrentHashMap<String, String> parsed = new ParseInformation(
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    public final Map<String, String> parse() {
+        final Map<String, String> parsed = new ParseInformation(
             this.information
         ).parse();
-        final ConcurrentHashMap<String, String> converted =
-            new ConcurrentHashMap<String, String>();
+        final Map<String, String> converted = new HashMap<String, String>();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
             if (Level.toLevel(level, null) == null) {

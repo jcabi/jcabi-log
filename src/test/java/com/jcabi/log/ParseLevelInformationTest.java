@@ -29,44 +29,43 @@
  */
 package com.jcabi.log;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test case for {@link ParseLevelInformation}.
+ * Test case.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
+ * @since 0.17.2
  * @checkstyle MultipleStringLiteralsCheck (80 lines)
  */
 public class ParseLevelInformationTest {
 
     /**
-     * Test the default path.
+     * ParseLevelInformation must parse the information correctly when it's
+     * with the right pattern.
      */
     @Test
-    public final void mustParseCorrectInformation() {
-        final ConcurrentHashMap<String, String> parsed =
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    public final void parsesCorrectlyTheInformation() {
+        final Map<String, String> parsed =
             new ParseLevelInformation("INFO:2;10,WARN:2;32").parse();
         Assert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
         Assert.assertThat(parsed, Matchers.hasEntry("WARN", "2;32"));
     }
 
     /**
-     * Test the wrong pattern path.
+     * ParseLevelInformation must throw an exception when information is
+     * not with the right pattern.
      */
     @Test
-    public final void mustNotParseIncorrectInformation() {
+    public final void throwsAnExceptionWhenParsingIncorrectInformation() {
         try {
-            final ConcurrentHashMap<String, String> parsed =
-                new ParseLevelInformation("INFO;10,WARN;32").parse();
-            Assert.assertThat(
-                "Never should enter this assert!",
-                parsed,
-                Matchers.nullValue()
-            );
+            new ParseLevelInformation("INFO;10,WARN;32").parse();
+            Assert.fail("Should neve enter this assert!");
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
                 ex.getMessage(), Matchers.equalToIgnoringCase(
@@ -74,8 +73,7 @@ public class ParseLevelInformationTest {
                         StringUtils.join(
                             "Information is not using the pattern ",
                             "KEY1:VALUE,KEY2:VALUE %1s"
-                            ),
-                        "INFO;10,WARN;32"
+                        ), "INFO;10,WARN;32"
                     )
                 )
             );
@@ -83,18 +81,14 @@ public class ParseLevelInformationTest {
     }
 
     /**
-     * Test the wrong {@link org.apache.log4j.Level} type path.
+     * ParseLevelInformation must throw an exception when passing information
+     * with a wrong type of level.
      */
     @Test
-    public final void mustNotParseInformationWithWrongLevelType() {
+    public final void throwsAnExceptionWhenParsingWrongLevelType() {
         try {
-            final ConcurrentHashMap<String, String> parsed =
-                    new ParseLevelInformation("INFO:2;10,EXTREME:2;32").parse();
-            Assert.assertThat(
-                "Never should enter this assert!",
-                parsed,
-                Matchers.nullValue()
-            );
+            new ParseLevelInformation("INFO:2;10,EXTREME:2;32").parse();
+            Assert.fail("Should neve enter this assert!");
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
                 ex.getMessage(),
