@@ -55,10 +55,10 @@ class DullFormatted implements Formatted {
 
     /**
      * Contructor.
-     * @param basic String to be formatted
+     * @param bas String to be formatted
      */
-    public DullFormatted(final String basic) {
-        this.basic = basic;
+    public DullFormatted(final String bas) {
+        this.basic = bas;
     }
 
     /**

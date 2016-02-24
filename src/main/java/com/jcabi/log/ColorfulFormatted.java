@@ -59,13 +59,13 @@ class ColorfulFormatted implements Formatted {
 
     /**
      * Constructor.
-     * @param basic Basic string to be formatted
-     * @param color Color to be used to paint the output
+     * @param bas Basic string to be formatted
+     * @param col Color to be used to paint the output
      */
-    public ColorfulFormatted(final String basic, final String color) {
+    public ColorfulFormatted(final String bas, final String col) {
         super();
-        this.basic = basic;
-        this.color = color;
+        this.basic = bas;
+        this.color = col;
     }
 
     /**
