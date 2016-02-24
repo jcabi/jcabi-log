@@ -71,7 +71,7 @@ public class ParseInformationTest {
                     String.format(
                         StringUtils.join(
                             "Information is not using the pattern ",
-                            "KEY1:VALUE,KEY2:VALUE"
+                            "KEY1:VALUE,KEY2:VALUE %1s"
                         ), "white"
                     )
                 )
