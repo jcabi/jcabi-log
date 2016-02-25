@@ -84,7 +84,6 @@ class ParseInformation {
     /**
      * Split the information using {@link ParseInformation#SPLIT_ITEMS}
      * pattern.
-     *
      * @return An array of items
      */
     private String[] items() {
