@@ -33,12 +33,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Generates the convertion pattern.
+ * Generates the conversion pattern.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.2
+ * @since 0.18
  */
-class ConvertionPattern {
+class ConversionPattern {
 
     /**
      * Control sequence indicator.
@@ -67,7 +67,7 @@ class ConvertionPattern {
      * @param pat Pattern to be used
      * @param col Colors to be used
      */
-    public ConvertionPattern(final String pat, final Colors col) {
+    public ConversionPattern(final String pat, final Colors col) {
         this.pattern = pat;
         this.colors = col;
     }
@@ -77,17 +77,17 @@ class ConvertionPattern {
      * @return Conversion pattern
      */
     public String generate() {
-        final Matcher matcher = ConvertionPattern.METAS.matcher(
+        final Matcher matcher = ConversionPattern.METAS.matcher(
             this.pattern
         );
         final StringBuffer buf = new StringBuffer(0);
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
-            buf.append(ConvertionPattern.CSI)
+            buf.append(ConversionPattern.CSI)
                 .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
                 .append(matcher.group(2))
-                .append(ConvertionPattern.CSI)
+                .append(ConversionPattern.CSI)
                 .append('m');
         }
         matcher.appendTail(buf);

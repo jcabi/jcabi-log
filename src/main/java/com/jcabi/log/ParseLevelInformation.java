@@ -41,7 +41,7 @@ import org.apache.log4j.Level;
  *
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.2
+ * @since 0.18
  */
 class ParseLevelInformation  {
 
@@ -52,7 +52,7 @@ class ParseLevelInformation  {
 
     /**
      * Construtor.
-     * @param info To be parsed.
+     * @param info To be parsed
      */
     public ParseLevelInformation(final String info) {
         this.information = info;
@@ -60,7 +60,7 @@ class ParseLevelInformation  {
 
     /**
      * Parse the level information.
-     * @return A {@link ConcurrentHashMap} with key,value pair of strings.
+     * @return A {@link Map} with key,value pair of strings
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> parse() {

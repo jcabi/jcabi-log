@@ -36,44 +36,49 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test case.
+ * ParseLevelInformationTest test case.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.2
- * @checkstyle MultipleStringLiteralsCheck (80 lines)
+ * @since 0.18
  */
 public class ParseLevelInformationTest {
 
     /**
-     * ParseLevelInformation must parse the information correctly when it's
+     * Wrong information to be parsed.
+     */
+    private static final String WRONG_INFORMATION = "INFO;10,WARN;32";
+
+    /**
+     * ParseLevelInformation can parse the information correctly when it's
      * with the right pattern.
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final void parsesCorrectlyTheInformation() {
-        final Map<String, String> parsed =
-            new ParseLevelInformation("INFO:2;10,WARN:2;32").parse();
+        final Map<String, String> parsed = new ParseLevelInformation(
+            "INFO:2;10,WARN:2;32"
+        ).parse();
         Assert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
         Assert.assertThat(parsed, Matchers.hasEntry("WARN", "2;32"));
     }
 
     /**
-     * ParseLevelInformation must throw an exception when information is
+     * ParseLevelInformation can throw an exception when information is
      * not with the right pattern.
      */
     @Test
     public final void throwsAnExceptionWhenParsingIncorrectInformation() {
         try {
-            new ParseLevelInformation("INFO;10,WARN;32").parse();
-            Assert.fail("Should neve enter this assert!");
+            new ParseLevelInformation(WRONG_INFORMATION).parse();
+            Assert.fail();
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
-                ex.getMessage(), Matchers.equalToIgnoringCase(
+                ex.getMessage(), Matchers.equalTo(
                     String.format(
                         StringUtils.join(
                             "Information is not using the pattern ",
-                            "KEY1:VALUE,KEY2:VALUE %1s"
-                        ), "INFO;10,WARN;32"
+                            "KEY1:VALUE,KEY2:VALUE %s"
+                        ), WRONG_INFORMATION
                     )
                 )
             );
@@ -81,14 +86,14 @@ public class ParseLevelInformationTest {
     }
 
     /**
-     * ParseLevelInformation must throw an exception when passing information
+     * ParseLevelInformation can throw an exception when passing information
      * with a wrong type of level.
      */
     @Test
     public final void throwsAnExceptionWhenParsingWrongLevelType() {
         try {
             new ParseLevelInformation("INFO:2;10,EXTREME:2;32").parse();
-            Assert.fail("Should neve enter this assert!");
+            Assert.fail();
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
                 ex.getMessage(),

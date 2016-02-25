@@ -36,43 +36,48 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test case.
+ * ParseInformation test case.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.2
- * @checkstyle MultipleStringLiteralsCheck (80 lines)
+ * @since 0.18
  */
 public class ParseInformationTest {
 
     /**
-     * ParseInformation must parse if the information correctly if is using
+     * Just a word used at several test cases.
+     */
+    private static final String WHITE = "white";
+
+    /**
+     * ParseInformation can parse if the information correctly if is using
      * the right pattern.
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final void parsesTheInformationCorrectly() {
-        final Map<String, String> parsed =
-            new ParseInformation("white:10,black:20").parse();
-        Assert.assertThat(parsed, Matchers.hasEntry("white", "10"));
+        final Map<String, String> parsed = new ParseInformation(
+            "white:10,black:20"
+        ).parse();
+        Assert.assertThat(parsed, Matchers.hasEntry(WHITE, "10"));
         Assert.assertThat(parsed, Matchers.hasEntry("black", "20"));
     }
 
     /**
-     * ParseInformation must throws an an exception when parsing wrong info.
+     * ParseInformation can throws an an exception when parsing wrong info.
      */
     @Test
     public final void throwsAnExceptionWhenParsingSomethingWrong() {
         try {
-            new ParseInformation("white").parse();
+            new ParseInformation(WHITE).parse();
             Assert.fail("Should never enter this assert!");
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
-                ex.getMessage(), Matchers.equalToIgnoringCase(
+                ex.getMessage(), Matchers.equalTo(
                     String.format(
                         StringUtils.join(
                             "Information is not using the pattern ",
-                            "KEY1:VALUE,KEY2:VALUE %1s"
-                        ), "white"
+                            "KEY1:VALUE,KEY2:VALUE %s"
+                        ), WHITE
                     )
                 )
             );

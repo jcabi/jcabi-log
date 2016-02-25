@@ -33,7 +33,7 @@ package com.jcabi.log;
  * Formats a log event without using ANSI color codes.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.2
+ * @since 0.18
  */
 class DullyFormatted implements Formatted {
 

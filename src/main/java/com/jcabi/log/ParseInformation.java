@@ -33,29 +33,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Converts items inside a string like K1:V1,K2:V2. - where K is for key and v
+ * Converts items inside a string like K1:V1,K2:V2. - where K is for key and V
  * is for value - to a {@code Map} of string key and string value.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
- * @since 0.17.2
+ * @since 0.18
  */
 class ParseInformation {
-
-    /**
-     * To split strings with javascript like map syntax.
-     */
-    private static final String SPLIT_ITEMS = ",";
-
-    /**
-     * To split key:value pairs.
-     */
-    private static final String SPLIT_VALUES = ":";
-
-    /**
-     * Constant for exception when information not follow the pattern.
-     */
-    private static final String EXCEPTION_INFO =
-        "Information is not using the pattern KEY1:VALUE,KEY2:VALUE %1s";
 
     /**
      * Information to be parsed.
@@ -65,7 +49,7 @@ class ParseInformation {
     /**
      * Construtor.
      *
-     * @param info To be parsed.
+     * @param info To be parsed
      */
     public ParseInformation(final String info) {
         super();
@@ -74,21 +58,24 @@ class ParseInformation {
 
     /**
      * Parse the information.
-     * @return A {@link ConcurrentHashMap} with a key,value pair os strings.
+     * @return A {@link Map} with a key,value pair os strings
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> parse() {
         final Map<String, String> parsed = new HashMap<String, String>();
         try {
             for (final String item : this.items()) {
-                final String[] values = item.split(
-                    ParseInformation.SPLIT_VALUES
-                );
+                final String[] values = item.split(":");
                 parsed.put(values[0], values[1]);
             }
         } catch (final ArrayIndexOutOfBoundsException ex) {
             throw new IllegalStateException(
-                String.format(EXCEPTION_INFO, this.information), ex
+                String.format(new StringBuilder()
+                    .append("Information is not using the pattern ")
+                    .append("KEY1:VALUE,KEY2:VALUE %s")
+                    .toString(),
+                    this.information
+                ), ex
             );
         }
         return parsed;
@@ -98,9 +85,9 @@ class ParseInformation {
      * Split the information using {@link ParseInformation#SPLIT_ITEMS}
      * pattern.
      *
-     * @return An array of items.
+     * @return An array of items
      */
     private String[] items() {
-        return this.information.split(ParseInformation.SPLIT_ITEMS);
+        return this.information.split(",");
     }
 }

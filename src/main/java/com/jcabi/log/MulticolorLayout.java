@@ -111,8 +111,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     @Override
     public void setConversionPattern(final String pattern) {
         this.base = pattern;
-        super.setConversionPattern(
-            new ConvertionPattern(
+        super.setConversionPattern(new ConversionPattern(
                 this.base,
                 this.colors
             ).generate()
@@ -147,7 +146,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Allow to overwrite the ANSI color values for the log levels
      * in a javascript map like format.
-     *
      * @param lev JavaScript like map of levels
      * @since 0.9
      */
@@ -165,29 +163,28 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public String format(final LoggingEvent event) {
         final Formatted formatted;
         if (this.isColoringEnabled()) {
-            formatted = this.colorful(event);
+            formatted = this.colorfulFormatting(event);
         } else {
-            formatted = this.dull(event);
+            formatted = this.dullFormatting(event);
         }
         return formatted.format();
     }
 
     /**
-     * Generate a dull {@link Formatted}.
-     *
-     * @param event Event to be formatted.
-     * @return A {@link Formatted} to format the event.
+     * Generate a dull {@code Formatted}.
+     * @param event Event to be formatted
+     * @return A {@link Formatted} to format the event
      */
-    private Formatted dull(final LoggingEvent event) {
+    private Formatted dullFormatting(final LoggingEvent event) {
         return new DullyFormatted(super.format(event));
     }
 
     /**
-     * Generate a colorful {@link Formatted}.
-     * @param event Event to be formatted.
-     * @return Text of a log event, probably colored with ANSI color codes.
+     * Generate a colorful {@code Formatted}.
+     * @param event Event to be formatted
+     * @return Text of a log event, probably colored with ANSI color codes
      */
-    private Formatted colorful(final LoggingEvent event) {
+    private Formatted colorfulFormatting(final LoggingEvent event) {
         return new ColorfullyFormatted(
             super.format(event),
             this.levels.get(event.getLevel().toString())
