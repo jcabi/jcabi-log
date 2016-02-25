@@ -48,7 +48,6 @@ class ParseInformation {
 
     /**
      * Construtor.
-     *
      * @param info To be parsed
      */
     public ParseInformation(final String info) {

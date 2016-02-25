@@ -38,7 +38,6 @@ import org.apache.log4j.Level;
 /**
  * Parse information like {@code ParseInformation} does, but increments with
  * some extra checks for {@code Level}s.
- *
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
  * @since 0.18
