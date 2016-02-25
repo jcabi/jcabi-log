@@ -44,7 +44,7 @@ import org.junit.Test;
 public class ParseInformationTest {
 
     /**
-     * Just a word used at several test cases.
+     * White color key.
      */
     private static final String WHITE = "white";
 
