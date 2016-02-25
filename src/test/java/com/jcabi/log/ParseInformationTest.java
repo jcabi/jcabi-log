@@ -63,7 +63,7 @@ public class ParseInformationTest {
     }
 
     /**
-     * ParseInformation can throws an an exception when parsing wrong info.
+     * ParseInformation can throw an an exception when parsing wrong info.
      */
     @Test
     public final void throwsAnExceptionWhenParsingSomethingWrong() {
