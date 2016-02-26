@@ -39,7 +39,7 @@ import java.util.Map;
  * @version $Id$
  * @since 0.18
  */
-class ParseInformation {
+class ParseableInformation {
 
     /**
      * Information to be parsed.
@@ -50,7 +50,7 @@ class ParseInformation {
      * Construtor.
      * @param info To be parsed
      */
-    public ParseInformation(final String info) {
+    public ParseableInformation(final String info) {
         super();
         this.information = info;
     }
@@ -81,7 +81,7 @@ class ParseInformation {
     }
 
     /**
-     * Split the information using {@link ParseInformation#SPLIT_ITEMS}
+     * Split the information using {@link ParseableInformation#SPLIT_ITEMS}
      * pattern.
      * @return An array of items
      */

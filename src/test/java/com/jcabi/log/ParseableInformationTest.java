@@ -29,54 +29,59 @@
  */
 package com.jcabi.log;
 
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
-import org.apache.log4j.Level;
+import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * Parse information like {@code ParseInformation} does, but increments with
- * some extra checks for {@code Level}s.
+ * ParseableInformation test case.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
  * @since 0.18
  */
-class ParseLevelInformation  {
+public class ParseableInformationTest {
 
     /**
-     * Information to be parsed.
+     * White color key.
      */
-    private final transient String information;
+    private static final String WHITE = "white";
 
     /**
-     * Construtor.
-     * @param info To be parsed
+     * ParseableInformation can parse if the information correctly if is using
+     * the right pattern.
      */
-    public ParseLevelInformation(final String info) {
-        this.information = info;
+    @Test
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    public final void parsesTheInformationCorrectly() {
+        final Map<String, String> parsed = new ParseableInformation(
+            "white:10,black:20"
+        ).parse();
+        Assert.assertThat(parsed, Matchers.hasEntry(WHITE, "10"));
+        Assert.assertThat(parsed, Matchers.hasEntry("black", "20"));
     }
 
     /**
-     * Parse the level information.
-     * @return A {@link Map} with key,value pair of strings
+     * ParseableInformation can throw an an exception when parsing wrong info.
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
-    public final Map<String, String> parse() {
-        final Map<String, String> parsed = new ParseInformation(
-            this.information
-        ).parse();
-        final Map<String, String> converted = new HashMap<String, String>();
-        for (final Entry<String, String> entry : parsed.entrySet()) {
-            final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
-            if (Level.toLevel(level, null) == null) {
-                throw new IllegalStateException(
-                    String.format(Locale.ENGLISH, "Unknown level '%s'", level)
-                );
-            }
-            converted.put(level, entry.getValue());
+    @Test
+    public final void throwsAnExceptionWhenParsingSomethingWrong() {
+        try {
+            new ParseableInformation(WHITE).parse();
+            Assert.fail("Should never enter this assert!");
+        } catch (final IllegalStateException ex) {
+            Assert.assertThat(
+                ex.getMessage(), Matchers.equalTo(
+                    String.format(
+                        StringUtils.join(
+                            "Information is not using the pattern ",
+                            "KEY1:VALUE,KEY2:VALUE %s"
+                        ), WHITE
+                    )
+                )
+            );
         }
-        return converted;
     }
 
 }

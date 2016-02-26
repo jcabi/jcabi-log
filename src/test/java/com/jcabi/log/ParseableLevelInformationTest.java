@@ -36,12 +36,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * ParseLevelInformationTest test case.
+ * ParseableLevelInformation test case.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
  * @since 0.18
  */
-public class ParseLevelInformationTest {
+public class ParseableLevelInformationTest {
 
     /**
      * Wrong information to be parsed.
@@ -49,13 +49,13 @@ public class ParseLevelInformationTest {
     private static final String WRONG_INFORMATION = "INFO;10,WARN;32";
 
     /**
-     * ParseLevelInformation can parse the information correctly when it's
+     * ParseableLevelInformation can parse the information correctly when it's
      * with the right pattern.
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final void parsesCorrectlyTheInformation() {
-        final Map<String, String> parsed = new ParseLevelInformation(
+        final Map<String, String> parsed = new ParseableLevelInformation(
             "INFO:2;10,WARN:2;32"
         ).parse();
         Assert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
@@ -63,13 +63,13 @@ public class ParseLevelInformationTest {
     }
 
     /**
-     * ParseLevelInformation can throw an exception when information is
+     * ParseableLevelInformation can throw an exception when information is
      * not with the right pattern.
      */
     @Test
     public final void throwsAnExceptionWhenParsingIncorrectInformation() {
         try {
-            new ParseLevelInformation(WRONG_INFORMATION).parse();
+            new ParseableLevelInformation(WRONG_INFORMATION).parse();
             Assert.fail();
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
@@ -86,13 +86,13 @@ public class ParseLevelInformationTest {
     }
 
     /**
-     * ParseLevelInformation can throw an exception when passing information
+     * ParseableLevelInformation can throw an exception when passing information
      * with a wrong type of level.
      */
     @Test
     public final void throwsAnExceptionWhenParsingWrongLevelType() {
         try {
-            new ParseLevelInformation("INFO:2;10,EXTREME:2;32").parse();
+            new ParseableLevelInformation("INFO:2;10,EXTREME:2;32").parse();
             Assert.fail();
         } catch (final IllegalStateException ex) {
             Assert.assertThat(

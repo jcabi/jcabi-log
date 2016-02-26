@@ -29,59 +29,54 @@
  */
 package com.jcabi.log;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
-import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.Map.Entry;
+import org.apache.log4j.Level;
 
 /**
- * ParseInformation test case.
+ * Parse information like {@code ParseInformation} does, but increments with
+ * some extra checks for {@code Level}s.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
  * @since 0.18
  */
-public class ParseInformationTest {
+class ParseableLevelInformation  {
 
     /**
-     * White color key.
+     * Information to be parsed.
      */
-    private static final String WHITE = "white";
+    private final transient String information;
 
     /**
-     * ParseInformation can parse if the information correctly if is using
-     * the right pattern.
+     * Construtor.
+     * @param info To be parsed
      */
-    @Test
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
-    public final void parsesTheInformationCorrectly() {
-        final Map<String, String> parsed = new ParseInformation(
-            "white:10,black:20"
-        ).parse();
-        Assert.assertThat(parsed, Matchers.hasEntry(WHITE, "10"));
-        Assert.assertThat(parsed, Matchers.hasEntry("black", "20"));
+    public ParseableLevelInformation(final String info) {
+        this.information = info;
     }
 
     /**
-     * ParseInformation can throw an an exception when parsing wrong info.
+     * Parse the level information.
+     * @return A {@link Map} with key,value pair of strings
      */
-    @Test
-    public final void throwsAnExceptionWhenParsingSomethingWrong() {
-        try {
-            new ParseInformation(WHITE).parse();
-            Assert.fail("Should never enter this assert!");
-        } catch (final IllegalStateException ex) {
-            Assert.assertThat(
-                ex.getMessage(), Matchers.equalTo(
-                    String.format(
-                        StringUtils.join(
-                            "Information is not using the pattern ",
-                            "KEY1:VALUE,KEY2:VALUE %s"
-                        ), WHITE
-                    )
-                )
-            );
+    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    public final Map<String, String> parse() {
+        final Map<String, String> parsed = new ParseableInformation(
+            this.information
+        ).parse();
+        final Map<String, String> converted = new HashMap<String, String>();
+        for (final Entry<String, String> entry : parsed.entrySet()) {
+            final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
+            if (Level.toLevel(level, null) == null) {
+                throw new IllegalStateException(
+                    String.format(Locale.ENGLISH, "Unknown level '%s'", level)
+                );
+            }
+            converted.put(level, entry.getValue());
         }
+        return converted;
     }
 
 }
