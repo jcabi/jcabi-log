@@ -30,40 +30,29 @@
 package com.jcabi.log;
 
 /**
- * Formats a log event without using ANSI color codes.
+ * Replaces some format with a Control Sequence Indicator.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
  * @since 0.18
  */
-class DullyFormatted implements Formatted {
+public class ControlSequenceIndicatorFormatted implements Formatted {
 
     /**
-     * String to be formatted.
+     * Pattern to be used to find replacement points.
      */
-    private final transient String basic;
+    private final transient String pattern;
 
     /**
-     * Contructor.
-     * @param bas String to be formatted
+     * Construtor.
+     * @param pat Pattern to be used to find replacement points
      */
-    public DullyFormatted(final String bas) {
-        this.basic = bas;
+    public ControlSequenceIndicatorFormatted(final String pat) {
+        this.pattern = pat;
     }
 
-    /**
-     * Gets formatted log event without using ANSI color codes.
-     * @return Text of a log event, not colored with ANSI color codes even
-     *  if there is markup that tells to color it.
-     */
     @Override
-    public String format() {
-        return this.basic.replace(
-            new ControlSequenceIndicatorFormatted("%s?m").format(),
-            ""
-        ).replace(
-            new ControlSequenceIndicatorFormatted("%sm").format(),
-            ""
-        );
+    public final String format() {
+        return String.format(this.pattern, "\u001b[");
     }
 
 }

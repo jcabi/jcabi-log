@@ -41,11 +41,6 @@ import java.util.regex.Pattern;
 class ConversionPattern {
 
     /**
-     * Control sequence indicator.
-     */
-    private static final String CSI = "\u001b[";
-
-    /**
      * Regular expression for all matches.
      */
     private static final Pattern METAS = Pattern.compile(
@@ -83,15 +78,25 @@ class ConversionPattern {
         final StringBuffer buf = new StringBuffer(0);
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
-            buf.append(ConversionPattern.CSI)
+            buf.append(this.csi())
                 .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
                 .append(matcher.group(2))
-                .append(ConversionPattern.CSI)
+                .append(this.csi())
                 .append('m');
         }
         matcher.appendTail(buf);
         return buf.toString();
+    }
+
+    /**
+     * Formats a string with a Control Sequence Information.
+     * @return Formatted string
+     */
+    private String csi() {
+        return new ControlSequenceIndicatorFormatted(
+                 "%s"
+             ).format();
     }
 
 }

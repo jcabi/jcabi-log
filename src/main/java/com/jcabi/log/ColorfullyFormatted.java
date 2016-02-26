@@ -38,11 +38,6 @@ package com.jcabi.log;
 class ColorfullyFormatted implements Formatted {
 
     /**
-     * Control sequence indicator.
-     */
-    private static final String CSI = "\u001b[";
-
-    /**
      * The basic information to be formatted with colors.
      */
     private final transient String basic;
@@ -69,8 +64,12 @@ class ColorfullyFormatted implements Formatted {
     @Override
     public String format() {
         return this.basic.replace(
-            String.format("%s?m", ColorfullyFormatted.CSI),
-            String.format("%s%sm", ColorfullyFormatted.CSI, this.color)
+            new ControlSequenceIndicatorFormatted("%s?m").format(),
+            String.format(
+                "%s%sm",
+                new ControlSequenceIndicatorFormatted("%s").format(),
+                this.color
+            )
         );
     }
 }
