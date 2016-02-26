@@ -44,7 +44,7 @@ import org.junit.Test;
 public class ParseableInformationTest {
 
     /**
-     * White color key.
+     * White color used inside a test case.
      */
     private static final String WHITE = "white";
 
@@ -56,9 +56,9 @@ public class ParseableInformationTest {
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final void parsesTheInformationCorrectly() {
         final Map<String, String> parsed = new ParseableInformation(
-            "white:10,black:20"
+            "red:10,black:20"
         ).parse();
-        Assert.assertThat(parsed, Matchers.hasEntry(WHITE, "10"));
+        Assert.assertThat(parsed, Matchers.hasEntry("red", "10"));
         Assert.assertThat(parsed, Matchers.hasEntry("black", "20"));
     }
 
