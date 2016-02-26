@@ -42,17 +42,17 @@ import java.util.Map;
 class ParseableInformation {
 
     /**
-     * Information to be parsed.
+     * Information content to be parsed.
      */
-    private final transient String information;
+    private final transient String content;
 
     /**
      * Construtor.
-     * @param info To be parsed
+     * @param cont Content to be parsed
      */
-    public ParseableInformation(final String info) {
+    public ParseableInformation(final String cont) {
         super();
-        this.information = info;
+        this.content = cont;
     }
 
     /**
@@ -60,7 +60,7 @@ class ParseableInformation {
      * @return A {@link Map} with a key,value pair os strings
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
-    public final Map<String, String> parse() {
+    public final Map<String, String> information() {
         final Map<String, String> parsed = new HashMap<String, String>();
         try {
             for (final String item : this.items()) {
@@ -73,7 +73,7 @@ class ParseableInformation {
                     .append("Information is not using the pattern ")
                     .append("KEY1:VALUE,KEY2:VALUE %s")
                     .toString(),
-                    this.information
+                    this.content
                 ), ex
             );
         }
@@ -86,6 +86,6 @@ class ParseableInformation {
      * @return An array of items
      */
     private String[] items() {
-        return this.information.split(",");
+        return this.content.split(",");
     }
 }

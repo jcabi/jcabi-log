@@ -57,7 +57,7 @@ public class ParseableLevelInformationTest {
     public final void parsesCorrectlyTheInformation() {
         final Map<String, String> parsed = new ParseableLevelInformation(
             "INFO:2;10,WARN:2;32"
-        ).parse();
+        ).information();
         Assert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
         Assert.assertThat(parsed, Matchers.hasEntry("WARN", "2;32"));
     }
@@ -69,7 +69,7 @@ public class ParseableLevelInformationTest {
     @Test
     public final void throwsAnExceptionWhenParsingIncorrectInformation() {
         try {
-            new ParseableLevelInformation(WRONG_INFORMATION).parse();
+            new ParseableLevelInformation(WRONG_INFORMATION).information();
             Assert.fail();
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
@@ -92,7 +92,9 @@ public class ParseableLevelInformationTest {
     @Test
     public final void throwsAnExceptionWhenParsingWrongLevelType() {
         try {
-            new ParseableLevelInformation("INFO:2;10,EXTREME:2;32").parse();
+            new ParseableLevelInformation(
+                "INFO:2;10,EXTREME:2;32"
+            ).information();
             Assert.fail();
         } catch (final IllegalStateException ex) {
             Assert.assertThat(

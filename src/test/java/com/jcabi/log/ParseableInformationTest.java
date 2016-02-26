@@ -57,7 +57,7 @@ public class ParseableInformationTest {
     public final void parsesTheInformationCorrectly() {
         final Map<String, String> parsed = new ParseableInformation(
             "red:10,black:20"
-        ).parse();
+        ).information();
         Assert.assertThat(parsed, Matchers.hasEntry("red", "10"));
         Assert.assertThat(parsed, Matchers.hasEntry("black", "20"));
     }
@@ -68,7 +68,7 @@ public class ParseableInformationTest {
     @Test
     public final void throwsAnExceptionWhenParsingSomethingWrong() {
         try {
-            new ParseableInformation(WHITE).parse();
+            new ParseableInformation(WHITE).information();
             Assert.fail("Should never enter this assert!");
         } catch (final IllegalStateException ex) {
             Assert.assertThat(

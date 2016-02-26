@@ -129,7 +129,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setColors(final String cols) {
         final Map<String, String> parsed = new ParseableInformation(
             cols
-        ).parse();
+        ).information();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             this.colors.addColor(entry.getKey(), entry.getValue());
         }
@@ -153,7 +153,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setLevels(final String lev) {
         final Map<String, String> parsed = new ParseableLevelInformation(
             lev
-        ).parse();
+        ).information();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             this.levels.put(entry.getKey(), entry.getValue());
         }

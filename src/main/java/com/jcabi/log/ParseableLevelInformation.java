@@ -45,16 +45,16 @@ import org.apache.log4j.Level;
 class ParseableLevelInformation  {
 
     /**
-     * Information to be parsed.
+     * Information content to be parsed.
      */
-    private final transient String information;
+    private final transient String content;
 
     /**
      * Construtor.
-     * @param info To be parsed
+     * @param cont Content to be parsed
      */
-    public ParseableLevelInformation(final String info) {
-        this.information = info;
+    public ParseableLevelInformation(final String cont) {
+        this.content = cont;
     }
 
     /**
@@ -62,10 +62,10 @@ class ParseableLevelInformation  {
      * @return A {@link Map} with key,value pair of strings
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
-    public final Map<String, String> parse() {
+    public final Map<String, String> information() {
         final Map<String, String> parsed = new ParseableInformation(
-            this.information
-        ).parse();
+            this.content
+        ).information();
         final Map<String, String> converted = new HashMap<String, String>();
         for (final Entry<String, String> entry : parsed.entrySet()) {
             final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
