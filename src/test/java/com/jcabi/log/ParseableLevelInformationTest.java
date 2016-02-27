@@ -44,11 +44,6 @@ import org.junit.Test;
 public class ParseableLevelInformationTest {
 
     /**
-     * Wrong information to be parsed.
-     */
-    private static final String WRONG_INFORMATION = "INFO;10,WARN;32";
-
-    /**
      * ParseableLevelInformation can parse the information correctly when it's
      * with the right pattern.
      */
@@ -68,8 +63,9 @@ public class ParseableLevelInformationTest {
      */
     @Test
     public final void throwsAnExceptionWhenParsingIncorrectInformation() {
+        final String wrong = "INFO;10,WARN;32";
         try {
-            new ParseableLevelInformation(WRONG_INFORMATION).information();
+            new ParseableLevelInformation(wrong).information();
             Assert.fail();
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
@@ -78,7 +74,7 @@ public class ParseableLevelInformationTest {
                         StringUtils.join(
                             "Information is not using the pattern ",
                             "KEY1:VALUE,KEY2:VALUE %s"
-                        ), WRONG_INFORMATION
+                        ), wrong
                     )
                 )
             );
@@ -99,7 +95,7 @@ public class ParseableLevelInformationTest {
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
                 ex.getMessage(),
-                Matchers.equalToIgnoringCase("Unknown level 'EXTREME'")
+                Matchers.equalTo("Unknown level 'EXTREME'")
             );
         }
     }

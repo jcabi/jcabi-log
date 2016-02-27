@@ -44,11 +44,6 @@ import org.junit.Test;
 public class ParseableInformationTest {
 
     /**
-     * White color used inside a test case.
-     */
-    private static final String WHITE = "white";
-
-    /**
      * ParseableInformation can parse if the information correctly if is using
      * the right pattern.
      */
@@ -67,8 +62,9 @@ public class ParseableInformationTest {
      */
     @Test
     public final void throwsAnExceptionWhenParsingSomethingWrong() {
+        final String white = "white";
         try {
-            new ParseableInformation(WHITE).information();
+            new ParseableInformation(white).information();
             Assert.fail("Should never enter this assert!");
         } catch (final IllegalStateException ex) {
             Assert.assertThat(
@@ -77,7 +73,7 @@ public class ParseableInformationTest {
                         StringUtils.join(
                             "Information is not using the pattern ",
                             "KEY1:VALUE,KEY2:VALUE %s"
-                        ), WHITE
+                        ), white
                     )
                 )
             );

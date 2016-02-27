@@ -30,7 +30,7 @@
 package com.jcabi.log;
 
 /**
- * Replaces some format with a Control Sequence Indicator.
+ * Replaces string format with a Control Sequence Indicator.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
  * @since 0.18

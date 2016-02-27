@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Converts items inside a string like K1:V1,K2:V2. - where K is for key and V
+ * Converts items inside a string like K1:V1,K2:V2 - where K is for key and V
  * is for value - to a {@code Map} of string key and string value.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
  * @version $Id$
