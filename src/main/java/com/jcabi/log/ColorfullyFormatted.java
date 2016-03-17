@@ -29,9 +29,6 @@
  */
 package com.jcabi.log;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * Formats a log event using ANSI color codes.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)

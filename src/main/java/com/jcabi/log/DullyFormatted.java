@@ -60,9 +60,6 @@ class DullyFormatted implements Formatted {
         return this.basic.replaceAll(
             new ControlSequenceIndicatorFormatted("%s([0-9]*|\\?)m").format(),
             ""
-        ).replaceAll(
-            new ControlSequenceIndicatorFormatted("%sm").format(),
-            ""
         );
     }
 
