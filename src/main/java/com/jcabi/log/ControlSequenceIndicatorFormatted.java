@@ -41,7 +41,6 @@ public class ControlSequenceIndicatorFormatted implements Formatted {
      * Pattern to be used to find replacement points.
      */
     private final transient String pattern;
-
     /**
      * Construtor.
      * @param pat Pattern to be used to find replacement points
@@ -52,7 +51,7 @@ public class ControlSequenceIndicatorFormatted implements Formatted {
 
     @Override
     public final String format() {
-        return String.format(this.pattern, "\u001b[");
+        return String.format(this.pattern, "\u001b\\[");
     }
 
 }

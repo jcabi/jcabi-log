@@ -34,7 +34,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -134,7 +133,6 @@ public final class MulticolorLayoutIntegrationTest {
      * @throws Exception - if something goes wrong.
      */
     @Test
-    @Ignore
     public void disablesConstantColor() throws Exception {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-blue{%p}] %color-blue{%m}");
@@ -169,7 +167,6 @@ public final class MulticolorLayoutIntegrationTest {
      * @throws Exception - if something goes wrong.
      */
     @Test
-    @Ignore
     public void disablesOverridenConstantColor() throws Exception {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-red{%p}] %color-red{%m}");

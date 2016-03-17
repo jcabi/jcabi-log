@@ -57,10 +57,10 @@ class DullyFormatted implements Formatted {
      */
     @Override
     public String format() {
-        return this.basic.replace(
-            new ControlSequenceIndicatorFormatted("%s?m").format(),
+        return this.basic.replaceAll(
+            new ControlSequenceIndicatorFormatted("%s([0-9]*|\\?)m").format(),
             ""
-        ).replace(
+        ).replaceAll(
             new ControlSequenceIndicatorFormatted("%sm").format(),
             ""
         );

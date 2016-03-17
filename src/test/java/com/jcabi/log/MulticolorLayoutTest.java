@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
@@ -41,14 +42,6 @@ import org.mockito.Mockito;
  * Test case for {@link MulticolorLayout}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
- * @todo #63:30min Fix bug in method format(LoggingEvent).
- *  The tests disablesOverridenConstantColor() and
- *  disablesConstantColor() from
- *  /src/it/it-decoloring/.../MulticolorLayoutITCase
- *  are currently failing and are ignored.
- *  Problem is that the text isn't decolored correctly when the color
- *  is specified in the conversion pattern.
- *  E.g. "[%color-blue{%p}] %color-blue{%m}" .
  */
 public final class MulticolorLayoutTest {
 
@@ -56,6 +49,7 @@ public final class MulticolorLayoutTest {
      * Conversation pattern for test case.
      */
     private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
+
     /**
      * MulticolorLayout can transform event to text.
      * @throws Exception If something goes wrong

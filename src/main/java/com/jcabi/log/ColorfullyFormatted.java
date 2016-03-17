@@ -29,6 +29,9 @@
  */
 package com.jcabi.log;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Formats a log event using ANSI color codes.
  * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
@@ -63,8 +66,8 @@ class ColorfullyFormatted implements Formatted {
      */
     @Override
     public String format() {
-        return this.basic.replace(
-            new ControlSequenceIndicatorFormatted("%s?m").format(),
+        return this.basic.replaceAll(
+            new ControlSequenceIndicatorFormatted("%s\\?m").format(),
             String.format(
                 "%s%sm",
                 new ControlSequenceIndicatorFormatted("%s").format(),
