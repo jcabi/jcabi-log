@@ -16,6 +16,6 @@ There are 1 active puzzles (16 total):
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>38-9367cb1e</del> [`VerboseProcess.java:179-183`](../master/src/main/java/com/jcabi/log/VerboseProcess.java#L179-L183)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[<del>54</del>](https://github.com/jcabi/jcabi-log/issues/54) [`?`](../master/?)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<del>54-5ce25827</del>](https://github.com/jcabi/jcabi-log/issues/63) [`MulticolorLayoutTest.java:44-56`](../master/src/test/java/com/jcabi/log/MulticolorLayoutTest.java#L44-L56)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[#77](https://github.com/jcabi/jcabi-log/issues/77):[<del>63-fcb6d07a</del>](https://github.com/jcabi/jcabi-log/issues/77) [`MulticolorLayoutTest.java:44-51`](../master/src/test/java/com/jcabi/log/MulticolorLayoutTest.java#L44-L51)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>63-fcb6d07a</del> [`MulticolorLayoutTest.java:44-51`](../master/src/test/java/com/jcabi/log/MulticolorLayoutTest.java#L44-L51)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;[<del>59</del>](https://github.com/jcabi/jcabi-log/issues/59) [`?`](../master/?)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>59-498fab78</del> [`MulticolorLayout.java:84-85`](../master/src/main/java/com/jcabi/log/MulticolorLayout.java#L84-L85)<br/>
