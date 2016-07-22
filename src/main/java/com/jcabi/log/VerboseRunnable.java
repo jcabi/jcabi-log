@@ -30,7 +30,6 @@
 package com.jcabi.log;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -211,11 +210,11 @@ public final class VerboseRunnable implements Runnable {
             }
             Logger.error(this, "swallowed error: %s", this.tail(error));
         }
-        try {
-            TimeUnit.MICROSECONDS.sleep(1L);
-        } catch (final InterruptedException ex) {
+        if (Thread.currentThread().isInterrupted()) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
+            throw new IllegalStateException(
+                "the thread has been interrupted"
+            );
         }
     }
 
