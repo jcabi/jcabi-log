@@ -147,8 +147,22 @@ public final class Logger {
         final String msg, final Object... args
     ) {
         if (Logger.isTraceEnabled(source)) {
-            Logger.logger(source).trace(Logger.format(msg, args));
+            Logger.traceForced(source, msg, args);
         }
+    }
+
+    /**
+     * Protocol one message, with {@code TRACE} priority level
+     * without internal checking whether {@code TRACE} level is enabled.
+     * @param source The source of the logging operation
+     * @param msg The text message to be logged, with meta-tags
+     * @param args List of arguments
+     */
+    public static void traceForced(
+        final Object source,
+        final String msg, final Object... args
+    ) {
+        Logger.logger(source).trace(Logger.format(msg, args));
     }
 
     /**
@@ -172,8 +186,22 @@ public final class Logger {
         final String msg, final Object... args
     ) {
         if (Logger.isDebugEnabled(source)) {
-            Logger.logger(source).debug(Logger.format(msg, args));
+            Logger.debugForced(source, msg, args);
         }
+    }
+
+    /**
+     * Protocol one message, with {@code DEBUG} priority level
+     * without internal checking whether {@code DEBUG} level is enabled.
+     * @param source The source of the logging operation
+     * @param msg The text message to be logged, with meta-tags
+     * @param args List of arguments
+     */
+    public static void debugForced(
+        final Object source,
+        final String msg, final Object... args
+    ) {
+        Logger.logger(source).debug(Logger.format(msg, args));
     }
 
     /**
@@ -197,8 +225,22 @@ public final class Logger {
         final String msg, final Object... args
     ) {
         if (Logger.isInfoEnabled(source)) {
-            Logger.logger(source).info(Logger.format(msg, args));
+            Logger.infoForced(source, msg, args);
         }
+    }
+
+    /**
+     * Protocol one message, with {@code INFO} priority level
+     * without internal checking whether {@code INFO} level is enabled.
+     * @param source The source of the logging operation
+     * @param msg The text message to be logged, with meta-tags
+     * @param args List of arguments
+     */
+    public static void infoForced(
+        final Object source, final String msg,
+        final Object... args
+    ) {
+        Logger.logger(source).info(Logger.format(msg, args));
     }
 
     /**
@@ -222,8 +264,22 @@ public final class Logger {
         final String msg, final Object... args
     ) {
         if (Logger.isWarnEnabled(source)) {
-            Logger.logger(source).warn(Logger.format(msg, args));
+            Logger.warnForced(source, msg, args);
         }
+    }
+
+    /**
+     * Protocol one message, with {@code WARN} priority level
+     * without internal checking whether {@code WARN} level is enabled.
+     * @param source The source of the logging operation
+     * @param msg The text message to be logged, with meta-tags
+     * @param args List of arguments
+     */
+    public static void warnForced(
+        final Object source,
+        final String msg, final Object... args
+    ) {
+        Logger.logger(source).warn(Logger.format(msg, args));
     }
 
     /**
