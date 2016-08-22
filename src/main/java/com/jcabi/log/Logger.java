@@ -429,6 +429,32 @@ public final class Logger {
     }
 
     /**
+     * Log messages constructed from Suppliers (Java 8 users).
+     * It is convenient to use method referencing because the method
+     * won't be called unless the specified logging level is enabled.
+     *
+     * This saves you the effort of having to check if the level is enabled
+     * before calling the logging method.
+     * E.g.
+     * <pre>
+     *     if (Logger.isDebugEnabled(this)) {
+     *         Logger.debug(this, "Some %s", calculate());
+     *     }
+     * </pre><br>
+     * turns into <br>
+     * <pre>
+     *     Logger.withSupplier().debug(this, "Some %s", this::calculate());
+     * </pre><br>
+     * and the calculate() method won't be called unless the debug level is
+     * active.
+     * @return Object containing methods for logging with Supplier-constructed
+     *  messages
+     */
+    public static SupplierLogger withSupplier() {
+        return new SupplierLogger();
+    }
+
+    /**
      * Set final static field in order to fix the %L log4j parameter.
      * @param field Field
      * @param value New value
