@@ -29,8 +29,6 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.log.functional.Supplier;
-
 /**
  * Logging methods which take {@link Supplier} arguments.
  * Used with Java 8 method referencing.
@@ -44,12 +42,11 @@ final class SupplierLogger {
      * Log one message, with {@code TRACE} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments
+     * @param args List of {@link Supplier} arguments. Method
+     *  references will be mapped to Supplier instances.
      */
     public void trace(
-        final Object source,
-        final String msg, final Supplier<?>... args
-    ) {
+        final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isTraceEnabled(source)) {
             Logger.traceForced(source, msg, this.supplied(args));
         }
@@ -59,12 +56,11 @@ final class SupplierLogger {
      * Log one message, with {@code DEBUG} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments
+     * @param args List of {@link Supplier} arguments. Method
+     *  references will be mapped to Supplier instances.
      */
     public void debug(
-        final Object source,
-        final String msg, final Supplier<?>... args
-    ) {
+        final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isDebugEnabled(source)) {
             Logger.debugForced(source, msg, this.supplied(args));
         }
@@ -74,12 +70,11 @@ final class SupplierLogger {
      * Log one message, with {@code INFO} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments
+     * @param args List of {@link Supplier} arguments. Method
+     *  references will be mapped to Supplier instances.
      */
     public void info(
-        final Object source,
-        final String msg, final Supplier<?>... args
-    ) {
+        final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isInfoEnabled(source)) {
             Logger.infoForced(source, msg, this.supplied(args));
         }
@@ -89,12 +84,11 @@ final class SupplierLogger {
      * Log one message, with {@code WARN} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments
+     * @param args List of {@link Supplier} arguments. Method
+     *  references will be mapped to Supplier instances.
      */
     public void warn(
-        final Object source,
-        final String msg, final Supplier<?>... args
-    ) {
+        final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isWarnEnabled(source)) {
             Logger.warnForced(source, msg, this.supplied(args));
         }

@@ -430,7 +430,7 @@ public final class Logger {
 
     /**
      * Log messages constructed from Suppliers (Java 8 users).
-     * It is convenient to use method referencing because the method
+     * It is more efficient to use method referencing because the method
      * won't be called unless the specified logging level is enabled.
      *
      * This saves you the effort of having to check if the level is enabled
@@ -447,6 +447,7 @@ public final class Logger {
      * </pre><br>
      * and the calculate() method won't be called unless the debug level is
      * active.
+     *
      * @return Object containing methods for logging with Supplier-constructed
      *  messages
      */

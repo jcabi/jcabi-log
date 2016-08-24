@@ -28,11 +28,41 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+package com.jcabi.log;
+
+import java.io.ByteArrayOutputStream;
+import org.apache.log4j.WriterAppender;
+
 /**
- * Functional interfaces for lambda expressions and method referencing
- * (usable with Java 8).
+ * Log4j appender for unit tests. Normally, we could use
+ * <a href="http://projects.lidalia.org.uk/slf4j-test/">slf4j-test</a>, but we
+ * have log4j in the classpath anyway, for {@link MulticolorLayout}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 0.18
  */
-package com.jcabi.log.functional;
+public final class UnitTestAppender extends WriterAppender {
+
+    /**
+     * OutputStream where this Appender writes.
+     */
+    private final transient ByteArrayOutputStream logs =
+        new ByteArrayOutputStream();
+
+    /**
+     * Prepares the appender for use.
+     */
+    public void activateOptions() {
+        setWriter(createWriter(this.logs));
+        super.activateOptions();
+    }
+
+    /**
+     * Return the used OutputStream.
+     * @return OutputStream where the logs are written
+     */
+    public ByteArrayOutputStream output() {
+        return this.logs;
+    }
+
+}

@@ -27,7 +27,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.jcabi.log.functional;
+package com.jcabi.log;
 
 /**
  * Functional interface used as assignment target for Java8 lambda expressions
