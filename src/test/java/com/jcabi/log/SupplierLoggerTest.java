@@ -29,11 +29,11 @@
  */
 package com.jcabi.log;
 
-import java.io.IOException;
+import java.util.Properties;
 import org.apache.log4j.Level;
+import org.apache.log4j.PropertyConfigurator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.After;
 import org.junit.Test;
 
 /**
@@ -46,10 +46,19 @@ import org.junit.Test;
 public final class SupplierLoggerTest {
 
     /**
-     * The name of the appender defined for this unit test class in
-     * log4j.properties.
+     * Layout for logging.
      */
-    private static final String APPENDER = "sltest";
+    private static final String LAYOUT = "org.apache.log4j.PatternLayout";
+
+    /**
+     * Pattern for logging.
+     */
+    private static final String PATTERN = "%d %c{1} - %m%n";
+
+    /**
+     * Appender for logging.
+     */
+    private static final String APPENDER = "com.jcabi.log.UnitTestAppender";
 
     /**
      * SupplierLogger does not log a message with DEBUG level if debug is not
@@ -58,11 +67,26 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void debugIsDisabled() throws Exception {
+        final String loggerName = "nodebug";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.nodebug", "INFO, nodebugapp");
+        prop.setProperty(
+            "log4j.appender.nodebugapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.nodebugapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.nodebugapp.layout.ConversionPattern",
+            SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.ERROR);
         Logger.withSupplier().debug(
-            this.getClass().getSimpleName(), "Debug disabled: %s",
+            loggerName, "Debug disabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return "test1";
@@ -70,7 +94,7 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("nodebugapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -83,12 +107,27 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void debugIsEnabled() throws Exception {
+        final String loggerName = "debugen";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.debugen", "INFO, debugapp");
+        prop.setProperty(
+            "log4j.appender.debugapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.debugapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.debugapp.layout.ConversionPattern",
+            SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final String text = "test2";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.DEBUG);
         Logger.withSupplier().debug(
-            this.getClass().getSimpleName(), "Debug enabled: %s",
+            loggerName, "Debug enabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return text;
@@ -96,7 +135,7 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("debugapp");
         MatcherAssert.assertThat(
             new String(appender.output().toByteArray()),
             Matchers.containsString(text)
@@ -110,11 +149,26 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void traceIsDisabled() throws Exception {
+        final String loggerName = "notrace";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.notrace", "INFO, notraceapp");
+        prop.setProperty(
+            "log4j.appender.notraceapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.notraceapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.notraceapp.layout.ConversionPattern",
+            SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.OFF);
         Logger.withSupplier().trace(
-            this.getClass().getSimpleName(), "Trace disabled: %s",
+            loggerName, "Trace disabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return "test3";
@@ -122,7 +176,7 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("notraceapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -135,12 +189,27 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void traceIsEnabled() throws Exception {
+        final String loggerName = "enabledtrace";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.enabledtrace", "INFO, traceapp");
+        prop.setProperty(
+            "log4j.appender.traceapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.traceapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.traceapp.layout.ConversionPattern",
+            SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final String text = "text4";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.TRACE);
         Logger.withSupplier().trace(
-            this.getClass().getSimpleName(), "Trace enabled: %s",
+            loggerName, "Trace enabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return text;
@@ -148,7 +217,7 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("traceapp");
         MatcherAssert.assertThat(
             new String(appender.output().toByteArray()),
             Matchers.containsString(text)
@@ -162,11 +231,26 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void warnIsDisabled() throws Exception {
+        final String loggerName = "nowarn";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.nowarn", "INFO, nowarnapp");
+        prop.setProperty(
+            "log4j.appender.nowarnapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.nowarnapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.nowarnapp.layout.ConversionPattern",
+            SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.OFF);
         Logger.withSupplier().warn(
-            this.getClass().getSimpleName(), "Warn disabled: %s",
+            loggerName, "Warn disabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return "test5";
@@ -174,7 +258,7 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("nowarnapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -187,12 +271,27 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void warnIsEnabled() throws Exception {
+        final String loggerName = "enwarn";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.enwarn", "INFO, warnapp");
+        prop.setProperty(
+            "log4j.appender.warnapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.warnapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.warnapp.layout.ConversionPattern",
+            SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final String text = "test6";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.WARN);
         Logger.withSupplier().warn(
-            this.getClass().getSimpleName(), "Warn enabled: %s",
+            loggerName, "Warn enabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return text;
@@ -200,7 +299,7 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("warnapp");
         MatcherAssert.assertThat(
             new String(appender.output().toByteArray()),
             Matchers.containsString(text)
@@ -214,11 +313,26 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void infoIsDisabled() throws Exception {
+        final String loggerName = "noinfo";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.noinfo", "INFO, noinfoapp");
+        prop.setProperty(
+            "log4j.appender.noinfoapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.noinfoapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.noinfoapp.layout.ConversionPattern",
+             SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.OFF);
         Logger.withSupplier().info(
-            this.getClass().getSimpleName(), "Info disabled: %s",
+            loggerName, "Info disabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return "test7";
@@ -226,7 +340,7 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("noinfoapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -239,12 +353,27 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void infoIsEnabled() throws Exception {
+        final String loggerName = "withinfo";
+        final Properties prop = new Properties();
+        prop.setProperty("log4j.logger.withinfo", "INFO, infoapp");
+        prop.setProperty(
+            "log4j.appender.infoapp", SupplierLoggerTest.APPENDER
+        );
+        prop.setProperty(
+            "log4j.appender.infoapp.layout",
+            SupplierLoggerTest.LAYOUT
+        );
+        prop.setProperty(
+            "log4j.appender.infoapp.layout.ConversionPattern",
+            SupplierLoggerTest.PATTERN
+        );
+        PropertyConfigurator.configure(prop);
         final String text = "text8";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
-            .getLogger(this.getClass().getSimpleName());
+            .getLogger(loggerName);
         logger.setLevel(Level.INFO);
         Logger.withSupplier().info(
-            this.getClass().getSimpleName(), "Info enabled: %s",
+            loggerName, "Info enabled: %s",
             new Supplier<String>() {
                 public String get() {
                     return text;
@@ -252,26 +381,11 @@ public final class SupplierLoggerTest {
             }
         );
         final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender(SupplierLoggerTest.APPENDER);
+            .getAppender("infoapp");
         MatcherAssert.assertThat(
             new String(appender.output().toByteArray()),
             Matchers.containsString(text)
         );
-    }
-
-    /**
-     * Cleans the appender's OutputStream after each test.
-     * This method is guaranteed to run even if an exception is thrown during
-     * a test run.
-     * @throws IOException If something goes wrong
-     */
-    @After
-    public void cleanLogs() throws IOException {
-        final UnitTestAppender appender = (UnitTestAppender) org.apache.log4j
-            .Logger.getLogger(
-                this.getClass().getSimpleName()
-            ).getAppender(SupplierLoggerTest.APPENDER);
-        appender.output().reset();
     }
 
 }
