@@ -429,7 +429,7 @@ public final class Logger {
     }
 
     /**
-     * Log messages constructed from Suppliers (Java 8 users).
+     * Log messages constructed from Suppliers.
      * It is more efficient to use method referencing because the method
      * won't be called unless the specified logging level is enabled.
      *

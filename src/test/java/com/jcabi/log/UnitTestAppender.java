@@ -31,6 +31,7 @@
 package com.jcabi.log;
 
 import java.io.ByteArrayOutputStream;
+import org.apache.log4j.PatternLayout;
 import org.apache.log4j.WriterAppender;
 
 /**
@@ -54,6 +55,7 @@ public final class UnitTestAppender extends WriterAppender {
      */
     public void activateOptions() {
         setWriter(createWriter(this.logs));
+        setLayout(new PatternLayout("%d %c{1} - %m%n"));
         super.activateOptions();
     }
 

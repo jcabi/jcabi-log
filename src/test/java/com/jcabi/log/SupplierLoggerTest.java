@@ -29,9 +29,7 @@
  */
 package com.jcabi.log;
 
-import java.util.Properties;
 import org.apache.log4j.Level;
-import org.apache.log4j.PropertyConfigurator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -46,44 +44,19 @@ import org.junit.Test;
 public final class SupplierLoggerTest {
 
     /**
-     * Layout for logging.
-     */
-    private static final String LAYOUT = "org.apache.log4j.PatternLayout";
-
-    /**
-     * Pattern for logging.
-     */
-    private static final String PATTERN = "%d %c{1} - %m%n";
-
-    /**
-     * Appender for logging.
-     */
-    private static final String APPENDER = "com.jcabi.log.UnitTestAppender";
-
-    /**
-     * SupplierLogger does not log a message with DEBUG level if debug is not
-     * enabled.
+     * SupplierLogger can tell if debug is disabled and the message is not
+     * logged enabled.
      * @throws Exception If something goes wrong
      */
     @Test
     public void debugIsDisabled() throws Exception {
         final String loggerName = "nodebug";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.nodebug", "INFO, nodebugapp");
-        prop.setProperty(
-            "log4j.appender.nodebugapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.nodebugapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.nodebugapp.layout.ConversionPattern",
-            SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("nodebugapp");
+        app.activateOptions();
+        logger.addAppender(app);
         logger.setLevel(Level.ERROR);
         Logger.withSupplier().debug(
             loggerName, "Debug disabled: %s",
@@ -93,8 +66,6 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender("nodebugapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -102,29 +73,19 @@ public final class SupplierLoggerTest {
     }
 
     /**
-     * SupplierLogger logs a message with DEBUG level if debug is enabled.
+     * SupplierLogger can log a message with debug level.
      * @throws Exception If something goes wrong
      */
     @Test
     public void debugIsEnabled() throws Exception {
         final String loggerName = "debugen";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.debugen", "INFO, debugapp");
-        prop.setProperty(
-            "log4j.appender.debugapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.debugapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.debugapp.layout.ConversionPattern",
-            SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
-        final String text = "test2";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("debugapp");
+        app.activateOptions();
+        logger.addAppender(app);
+        final String text = "test2";
         logger.setLevel(Level.DEBUG);
         Logger.withSupplier().debug(
             loggerName, "Debug enabled: %s",
@@ -134,38 +95,26 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender("debugapp");
         MatcherAssert.assertThat(
-            new String(appender.output().toByteArray()),
+            new String(app.output().toByteArray()),
             Matchers.containsString(text)
         );
     }
 
     /**
-     * SupplierLogger does not log a message with TRACE level if debug is not
-     * enabled.
+     * SupplierLogger can tell if trace is disabled and the message is not
+     * logged enabled.
      * @throws Exception If something goes wrong
      */
     @Test
     public void traceIsDisabled() throws Exception {
         final String loggerName = "notrace";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.notrace", "INFO, notraceapp");
-        prop.setProperty(
-            "log4j.appender.notraceapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.notraceapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.notraceapp.layout.ConversionPattern",
-            SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("notraceapp");
+        app.activateOptions();
+        logger.addAppender(app);
         logger.setLevel(Level.OFF);
         Logger.withSupplier().trace(
             loggerName, "Trace disabled: %s",
@@ -175,8 +124,6 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender("notraceapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -184,29 +131,19 @@ public final class SupplierLoggerTest {
     }
 
     /**
-     * SupplierLogger logs a message with TRACE level if debug is enabled.
+     * SupplierLogger can log a message with trace level.
      * @throws Exception If something goes wrong
      */
     @Test
     public void traceIsEnabled() throws Exception {
         final String loggerName = "enabledtrace";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.enabledtrace", "INFO, traceapp");
-        prop.setProperty(
-            "log4j.appender.traceapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.traceapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.traceapp.layout.ConversionPattern",
-            SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
-        final String text = "text4";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("traceapp");
+        app.activateOptions();
+        logger.addAppender(app);
+        final String text = "text4";
         logger.setLevel(Level.TRACE);
         Logger.withSupplier().trace(
             loggerName, "Trace enabled: %s",
@@ -216,38 +153,26 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender("traceapp");
         MatcherAssert.assertThat(
-            new String(appender.output().toByteArray()),
+            new String(app.output().toByteArray()),
             Matchers.containsString(text)
         );
     }
 
     /**
-     * SupplierLogger does not log a message with WARN level if debug is not
-     * enabled.
+     * SupplierLogger can tell if warn is disabled and the message is not
+     * logged enabled.
      * @throws Exception If something goes wrong
      */
     @Test
     public void warnIsDisabled() throws Exception {
         final String loggerName = "nowarn";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.nowarn", "INFO, nowarnapp");
-        prop.setProperty(
-            "log4j.appender.nowarnapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.nowarnapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.nowarnapp.layout.ConversionPattern",
-            SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("nowarnapp");
+        app.activateOptions();
+        logger.addAppender(app);
         logger.setLevel(Level.OFF);
         Logger.withSupplier().warn(
             loggerName, "Warn disabled: %s",
@@ -257,8 +182,6 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender("nowarnapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -266,29 +189,19 @@ public final class SupplierLoggerTest {
     }
 
     /**
-     * SupplierLogger logs a message with WARN level if debug is enabled.
+     * SupplierLogger can log a message with warn level.
      * @throws Exception If something goes wrong
      */
     @Test
     public void warnIsEnabled() throws Exception {
         final String loggerName = "enwarn";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.enwarn", "INFO, warnapp");
-        prop.setProperty(
-            "log4j.appender.warnapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.warnapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.warnapp.layout.ConversionPattern",
-            SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
-        final String text = "test6";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("warnapp");
+        app.activateOptions();
+        logger.addAppender(app);
+        final String text = "test6";
         logger.setLevel(Level.WARN);
         Logger.withSupplier().warn(
             loggerName, "Warn enabled: %s",
@@ -298,38 +211,26 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender("warnapp");
         MatcherAssert.assertThat(
-            new String(appender.output().toByteArray()),
+            new String(app.output().toByteArray()),
             Matchers.containsString(text)
         );
     }
 
     /**
-     * SupplierLogger does not log a message with INFO level if debug is not
-     * enabled.
+     * SupplierLogger can tell if info is disabled and the message is not
+     * logged enabled.
      * @throws Exception If something goes wrong
      */
     @Test
     public void infoIsDisabled() throws Exception {
         final String loggerName = "noinfo";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.noinfo", "INFO, noinfoapp");
-        prop.setProperty(
-            "log4j.appender.noinfoapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.noinfoapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.noinfoapp.layout.ConversionPattern",
-             SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("noinfoapp");
+        app.activateOptions();
+        logger.addAppender(app);
         logger.setLevel(Level.OFF);
         Logger.withSupplier().info(
             loggerName, "Info disabled: %s",
@@ -339,8 +240,6 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender app = (UnitTestAppender) logger
-            .getAppender("noinfoapp");
         MatcherAssert.assertThat(
             new String(app.output().toByteArray()),
             Matchers.isEmptyString()
@@ -348,29 +247,19 @@ public final class SupplierLoggerTest {
     }
 
     /**
-     * SupplierLogger logs a message with INFO level if debug is enabled.
+     * SupplierLogger can log a message with info level.
      * @throws Exception If something goes wrong
      */
     @Test
     public void infoIsEnabled() throws Exception {
         final String loggerName = "withinfo";
-        final Properties prop = new Properties();
-        prop.setProperty("log4j.logger.withinfo", "INFO, infoapp");
-        prop.setProperty(
-            "log4j.appender.infoapp", SupplierLoggerTest.APPENDER
-        );
-        prop.setProperty(
-            "log4j.appender.infoapp.layout",
-            SupplierLoggerTest.LAYOUT
-        );
-        prop.setProperty(
-            "log4j.appender.infoapp.layout.ConversionPattern",
-            SupplierLoggerTest.PATTERN
-        );
-        PropertyConfigurator.configure(prop);
-        final String text = "text8";
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(loggerName);
+        final UnitTestAppender app = new UnitTestAppender();
+        app.setName("infoapp");
+        app.activateOptions();
+        logger.addAppender(app);
+        final String text = "text8";
         logger.setLevel(Level.INFO);
         Logger.withSupplier().info(
             loggerName, "Info enabled: %s",
@@ -380,10 +269,8 @@ public final class SupplierLoggerTest {
                 }
             }
         );
-        final UnitTestAppender appender = (UnitTestAppender) logger
-            .getAppender("infoapp");
         MatcherAssert.assertThat(
-            new String(appender.output().toByteArray()),
+            new String(app.output().toByteArray()),
             Matchers.containsString(text)
         );
     }
