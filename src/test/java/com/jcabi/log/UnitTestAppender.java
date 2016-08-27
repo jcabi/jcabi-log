@@ -31,6 +31,7 @@
 package com.jcabi.log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.WriterAppender;
 
@@ -51,6 +52,15 @@ public final class UnitTestAppender extends WriterAppender {
         new ByteArrayOutputStream();
 
     /**
+     * Ctor.
+     * @param name The appender's name
+     */
+    public UnitTestAppender(final String name) {
+        super();
+        this.setName(name);
+    }
+
+    /**
      * Prepares the appender for use.
      */
     public void activateOptions() {
@@ -60,11 +70,13 @@ public final class UnitTestAppender extends WriterAppender {
     }
 
     /**
-     * Return the used OutputStream.
-     * @return OutputStream where the logs are written
+     * Return the logged messages.
+     * @return String logs
+     * @throws UnsupportedEncodingException If the bytes cannot be converted
+     *  to String using UTF-8
      */
-    public ByteArrayOutputStream output() {
-        return this.logs;
+    public String output() throws UnsupportedEncodingException {
+        return new String(this.logs.toByteArray(), "UTF-8");
     }
 
 }

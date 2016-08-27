@@ -42,8 +42,8 @@ final class SupplierLogger {
      * Log one message, with {@code TRACE} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments. Method
-     *  references will be mapped to Supplier instances.
+     * @param args List of {@link Supplier} arguments. Objects are going
+     *  to be extracted from them and used for log message interpolation.
      */
     public void trace(
         final Object source, final String msg, final Supplier<?>... args) {
@@ -56,8 +56,8 @@ final class SupplierLogger {
      * Log one message, with {@code DEBUG} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments. Method
-     *  references will be mapped to Supplier instances.
+     * @param args List of {@link Supplier} arguments. Objects are going
+     *  to be extracted from them and used for log message interpolation.
      */
     public void debug(
         final Object source, final String msg, final Supplier<?>... args) {
@@ -70,8 +70,8 @@ final class SupplierLogger {
      * Log one message, with {@code INFO} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments. Method
-     *  references will be mapped to Supplier instances.
+     * @param args List of {@link Supplier} arguments. Objects are going
+     *  to be extracted from them and used for log message interpolation.
      */
     public void info(
         final Object source, final String msg, final Supplier<?>... args) {
@@ -84,8 +84,8 @@ final class SupplierLogger {
      * Log one message, with {@code WARN} priority level.
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
-     * @param args List of {@link Supplier} arguments. Method
-     *  references will be mapped to Supplier instances.
+     * @param args List of {@link Supplier} arguments. Objects are going
+     *  to be extracted from them and used for log message interpolation.
      */
     public void warn(
         final Object source, final String msg, final Supplier<?>... args) {
