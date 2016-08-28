@@ -43,7 +43,7 @@ final class SupplierLogger {
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going
-     *  to be extracted from them and used for log message interpolation.
+     *  to be extracted from them and used for log message interpolation
      */
     public void trace(
         final Object source, final String msg, final Supplier<?>... args) {
@@ -57,7 +57,7 @@ final class SupplierLogger {
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going
-     *  to be extracted from them and used for log message interpolation.
+     *  to be extracted from them and used for log message interpolation
      */
     public void debug(
         final Object source, final String msg, final Supplier<?>... args) {
@@ -71,7 +71,7 @@ final class SupplierLogger {
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going
-     *  to be extracted from them and used for log message interpolation.
+     *  to be extracted from them and used for log message interpolation
      */
     public void info(
         final Object source, final String msg, final Supplier<?>... args) {
@@ -85,7 +85,7 @@ final class SupplierLogger {
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going
-     *  to be extracted from them and used for log message interpolation.
+     *  to be extracted from them and used for log message interpolation
      */
     public void warn(
         final Object source, final String msg, final Supplier<?>... args) {
