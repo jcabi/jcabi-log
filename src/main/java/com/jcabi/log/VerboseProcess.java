@@ -44,6 +44,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -106,10 +107,15 @@ public final class VerboseProcess implements Closeable {
      */
     private transient boolean closed;
 
-    /**
-     * Public ctor.
-     * @param prc The process to work with
-     */
+	/**
+	 * Maximum number of log lines for a stack trace
+	 */
+	public volatile static int maxStackLength = 1000;
+
+	/**
+	 * Public ctor.
+	 * @param prc The process to work with
+	 */
     public VerboseProcess(final Process prc) {
         this(prc, Level.INFO, Level.WARNING);
     }
@@ -281,7 +287,7 @@ public final class VerboseProcess implements Closeable {
             this.process, result.code(), result.stdout().length(),
             System.currentTimeMillis() - start
         );
-        if (check && result.code() != 0) {
+		if (check && (result.code() != 0)) {
             throw new IllegalArgumentException(
                 Logger.format(
                     "Non-zero exit code %d: %[text]s",
@@ -389,9 +395,14 @@ public final class VerboseProcess implements Closeable {
      * Stream monitor.
      */
     private static final class Monitor implements Callable<Void> {
-        /**
-         * Stream to read.
-         */
+
+		private static final String PREFIX_AT = "at ";
+		private static final String PREFIX_CB = "Caused by";
+		private static final String PREFIX_DOTS = "... ";
+
+		/**
+		 * Stream to read.
+		 */
         private final transient InputStream input;
         /**
          * Latch to count down when done.
@@ -420,7 +431,25 @@ public final class VerboseProcess implements Closeable {
             this.output = out;
             this.level = lvl;
         }
-        @Override
+
+		private static boolean shouldAppend(final String string) {
+			final String leftStrip = stripStart(string);
+			return leftStrip.startsWith(PREFIX_AT) || leftStrip.startsWith(PREFIX_CB) || leftStrip.startsWith(PREFIX_DOTS);
+		}
+
+		private static String stripStart(final String string) {
+			if ((string == null) || string.isEmpty()) {
+				return null;
+			}
+			final int stringLength = string.length();
+			int start = 0;
+			while ((start != stringLength) && Character.isWhitespace(string.charAt(start))) {
+				start++;
+			}
+			return string.substring(start);
+		}
+
+		@Override
         public Void call() throws Exception {
             final BufferedReader reader = new BufferedReader(
                 Channels.newReader(
@@ -433,6 +462,9 @@ public final class VerboseProcess implements Closeable {
                     new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
                 );
                 try {
+					StringBuilder sb = new StringBuilder();
+					String previousLine = null;
+					int lineCount = 0;
                     while (true) {
                         if (Thread.interrupted()) {
                             Logger.debug(
@@ -441,16 +473,33 @@ public final class VerboseProcess implements Closeable {
                             );
                             break;
                         }
-                        final String line = reader.readLine();
+						if (previousLine != null) {
+							sb.append(previousLine).append(System.getProperty("line.separator"));
+							previousLine = null;
+						}
+
+						final String line = reader.readLine();
                         if (line == null) {
+							if (sb.length() > 0) {
+								final String logText = sb.toString();
+								Logger.log(this.level, VerboseProcess.class, ">> %s", logText);
+								writer.write(logText);
+							}
                             break;
                         }
-                        Logger.log(
-                            this.level, VerboseProcess.class,
-                            ">> %s", line
-                        );
-                        writer.write(line);
-                        writer.newLine();
+
+						if (shouldAppend(line) && (++lineCount < maxStackLength)) {
+							sb.append(line).append(System.getProperty("line.separator"));
+						} else {
+							if (sb.length() > 0) {
+								final String logText = sb.toString();
+								Logger.log(this.level, VerboseProcess.class, ">> %s", logText);
+								writer.write(logText);
+								sb = new StringBuilder();
+							}
+							lineCount = 1;
+							previousLine = line;
+						}
                     }
                 } catch (final ClosedByInterruptException ex) {
                     Thread.interrupted();
