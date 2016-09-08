@@ -179,6 +179,24 @@ public final class VerboseProcessTest {
     }
 
     /**
+     * VerboseProcess can reject ALL stdout level.
+     * @throws Exception If something goes wrong
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectsStdoutWithLevelAll() throws Exception {
+        new VerboseProcess(Mockito.mock(Process.class), Level.ALL, Level.INFO);
+    }
+
+    /**
+     * VerboseProcess can reject ALL stderr level.
+     * @throws Exception If something goes wrong
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void rejectsStderrWithLevelAll() throws Exception {
+        new VerboseProcess(Mockito.mock(Process.class), Level.INFO, Level.ALL);
+    }
+
+    /**
      * VerboseProcess can quietly terminate a long-running process.
      * @throws Exception If something goes wrong
      */
@@ -231,7 +249,7 @@ public final class VerboseProcessTest {
             );
         }
         final VerboseProcess process = new VerboseProcess(
-            builder, Level.OFF, Level.ALL
+            builder, Level.OFF, Level.WARNING
         );
         process.stdoutQuietly();
         MatcherAssert.assertThat(
@@ -261,8 +279,8 @@ public final class VerboseProcessTest {
             .when(prc).getErrorStream();
         final VerboseProcess verboseProcess = new VerboseProcess(
             prc,
-            Level.ALL,
-            Level.ALL
+            Level.FINEST,
+            Level.FINEST
         );
         Logger.debug(
             this,

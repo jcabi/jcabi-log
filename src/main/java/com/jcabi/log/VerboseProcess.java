@@ -142,6 +142,16 @@ public final class VerboseProcess implements Closeable {
         if (stderr == null) {
             throw new IllegalArgumentException("stderr LEVEL can't be NULL");
         }
+        if (Level.ALL.equals(stdout)) {
+            throw new IllegalArgumentException(
+                "stdout LEVEL can't be set to ALL"
+            );
+        }
+        if (Level.ALL.equals(stderr)) {
+            throw new IllegalArgumentException(
+                "stderr LEVEL can't be set to ALL"
+            );
+        }
         this.process = prc;
         this.olevel = stdout;
         this.elevel = stderr;
