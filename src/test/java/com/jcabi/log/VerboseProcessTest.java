@@ -182,18 +182,38 @@ public final class VerboseProcessTest {
      * VerboseProcess can reject ALL stdout level.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void rejectsStdoutWithLevelAll() throws Exception {
-        new VerboseProcess(Mockito.mock(Process.class), Level.ALL, Level.INFO);
+        try {
+            new VerboseProcess(
+                Mockito.mock(Process.class), Level.ALL, Level.INFO
+            );
+            Assert.fail("IllegalArgumentException expected");
+        } catch (final IllegalArgumentException ex) {
+            MatcherAssert.assertThat(
+                ex.getMessage(),
+                Matchers.equalTo("stdout LEVEL can't be set to ALL")
+            );
+        }
     }
 
     /**
      * VerboseProcess can reject ALL stderr level.
      * @throws Exception If something goes wrong
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void rejectsStderrWithLevelAll() throws Exception {
-        new VerboseProcess(Mockito.mock(Process.class), Level.INFO, Level.ALL);
+        try {
+            new VerboseProcess(
+                Mockito.mock(Process.class), Level.INFO, Level.ALL
+            );
+            Assert.fail("IllegalArgumentException expected");
+        } catch (final IllegalArgumentException ex) {
+            MatcherAssert.assertThat(
+                ex.getMessage(),
+                Matchers.equalTo("stderr LEVEL can't be set to ALL")
+            );
+        }
     }
 
     /**
