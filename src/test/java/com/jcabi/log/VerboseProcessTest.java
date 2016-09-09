@@ -192,7 +192,12 @@ public final class VerboseProcessTest {
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
-                Matchers.equalTo("stdout LEVEL can't be set to ALL")
+                Matchers.equalTo(
+                    new StringBuilder("stdout LEVEL can't be set to ALL ")
+                        .append("because it is intended only for ")
+                        .append("internal configuration")
+                        .toString()
+                )
             );
         }
     }
@@ -211,7 +216,12 @@ public final class VerboseProcessTest {
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
-                Matchers.equalTo("stderr LEVEL can't be set to ALL")
+                Matchers.equalTo(
+                    new StringBuilder("stderr LEVEL can't be set to ALL ")
+                        .append("because it is intended only for ")
+                        .append("internal configuration")
+                        .toString()
+                )
             );
         }
     }

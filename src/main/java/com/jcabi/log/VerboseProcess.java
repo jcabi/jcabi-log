@@ -125,7 +125,9 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Public ctor, with a given process and logging levels for {@code stdout}
-     * and {@code stderr}.
+     * and {@code stderr}. Neither {@code stdout} nor {@code stderr} cannot be
+     * set to {@link Level#ALL} because it is intended to be used only for
+     * internal configuration.
      * @param prc Process to execute and monitor
      * @param stdout Log level for stdout
      * @param stderr Log level for stderr
@@ -142,14 +144,18 @@ public final class VerboseProcess implements Closeable {
         if (stderr == null) {
             throw new IllegalArgumentException("stderr LEVEL can't be NULL");
         }
+        final String format = new StringBuilder("%s LEVEL can't be set to ALL ")
+                .append("because it is intended only for ")
+                .append("internal configuration")
+                .toString();
         if (Level.ALL.equals(stdout)) {
             throw new IllegalArgumentException(
-                "stdout LEVEL can't be set to ALL"
+                String.format(format, "stdout")
             );
         }
         if (Level.ALL.equals(stderr)) {
             throw new IllegalArgumentException(
-                "stderr LEVEL can't be set to ALL"
+                String.format(format, "stderr")
             );
         }
         this.process = prc;
