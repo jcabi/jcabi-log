@@ -492,10 +492,11 @@ public final class VerboseProcessTest {
                 org.apache.log4j.Logger.getRootLogger();
         final TestAppender appender = new TestAppender();
         logger.addAppender(appender);
-        final String[] commands = new String[] { retrieveJavaExecLocation(),
-                "-cp", System.getProperty("java.class.path"),
-                "com.jcabi.log.VerboseProcessExample"
-                };
+        final String[] commands = new String[] {
+            retrieveJavaExecLocation(), "-cp",
+            System.getProperty("java.class.path"),
+            "com.jcabi.log.VerboseProcessExample"
+        };
         final ProcessBuilder builder = new ProcessBuilder(commands);
         VerboseProcess process = null;
         IllegalArgumentException caught = null;
@@ -543,17 +544,20 @@ public final class VerboseProcessTest {
      * @return String with Java location
      */
     public static String retrieveJavaExecLocation() {
-        String rootpath = System.getProperty("java.home");
+        final String rootpath = System.getProperty("java.home");
         if (SystemUtils.IS_OS_WINDOWS) {
             final String winpath =
                     rootpath.replaceAll("\\\\", "\\\\\\\\");
-            final String finalpath = winpath + "\\bin\\java.exe";
+            final String finalpath = String.format("%s%s", winpath,
+                    "\\bin\\java.exe"
+            );
             final File file = new File(finalpath);
             if (file.exists()) {
                 return finalpath;
             }
         } else {
-            final String linuxpath = rootpath + "/bin/java";
+            final String linuxpath = String.format("%s%s", rootpath,
+                    "/bin/java");
             final File file = new File(linuxpath);
             if (file.exists()) {
                 return linuxpath;
@@ -577,14 +581,11 @@ public final class VerboseProcessTest {
          * @return Copy of log list
          */
         public List<LoggingEvent> getLogs() {
-			return new ArrayList<LoggingEvent>(this.logs);
+            return new ArrayList<LoggingEvent>(this.logs);
         }
 
-		/**
-		 * Nothing to to here but it must be implemented.
-		 */
         @Override
-        public void close() {}
+        public void close() { }
 
         @Override
         public boolean requiresLayout() {
@@ -593,7 +594,7 @@ public final class VerboseProcessTest {
 
         @Override
         protected void append(final LoggingEvent event) {
-        	this.logs.add(event);
+            this.logs.add(event);
         }
 
     }

@@ -417,7 +417,9 @@ public final class VerboseProcess implements Closeable {
         /**
          * Newline string.
          */
-        private static final String NEW_LINE = System.getProperty("line.separator");
+        private static final String NEW_LINE = System.getProperty(
+            "line.separator"
+        );
         /**
          * Stream to read.
          */
@@ -477,8 +479,14 @@ public final class VerboseProcess implements Closeable {
             return string.substring(start);
         }
 
-        private static void log(BufferedWriter writer, Level level,
-                StringBuilder builder) throws IOException {
+        /**
+         * Logs supplied StringBuilder to supplied Logger and Writer.
+         * @param writer Writer to use
+         * @param level Level to log at
+         * @param builder StringBuilder with log statment
+         */
+        private static void log(final BufferedWriter writer, final Level level,
+                final StringBuilder builder) throws IOException {
             if (builder.length() > 0) {
                 final String logText = builder.toString();
                 Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);

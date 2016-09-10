@@ -69,10 +69,10 @@ public class VerboseProcessExample {
     /**
      * Private constructor since class should not be instantiated.
      */
-    private VerboseProcessExample() {}
+    private VerboseProcessExample() { }
 
     /**
-     * Instantiates instance of this class and calls primary method
+     * Instantiates instance of this class and calls primary method.
      * @param args Any args passed to main method
      */
     public static void main(final String[] args) {
@@ -94,7 +94,6 @@ public class VerboseProcessExample {
 
     /**
      * Call a method which will throw an exception. Then catch and re-throw it.
-     * @param loopCount Times to loop
      */
     private static void catchAndThrow() {
         try {
