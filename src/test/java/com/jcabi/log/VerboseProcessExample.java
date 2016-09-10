@@ -67,7 +67,7 @@ public class VerboseProcessExample {
     static final String THROWN_ERR_MSG = "just throw me";
 
     /**
-     * Private constructor since class should not be instantiated.
+     * Private constructor.
      */
     private VerboseProcessExample() { }
 
@@ -104,7 +104,7 @@ public class VerboseProcessExample {
     }
 
     /**
-     * Recursively loops i-times and then throws an exception.
+     * Recursively loops and then throws an exception.
      * @param loops Times to loop
      */
     private static void countdownAndThrow(final int loops) {

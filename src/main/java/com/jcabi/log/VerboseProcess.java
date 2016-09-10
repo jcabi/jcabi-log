@@ -464,7 +464,7 @@ public final class VerboseProcess implements Closeable {
                     new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
                 );
                 try {
-                    logFromReader(reader, writer);
+                    this.logFromReader(reader, writer);
                 } catch (final ClosedByInterruptException ex) {
                     Thread.interrupted();
                     Logger.debug(
