@@ -493,7 +493,6 @@ public final class VerboseProcess implements Closeable {
          * Logs supplied StringBuilder to supplied Logger and Writer.
          * @param reader Reader to use
          * @param writer Writer to use
-         * @param builder StringBuilder with log statement
          * @throws IOException writer could throw this
          * @throws ClosedByInterruptException thrown if interrupted
          */

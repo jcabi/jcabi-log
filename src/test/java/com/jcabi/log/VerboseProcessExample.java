@@ -87,8 +87,8 @@ public final class VerboseProcessExample {
     public void doWork() {
         System.out.println(SYSOUT_1);
         System.err.println(SYSOUT_1);
-        System.out.println(SYSOUT_2);
-        System.err.println(SYSOUT_2);
+        System.out.println(SYSERR_2);
+        System.err.println(SYSERR_2);
         catchAndThrow();
     }
 
