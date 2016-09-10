@@ -483,7 +483,8 @@ public final class VerboseProcess implements Closeable {
          * Logs supplied StringBuilder to supplied Logger and Writer.
          * @param writer Writer to use
          * @param level Level to log at
-         * @param builder StringBuilder with log statment
+         * @param builder StringBuilder with log statement
+         * @throws IOException writer could throw this
          */
         private static void log(final BufferedWriter writer, final Level level,
                 final StringBuilder builder) throws IOException {

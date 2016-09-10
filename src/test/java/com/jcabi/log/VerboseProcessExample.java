@@ -98,21 +98,21 @@ public class VerboseProcessExample {
     private static void catchAndThrow() {
         try {
             countdownAndThrow(2);
-        } catch (final IllegalStateException exception) {
-            throw new IllegalStateException(THROWN_ERR_MSG, exception);
+        } catch (final IllegalStateException ex) {
+            throw new IllegalStateException(THROWN_ERR_MSG, ex);
         }
     }
 
     /**
      * Recursively loops i-times and then throws an exception.
-     * @param loopCount Times to loop
-     * @throws Exception
+     * @param loops Times to loop
+     * @throws IllegalStateException
      */
-    private static void countdownAndThrow(final int loopCount) throws RuntimeException {
-        if (loopCount == 0) {
+    private static void countdownAndThrow(final int loops) throws IllegalStateException {
+        if (loops == 0) {
             throw new IllegalStateException(CAUGHT_ERR_MSG);
         }
-        countdownAndThrow(loopCount - 1);
+        countdownAndThrow(loops - 1);
     }
 
 }

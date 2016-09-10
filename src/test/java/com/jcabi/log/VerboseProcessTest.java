@@ -58,7 +58,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test case for {@link VerboseProcess}.
@@ -314,6 +313,93 @@ public final class VerboseProcessTest {
     }
 
     /**
+     * Runs a java process which will throw a stack trace and makes sure it
+     * will group the stack trace.
+     */
+    @Test
+    public void logCompleteStackTrace() {
+        final org.apache.log4j.Logger logger =
+                org.apache.log4j.Logger.getRootLogger();
+        final TestAppender appender = new TestAppender();
+        logger.addAppender(appender);
+        final String[] commands = new String[] {
+            retrieveJavaExecLocation(), "-cp",
+            System.getProperty("java.class.path"),
+            "com.jcabi.log.VerboseProcessExample"
+        };
+        final ProcessBuilder builder = new ProcessBuilder(commands);
+        VerboseProcess process = null;
+        IllegalArgumentException caught = null;
+        try {
+            process = new VerboseProcess(builder, Level.INFO, Level.SEVERE);
+            process.stdout();
+        } catch (final IllegalArgumentException ex) {
+            caught = ex;
+        } finally {
+            logger.removeAppender(appender);
+            if (process != null) {
+                process.close();
+            }
+        }
+        Assert.assertNotNull(caught);
+        MatcherAssert.assertThat(
+        		caught.getMessage(),
+                Matchers.containsString(VerboseProcessExample.SYSOUT_1)
+        );
+        MatcherAssert.assertThat(
+        		caught.getMessage(),
+                Matchers.containsString(VerboseProcessExample.SYSOUT_2)
+        );
+        verifyLogs(appender);
+    }
+
+    /**
+     * Checks appender to make sure expected log statements are present.
+     * @param appender Log appender
+     */
+    private static void verifyLogs(final TestAppender appender) {
+        boolean foundCompleteStack = false;
+        for (final LoggingEvent event : appender.getLogs()) {
+            final String message = (String) event.getMessage();
+            if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
+                final boolean containsCaughtException =
+                        message.contains(VerboseProcessExample.CAUGHT_ERR_MSG);
+                Assert.assertTrue(containsCaughtException);
+                foundCompleteStack = containsCaughtException;
+            }
+        }
+        Assert.assertTrue(foundCompleteStack);
+    }
+
+    /**
+     * Gets the location of Java, whether on Linux of Windows.
+     * @return String with Java location
+     */
+    public static String retrieveJavaExecLocation() {
+        final String rootpath = System.getProperty("java.home");
+        if (SystemUtils.IS_OS_WINDOWS) {
+            final String winpath =
+                    rootpath.replaceAll("\\\\", "\\\\\\\\");
+            final String finalpath = String.format(
+            		"%s%s", winpath, "\\bin\\java.exe"
+            );
+            final File file = new File(finalpath);
+            if (file.exists()) {
+                return finalpath;
+            }
+        } else {
+            final String linuxpath = String.format(
+            		"%s%s", rootpath, "/bin/java"
+            );
+            final File file = new File(linuxpath);
+            if (file.exists()) {
+                return linuxpath;
+            }
+        }
+        throw new IllegalStateException("Unable to get the Java Path.");
+    }
+
+    /**
      * VerboseProcess can terminate its monitors and underlying Process if
      * closed after specified time since real usage.
      * @param delay Time in milliseconds between usage of vrbcPrc starts and
@@ -483,94 +569,10 @@ public final class VerboseProcessTest {
     }
 
     /**
-     * Runs a java process which will throw a stack trace and makes sure it
-     * will group the stack trace.
-     */
-    @Test
-    public void logCompleteStackTrace() {
-        final org.apache.log4j.Logger logger =
-                org.apache.log4j.Logger.getRootLogger();
-        final TestAppender appender = new TestAppender();
-        logger.addAppender(appender);
-        final String[] commands = new String[] {
-            retrieveJavaExecLocation(), "-cp",
-            System.getProperty("java.class.path"),
-            "com.jcabi.log.VerboseProcessExample"
-        };
-        final ProcessBuilder builder = new ProcessBuilder(commands);
-        VerboseProcess process = null;
-        IllegalArgumentException caught = null;
-        try {
-            process = new VerboseProcess(builder, Level.INFO, Level.SEVERE);
-            process.stdout();
-        } catch (final IllegalArgumentException e) {
-            caught = e;
-        } finally {
-            logger.removeAppender(appender);
-            if (process != null) {
-                process.close();
-            }
-        }
-        Assert.assertNotNull(caught);
-        MatcherAssert.assertThat(caught.getMessage(),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_1)
-        );
-        MatcherAssert.assertThat(caught.getMessage(),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_2)
-        );
-        verifyLogs(appender);
-    }
-
-    /**
-     * Checks appender to make sure expected log statements are present.
-     * @param appender Log appender
-     */
-    private void verifyLogs(final TestAppender appender) {
-        boolean foundCompleteStack = false;
-        for (final LoggingEvent event : appender.getLogs()) {
-            final String message = (String) event.getMessage();
-            if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
-                final boolean containsCaughtException =
-                        message.contains(VerboseProcessExample.CAUGHT_ERR_MSG);
-                Assert.assertTrue(containsCaughtException);
-                foundCompleteStack = containsCaughtException;
-            }
-        }
-        Assert.assertTrue(foundCompleteStack);
-    }
-
-    /**
-     * Gets the location of Java, whether on Linux of Windows.
-     * @return String with Java location
-     */
-    public static String retrieveJavaExecLocation() {
-        final String rootpath = System.getProperty("java.home");
-        if (SystemUtils.IS_OS_WINDOWS) {
-            final String winpath =
-                    rootpath.replaceAll("\\\\", "\\\\\\\\");
-            final String finalpath = String.format("%s%s", winpath,
-                    "\\bin\\java.exe"
-            );
-            final File file = new File(finalpath);
-            if (file.exists()) {
-                return finalpath;
-            }
-        } else {
-            final String linuxpath = String.format("%s%s", rootpath,
-                    "/bin/java");
-            final File file = new File(linuxpath);
-            if (file.exists()) {
-                return linuxpath;
-            }
-        }
-        throw new IllegalStateException("Unable to get the Java Path.");
-    }
-
-    /**
      * Logger appender that compiles a list of all LoggingEvents.
      * @author dean.e.clark
      */
-    class TestAppender extends AppenderSkeleton {
+    private class TestAppender extends AppenderSkeleton {
         /**
          * List of logging events.
          */
