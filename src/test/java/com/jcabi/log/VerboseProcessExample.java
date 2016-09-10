@@ -76,7 +76,7 @@ public class VerboseProcessExample {
      * @param args Any args passed to main method
      */
     public static void main(final String[] args) {
-        VerboseProcessExample instance = new VerboseProcessExample();
+        final VerboseProcessExample instance = new VerboseProcessExample();
         instance.doWork();
     }
 
@@ -106,9 +106,8 @@ public class VerboseProcessExample {
     /**
      * Recursively loops i-times and then throws an exception.
      * @param loops Times to loop
-     * @throws IllegalStateException
      */
-    private static void countdownAndThrow(final int loops) throws IllegalStateException {
+    private static void countdownAndThrow(final int loops) {
         if (loops == 0) {
             throw new IllegalStateException(CAUGHT_ERR_MSG);
         }

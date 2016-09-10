@@ -452,6 +452,94 @@ public final class VerboseProcess implements Closeable {
             this.level = lvl;
         }
 
+        @Override
+        public Void call() throws Exception {
+            final BufferedReader reader = new BufferedReader(
+                Channels.newReader(
+                    Channels.newChannel(this.input), VerboseProcess.UTF_8
+                )
+            );
+            try {
+                final BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
+                );
+                try {
+                    logFromReader(reader, writer);
+                } catch (final ClosedByInterruptException ex) {
+                    Thread.interrupted();
+                    Logger.debug(
+                        VerboseProcess.class,
+                        "Monitor is interrupted in the expected way"
+                    );
+                } catch (final IOException ex) {
+                    Logger.error(
+                        VerboseProcess.class,
+                        "Error reading from process stream: %[exception]s",
+                        ex
+                    );
+                } finally {
+                    VerboseProcess.close(writer);
+                    this.done.countDown();
+                }
+            } finally {
+                VerboseProcess.close(reader);
+            }
+            return null;
+        }
+        
+        private void logFromReader(final BufferedReader reader,
+                final BufferedWriter writer) throws IOException, 
+                ClosedByInterruptException {
+            StringBuilder builder = new StringBuilder();
+            String previous = NULL_STRING;
+            int lineCount = 0;
+            while (true) {
+                if (Thread.interrupted()) {
+                    Logger.debug(
+                        VerboseProcess.class,
+                        "explicitly interrupting read from buffer"
+                    );
+                    break;
+                }
+                if (previous != NULL_STRING) {
+                    builder.append(previous).append(NEW_LINE);
+                    previous = NULL_STRING;
+                }
+                final String line = reader.readLine();
+                if (line == null) {
+                    doLog(writer, this.level, builder);
+                    break;
+                }
+                if (shouldAppend(line)
+                        && (++lineCount < MAX_STACK_LENGTH)) {
+                    builder.append(line).append(NEW_LINE);
+                } else {
+                    if (builder.length() > 0) {
+                        doLog(writer, this.level, builder);
+                        builder = new StringBuilder();
+                    }
+                    lineCount = 1;
+                    previous = line;
+                }
+            }
+        }
+
+        /**
+         * Logs supplied StringBuilder to supplied Logger and Writer.
+         * @param writer Writer to use
+         * @param level Level to log at
+         * @param builder StringBuilder with log statement
+         * @throws IOException writer could throw this
+         */
+        private static void doLog(final BufferedWriter writer, final Level level,
+                final StringBuilder builder) throws IOException {
+            if (builder.length() > 0) {
+                final String logText = builder.toString();
+                Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);
+                writer.write(logText);
+            }
+        }
+
         /**
          * Checks if line is part of a stack trace and should be appended.
          * @param string String to check
@@ -479,88 +567,6 @@ public final class VerboseProcess implements Closeable {
             return string.substring(start);
         }
 
-        @Override
-        public Void call() throws Exception {
-            final BufferedReader reader = new BufferedReader(
-                Channels.newReader(
-                    Channels.newChannel(this.input),
-                    VerboseProcess.UTF_8
-                )
-            );
-            try {
-                final BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
-                );
-                try {
-                    StringBuilder builder = new StringBuilder();
-                    String previous = NULL_STRING;
-                    int lineCount = 0;
-                    while (true) {
-                        if (Thread.interrupted()) {
-                            Logger.debug(
-                                VerboseProcess.class,
-                                "explicitly interrupting read from buffer"
-                            );
-                            break;
-                        }
-                        if (previous != NULL_STRING) {
-                            builder.append(previous).append(NEW_LINE);
-                            previous = NULL_STRING;
-                        }
-                        final String line = reader.readLine();
-                        if (line == null) {
-                            log(writer, this.level, builder);
-                            break;
-                        }
-                        if (shouldAppend(line)
-                                && (++lineCount < MAX_STACK_LENGTH)) {
-                            builder.append(line).append(NEW_LINE);
-                        } else {
-                            if (builder.length() > 0) {
-                                log(writer, this.level, builder);
-                                builder = new StringBuilder();
-                            }
-                            lineCount = 1;
-                            previous = line;
-                        }
-                    }
-                } catch (final ClosedByInterruptException ex) {
-                    Thread.interrupted();
-                    Logger.debug(
-                        VerboseProcess.class,
-                        "Monitor is interrupted in the expected way"
-                    );
-                } catch (final IOException ex) {
-                    Logger.error(
-                        VerboseProcess.class,
-                        "Error reading from process stream: %[exception]s",
-                        ex
-                    );
-                } finally {
-                    VerboseProcess.close(writer);
-                    this.done.countDown();
-                }
-            } finally {
-                VerboseProcess.close(reader);
-            }
-            return null;
-        }
-
-        /**
-         * Logs supplied StringBuilder to supplied Logger and Writer.
-         * @param writer Writer to use
-         * @param level Level to log at
-         * @param builder StringBuilder with log statement
-         * @throws IOException writer could throw this
-         */
-        private static void log(final BufferedWriter writer, final Level level,
-                final StringBuilder builder) throws IOException {
-            if (builder.length() > 0) {
-                final String logText = builder.toString();
-                Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);
-                writer.write(logText);
-            }
-        }
     }
 
     /**
