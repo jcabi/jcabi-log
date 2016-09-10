@@ -413,7 +413,9 @@ public final class VerboseProcess implements Closeable {
         /**
          * Empty String.
          */
-        private static final String NULL_STRING = new String() + '\u0000';
+        private static final String NULL_STRING = String.format(
+            "%s%c", "", '\u0000'
+        );
         /**
          * Newline string.
          */
@@ -486,9 +488,17 @@ public final class VerboseProcess implements Closeable {
             }
             return null;
         }
-        
+
+        /**
+         * Logs supplied StringBuilder to supplied Logger and Writer.
+         * @param reader Reader to use
+         * @param writer Writer to use
+         * @param builder StringBuilder with log statement
+         * @throws IOException writer could throw this
+         * @throws ClosedByInterruptException thrown if interrupted
+         */
         private void logFromReader(final BufferedReader reader,
-                final BufferedWriter writer) throws IOException, 
+                final BufferedWriter writer) throws IOException,
                 ClosedByInterruptException {
             StringBuilder builder = new StringBuilder();
             String previous = NULL_STRING;
@@ -531,7 +541,7 @@ public final class VerboseProcess implements Closeable {
          * @param builder StringBuilder with log statement
          * @throws IOException writer could throw this
          */
-        private static void doLog(final BufferedWriter writer, 
+        private static void doLog(final BufferedWriter writer,
                 final Level level, final StringBuilder builder)
                 throws IOException {
             if (builder.length() > 0) {

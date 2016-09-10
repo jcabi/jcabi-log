@@ -34,7 +34,7 @@ package com.jcabi.log;
  * @author Dean Clark (dean.clark@gmail.com)
  * @version $Id$
  */
-public class VerboseProcessExample {
+public final class VerboseProcessExample {
 
     /**
      * System output line 1.
