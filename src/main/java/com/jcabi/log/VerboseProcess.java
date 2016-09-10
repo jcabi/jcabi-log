@@ -479,22 +479,6 @@ public final class VerboseProcess implements Closeable {
             return string.substring(start);
         }
 
-        /**
-         * Logs supplied StringBuilder to supplied Logger and Writer.
-         * @param writer Writer to use
-         * @param level Level to log at
-         * @param builder StringBuilder with log statement
-         * @throws IOException writer could throw this
-         */
-        private static void log(final BufferedWriter writer, final Level level,
-                final StringBuilder builder) throws IOException {
-            if (builder.length() > 0) {
-                final String logText = builder.toString();
-                Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);
-                writer.write(logText);
-            }
-       }
-
         @Override
         public Void call() throws Exception {
             final BufferedReader reader = new BufferedReader(
@@ -560,6 +544,22 @@ public final class VerboseProcess implements Closeable {
                 VerboseProcess.close(reader);
             }
             return null;
+        }
+
+        /**
+         * Logs supplied StringBuilder to supplied Logger and Writer.
+         * @param writer Writer to use
+         * @param level Level to log at
+         * @param builder StringBuilder with log statement
+         * @throws IOException writer could throw this
+         */
+        private static void log(final BufferedWriter writer, final Level level,
+                final StringBuilder builder) throws IOException {
+            if (builder.length() > 0) {
+                final String logText = builder.toString();
+                Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);
+                writer.write(logText);
+            }
         }
     }
 

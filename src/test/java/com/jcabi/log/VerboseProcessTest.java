@@ -325,7 +325,7 @@ public final class VerboseProcessTest {
         final String[] commands = new String[] {
             retrieveJavaExecLocation(), "-cp",
             System.getProperty("java.class.path"),
-            "com.jcabi.log.VerboseProcessExample"
+            "com.jcabi.log.VerboseProcessExample",
         };
         final ProcessBuilder builder = new ProcessBuilder(commands);
         VerboseProcess process = null;
@@ -343,14 +343,42 @@ public final class VerboseProcessTest {
         }
         Assert.assertNotNull(caught);
         MatcherAssert.assertThat(
-        		caught.getMessage(),
+                caught.getMessage(),
                 Matchers.containsString(VerboseProcessExample.SYSOUT_1)
         );
         MatcherAssert.assertThat(
-        		caught.getMessage(),
+                caught.getMessage(),
                 Matchers.containsString(VerboseProcessExample.SYSOUT_2)
         );
         verifyLogs(appender);
+    }
+
+    /**
+     * Gets the location of Java, whether on Linux of Windows.
+     * @return String with Java location
+     */
+    public static String retrieveJavaExecLocation() {
+        final String rootpath = System.getProperty("java.home");
+        if (SystemUtils.IS_OS_WINDOWS) {
+            final String winpath =
+                    rootpath.replaceAll("\\\\", "\\\\\\\\");
+            final String finalpath = String.format(
+                "%s%s", winpath, "\\bin\\java.exe"
+            );
+            final File file = new File(finalpath);
+            if (file.exists()) {
+                return finalpath;
+            }
+        } else {
+            final String linuxpath = String.format(
+                "%s%s", rootpath, "/bin/java"
+            );
+            final File file = new File(linuxpath);
+            if (file.exists()) {
+                return linuxpath;
+            }
+        }
+        throw new IllegalStateException("Unable to get the Java Path.");
     }
 
     /**
@@ -369,34 +397,6 @@ public final class VerboseProcessTest {
             }
         }
         Assert.assertTrue(foundCompleteStack);
-    }
-
-    /**
-     * Gets the location of Java, whether on Linux of Windows.
-     * @return String with Java location
-     */
-    public static String retrieveJavaExecLocation() {
-        final String rootpath = System.getProperty("java.home");
-        if (SystemUtils.IS_OS_WINDOWS) {
-            final String winpath =
-                    rootpath.replaceAll("\\\\", "\\\\\\\\");
-            final String finalpath = String.format(
-            		"%s%s", winpath, "\\bin\\java.exe"
-            );
-            final File file = new File(finalpath);
-            if (file.exists()) {
-                return finalpath;
-            }
-        } else {
-            final String linuxpath = String.format(
-            		"%s%s", rootpath, "/bin/java"
-            );
-            final File file = new File(linuxpath);
-            if (file.exists()) {
-                return linuxpath;
-            }
-        }
-        throw new IllegalStateException("Unable to get the Java Path.");
     }
 
     /**
