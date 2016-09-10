@@ -483,14 +483,17 @@ public final class VerboseProcessTest {
     }
 
     /**
-     * Runs a java process which will throw a stack trace and makes sure it will group the stack trace.
+     * Runs a java process which will throw a stack trace and makes sure it 
+     * will group the stack trace.
      */
     @Test
     public void logCompleteStackTrace() {
-        final org.apache.log4j.Logger rootLogger = org.apache.log4j.Logger.getRootLogger();
+        final org.apache.log4j.Logger rootLogger = 
+                org.apache.log4j.Logger.getRootLogger();
         final TestAppender appender = new TestAppender();
         rootLogger.addAppender(appender);
-        final String[] commands = { getJavaExecLoc(), ("-cp"), System.getProperty("java.class.path"),
+        final String[] commands = { getJavaExecLoc(), ("-cp"), 
+                System.getProperty("java.class.path"),
                 "com.jcabi.log.VerboseProcessExample" };
         final ProcessBuilder builder = new ProcessBuilder(commands);
         VerboseProcess process = null;
@@ -507,15 +510,20 @@ public final class VerboseProcessTest {
             }
         }
         Assert.assertNotNull(thrownException);
-        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_1));
-        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_2));
-        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_3));
-        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_4));
+        MatcherAssert.assertThat(thrownException.getMessage(),
+                Matchers.containsString(VerboseProcessExample.SYSOUT_1));
+        MatcherAssert.assertThat(thrownException.getMessage(),
+                Matchers.containsString(VerboseProcessExample.SYSOUT_2));
+        MatcherAssert.assertThat(thrownException.getMessage(),        
+        Matchers.containsString(VerboseProcessExample.SYSOUT_3));
+        MatcherAssert.assertThat(thrownException.getMessage(),
+                Matchers.containsString(VerboseProcessExample.SYSOUT_4));
         boolean foundCompleteStack = false;
         for (final LoggingEvent event : appender.getLog()) {
             final String message = (String) event.getMessage();
             if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
-                final boolean containsCaughtException = message.contains(VerboseProcessExample.CAUGHT_ERR_MSG);
+                final boolean containsCaughtException =
+                        message.contains(VerboseProcessExample.CAUGHT_ERR_MSG);
                 Assert.assertTrue(containsCaughtException);
                 foundCompleteStack = containsCaughtException;
             }
@@ -534,7 +542,8 @@ public final class VerboseProcessTest {
         if (SystemUtils.IS_OS_WINDOWS) {
             // Windows
             try {
-                final String sunLibPathNew = sunLibPath.replaceAll("\\\\", "\\\\\\\\");
+                final String sunLibPathNew =
+                        sunLibPath.replaceAll("\\\\", "\\\\\\\\");
                 sunLibPath = sunLibPathNew;
                 javaExec = (sunLibPath + "\\bin\\java.exe");
                 // Test Location
@@ -544,7 +553,7 @@ public final class VerboseProcessTest {
                     return javaExec;
                 }
             } catch (final Exception e) {
-                throw new RuntimeException("Unable to get the Java Path.  error = " + e.getMessage(), e);
+                throw new RuntimeException("Unable to get the Java Path", e);
             }
         } else {
             // Unix
@@ -556,7 +565,7 @@ public final class VerboseProcessTest {
                     return javaExec;
                 }
             } catch (final Exception e) {
-                throw new RuntimeException("Unable to get the Java Path.  error = " + e.getMessage(), e);
+                throw new RuntimeException("Unable to get the Java Path", e);
             }
         }
         throw new RuntimeException("Unable to get the Java Path.");

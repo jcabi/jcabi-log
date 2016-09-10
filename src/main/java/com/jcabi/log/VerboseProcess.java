@@ -107,16 +107,6 @@ public final class VerboseProcess implements Closeable {
     private transient boolean closed;
 
     /**
-     * Maximum number of log lines for a stack trace.
-     */
-    private static final int DEFUALT_MAX_LENGTH = 1000;
-
-    /**
-     * Maximum number of log lines for a stack trace.
-     */
-    private static final int maxStackLength = DEFUALT_MAX_LENGTH;
-
-    /**
      * Public ctor.
      * @param prc The process to work with
      */
@@ -401,6 +391,14 @@ public final class VerboseProcess implements Closeable {
     private static final class Monitor implements Callable<Void> {
 
         /**
+         * Maximum number of log lines for a stack trace.
+         */
+        private static final int DEFUALT_MAX_LENGTH = 1000;
+        /**
+         * Maximum number of log lines for a stack trace.
+         */
+        private static final int maxStackLength = DEFUALT_MAX_LENGTH;
+        /**
          * Prefix "at ".
          */
         private static final String PREFIX_AT = "at ";
@@ -454,12 +452,14 @@ public final class VerboseProcess implements Closeable {
 
         /**
          * Checks if line is part of a stack trace and should be appended.
-         * @param string string to check
-         * @return boolean result
+         * @param string String to check
+         * @return boolean Result
          */
         private static boolean shouldAppend(final String string) {
             final String leftStrip = stripStart(string);
-            return leftStrip.startsWith(PREFIX_AT) || leftStrip.startsWith(PREFIX_CB) || leftStrip.startsWith(PREFIX_DOTS);
+            return leftStrip.startsWith(PREFIX_AT) || 
+                leftStrip.startsWith(PREFIX_CB) || 
+                leftStrip.startsWith(PREFIX_DOTS);
         }
 
         /**
@@ -470,7 +470,8 @@ public final class VerboseProcess implements Closeable {
         private static String stripStart(final String string) {
             final int stringLength = string.length();
             int start = 0;
-            while ((start != stringLength) && Character.isWhitespace(string.charAt(start))) {
+            while ((start != stringLength) && 
+                Character.isWhitespace(string.charAt(start))) {
                 ++start;
             }
             return string.substring(start);
@@ -501,24 +502,28 @@ public final class VerboseProcess implements Closeable {
                             break;
                         }
                         if (previousLine != NULL_STRING) {
-                            builder.append(previousLine).append(System.getProperty("line.separator"));
+                            builder.append(previousLine).append(
+                                System.getProperty("line.separator"));
                             previousLine = NULL_STRING;
                         }
                         final String line = reader.readLine();
                         if (line == null) {
                             if (builder.length() > 0) {
                                 final String logText = builder.toString();
-                                Logger.log(this.level, VerboseProcess.class, LOG_FORMAT, logText);
+                                Logger.log(this.level, VerboseProcess.class, 
+                                    LOG_FORMAT, logText);
                                 writer.write(logText);
                             }
                             break;
                         }
                         if (shouldAppend(line) && (++lineCount < maxStackLength)) {
-                            builder.append(line).append(System.getProperty("line.separator"));
+                            builder.append(line).append(
+                                System.getProperty("line.separator"));
                         } else {
                             if (builder.length() > 0) {
                                 final String logText = builder.toString();
-                                Logger.log(this.level, VerboseProcess.class, LOG_FORMAT, logText);
+                                Logger.log(this.level, VerboseProcess.class, 
+                                    LOG_FORMAT, logText);
                                 writer.write(logText);
                                 builder = new StringBuilder();
                             }
