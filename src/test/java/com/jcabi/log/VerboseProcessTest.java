@@ -36,12 +36,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 import org.apache.log4j.spi.Filter;
@@ -55,6 +58,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test case for {@link VerboseProcess}.
@@ -475,6 +479,118 @@ public final class VerboseProcessTest {
                 decision = Filter.DENY;
             }
             return decision;
+        }
+    }
+
+    /**
+     * Runs a java process which will throw a stack trace and makes sure it will group the stack trace.
+     */
+    @Test
+    public void logCompleteStackTrace() {
+        final org.apache.log4j.Logger rootLogger = org.apache.log4j.Logger.getRootLogger();
+        final TestAppender appender = new TestAppender();
+        rootLogger.addAppender(appender);
+        final String[] commands = { getJavaExecLoc(), ("-cp"), System.getProperty("java.class.path"),
+                "com.jcabi.log.VerboseProcessExample" };
+        final ProcessBuilder builder = new ProcessBuilder(commands);
+        VerboseProcess process = null;
+        RuntimeException thrownException = null;
+        try {
+            process = new VerboseProcess(builder, Level.INFO, Level.SEVERE);
+            process.stdout();
+        } catch (final RuntimeException e) {
+            thrownException = e;
+        } finally {
+            rootLogger.removeAppender(appender);
+            if (process != null) {
+                process.close();
+            }
+        }
+        Assert.assertNotNull(thrownException);
+        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_1));
+        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_2));
+        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_3));
+        MatcherAssert.assertThat(thrownException.getMessage(), Matchers.containsString(VerboseProcessExample.SYSOUT_4));
+        boolean foundCompleteStack = false;
+        for (final LoggingEvent event : appender.getLog()) {
+            final String message = (String) event.getMessage();
+            if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
+                final boolean containsCaughtException = message.contains(VerboseProcessExample.CAUGHT_ERR_MSG);
+                Assert.assertTrue(containsCaughtException);
+                foundCompleteStack = containsCaughtException;
+            }
+        }
+        Assert.assertTrue(foundCompleteStack);
+    }
+
+    /**
+     * Gets the location of Java, whether on Linux of Windows.
+     * @return
+     */
+    public static String getJavaExecLoc() {
+        String javaExec = null;
+        String sunLibPath = System.getProperty("java.home");
+        javaExec = new String();
+        if (SystemUtils.IS_OS_WINDOWS) {
+            // Windows
+            try {
+                final String sunLibPathNew = sunLibPath.replaceAll("\\\\", "\\\\\\\\");
+                sunLibPath = sunLibPathNew;
+                javaExec = (sunLibPath + "\\bin\\java.exe");
+                // Test Location
+                final File file1 = new File(javaExec);
+                if (file1.exists()) {
+                    System.out.println("File [" + javaExec + "] exists.");
+                    return javaExec;
+                }
+            } catch (final Exception e) {
+                throw new RuntimeException("Unable to get the Java Path.  error = " + e.getMessage(), e);
+            }
+        } else {
+            // Unix
+            try {
+                javaExec = sunLibPath + "/bin/java";
+                // Test Location
+                final File file1 = new File(javaExec);
+                if (file1.exists()) {
+                    return javaExec;
+                }
+            } catch (final Exception e) {
+                throw new RuntimeException("Unable to get the Java Path.  error = " + e.getMessage(), e);
+            }
+        }
+        throw new RuntimeException("Unable to get the Java Path.");
+    }
+
+    /**
+     * Logger appender that compiles a list of all LoggingEvents.
+     * @author dean.e.clark
+     */
+    class TestAppender extends AppenderSkeleton {
+        /**
+         * List of logging events.
+         */
+        private final List<LoggingEvent> log = new ArrayList<LoggingEvent>();
+
+        @Override
+        public boolean requiresLayout() {
+            return false;
+        }
+
+        @Override
+        protected void append(final LoggingEvent loggingEvent) {
+            log.add(loggingEvent);
+        }
+
+        @Override
+        public void close() {}
+
+        /**
+         * Provides all captured logging events.
+         * @return copy of log list
+         */
+        public List<LoggingEvent> getLog() {
+            return new ArrayList<LoggingEvent>(log);
         }
     }
 }

@@ -107,14 +107,14 @@ public final class VerboseProcess implements Closeable {
     private transient boolean closed;
 
     /**
-     * Maximum number of log lines for a stack trace
+     * Maximum number of log lines for a stack trace.
      */
-    public static final int DEFUALT_MAX_LENGTH = 1000;
+    private static final int DEFUALT_MAX_LENGTH = 1000;
 
     /**
-     * Maximum number of log lines for a stack trace
+     * Maximum number of log lines for a stack trace.
      */
-    public static volatile int maxStackLength = DEFUALT_MAX_LENGTH;
+    private static final int maxStackLength = DEFUALT_MAX_LENGTH;
 
     /**
      * Public ctor.
@@ -291,7 +291,7 @@ public final class VerboseProcess implements Closeable {
             this.process, result.code(), result.stdout().length(),
             System.currentTimeMillis() - start
         );
-        if (check && (result.code() != 0)) {
+        if (check && result.code() != 0) {
             throw new IllegalArgumentException(
                 Logger.format(
                     "Non-zero exit code %d: %[text]s",
@@ -401,18 +401,25 @@ public final class VerboseProcess implements Closeable {
     private static final class Monitor implements Callable<Void> {
 
         /**
-         * Prefix "at "
+         * Prefix "at ".
          */
         private static final String PREFIX_AT = "at ";
         /**
-         * Prefix "Caused by"
+         * Prefix "Caused by".
          */
         private static final String PREFIX_CB = "Caused by";
         /**
-         * Prefix "... "
+         * Prefix "... ".
          */
         private static final String PREFIX_DOTS = "... ";
-
+        /**
+         * Format string for log statements.
+         */
+        private static final String LOG_FORMAT = ">> %s";
+        /**
+         * Empty String.
+         */
+        private static final String NULL_STRING = new String() + '\u0000';
         /**
          * Stream to read.
          */
@@ -447,7 +454,7 @@ public final class VerboseProcess implements Closeable {
 
         /**
          * Checks if line is part of a stack trace and should be appended.
-         * @param string String to check
+         * @param string string to check
          * @return boolean result
          */
         private static boolean shouldAppend(final String string) {
@@ -456,18 +463,15 @@ public final class VerboseProcess implements Closeable {
         }
 
         /**
-         * Strips whitespace at beginning of String
+         * Strips whitespace at beginning of String.
          * @param string String to strip
-         * @return string Stripped String
+         * @return string Stripped string
          */
         private static String stripStart(final String string) {
-            if ((string == null) || string.isEmpty()) {
-                return null;
-            }
             final int stringLength = string.length();
             int start = 0;
             while ((start != stringLength) && Character.isWhitespace(string.charAt(start))) {
-                start++;
+                ++start;
             }
             return string.substring(start);
         }
@@ -485,8 +489,8 @@ public final class VerboseProcess implements Closeable {
                     new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
                 );
                 try {
-                    StringBuilder sb = new StringBuilder();
-                    String previousLine = null;
+                    StringBuilder builder = new StringBuilder();
+                    String previousLine = NULL_STRING;
                     int lineCount = 0;
                     while (true) {
                         if (Thread.interrupted()) {
@@ -496,29 +500,27 @@ public final class VerboseProcess implements Closeable {
                             );
                             break;
                         }
-                        if (previousLine != null) {
-                            sb.append(previousLine).append(System.getProperty("line.separator"));
-                            previousLine = null;
+                        if (previousLine != NULL_STRING) {
+                            builder.append(previousLine).append(System.getProperty("line.separator"));
+                            previousLine = NULL_STRING;
                         }
-
                         final String line = reader.readLine();
                         if (line == null) {
-                            if (sb.length() > 0) {
-                                final String logText = sb.toString();
-                                Logger.log(this.level, VerboseProcess.class, ">> %s", logText);
+                            if (builder.length() > 0) {
+                                final String logText = builder.toString();
+                                Logger.log(this.level, VerboseProcess.class, LOG_FORMAT, logText);
                                 writer.write(logText);
                             }
                             break;
                         }
-
                         if (shouldAppend(line) && (++lineCount < maxStackLength)) {
-                            sb.append(line).append(System.getProperty("line.separator"));
+                            builder.append(line).append(System.getProperty("line.separator"));
                         } else {
-                            if (sb.length() > 0) {
-                                final String logText = sb.toString();
-                                Logger.log(this.level, VerboseProcess.class, ">> %s", logText);
+                            if (builder.length() > 0) {
+                                final String logText = builder.toString();
+                                Logger.log(this.level, VerboseProcess.class, LOG_FORMAT, logText);
                                 writer.write(logText);
-                                sb = new StringBuilder();
+                                builder = new StringBuilder();
                             }
                             lineCount = 1;
                             previousLine = line;
