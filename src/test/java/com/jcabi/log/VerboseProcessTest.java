@@ -313,8 +313,8 @@ public final class VerboseProcessTest {
     }
 
     /**
-     * Runs a java process which will throw a stack trace and makes sure it
-     * will group the stack trace.
+     * VerboseProcess can run a java process which will throw a stack trace and
+     * makes sure it will group the stack trace.
      */
     @Test
     public void logCompleteStackTrace() {

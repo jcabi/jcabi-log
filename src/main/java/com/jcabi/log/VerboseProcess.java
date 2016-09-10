@@ -553,29 +553,29 @@ public final class VerboseProcess implements Closeable {
 
         /**
          * Checks if line is part of a stack trace and should be appended.
-         * @param string String to check
+         * @param input String to check
          * @return Result, true or false
          */
-        private static boolean shouldAppend(final String string) {
-            final String leftStrip = stripStart(string);
-            return leftStrip.startsWith(PREFIX_AT)
-                || leftStrip.startsWith(PREFIX_CB)
-                || leftStrip.startsWith(PREFIX_DOTS);
+        private static boolean shouldAppend(final String input) {
+            final String stripped = stripStart(input);
+            return stripped.startsWith(PREFIX_AT)
+                || stripped.startsWith(PREFIX_CB)
+                || stripped.startsWith(PREFIX_DOTS);
         }
 
         /**
          * Strips whitespace at beginning of String.
-         * @param string String to strip
+         * @param input String to strip
          * @return Stripped string
          */
-        private static String stripStart(final String string) {
-            final int stringLength = string.length();
+        private static String stripStart(final String input) {
+            final int length = input.length();
             int start = 0;
-            while ((start != stringLength)
-                && Character.isWhitespace(string.charAt(start))) {
+            while ((start != length)
+                && Character.isWhitespace(input.charAt(start))) {
                 ++start;
             }
-            return string.substring(start);
+            return input.substring(start);
         }
 
     }
