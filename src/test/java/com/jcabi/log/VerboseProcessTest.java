@@ -328,20 +328,21 @@ public final class VerboseProcessTest {
             "com.jcabi.log.VerboseProcessExample",
         };
         final ProcessBuilder builder = new ProcessBuilder(commands);
-        VerboseProcess process = null;
-        IllegalArgumentException caught = null;
+        final VerboseProcess process = new VerboseProcess(
+            builder, Level.INFO, Level.SEVERE
+        );
+        IllegalArgumentException caught = new IllegalArgumentException();
+        boolean failed = false;
         try {
-            process = new VerboseProcess(builder, Level.INFO, Level.SEVERE);
             process.stdout();
         } catch (final IllegalArgumentException ex) {
             caught = ex;
+            failed = true;
         } finally {
             logger.removeAppender(appender);
-            if (process != null) {
-                process.close();
-            }
+            process.close();
         }
-        Assert.assertNotNull(caught);
+        Assert.assertTrue("Process should have failed!", failed);
         MatcherAssert.assertThat(
                 caught.getMessage(),
                 Matchers.containsString(VerboseProcessExample.SYSOUT_1)
@@ -357,7 +358,7 @@ public final class VerboseProcessTest {
      * Gets the location of Java, whether on Linux of Windows.
      * @return String with Java location
      */
-    public static String retrieveJavaExecLocation() {
+    private static String retrieveJavaExecLocation() {
         final String rootpath = System.getProperty("java.home");
         if (SystemUtils.IS_OS_WINDOWS) {
             final String winpath =

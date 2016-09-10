@@ -531,8 +531,9 @@ public final class VerboseProcess implements Closeable {
          * @param builder StringBuilder with log statement
          * @throws IOException writer could throw this
          */
-        private static void doLog(final BufferedWriter writer, final Level level,
-                final StringBuilder builder) throws IOException {
+        private static void doLog(final BufferedWriter writer, 
+                final Level level, final StringBuilder builder)
+                throws IOException {
             if (builder.length() > 0) {
                 final String logText = builder.toString();
                 Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);
