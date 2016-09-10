@@ -483,43 +483,50 @@ public final class VerboseProcessTest {
     }
 
     /**
-     * Runs a java process which will throw a stack trace and makes sure it 
+     * Runs a java process which will throw a stack trace and makes sure it
      * will group the stack trace.
      */
     @Test
     public void logCompleteStackTrace() {
-        final org.apache.log4j.Logger rootLogger = 
+        final org.apache.log4j.Logger logger =
                 org.apache.log4j.Logger.getRootLogger();
         final TestAppender appender = new TestAppender();
-        rootLogger.addAppender(appender);
-        final String[] commands = { getJavaExecLoc(), ("-cp"), 
-                System.getProperty("java.class.path"),
-                "com.jcabi.log.VerboseProcessExample" };
+        logger.addAppender(appender);
+        final String[] commands = new String[] { retrieveJavaExecLocation(),
+                "-cp", System.getProperty("java.class.path"),
+                "com.jcabi.log.VerboseProcessExample"
+                };
         final ProcessBuilder builder = new ProcessBuilder(commands);
         VerboseProcess process = null;
-        RuntimeException thrownException = null;
+        IllegalArgumentException caught = null;
         try {
             process = new VerboseProcess(builder, Level.INFO, Level.SEVERE);
             process.stdout();
-        } catch (final RuntimeException e) {
-            thrownException = e;
+        } catch (final IllegalArgumentException e) {
+            caught = e;
         } finally {
-            rootLogger.removeAppender(appender);
+            logger.removeAppender(appender);
             if (process != null) {
                 process.close();
             }
         }
-        Assert.assertNotNull(thrownException);
-        MatcherAssert.assertThat(thrownException.getMessage(),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_1));
-        MatcherAssert.assertThat(thrownException.getMessage(),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_2));
-        MatcherAssert.assertThat(thrownException.getMessage(),        
-        Matchers.containsString(VerboseProcessExample.SYSOUT_3));
-        MatcherAssert.assertThat(thrownException.getMessage(),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_4));
+        Assert.assertNotNull(caught);
+        MatcherAssert.assertThat(caught.getMessage(),
+                Matchers.containsString(VerboseProcessExample.SYSOUT_1)
+        );
+        MatcherAssert.assertThat(caught.getMessage(),
+                Matchers.containsString(VerboseProcessExample.SYSOUT_2)
+        );
+        verifyLogs(appender);
+    }
+
+    /**
+     * Checks appender to make sure expected log statements are present.
+     * @param appender Log appender
+     */
+    private void verifyLogs(final TestAppender appender) {
         boolean foundCompleteStack = false;
-        for (final LoggingEvent event : appender.getLog()) {
+        for (final LoggingEvent event : appender.getLogs()) {
             final String message = (String) event.getMessage();
             if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
                 final boolean containsCaughtException =
@@ -533,42 +540,26 @@ public final class VerboseProcessTest {
 
     /**
      * Gets the location of Java, whether on Linux of Windows.
-     * @return
+     * @return String with Java location
      */
-    public static String getJavaExecLoc() {
-        String javaExec = null;
-        String sunLibPath = System.getProperty("java.home");
-        javaExec = new String();
+    public static String retrieveJavaExecLocation() {
+        String rootpath = System.getProperty("java.home");
         if (SystemUtils.IS_OS_WINDOWS) {
-            // Windows
-            try {
-                final String sunLibPathNew =
-                        sunLibPath.replaceAll("\\\\", "\\\\\\\\");
-                sunLibPath = sunLibPathNew;
-                javaExec = (sunLibPath + "\\bin\\java.exe");
-                // Test Location
-                final File file1 = new File(javaExec);
-                if (file1.exists()) {
-                    System.out.println("File [" + javaExec + "] exists.");
-                    return javaExec;
-                }
-            } catch (final Exception e) {
-                throw new RuntimeException("Unable to get the Java Path", e);
+            final String winpath =
+                    rootpath.replaceAll("\\\\", "\\\\\\\\");
+            final String finalpath = winpath + "\\bin\\java.exe";
+            final File file = new File(finalpath);
+            if (file.exists()) {
+                return finalpath;
             }
         } else {
-            // Unix
-            try {
-                javaExec = sunLibPath + "/bin/java";
-                // Test Location
-                final File file1 = new File(javaExec);
-                if (file1.exists()) {
-                    return javaExec;
-                }
-            } catch (final Exception e) {
-                throw new RuntimeException("Unable to get the Java Path", e);
+            final String linuxpath = rootpath + "/bin/java";
+            final File file = new File(linuxpath);
+            if (file.exists()) {
+                return linuxpath;
             }
         }
-        throw new RuntimeException("Unable to get the Java Path.");
+        throw new IllegalStateException("Unable to get the Java Path.");
     }
 
     /**
@@ -579,7 +570,21 @@ public final class VerboseProcessTest {
         /**
          * List of logging events.
          */
-        private final List<LoggingEvent> log = new ArrayList<LoggingEvent>();
+        private final List<LoggingEvent> logs = new ArrayList<LoggingEvent>(10);
+
+        /**
+         * Provides all captured logging events.
+         * @return Copy of log list
+         */
+        public List<LoggingEvent> getLogs() {
+			return new ArrayList<LoggingEvent>(this.logs);
+        }
+
+		/**
+		 * Nothing to to here but it must be implemented.
+		 */
+        @Override
+        public void close() {}
 
         @Override
         public boolean requiresLayout() {
@@ -587,19 +592,9 @@ public final class VerboseProcessTest {
         }
 
         @Override
-        protected void append(final LoggingEvent loggingEvent) {
-            log.add(loggingEvent);
+        protected void append(final LoggingEvent event) {
+        	this.logs.add(event);
         }
 
-        @Override
-        public void close() {}
-
-        /**
-         * Provides all captured logging events.
-         * @return copy of log list
-         */
-        public List<LoggingEvent> getLog() {
-            return new ArrayList<LoggingEvent>(log);
-        }
     }
 }

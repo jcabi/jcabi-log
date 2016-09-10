@@ -32,91 +32,88 @@ package com.jcabi.log;
 /**
  * Example application to help test {@link VerboseProcess}.
  * @author Dean Clark (dean.clark@gmail.com)
+ * @version $Id$
  */
- public class VerboseProcessExample {
+public class VerboseProcessExample {
 
     /**
      * System output line 1.
      */
-    protected static final String SYSOUT_1 = "sysout line 1";
+    static final String SYSOUT_1 = "sysout line 1";
+
     /**
      * System output line 2.
      */
-    protected static final String SYSOUT_2 = "sysout line 2";
-    /**
-     * System output line 3.
-     */
-    protected static final String SYSOUT_3 = "sysout line 3";
-    /**
-     * System output line 4.
-     */
-    protected static final String SYSOUT_4 = "sysout line 4";
+    static final String SYSOUT_2 = "sysout line 2";
+
     /**
      * Error output line 1.
      */
-    protected static final String SYSERR_1 = "syserr line 1";
+    static final String SYSERR_1 = "syserr line 1";
+
     /**
      * Error output line 2.
      */
-    protected static final String SYSERR_2 = "syserr line 2";
-    /**
-     * Error output line 3.
-     */
-    protected static final String SYSERR_3 = "syserr line 3";
-    /**
-     * Error output line 4.
-     */
-    protected static final String SYSERR_4 = "syserr line 4";
+    static final String SYSERR_2 = "syserr line 2";
+
     /**
      * Exception to be thrown and caught.
      */
-    protected static final String CAUGHT_ERR_MSG = "this error gets thrown" 
-        + " and caught";
+    static final String CAUGHT_ERR_MSG = "throw/catch me";
+
     /**
      * Exception to be thrown.
      */
-    protected static final String THROWN_ERR_MSG = "this error was caused by" 
-        + " the other one";
+    static final String THROWN_ERR_MSG = "just throw me";
 
     /**
-     * Will log to standard output and error and then intentionally fail with a 
-     * stack trace.
-     * @param args
+     * Private constructor since class should not be instantiated.
+     */
+    private VerboseProcessExample() {}
+
+    /**
+     * Instantiates instance of this class and calls primary method
+     * @param args Any args passed to main method
      */
     public static void main(final String[] args) {
+        VerboseProcessExample instance = new VerboseProcessExample();
+        instance.doWork();
+    }
+
+    /**
+     * Will log to standard output and error and then intentionally fail with a
+     * stack trace.
+     */
+    public void doWork() {
         System.out.println(SYSOUT_1);
         System.err.println(SYSOUT_1);
         System.out.println(SYSOUT_2);
         System.err.println(SYSOUT_2);
-        System.out.println(SYSOUT_3);
-        System.err.println(SYSOUT_3);
-        System.out.println(SYSOUT_4);
-        System.err.println(SYSOUT_4);
-        catchAndThrow(20);
+        catchAndThrow();
     }
 
     /**
      * Call a method which will throw an exception. Then catch and re-throw it.
-     * @param i Times to loop
+     * @param loopCount Times to loop
      */
-    private static void catchAndThrow(final int i) {
+    private static void catchAndThrow() {
         try {
-            countdownAndThrow(i);
-        } catch (final RuntimeException e) {
-            throw new RuntimeException(THROWN_ERR_MSG, e);
+            countdownAndThrow(2);
+        } catch (final IllegalStateException exception) {
+            throw new IllegalStateException(THROWN_ERR_MSG, exception);
         }
     }
 
     /**
      * Recursively loops i-times and then throws an exception.
-     * @param i Times to loop
+     * @param loopCount Times to loop
      * @throws Exception
      */
-    private static void countdownAndThrow(final int i) throws RuntimeException {
-        if (i == 0) {
-            throw new RuntimeException(CAUGHT_ERR_MSG);
+    private static void countdownAndThrow(final int loopCount) throws RuntimeException {
+        if (loopCount == 0) {
+            throw new IllegalStateException(CAUGHT_ERR_MSG);
         }
-        countdownAndThrow(i - 1);
+        countdownAndThrow(loopCount - 1);
     }
 
 }

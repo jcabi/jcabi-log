@@ -393,11 +393,7 @@ public final class VerboseProcess implements Closeable {
         /**
          * Maximum number of log lines for a stack trace.
          */
-        private static final int DEFUALT_MAX_LENGTH = 1000;
-        /**
-         * Maximum number of log lines for a stack trace.
-         */
-        private static final int maxStackLength = DEFUALT_MAX_LENGTH;
+        private static final int MAX_STACK_LENGTH = 1000;
         /**
          * Prefix "at ".
          */
@@ -418,6 +414,10 @@ public final class VerboseProcess implements Closeable {
          * Empty String.
          */
         private static final String NULL_STRING = new String() + '\u0000';
+        /**
+         * Newline string.
+         */
+        private static final String NEW_LINE = System.getProperty("line.separator");
         /**
          * Stream to read.
          */
@@ -453,29 +453,38 @@ public final class VerboseProcess implements Closeable {
         /**
          * Checks if line is part of a stack trace and should be appended.
          * @param string String to check
-         * @return boolean Result
+         * @return Result, true or false
          */
         private static boolean shouldAppend(final String string) {
             final String leftStrip = stripStart(string);
-            return leftStrip.startsWith(PREFIX_AT) || 
-                leftStrip.startsWith(PREFIX_CB) || 
-                leftStrip.startsWith(PREFIX_DOTS);
+            return leftStrip.startsWith(PREFIX_AT)
+                || leftStrip.startsWith(PREFIX_CB)
+                || leftStrip.startsWith(PREFIX_DOTS);
         }
 
         /**
          * Strips whitespace at beginning of String.
          * @param string String to strip
-         * @return string Stripped string
+         * @return Stripped string
          */
         private static String stripStart(final String string) {
             final int stringLength = string.length();
             int start = 0;
-            while ((start != stringLength) && 
-                Character.isWhitespace(string.charAt(start))) {
+            while ((start != stringLength)
+                && Character.isWhitespace(string.charAt(start))) {
                 ++start;
             }
             return string.substring(start);
         }
+
+        private static void log(BufferedWriter writer, Level level,
+                StringBuilder builder) throws IOException {
+            if (builder.length() > 0) {
+                final String logText = builder.toString();
+                Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);
+                writer.write(logText);
+            }
+       }
 
         @Override
         public Void call() throws Exception {
@@ -491,7 +500,7 @@ public final class VerboseProcess implements Closeable {
                 );
                 try {
                     StringBuilder builder = new StringBuilder();
-                    String previousLine = NULL_STRING;
+                    String previous = NULL_STRING;
                     int lineCount = 0;
                     while (true) {
                         if (Thread.interrupted()) {
@@ -501,34 +510,25 @@ public final class VerboseProcess implements Closeable {
                             );
                             break;
                         }
-                        if (previousLine != NULL_STRING) {
-                            builder.append(previousLine).append(
-                                System.getProperty("line.separator"));
-                            previousLine = NULL_STRING;
+                        if (previous != NULL_STRING) {
+                            builder.append(previous).append(NEW_LINE);
+                            previous = NULL_STRING;
                         }
                         final String line = reader.readLine();
                         if (line == null) {
-                            if (builder.length() > 0) {
-                                final String logText = builder.toString();
-                                Logger.log(this.level, VerboseProcess.class, 
-                                    LOG_FORMAT, logText);
-                                writer.write(logText);
-                            }
+                            log(writer, this.level, builder);
                             break;
                         }
-                        if (shouldAppend(line) && (++lineCount < maxStackLength)) {
-                            builder.append(line).append(
-                                System.getProperty("line.separator"));
+                        if (shouldAppend(line)
+                                && (++lineCount < MAX_STACK_LENGTH)) {
+                            builder.append(line).append(NEW_LINE);
                         } else {
                             if (builder.length() > 0) {
-                                final String logText = builder.toString();
-                                Logger.log(this.level, VerboseProcess.class, 
-                                    LOG_FORMAT, logText);
-                                writer.write(logText);
+                                log(writer, this.level, builder);
                                 builder = new StringBuilder();
                             }
                             lineCount = 1;
-                            previousLine = line;
+                            previous = line;
                         }
                     }
                 } catch (final ClosedByInterruptException ex) {
