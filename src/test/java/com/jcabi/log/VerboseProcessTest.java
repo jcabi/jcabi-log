@@ -562,7 +562,7 @@ public final class VerboseProcessTest {
      * Logger appender that compiles a list of all LoggingEvents.
      * @author dean.e.clark
      */
-    private final class TestAppender extends AppenderSkeleton {
+    private class TestAppender extends AppenderSkeleton {
         /**
          * List of logging events.
          */
@@ -585,7 +585,7 @@ public final class VerboseProcessTest {
         }
 
         @Override
-        protected final void append(final LoggingEvent event) {
+        protected void append(final LoggingEvent event) {
             this.logs.add(event);
         }
 
