@@ -46,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Utility class for getting {@code stdout} from a running process
@@ -144,10 +145,10 @@ public final class VerboseProcess implements Closeable {
         if (stderr == null) {
             throw new IllegalArgumentException("stderr LEVEL can't be NULL");
         }
-        final String format = new StringBuilder("%s LEVEL can't be set to ALL ")
-                .append("because it is intended only for ")
-                .append("internal configuration")
-                .toString();
+        final String format = StringUtils.join(
+            "%s LEVEL can't be set to ALL because it is ",
+            "intended only for internal configuration"
+        );
         if (Level.ALL.equals(stdout)) {
             throw new IllegalArgumentException(
                 String.format(format, "stdout")

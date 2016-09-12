@@ -41,6 +41,7 @@ import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
@@ -193,10 +194,10 @@ public final class VerboseProcessTest {
             MatcherAssert.assertThat(
                 ex.getMessage(),
                 Matchers.equalTo(
-                    new StringBuilder("stdout LEVEL can't be set to ALL ")
-                        .append("because it is intended only for ")
-                        .append("internal configuration")
-                        .toString()
+                    StringUtils.join(
+                        "stdout LEVEL can't be set to ALL because it is ",
+                        "intended only for internal configuration"
+                    )
                 )
             );
         }
@@ -217,10 +218,10 @@ public final class VerboseProcessTest {
             MatcherAssert.assertThat(
                 ex.getMessage(),
                 Matchers.equalTo(
-                    new StringBuilder("stderr LEVEL can't be set to ALL ")
-                        .append("because it is intended only for ")
-                        .append("internal configuration")
-                        .toString()
+                    StringUtils.join(
+                        "stderr LEVEL can't be set to ALL because it is ",
+                        "intended only for internal configuration"
+                    )
                 )
             );
         }
