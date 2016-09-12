@@ -543,9 +543,9 @@ public final class VerboseProcess implements Closeable {
                 final Level level, final StringBuilder builder)
                 throws IOException {
             if (builder.length() > 0) {
-                final String logText = builder.toString();
-                Logger.log(level, VerboseProcess.class, LOG_FORMAT, logText);
-                writer.write(logText);
+                final String text = builder.toString();
+                Logger.log(level, VerboseProcess.class, LOG_FORMAT, text);
+                writer.write(text);
             }
         }
 
