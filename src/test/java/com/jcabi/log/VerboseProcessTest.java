@@ -585,7 +585,7 @@ public final class VerboseProcessTest {
         }
 
         @Override
-        protected void append(final LoggingEvent event) {
+        protected final void append(final LoggingEvent event) {
             this.logs.add(event);
         }
 
