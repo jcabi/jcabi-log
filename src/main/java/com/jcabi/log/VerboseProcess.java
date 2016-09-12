@@ -391,7 +391,8 @@ public final class VerboseProcess implements Closeable {
     private static final class Monitor implements Callable<Void> {
 
         /**
-         * Maximum number of log lines for a stack trace.
+         * Maximum number of log lines for a stack trace. Set to 1000
+         * to avoid storing too many lines in memory before flushing.
          */
         private static final int MAX_STACK_LENGTH = 1000;
         /**
@@ -499,7 +500,7 @@ public final class VerboseProcess implements Closeable {
                 ClosedByInterruptException {
             StringBuilder builder = new StringBuilder();
             String previous = NULL_STRING;
-            int lineCount = 0;
+            int count = 0;
             while (true) {
                 if (Thread.interrupted()) {
                     Logger.debug(
@@ -518,14 +519,14 @@ public final class VerboseProcess implements Closeable {
                     break;
                 }
                 if (shouldAppend(line)
-                        && (++lineCount < MAX_STACK_LENGTH)) {
+                        && ++count < MAX_STACK_LENGTH) {
                     builder.append(line).append(NEW_LINE);
                 } else {
                     if (builder.length() > 0) {
                         doLog(writer, this.level, builder);
                         builder = new StringBuilder();
                     }
-                    lineCount = 1;
+                    count = 1;
                     previous = line;
                 }
             }
@@ -568,7 +569,7 @@ public final class VerboseProcess implements Closeable {
         private static String stripStart(final String input) {
             final int length = input.length();
             int start = 0;
-            while ((start != length)
+            while (start != length
                 && Character.isWhitespace(input.charAt(start))) {
                 ++start;
             }
