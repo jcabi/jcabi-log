@@ -376,17 +376,15 @@ public final class VerboseProcessTest {
      * @param appender Log appender
      */
     private static void verifyLogs(final TestAppender appender) {
-        boolean foundCompleteStack = false;
+        boolean complete = false;
         for (final LoggingEvent event : appender.getLogs()) {
             final String message = (String) event.getMessage();
             if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
-                final boolean containsCaughtException =
+                complete =
                         message.contains(VerboseProcessExample.CAUGHT_ERR_MSG);
-                Assert.assertTrue(containsCaughtException);
-                foundCompleteStack = containsCaughtException;
             }
         }
-        Assert.assertTrue(foundCompleteStack);
+        Assert.assertTrue(complete);
     }
 
     /**

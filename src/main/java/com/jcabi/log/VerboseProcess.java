@@ -495,6 +495,7 @@ public final class VerboseProcess implements Closeable {
          * @throws IOException writer could throw this
          * @throws ClosedByInterruptException thrown if interrupted
          */
+        @SuppressWarnings("PMD.ConsecutiveLiteralAppends")
         private void logFromReader(final BufferedReader reader,
                 final BufferedWriter writer) throws IOException,
                 ClosedByInterruptException {

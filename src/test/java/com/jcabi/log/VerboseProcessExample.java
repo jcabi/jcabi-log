@@ -34,6 +34,7 @@ package com.jcabi.log;
  * @author Dean Clark (dean.clark@gmail.com)
  * @version $Id$
  */
+@SuppressWarnings("PMD.DefaultPackage")
 public final class VerboseProcessExample {
 
     /**
@@ -69,6 +70,7 @@ public final class VerboseProcessExample {
     /**
      * Private constructor.
      */
+    @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     private VerboseProcessExample() { }
 
     /**
@@ -84,6 +86,7 @@ public final class VerboseProcessExample {
      * Will log to standard output and error and then intentionally fail with a
      * stack trace.
      */
+    @SuppressWarnings("PMD.SystemPrintln")
     private void doWork() {
         System.out.println(SYSOUT_1);
         System.err.println(SYSERR_1);
