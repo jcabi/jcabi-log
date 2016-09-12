@@ -331,26 +331,24 @@ public final class VerboseProcessTest {
         final VerboseProcess process = new VerboseProcess(
             builder, Level.INFO, Level.SEVERE
         );
-        IllegalArgumentException caught = new IllegalArgumentException();
         boolean failed = false;
         try {
             process.stdout();
         } catch (final IllegalArgumentException ex) {
-            caught = ex;
             failed = true;
+            MatcherAssert.assertThat(
+                    ex.getMessage(),
+                    Matchers.containsString(VerboseProcessExample.SYSOUT_1)
+            );
+            MatcherAssert.assertThat(
+                    ex.getMessage(),
+                    Matchers.containsString(VerboseProcessExample.SYSOUT_2)
+            );
         } finally {
             logger.removeAppender(appender);
             process.close();
         }
         Assert.assertTrue("Process should have failed!", failed);
-        MatcherAssert.assertThat(
-                caught.getMessage(),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_1)
-        );
-        MatcherAssert.assertThat(
-                caught.getMessage(),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_2)
-        );
         verifyLogs(appender);
     }
 
@@ -360,24 +358,15 @@ public final class VerboseProcessTest {
      */
     private static String retrieveJavaExecLocation() {
         final String rootpath = System.getProperty("java.home");
+        final String finalpath;
         if (SystemUtils.IS_OS_WINDOWS) {
-            final String winpath =
-                    rootpath.replaceAll("\\\\", "\\\\\\\\");
-            final String finalpath = String.format(
-                "%s%s", winpath, "\\bin\\java.exe"
-            );
-            final File file = new File(finalpath);
-            if (file.exists()) {
-                return finalpath;
-            }
+            finalpath = String.format("%s%s", rootpath, "\\bin\\java.exe");
         } else {
-            final String linuxpath = String.format(
-                "%s%s", rootpath, "/bin/java"
-            );
-            final File file = new File(linuxpath);
-            if (file.exists()) {
-                return linuxpath;
-            }
+            finalpath = String.format("%s%s", rootpath, "/bin/java");
+        }
+        final File file = new File(finalpath);
+        if (file.exists()) {
+            return finalpath;
         }
         throw new IllegalStateException("Unable to get the Java Path.");
     }

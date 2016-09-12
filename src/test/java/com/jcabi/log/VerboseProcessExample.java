@@ -84,7 +84,7 @@ public final class VerboseProcessExample {
      * Will log to standard output and error and then intentionally fail with a
      * stack trace.
      */
-    public void doWork() {
+    private void doWork() {
         System.out.println(SYSOUT_1);
         System.err.println(SYSERR_1);
         System.out.println(SYSOUT_2);

@@ -413,9 +413,7 @@ public final class VerboseProcess implements Closeable {
         /**
          * Empty String.
          */
-        private static final String NULL_STRING = String.format(
-            "%s%c", "", '\u0000'
-        );
+        private static final String NULL_STRING = String.valueOf('\u0000');
         /**
          * Newline string.
          */
