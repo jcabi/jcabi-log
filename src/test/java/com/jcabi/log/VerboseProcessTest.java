@@ -322,7 +322,7 @@ public final class VerboseProcessTest {
                 org.apache.log4j.Logger.getRootLogger();
         final TestAppender appender = new TestAppender();
         logger.addAppender(appender);
-        final String[] commands = new String[] {
+        final String[] commands = {
             retrieveJavaExecLocation(), "-cp",
             System.getProperty("java.class.path"),
             "com.jcabi.log.VerboseProcessExample",
@@ -562,7 +562,7 @@ public final class VerboseProcessTest {
      * Logger appender that compiles a list of all LoggingEvents.
      * @author dean.e.clark
      */
-    private class TestAppender extends AppenderSkeleton {
+    private final class TestAppender extends AppenderSkeleton {
         /**
          * List of logging events.
          */
