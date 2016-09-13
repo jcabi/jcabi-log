@@ -320,7 +320,7 @@ public final class VerboseProcessTest {
     public void logCompleteStackTrace() {
         final org.apache.log4j.Logger logger =
                 org.apache.log4j.Logger.getRootLogger();
-        final VerboseProcessTest.TestAppender appender = 
+        final VerboseProcessTest.TestAppender appender =
                 new VerboseProcessTest.TestAppender();
         logger.addAppender(appender);
         final String[] commands = {

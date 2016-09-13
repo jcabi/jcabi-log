@@ -510,24 +510,21 @@ public final class VerboseProcess implements Closeable {
                     break;
                 }
                 if (previous.length() > 0) {
-                    builder.append(previous);
-                    builder.append(NEW_LINE);
+                    builder.append(String.format("%s%s", previous, NEW_LINE));
                     previous = EMPTY_STRING;
                 }
                 final String line = reader.readLine();
                 if (line == null) {
-                    doLog(writer, this.level, builder);
+                    logAndClear(writer, this.level, builder);
                     break;
                 }
                 if (shouldAppend(line)
                         && count < MAX_STACK_LENGTH) {
-                    builder.append(line);
-                    builder.append(NEW_LINE);
+                    builder.append(String.format("%s%s", line, NEW_LINE));
                     ++count;
                 } else {
                     if (builder.length() > 0) {
-                        doLog(writer, this.level, builder);
-                        builder.setLength(0);
+                        logAndClear(writer, this.level, builder);
                     }
                     count = 1;
                     previous = line;
@@ -536,13 +533,14 @@ public final class VerboseProcess implements Closeable {
         }
 
         /**
-         * Logs supplied StringBuilder to supplied Logger and Writer.
+         * Logs StringBuilder to supplied Logger and Writer then clears out
+         * the builder.
          * @param writer Writer to use
          * @param level Level to log at
          * @param builder StringBuilder with log statement
          * @throws IOException writer could throw this
          */
-        private static void doLog(final BufferedWriter writer,
+        private static void logAndClear(final BufferedWriter writer,
                 final Level level, final StringBuilder builder)
                 throws IOException {
             if (builder.length() > 0) {
@@ -550,6 +548,7 @@ public final class VerboseProcess implements Closeable {
                 Logger.log(level, VerboseProcess.class, LOG_FORMAT, text);
                 writer.write(text);
             }
+			builder.setLength(0);
         }
 
         /**
