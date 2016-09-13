@@ -466,6 +466,12 @@ public final class VerboseProcess implements Closeable {
                 );
                 try {
                     this.logFromReader(reader, writer);
+                } catch (final ClosedByInterruptException ex) {
+                    Thread.interrupted();
+                    Logger.debug(
+                        VerboseProcess.class,
+                        "Monitor is interrupted in the expected way"
+                    );
                 } catch (final IOException ex) {
                     Logger.error(
                         VerboseProcess.class,
@@ -501,7 +507,7 @@ public final class VerboseProcess implements Closeable {
                     );
                     break;
                 }
-                if (previous.length() > 0) {
+                if (!previous.isEmpty()) {
                     appendLine(previous, builder);
                     previous = EMPTY_STRING;
                 }

@@ -576,7 +576,7 @@ public final class VerboseProcessTest {
         }
 
         /**
-         * I couldn't get PMB to stop triggering a `UncommentedEmptyMethodBody`
+         * I couldn't get PMD to stop triggering a `UncommentedEmptyMethodBody`
          * error. I'm hoping a return statement makes it happy.
          */
         @Override
