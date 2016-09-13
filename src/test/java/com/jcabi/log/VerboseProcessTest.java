@@ -320,7 +320,8 @@ public final class VerboseProcessTest {
     public void logCompleteStackTrace() {
         final org.apache.log4j.Logger logger =
                 org.apache.log4j.Logger.getRootLogger();
-        final VerboseProcessTest.TestAppender appender = new VerboseProcessTest.TestAppender();
+        final VerboseProcessTest.TestAppender appender = 
+                new VerboseProcessTest.TestAppender();
         logger.addAppender(appender);
         final String[] commands = {
             retrieveJavaExecLocation(), "-cp",
@@ -375,7 +376,8 @@ public final class VerboseProcessTest {
      * Checks appender to make sure expected log statements are present.
      * @param appender Log appender
      */
-    private static void verifyLogs(final VerboseProcessTest.TestAppender appender) {
+    private static void verifyLogs(
+            final VerboseProcessTest.TestAppender appender) {
         boolean complete = false;
         for (final LoggingEvent event : appender.getLogs()) {
             final String message = (String) event.getMessage();

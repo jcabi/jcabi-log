@@ -498,9 +498,8 @@ public final class VerboseProcess implements Closeable {
         private void logFromReader(final BufferedReader reader,
                 final BufferedWriter writer) throws IOException,
                 ClosedByInterruptException {
-            StringBuilder builder = new StringBuilder();
+            final StringBuilder builder = new StringBuilder();
             String previous = EMPTY_STRING;
-			boolean addprevious = false;
             int count = 0;
             while (true) {
                 if (Thread.interrupted()) {
@@ -510,11 +509,10 @@ public final class VerboseProcess implements Closeable {
                     );
                     break;
                 }
-                if (addprevious) {
+                if (previous.length() > 0) {
                     builder.append(previous);
                     builder.append(NEW_LINE);
-                    addprevious = false;
-					previous = EMPTY_STRING;
+                    previous = EMPTY_STRING;
                 }
                 final String line = reader.readLine();
                 if (line == null) {
@@ -533,7 +531,6 @@ public final class VerboseProcess implements Closeable {
                     }
                     count = 1;
                     previous = line;
-					addprevious = true;
                 }
             }
         }
