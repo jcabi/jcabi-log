@@ -510,7 +510,7 @@ public final class VerboseProcess implements Closeable {
                     break;
                 }
                 if (previous.length() > 0) {
-                    builder.append(String.format("%s%s", previous, NEW_LINE));
+                    builder.append(previous + NEW_LINE);
                     previous = EMPTY_STRING;
                 }
                 final String line = reader.readLine();
@@ -520,7 +520,7 @@ public final class VerboseProcess implements Closeable {
                 }
                 if (shouldAppend(line)
                         && count < MAX_STACK_LENGTH) {
-                    builder.append(String.format("%s%s", line, NEW_LINE));
+                    builder.append(line + NEW_LINE);
                     ++count;
                 } else {
                     if (builder.length() > 0) {
@@ -548,7 +548,7 @@ public final class VerboseProcess implements Closeable {
                 Logger.log(level, VerboseProcess.class, LOG_FORMAT, text);
                 writer.write(text);
             }
-			builder.setLength(0);
+            builder.setLength(0);
         }
 
         /**
