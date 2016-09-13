@@ -408,10 +408,6 @@ public final class VerboseProcess implements Closeable {
          */
         private static final String PREFIX_DOTS = "... ";
         /**
-         * Format string for appending to builder.
-         */
-        private static final String APPEND_FORMAT = "%s%s";
-        /**
          * Format string for log statements.
          */
         private static final String LOG_FORMAT = ">> %s";
@@ -514,9 +510,7 @@ public final class VerboseProcess implements Closeable {
                     break;
                 }
                 if (previous.length() > 0) {
-                    builder.append(
-                            String.format(APPEND_FORMAT, previous, NEW_LINE)
-                    );
+                    appendLine(previous, builder);
                     previous = EMPTY_STRING;
                 }
                 final String line = reader.readLine();
@@ -526,9 +520,7 @@ public final class VerboseProcess implements Closeable {
                 }
                 if (shouldAppend(line)
                         && count < MAX_STACK_LENGTH) {
-                    builder.append(
-                            String.format(APPEND_FORMAT, line, NEW_LINE)
-                    );
+                    appendLine(line, builder);
                     ++count;
                 } else {
                     if (builder.length() > 0) {
@@ -538,6 +530,17 @@ public final class VerboseProcess implements Closeable {
                     previous = line;
                 }
             }
+        }
+
+        /**
+         * Appends a line and a newline character to the builder.
+         * @param line String to append
+         * @param builder StringBuilder with log statement
+         */
+        private static void appendLine(final String line,
+                final StringBuilder builder) {
+            builder.append(line);
+            builder.append(NEW_LINE);
         }
 
         /**

@@ -575,6 +575,9 @@ public final class VerboseProcessTest {
             return new ArrayList<LoggingEvent>(this.logs);
         }
 
+        /**
+         * Method must be implemented but is intentionally empty.
+         */
         @Override
         public final void close() { }
 
