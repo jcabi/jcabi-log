@@ -576,7 +576,8 @@ public final class VerboseProcessTest {
         }
 
         /**
-         * Method must be implemented but is intentionally empty.
+         * This method must be implemented per interface but is not needed in
+         * this case. Intentionally empty.
          */
         @Override
         public final void close() { }
