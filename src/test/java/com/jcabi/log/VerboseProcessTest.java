@@ -320,7 +320,7 @@ public final class VerboseProcessTest {
     public void logCompleteStackTrace() {
         final org.apache.log4j.Logger logger =
                 org.apache.log4j.Logger.getRootLogger();
-        final TestAppender appender = new TestAppender();
+        final VerboseProcessTest.TestAppender appender = new VerboseProcessTest.TestAppender();
         logger.addAppender(appender);
         final String[] commands = {
             retrieveJavaExecLocation(), "-cp",
@@ -375,7 +375,7 @@ public final class VerboseProcessTest {
      * Checks appender to make sure expected log statements are present.
      * @param appender Log appender
      */
-    private static void verifyLogs(final TestAppender appender) {
+    private static void verifyLogs(final VerboseProcessTest.TestAppender appender) {
         boolean complete = false;
         for (final LoggingEvent event : appender.getLogs()) {
             final String message = (String) event.getMessage();
@@ -558,7 +558,6 @@ public final class VerboseProcessTest {
 
     /**
      * Logger appender that compiles a list of all LoggingEvents.
-     * @author dean.e.clark
      */
     private class TestAppender extends AppenderSkeleton {
         /**
@@ -570,20 +569,20 @@ public final class VerboseProcessTest {
          * Provides all captured logging events.
          * @return Copy of log list
          */
-        public List<LoggingEvent> getLogs() {
+        public final List<LoggingEvent> getLogs() {
             return new ArrayList<LoggingEvent>(this.logs);
         }
 
         @Override
-        public void close() { }
+        public final void close() { }
 
         @Override
-        public boolean requiresLayout() {
+        public final boolean requiresLayout() {
             return false;
         }
 
         @Override
-        protected void append(final LoggingEvent event) {
+        protected final void append(final LoggingEvent event) {
             this.logs.add(event);
         }
 

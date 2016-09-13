@@ -68,16 +68,15 @@ public final class VerboseProcessExample {
     static final String THROWN_ERR_MSG = "just throw me";
 
     /**
-     * Private constructor.
+     * Private constructor. Intentionally empty.
      */
-    @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     private VerboseProcessExample() { }
 
     /**
      * Instantiates instance of this class and calls primary method.
      * @param args Any args passed to main method
      */
-    public static void main(final String[] args) {
+    public static void main(final String... args) {
         final VerboseProcessExample instance = new VerboseProcessExample();
         instance.doWork();
     }

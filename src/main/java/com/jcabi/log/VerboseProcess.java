@@ -396,15 +396,15 @@ public final class VerboseProcess implements Closeable {
          */
         private static final int MAX_STACK_LENGTH = 1000;
         /**
-         * Prefix "at ".
+         * Prefix "at ". Needed to check if line is part of stack trace.
          */
         private static final String PREFIX_AT = "at ";
         /**
-         * Prefix "Caused by".
+         * Prefix "Caused by". Needed to check if line is part of stack trace.
          */
         private static final String PREFIX_CB = "Caused by";
         /**
-         * Prefix "... ".
+         * Prefix "... ". Needed to check if line is part of stack trace.
          */
         private static final String PREFIX_DOTS = "... ";
         /**
@@ -414,7 +414,7 @@ public final class VerboseProcess implements Closeable {
         /**
          * Empty String.
          */
-        private static final String NULL_STRING = String.valueOf('\u0000');
+        private static final String EMPTY_STRING = "";
         /**
          * Newline string.
          */
@@ -495,12 +495,12 @@ public final class VerboseProcess implements Closeable {
          * @throws IOException writer could throw this
          * @throws ClosedByInterruptException thrown if interrupted
          */
-        @SuppressWarnings("PMD.ConsecutiveLiteralAppends")
         private void logFromReader(final BufferedReader reader,
                 final BufferedWriter writer) throws IOException,
                 ClosedByInterruptException {
             StringBuilder builder = new StringBuilder();
-            String previous = NULL_STRING;
+            String previous = EMPTY_STRING;
+			boolean addprevious = false;
             int count = 0;
             while (true) {
                 if (Thread.interrupted()) {
@@ -510,9 +510,11 @@ public final class VerboseProcess implements Closeable {
                     );
                     break;
                 }
-                if (previous != NULL_STRING) {
-                    builder.append(previous).append(NEW_LINE);
-                    previous = NULL_STRING;
+                if (addprevious) {
+                    builder.append(previous);
+                    builder.append(NEW_LINE);
+                    addprevious = false;
+					previous = EMPTY_STRING;
                 }
                 final String line = reader.readLine();
                 if (line == null) {
@@ -520,15 +522,18 @@ public final class VerboseProcess implements Closeable {
                     break;
                 }
                 if (shouldAppend(line)
-                        && ++count < MAX_STACK_LENGTH) {
-                    builder.append(line).append(NEW_LINE);
+                        && count < MAX_STACK_LENGTH) {
+                    builder.append(line);
+                    builder.append(NEW_LINE);
+                    ++count;
                 } else {
                     if (builder.length() > 0) {
                         doLog(writer, this.level, builder);
-                        builder = new StringBuilder();
+                        builder.setLength(0);
                     }
                     count = 1;
                     previous = line;
+					addprevious = true;
                 }
             }
         }
