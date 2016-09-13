@@ -466,12 +466,6 @@ public final class VerboseProcess implements Closeable {
                 );
                 try {
                     this.logFromReader(reader, writer);
-                } catch (final ClosedByInterruptException ex) {
-                    Thread.interrupted();
-                    Logger.debug(
-                        VerboseProcess.class,
-                        "Monitor is interrupted in the expected way"
-                    );
                 } catch (final IOException ex) {
                     Logger.error(
                         VerboseProcess.class,
@@ -493,11 +487,9 @@ public final class VerboseProcess implements Closeable {
          * @param reader Reader to use
          * @param writer Writer to use
          * @throws IOException writer could throw this
-         * @throws ClosedByInterruptException thrown if interrupted
          */
         private void logFromReader(final BufferedReader reader,
-                final BufferedWriter writer) throws IOException,
-                ClosedByInterruptException {
+                final BufferedWriter writer) throws IOException {
             final StringBuilder builder = new StringBuilder();
             String previous = EMPTY_STRING;
             int count = 0;
