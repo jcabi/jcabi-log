@@ -576,11 +576,13 @@ public final class VerboseProcessTest {
         }
 
         /**
-         * This method must be implemented per interface but is not needed in
-         * this case. Intentionally empty.
+         * I couldn't get PMB to stop triggering a `UncommentedEmptyMethodBody`
+         * error. I'm hoping a return statement makes it happy.
          */
         @Override
-        public final void close() { }
+        public final void close() {
+            return;
+        }
 
         @Override
         public final boolean requiresLayout() {
