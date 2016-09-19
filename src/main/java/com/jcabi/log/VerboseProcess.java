@@ -397,21 +397,6 @@ public final class VerboseProcess implements Closeable {
         private static final int MAX_STACK_LENGTH = 1000;
 
         /**
-         * Prefix "at ". Needed to check if line is part of stack trace.
-         */
-        private static final String PREFIX_AT = "at ";
-
-        /**
-         * Prefix "Caused by". Needed to check if line is part of stack trace.
-         */
-        private static final String PREFIX_CB = "Caused by";
-
-        /**
-         * Prefix "... ". Needed to check if line is part of stack trace.
-         */
-        private static final String PREFIX_DOTS = "... ";
-
-        /**
          * Format string for log statements.
          */
         private static final String LOG_FORMAT = ">> %s";
