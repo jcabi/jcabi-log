@@ -564,7 +564,8 @@ public final class VerboseProcessTest {
         /**
          * List of logging events.
          */
-        private final List<LoggingEvent> logs = new ArrayList<LoggingEvent>(10);
+        private final transient List<LoggingEvent> logs =
+                new ArrayList<LoggingEvent>(10);
 
         /**
          * Provides all captured logging events.
