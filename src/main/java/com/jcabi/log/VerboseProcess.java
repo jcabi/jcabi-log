@@ -395,48 +395,59 @@ public final class VerboseProcess implements Closeable {
          * to avoid storing too many lines in memory before flushing.
          */
         private static final int MAX_STACK_LENGTH = 1000;
+
         /**
          * Prefix "at ". Needed to check if line is part of stack trace.
          */
         private static final String PREFIX_AT = "at ";
+
         /**
          * Prefix "Caused by". Needed to check if line is part of stack trace.
          */
         private static final String PREFIX_CB = "Caused by";
+
         /**
          * Prefix "... ". Needed to check if line is part of stack trace.
          */
         private static final String PREFIX_DOTS = "... ";
+
         /**
          * Format string for log statements.
          */
         private static final String LOG_FORMAT = ">> %s";
+
         /**
          * Empty String.
          */
         private static final String EMPTY_STRING = "";
+
         /**
          * Newline string.
          */
         private static final String NEW_LINE = System.getProperty(
             "line.separator"
         );
+
         /**
          * Stream to read.
          */
         private final transient InputStream input;
+
         /**
          * Latch to count down when done.
          */
         private final transient CountDownLatch done;
+
         /**
          * Buffer to save output.
          */
         private final transient OutputStream output;
+
         /**
          * Log level.
          */
         private final transient Level level;
+
         /**
          * Ctor.
          * @param inp Stream to monitor
@@ -489,7 +500,7 @@ public final class VerboseProcess implements Closeable {
         }
 
         /**
-         * Logs supplied StringBuilder to supplied Logger and Writer.
+         * Logs supplied BufferedReader to Logger and supplied Writer.
          * @param reader Reader to use
          * @param writer Writer to use
          * @throws IOException writer could throw this
@@ -542,7 +553,7 @@ public final class VerboseProcess implements Closeable {
         }
 
         /**
-         * Logs StringBuilder to supplied Logger and Writer then clears out
+         * Logs StringBuilder to Logger and supplied Writer then clears out
          * the builder.
          * @param writer Writer to use
          * @param level Level to log at
@@ -566,27 +577,11 @@ public final class VerboseProcess implements Closeable {
          * @return Result, true or false
          */
         private static boolean shouldAppend(final String input) {
-            final String stripped = stripStart(input);
-            return stripped.startsWith(PREFIX_AT)
-                || stripped.startsWith(PREFIX_CB)
-                || stripped.startsWith(PREFIX_DOTS);
+            final String trimmed = input.trim();
+            return trimmed.startsWith("at ")
+                || trimmed.startsWith("Caused by")
+                || trimmed.startsWith("... ");
         }
-
-        /**
-         * Strips whitespace at beginning of String.
-         * @param input String to strip
-         * @return Stripped string
-         */
-        private static String stripStart(final String input) {
-            final int length = input.length();
-            int start = 0;
-            while (start != length
-                && Character.isWhitespace(input.charAt(start))) {
-                ++start;
-            }
-            return input.substring(start);
-        }
-
     }
 
     /**

@@ -365,8 +365,7 @@ public final class VerboseProcessTest {
         } else {
             finalpath = String.format("%s%s", rootpath, "/bin/java");
         }
-        final File file = new File(finalpath);
-        if (file.exists()) {
+        if (new File(finalpath).exists()) {
             return finalpath;
         }
         throw new IllegalStateException("Unable to get the Java Path.");
@@ -379,7 +378,7 @@ public final class VerboseProcessTest {
     private static void verifyLogs(
             final VerboseProcessTest.TestAppender appender) {
         boolean complete = false;
-        for (final LoggingEvent event : appender.getLogs()) {
+        for (final LoggingEvent event : appender.listLogs()) {
             final String message = (String) event.getMessage();
             if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
                 complete =
@@ -571,7 +570,7 @@ public final class VerboseProcessTest {
          * Provides all captured logging events.
          * @return Copy of log list
          */
-        public final List<LoggingEvent> getLogs() {
+        public final List<LoggingEvent> listLogs() {
             return new ArrayList<LoggingEvent>(this.logs);
         }
 

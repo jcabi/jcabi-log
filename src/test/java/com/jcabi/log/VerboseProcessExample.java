@@ -33,6 +33,7 @@ package com.jcabi.log;
  * Example application to help test {@link VerboseProcess}.
  * @author Dean Clark (dean.clark@gmail.com)
  * @version $Id$
+ * @since 1.20.1
  */
 @SuppressWarnings("PMD.DefaultPackage")
 public final class VerboseProcessExample {
