@@ -144,16 +144,17 @@ public final class VerboseProcess implements Closeable {
         if (stderr == null) {
             throw new IllegalArgumentException("stderr LEVEL can't be NULL");
         }
-        final String format = "%s LEVEL can't be set to ALL because it is "
-            .concat("intended only for internal configuration");
+        // @checkstyle MultipleStringLiteralsCheck (12 line)
         if (Level.ALL.equals(stdout)) {
             throw new IllegalArgumentException(
-                String.format(format, "stdout")
+                "stdout LEVEL can't be set to ALL because "
+                    .concat("it is intended only for internal configuration")
             );
         }
         if (Level.ALL.equals(stderr)) {
             throw new IllegalArgumentException(
-                String.format(format, "stderr")
+                "stderr LEVEL can't be set to ALL because "
+                    .concat("it is intended only for internal configuration")
             );
         }
         this.process = prc;
