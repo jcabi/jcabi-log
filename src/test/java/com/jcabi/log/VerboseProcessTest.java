@@ -41,6 +41,7 @@ import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
@@ -179,6 +180,54 @@ public final class VerboseProcessTest {
     }
 
     /**
+     * VerboseProcess can reject ALL stdout level.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void rejectsStdoutWithLevelAll() throws Exception {
+        try {
+            new VerboseProcess(
+                Mockito.mock(Process.class), Level.ALL, Level.INFO
+            );
+            Assert.fail("IllegalArgumentException expected");
+        } catch (final IllegalArgumentException ex) {
+            MatcherAssert.assertThat(
+                ex.getMessage(),
+                Matchers.equalTo(
+                    StringUtils.join(
+                        "stdout LEVEL can't be set to ALL because it is ",
+                        "intended only for internal configuration"
+                    )
+                )
+            );
+        }
+    }
+
+    /**
+     * VerboseProcess can reject ALL stderr level.
+     * @throws Exception If something goes wrong
+     */
+    @Test
+    public void rejectsStderrWithLevelAll() throws Exception {
+        try {
+            new VerboseProcess(
+                Mockito.mock(Process.class), Level.INFO, Level.ALL
+            );
+            Assert.fail("IllegalArgumentException expected");
+        } catch (final IllegalArgumentException ex) {
+            MatcherAssert.assertThat(
+                ex.getMessage(),
+                Matchers.equalTo(
+                    StringUtils.join(
+                        "stderr LEVEL can't be set to ALL because it is ",
+                        "intended only for internal configuration"
+                    )
+                )
+            );
+        }
+    }
+
+    /**
      * VerboseProcess can quietly terminate a long-running process.
      * @throws Exception If something goes wrong
      */
@@ -231,7 +280,7 @@ public final class VerboseProcessTest {
             );
         }
         final VerboseProcess process = new VerboseProcess(
-            builder, Level.OFF, Level.ALL
+            builder, Level.OFF, Level.WARNING
         );
         process.stdoutQuietly();
         MatcherAssert.assertThat(
@@ -261,8 +310,8 @@ public final class VerboseProcessTest {
             .when(prc).getErrorStream();
         final VerboseProcess verboseProcess = new VerboseProcess(
             prc,
-            Level.ALL,
-            Level.ALL
+            Level.FINEST,
+            Level.FINEST
         );
         Logger.debug(
             this,
