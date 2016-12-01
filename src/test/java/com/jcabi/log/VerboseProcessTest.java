@@ -71,7 +71,7 @@ import org.mockito.stubbing.Answer;
  *  machines, while run perfectly on others. They also fail when being
  *  executed from IntelliJ.
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports" })
 public final class VerboseProcessTest {
 
     /**
