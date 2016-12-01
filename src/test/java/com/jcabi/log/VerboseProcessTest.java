@@ -385,10 +385,13 @@ public final class VerboseProcessTest {
             process.stdout();
             Assert.fail();
         } catch (final IllegalArgumentException ex) {
-            MatcherAssert.assertThat(ex.getMessage(), Matchers.allOf(
-                Matchers.containsString(VerboseProcessExample.SYSOUT_1),
-                Matchers.containsString(VerboseProcessExample.SYSOUT_2)
-            ));
+            MatcherAssert.assertThat(
+                ex.getMessage(), 
+                Matchers.allOf(
+                    Matchers.containsString(VerboseProcessExample.SYSOUT_1),
+                    Matchers.containsString(VerboseProcessExample.SYSOUT_2)
+                )
+            );
         } finally {
             logger.removeAppender(appender);
             process.close();
