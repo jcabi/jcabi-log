@@ -386,7 +386,7 @@ public final class VerboseProcessTest {
             Assert.fail();
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
-                ex.getMessage(), 
+                ex.getMessage(),
                 Matchers.allOf(
                     Matchers.containsString(VerboseProcessExample.SYSOUT_1),
                     Matchers.containsString(VerboseProcessExample.SYSOUT_2)
