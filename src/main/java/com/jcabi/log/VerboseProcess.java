@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2015, jcabi.com
+ * Copyright (c) 2012-2016, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -125,7 +125,9 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Public ctor, with a given process and logging levels for {@code stdout}
-     * and {@code stderr}.
+     * and {@code stderr}. Neither {@code stdout} nor {@code stderr} cannot be
+     * set to {@link Level#ALL} because it is intended to be used only for
+     * internal configuration.
      * @param prc Process to execute and monitor
      * @param stdout Log level for stdout
      * @param stderr Log level for stderr
@@ -141,6 +143,18 @@ public final class VerboseProcess implements Closeable {
         }
         if (stderr == null) {
             throw new IllegalArgumentException("stderr LEVEL can't be NULL");
+        }
+        if (Level.ALL.equals(stdout)) {
+            throw new IllegalArgumentException(
+                // @checkstyle LineLength (1 line)
+                "stdout LEVEL can't be set to ALL because it is intended only for internal configuration"
+            );
+        }
+        if (Level.ALL.equals(stderr)) {
+            throw new IllegalArgumentException(
+                // @checkstyle LineLength (1 line)
+                "stderr LEVEL can't be set to ALL because it is intended only for internal configuration"
+            );
         }
         this.process = prc;
         this.olevel = stdout;
