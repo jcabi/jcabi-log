@@ -332,24 +332,18 @@ public final class VerboseProcessTest {
         final VerboseProcess process = new VerboseProcess(
             builder, Level.INFO, Level.SEVERE
         );
-        boolean failed = false;
         try {
             process.stdout();
+            Assert.fail();
         } catch (final IllegalArgumentException ex) {
-            failed = true;
-            MatcherAssert.assertThat(
-                    ex.getMessage(),
-                    Matchers.containsString(VerboseProcessExample.SYSOUT_1)
-            );
-            MatcherAssert.assertThat(
-                    ex.getMessage(),
+            MatcherAssert.assertThat(ex.getMessage(), Matchers.allOf(
+                    Matchers.containsString(VerboseProcessExample.SYSOUT_1),
                     Matchers.containsString(VerboseProcessExample.SYSOUT_2)
-            );
+            ));
         } finally {
             logger.removeAppender(appender);
             process.close();
         }
-        Assert.assertTrue("Process should have failed!", failed);
         verifyLogs(appender);
     }
 
