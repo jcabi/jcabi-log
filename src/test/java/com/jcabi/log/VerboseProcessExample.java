@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2015, jcabi.com
+ * Copyright (c) 2012-2016, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@ package com.jcabi.log;
 /**
  * Example application to help test {@link VerboseProcess}.
  * @author Dean Clark (dean.clark@gmail.com)
- * @version $Id$
+ * @version $Id: 97615996e8472494c4561b6d9d5bca0e7f6992dc $
  * @since 1.20.1
  */
 @SuppressWarnings("PMD.DefaultPackage")
