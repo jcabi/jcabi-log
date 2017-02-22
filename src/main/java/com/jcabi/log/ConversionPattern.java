@@ -92,6 +92,7 @@ public class ConversionPattern {
     /**
      * Formats a string with a Control Sequence Information.
      * @return Formatted string
+     * @checkstyle NonStaticMethodCheck (6 lines)
      */
     private String csi() {
         return new ControlSequenceIndicatorFormatted(

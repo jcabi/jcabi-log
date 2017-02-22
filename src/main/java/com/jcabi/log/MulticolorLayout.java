@@ -174,6 +174,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Generate a dull {@code Formatted}.
      * @param event Event to be formatted
      * @return A {@link Formatted} to format the event
+     * @checkstyle NonStaticMethodCheck (4 lines)
      */
     private Formatted dullFormatting(final LoggingEvent event) {
         return new DullyFormatted(super.format(event));
@@ -211,6 +212,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Should the logged text be colored or not.
      * @return True if the coloring is enabled, or false otherwise.
+     * @checkstyle NonStaticMethodCheck (6 lines)
      */
     private boolean isColoringEnabled() {
         return !"false".equals(
