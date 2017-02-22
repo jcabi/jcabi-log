@@ -86,6 +86,7 @@ public class Colors {
     /**
      * Color map.
      * @return Map of colors
+     * @checkstyle DiamondOperatorCheck (4 lines)
      */
     private static ConcurrentMap<String, String> colorMap() {
         final ConcurrentMap<String, String> map =

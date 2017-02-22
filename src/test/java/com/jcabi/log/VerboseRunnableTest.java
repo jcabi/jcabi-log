@@ -159,6 +159,7 @@ public final class VerboseRunnableTest {
     public void preservesInterruptedStatus() throws Exception {
         final ScheduledExecutorService svc =
             Executors.newSingleThreadScheduledExecutor();
+        // @checkstyle DiamondOperatorCheck (1 line)
         final AtomicReference<Thread> thread = new AtomicReference<Thread>();
         final AtomicInteger runs = new AtomicInteger();
         svc.scheduleWithFixedDelay(

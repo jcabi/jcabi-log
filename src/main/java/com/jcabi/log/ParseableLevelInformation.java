@@ -60,6 +60,7 @@ public class ParseableLevelInformation  {
     /**
      * Parse the level information.
      * @return A {@link Map} with key,value pair of strings
+     * @checkstyle DiamondOperatorCheck (7 lines)
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> information() {

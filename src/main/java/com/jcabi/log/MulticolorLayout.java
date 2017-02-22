@@ -194,6 +194,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Level map.
      * @return Map of levels
+     * @checkstyle DiamondOperatorCheck (4 lines)
      */
     private static ConcurrentMap<String, String> levelMap() {
         final ConcurrentMap<String, String> map =

@@ -58,6 +58,7 @@ public class ParseableInformation {
     /**
      * Parse the information.
      * @return A {@link Map} with a key,value pair os strings
+     * @checkstyle DiamondOperatorCheck (4 lines)
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> information() {

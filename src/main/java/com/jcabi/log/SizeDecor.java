@@ -56,6 +56,7 @@ public final class SizeDecor implements Formattable {
 
     /**
      * Map of prefixes for powers of 1024.
+     * @checkstyle DiamondOperatorCheck (3 lines)
      */
     private static final ConcurrentMap<Integer, String> SUFFIXES =
         new ConcurrentHashMap<Integer, String>();
