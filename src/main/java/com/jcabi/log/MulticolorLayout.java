@@ -112,8 +112,8 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setConversionPattern(final String pattern) {
         this.base = pattern;
         super.setConversionPattern(new ConversionPattern(
-                this.base,
-                this.colors
+            this.base,
+            this.colors
             ).generate()
         );
     }

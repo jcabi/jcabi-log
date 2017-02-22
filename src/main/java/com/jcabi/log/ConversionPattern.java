@@ -95,8 +95,8 @@ public class ConversionPattern {
      */
     private String csi() {
         return new ControlSequenceIndicatorFormatted(
-                 "%s"
-             ).format();
+            "%s"
+        ).format();
     }
 
 }

@@ -425,7 +425,7 @@ public final class VerboseProcessTest {
         MatcherAssert.assertThat(
             writer.toString(),
             Matchers.not(Matchers
-                    .containsString("Error reading from process stream")
+                .containsString("Error reading from process stream")
             )
         );
     }
@@ -517,7 +517,7 @@ public final class VerboseProcessTest {
             final String thread = event.getThreadName();
             final int decision;
             if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START
-                    + this.hash
+                + this.hash
             )) {
                 decision = Filter.ACCEPT;
             } else {
