@@ -457,7 +457,7 @@ public final class VerboseProcessTest {
          * character and end of line.
          * @param character Character to return in the stream
          */
-        public InfiniteInputStream(final char character) {
+        InfiniteInputStream(final char character) {
             super();
             this.chr = character;
         }
@@ -507,7 +507,7 @@ public final class VerboseProcessTest {
          * <p>The messages from its monitor threads will be filtered in.
          * @param prc Process
          */
-        public VrbPrcMonitorFilter(final VerboseProcess prc) {
+        VrbPrcMonitorFilter(final VerboseProcess prc) {
             super();
             this.hash = prc.hashCode();
         }

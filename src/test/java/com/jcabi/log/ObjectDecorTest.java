@@ -109,7 +109,7 @@ public final class ObjectDecorTest extends AbstractDecorTest {
          * @param number The number
          * @param nme The name
          */
-        public Foo(final int number, final String nme) {
+        Foo(final int number, final String nme) {
             this.num = number;
             this.name = nme;
         }
