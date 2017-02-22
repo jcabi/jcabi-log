@@ -39,7 +39,7 @@ import java.util.Map;
  * @version $Id$
  * @since 0.18
  */
-class ParseableInformation {
+public class ParseableInformation {
 
     /**
      * Information content to be parsed.

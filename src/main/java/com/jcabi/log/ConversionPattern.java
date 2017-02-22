@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * @version $Id$
  * @since 0.18
  */
-class ConversionPattern {
+public class ConversionPattern {
 
     /**
      * Regular expression for all matches.

@@ -35,7 +35,7 @@ package com.jcabi.log;
  * @version $Id$
  * @since 0.18
  */
-class DullyFormatted implements Formatted {
+public class DullyFormatted implements Formatted {
 
     /**
      * String to be formatted.

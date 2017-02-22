@@ -47,7 +47,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(of = "size")
-final class SizeDecor implements Formattable {
+public final class SizeDecor implements Formattable {
 
     /**
      * Highest power supported by this SizeDecor.

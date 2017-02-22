@@ -35,7 +35,7 @@ package com.jcabi.log;
  * @version $Id$
  * @since 0.18
  */
-class ColorfullyFormatted implements Formatted {
+public class ColorfullyFormatted implements Formatted {
 
     /**
      * The basic information to be formatted with colors.

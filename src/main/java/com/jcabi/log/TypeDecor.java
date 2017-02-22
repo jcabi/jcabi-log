@@ -51,7 +51,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(of = "object")
-final class TypeDecor implements Formattable {
+public final class TypeDecor implements Formattable {
 
     /**
      * The object.

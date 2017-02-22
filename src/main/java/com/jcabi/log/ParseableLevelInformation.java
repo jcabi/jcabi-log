@@ -42,7 +42,7 @@ import org.apache.log4j.Level;
  * @version $Id$
  * @since 0.18
  */
-class ParseableLevelInformation  {
+public class ParseableLevelInformation  {
 
     /**
      * Information content to be parsed.
