@@ -183,6 +183,7 @@ public final class VerboseRunnable implements Runnable {
         this.verbose = vrbs;
     }
 
+    // @checkstyle NoJavadocForOverriddenMethodsCheck (10 lines)
     /**
      * {@inheritDoc}
      *

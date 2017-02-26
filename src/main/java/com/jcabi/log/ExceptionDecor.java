@@ -72,6 +72,7 @@ final class ExceptionDecor implements Formattable {
         this.throwable = thr;
     }
 
+    // @checkstyle NoJavadocForOverriddenMethodsCheck (6 lines)
     /**
      * {@inheritDoc}
      * @checkstyle ParameterNumber (4 lines)

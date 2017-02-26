@@ -164,6 +164,7 @@ public final class VerboseCallable<T> implements Callable<T> {
         this.verbose = vrbs;
     }
 
+    // @checkstyle NoJavadocForOverriddenMethodsCheck (10 lines)
     /**
      * {@inheritDoc}
      *

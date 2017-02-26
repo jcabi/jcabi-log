@@ -50,6 +50,7 @@ public class DullyFormatted implements Formatted {
         this.basic = bas;
     }
 
+    // @checkstyle NoJavadocForOverriddenMethodsCheck (7 lines)
     /**
      * Gets formatted log event without using ANSI color codes.
      * @return Text of a log event, not colored with ANSI color codes even

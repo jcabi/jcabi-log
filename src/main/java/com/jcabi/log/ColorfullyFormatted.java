@@ -57,6 +57,7 @@ public class ColorfullyFormatted implements Formatted {
         this.color = col;
     }
 
+    //@checkstyle NoJavadocForOverriddenMethodsCheck (6 lines)
     /**
      * Gets the formatted log event using ANSI color codes.
      * @return Text of a log event, colored with ANSI color codes
