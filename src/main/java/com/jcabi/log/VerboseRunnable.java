@@ -133,7 +133,7 @@ public final class VerboseRunnable implements Runnable {
                     } catch (final InterruptedException ex) {
                         Thread.currentThread().interrupt();
                         throw new IllegalStateException(ex);
-                    // @checkstyle IllegalCatch (1 line)
+                        // @checkstyle IllegalCatch (1 line)
                     } catch (final Exception ex) {
                         throw new IllegalStateException(ex);
                     }
@@ -196,14 +196,14 @@ public final class VerboseRunnable implements Runnable {
     public void run() {
         try {
             this.origin.run();
-        // @checkstyle IllegalCatch (1 line)
+            // @checkstyle IllegalCatch (1 line)
         } catch (final RuntimeException ex) {
             if (this.rethrow) {
                 Logger.warn(this, "escalated exception: %s", this.tail(ex));
                 throw ex;
             }
             Logger.warn(this, "swallowed exception: %s", this.tail(ex));
-        // @checkstyle IllegalCatch (1 line)
+            // @checkstyle IllegalCatch (1 line)
         } catch (final Error error) {
             if (this.rethrow) {
                 Logger.error(this, "escalated error: %s", this.tail(error));
