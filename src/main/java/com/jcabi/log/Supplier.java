@@ -36,8 +36,8 @@ package com.jcabi.log;
  * </b>
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
- * @since 0.18
  * @param <T> The type of results supplied by this supplier
+ * @since 0.18
  */
 public interface Supplier<T> {
 
