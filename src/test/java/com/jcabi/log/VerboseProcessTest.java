@@ -308,6 +308,7 @@ public final class VerboseProcessTest {
         Mockito.doReturn(stdout).when(prc).getInputStream();
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
+        // @checkstyle LocalFinalVariableNameCheck (1 line)
         final VerboseProcess verboseProcess = new VerboseProcess(
             prc,
             Level.FINEST,
@@ -367,6 +368,7 @@ public final class VerboseProcessTest {
      */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final InputStream inputStream = new InfiniteInputStream('i');
         final InputStream errorStream = new InfiniteInputStream('e');
         final Process prc = Mockito.mock(Process.class);
@@ -383,6 +385,7 @@ public final class VerboseProcessTest {
                 }
             }
         ).when(prc).destroy();
+        // @checkstyle LocalFinalVariableNameCheck (1 line)
         final VerboseProcess verboseProcess = new VerboseProcess(
             prc,
             Level.FINEST,

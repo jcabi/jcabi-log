@@ -50,6 +50,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void debugIsDisabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "nodebug";
         final String appenderName = "nodebugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -76,6 +77,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void debugIsEnabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "debugen";
         final String appenderName = "debugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -104,6 +106,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void traceIsDisabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "notrace";
         final String appenderName = "notraceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -130,6 +133,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void traceIsEnabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "enabledtrace";
         final String appenderName = "traceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -158,6 +162,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void warnIsDisabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "nowarn";
         final String appenderName = "nowarnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -184,6 +189,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void warnIsEnabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "enwarn";
         final String appenderName = "warnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -212,6 +218,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void infoIsDisabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "noinfo";
         final String appenderName = "noinfoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -238,6 +245,7 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void infoIsEnabled() throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final String loggerName = "withinfo";
         final String appenderName = "infoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
