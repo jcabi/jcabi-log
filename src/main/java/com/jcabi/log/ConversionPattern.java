@@ -71,7 +71,7 @@ public class ConversionPattern {
      * Generates the conversion pattern.
      * @return Conversion pattern
      */
-    public String generate() {
+    public final String generate() {
         final Matcher matcher = ConversionPattern.METAS.matcher(
             this.pattern
         );

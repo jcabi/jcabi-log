@@ -63,7 +63,7 @@ public class ColorfullyFormatted implements Formatted {
      * @return Text of a log event, colored with ANSI color codes
      */
     @Override
-    public String format() {
+    public final String format() {
         return this.basic.replaceAll(
             new ControlSequenceIndicatorFormatted("%s\\?m").format(),
             String.format(

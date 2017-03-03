@@ -57,7 +57,7 @@ public class DullyFormatted implements Formatted {
      *  if there is markup that tells to color it.
      */
     @Override
-    public String format() {
+    public final String format() {
         return this.basic.replaceAll(
             new ControlSequenceIndicatorFormatted("%s([0-9]*|\\?)m").format(),
             ""
