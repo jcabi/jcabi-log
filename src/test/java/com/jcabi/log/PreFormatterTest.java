@@ -38,6 +38,7 @@ import org.junit.Test;
  * @author Marina Kosenko (marina.kosenko@gmail.com)
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.1.2
  */
 public final class PreFormatterTest {
 

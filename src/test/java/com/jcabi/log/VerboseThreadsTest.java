@@ -39,6 +39,7 @@ import org.junit.Test;
  * Test case for {@link VerboseThreads}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.1.2
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreadsTest {

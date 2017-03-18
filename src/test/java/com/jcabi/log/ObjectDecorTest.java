@@ -41,6 +41,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Marina Kosenko (marina.kosenko@gmail.com)
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.1.2
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings("PMD.TestClassWithoutTestCases")

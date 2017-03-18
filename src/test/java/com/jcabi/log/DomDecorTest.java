@@ -42,6 +42,7 @@ import org.w3c.dom.Document;
  * Test case for {@link DomDecor}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.1.2
  */
 public final class DomDecorTest {
 

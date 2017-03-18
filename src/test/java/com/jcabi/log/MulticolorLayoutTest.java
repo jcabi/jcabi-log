@@ -41,6 +41,7 @@ import org.mockito.Mockito;
  * Test case for {@link MulticolorLayout}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.1.2
  */
 public final class MulticolorLayoutTest {
 

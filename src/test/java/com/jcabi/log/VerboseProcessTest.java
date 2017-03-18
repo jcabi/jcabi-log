@@ -61,6 +61,7 @@ import org.mockito.stubbing.Answer;
  * Test case for {@link VerboseProcess}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.5
  * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)
  * @todo #18 Locale/encoding problem in two test methods here. I'm not

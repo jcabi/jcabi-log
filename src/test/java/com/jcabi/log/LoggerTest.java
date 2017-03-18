@@ -42,6 +42,7 @@ import org.junit.Test;
  * Test case for {@link Logger}.
  * @author Yegor Bugayenko (yegor@teamed.io)
  * @version $Id$
+ * @since 0.1.2
  */
 public final class LoggerTest {
 
