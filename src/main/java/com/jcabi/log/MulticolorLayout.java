@@ -124,6 +124,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      *
      * @param cols JavaScript like map of color names
      * @since 0.9
+     * @checkstyle MethodBodyCommentsCheck (14 lines)
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setColors(final String cols) {
