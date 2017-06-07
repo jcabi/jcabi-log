@@ -52,7 +52,7 @@ import lombok.ToString;
  *
  * <p>This class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.16
  * @see VerboseThreads

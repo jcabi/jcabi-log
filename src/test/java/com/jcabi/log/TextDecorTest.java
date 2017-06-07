@@ -43,7 +43,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Test case for {@link TextDecor}.
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 @RunWith(Parameterized.class)

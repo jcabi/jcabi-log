@@ -43,7 +43,7 @@ import lombok.ToString;
  *   Logger.debug("Long input '%[text]s' provided", input);
  * }</pre>
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1.5
  */

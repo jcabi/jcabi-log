@@ -41,7 +41,7 @@ import org.mockito.Mockito;
 /**
  * Abstract test case for all decors in the package.
  * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public abstract class AbstractDecorTest {

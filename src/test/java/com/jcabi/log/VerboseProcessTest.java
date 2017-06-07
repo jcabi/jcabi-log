@@ -59,7 +59,7 @@ import org.mockito.stubbing.Answer;
 
 /**
  * Test case for {@link VerboseProcess}.
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)

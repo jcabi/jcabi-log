@@ -42,7 +42,7 @@ import lombok.ToString;
 /**
  * Format internal structure of an object.
  * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.1
  */
@@ -123,7 +123,7 @@ final class ObjectDecor implements Formattable {
     /**
      * {@link PrivilegedAction} for obtaining object contents.
      * @author Marina Kosenko (marina.kosenko@gmail.com)
-     * @author Yegor Bugayenko (yegor@teamed.io)
+     * @author Yegor Bugayenko (yegor256@gmail.com)
      * @version $Id$
      */
     @Immutable

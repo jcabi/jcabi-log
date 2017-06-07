@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * Test case for {@link DecorsManager}.
  * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public final class DecorsManagerTest {

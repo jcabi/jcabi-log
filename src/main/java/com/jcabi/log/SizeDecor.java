@@ -40,7 +40,7 @@ import lombok.ToString;
 /**
  * Size decorator.
  * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @author Carlos Miranda (miranda.cma@gmail.com)
  * @version $Id$
  * @since 0.1
