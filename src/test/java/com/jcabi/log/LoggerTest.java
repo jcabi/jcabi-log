@@ -32,6 +32,7 @@ package com.jcabi.log;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import org.apache.log4j.LogManager;
 import org.hamcrest.MatcherAssert;
@@ -129,10 +130,12 @@ public final class LoggerTest {
 
     /**
      * Logger can correctly check the current logging level.
+     * @throws Exception If fails
      */
     @Test
-    public void checksLogLevel() {
+    public void checksLogLevel() throws Exception {
         LogManager.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
+        TimeUnit.MILLISECONDS.sleep(1L);
         MatcherAssert.assertThat(
             Logger.isEnabled(Level.INFO, LogManager.getRootLogger()),
             Matchers.is(true)
