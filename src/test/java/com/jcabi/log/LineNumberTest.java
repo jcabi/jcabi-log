@@ -30,6 +30,7 @@
 package com.jcabi.log;
 
 import java.io.StringWriter;
+import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.PatternLayout;
@@ -70,10 +71,11 @@ public final class LineNumberTest {
         root.addAppender(appender);
         try {
             Logger.info(this, "Test");
+            TimeUnit.MILLISECONDS.sleep(1L);
             MatcherAssert.assertThat(
                 writer.toString(),
                 Matchers.containsString(
-                    "com.jcabi.log.LineNumberTest:72"
+                    "com.jcabi.log.LineNumberTest:73"
                 )
             );
         } finally {
