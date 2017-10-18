@@ -43,6 +43,7 @@ import org.junit.Test;
  * Test case for {@link VerboseRunnable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.1.4
  */
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
 public final class VerboseRunnableTest {
@@ -159,6 +160,7 @@ public final class VerboseRunnableTest {
     public void preservesInterruptedStatus() throws Exception {
         final ScheduledExecutorService svc =
             Executors.newSingleThreadScheduledExecutor();
+        // @checkstyle DiamondOperatorCheck (1 line)
         final AtomicReference<Thread> thread = new AtomicReference<Thread>();
         final AtomicInteger runs = new AtomicInteger();
         svc.scheduleWithFixedDelay(

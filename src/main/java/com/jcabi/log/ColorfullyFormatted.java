@@ -35,7 +35,7 @@ package com.jcabi.log;
  * @version $Id$
  * @since 0.18
  */
-class ColorfullyFormatted implements Formatted {
+public class ColorfullyFormatted implements Formatted {
 
     /**
      * The basic information to be formatted with colors.
@@ -57,12 +57,13 @@ class ColorfullyFormatted implements Formatted {
         this.color = col;
     }
 
+    //@checkstyle NoJavadocForOverriddenMethodsCheck (6 lines)
     /**
      * Gets the formatted log event using ANSI color codes.
      * @return Text of a log event, colored with ANSI color codes
      */
     @Override
-    public String format() {
+    public final String format() {
         return this.basic.replaceAll(
             new ControlSequenceIndicatorFormatted("%s\\?m").format(),
             String.format(

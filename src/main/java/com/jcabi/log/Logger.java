@@ -398,8 +398,8 @@ public final class Logger {
      * @param level The level of logging
      * @param source The source of the logging operation
      * @return Output stream directly pointed to the logging facility
-     * @since 0.8
      * @see <a href="http://stackoverflow.com/questions/17258325">some discussion</a>
+     * @since 0.8
      * @checkstyle MagicNumberCheck (20 lines)
      */
     public static OutputStream stream(final Level level, final Object source) {

@@ -71,6 +71,7 @@ final class ListDecor implements Formattable {
         }
     }
 
+    // @checkstyle NoJavadocForOverriddenMethodsCheck (6 lines)
     /**
      * {@inheritDoc}
      * @checkstyle ParameterNumber (4 lines)

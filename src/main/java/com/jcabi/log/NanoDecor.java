@@ -73,10 +73,7 @@ final class NanoDecor implements Formattable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (3 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
@@ -108,7 +105,7 @@ final class NanoDecor implements Formattable {
      * @return The text
      */
     private String toText(final int precision) {
-        double number;
+        final double number;
         final String title;
         // @checkstyle MagicNumber (15 lines)
         if (this.nano < 1000L) {

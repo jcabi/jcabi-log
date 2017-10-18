@@ -39,7 +39,7 @@ import java.util.Map;
  * @version $Id$
  * @since 0.18
  */
-class ParseableInformation {
+public class ParseableInformation {
 
     /**
      * Information content to be parsed.
@@ -58,6 +58,7 @@ class ParseableInformation {
     /**
      * Parse the information.
      * @return A {@link Map} with a key,value pair os strings
+     * @checkstyle DiamondOperatorCheck (4 lines)
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> information() {

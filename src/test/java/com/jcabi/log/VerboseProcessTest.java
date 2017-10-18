@@ -61,6 +61,7 @@ import org.mockito.stubbing.Answer;
  * Test case for {@link VerboseProcess}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.5
  * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
@@ -308,6 +309,7 @@ public final class VerboseProcessTest {
         Mockito.doReturn(stdout).when(prc).getInputStream();
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
+        // @checkstyle LocalFinalVariableNameCheck (1 line)
         final VerboseProcess verboseProcess = new VerboseProcess(
             prc,
             Level.FINEST,
@@ -367,6 +369,7 @@ public final class VerboseProcessTest {
      */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
+        // @checkstyle LocalFinalVariableNameCheck (2 lines)
         final InputStream inputStream = new InfiniteInputStream('i');
         final InputStream errorStream = new InfiniteInputStream('e');
         final Process prc = Mockito.mock(Process.class);
@@ -383,6 +386,7 @@ public final class VerboseProcessTest {
                 }
             }
         ).when(prc).destroy();
+        // @checkstyle LocalFinalVariableNameCheck (1 line)
         final VerboseProcess verboseProcess = new VerboseProcess(
             prc,
             Level.FINEST,
@@ -425,7 +429,7 @@ public final class VerboseProcessTest {
         MatcherAssert.assertThat(
             writer.toString(),
             Matchers.not(Matchers
-                    .containsString("Error reading from process stream")
+                .containsString("Error reading from process stream")
             )
         );
     }
@@ -457,7 +461,7 @@ public final class VerboseProcessTest {
          * character and end of line.
          * @param character Character to return in the stream
          */
-        public InfiniteInputStream(final char character) {
+        InfiniteInputStream(final char character) {
             super();
             this.chr = character;
         }
@@ -507,7 +511,7 @@ public final class VerboseProcessTest {
          * <p>The messages from its monitor threads will be filtered in.
          * @param prc Process
          */
-        public VrbPrcMonitorFilter(final VerboseProcess prc) {
+        VrbPrcMonitorFilter(final VerboseProcess prc) {
             super();
             this.hash = prc.hashCode();
         }
@@ -517,7 +521,7 @@ public final class VerboseProcessTest {
             final String thread = event.getThreadName();
             final int decision;
             if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START
-                    + this.hash
+                + this.hash
             )) {
                 decision = Filter.ACCEPT;
             } else {

@@ -47,7 +47,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(of = "size")
-final class SizeDecor implements Formattable {
+public final class SizeDecor implements Formattable {
 
     /**
      * Highest power supported by this SizeDecor.
@@ -56,6 +56,7 @@ final class SizeDecor implements Formattable {
 
     /**
      * Map of prefixes for powers of 1024.
+     * @checkstyle DiamondOperatorCheck (3 lines)
      */
     private static final ConcurrentMap<Integer, String> SUFFIXES =
         new ConcurrentHashMap<Integer, String>();
@@ -84,10 +85,7 @@ final class SizeDecor implements Formattable {
         this.size = sze;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (3 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * @version $Id$
  * @since 0.18
  */
-class ConversionPattern {
+public class ConversionPattern {
 
     /**
      * Regular expression for all matches.
@@ -71,7 +71,7 @@ class ConversionPattern {
      * Generates the conversion pattern.
      * @return Conversion pattern
      */
-    public String generate() {
+    public final String generate() {
         final Matcher matcher = ConversionPattern.METAS.matcher(
             this.pattern
         );
@@ -92,11 +92,12 @@ class ConversionPattern {
     /**
      * Formats a string with a Control Sequence Information.
      * @return Formatted string
+     * @checkstyle NonStaticMethodCheck (6 lines)
      */
     private String csi() {
         return new ControlSequenceIndicatorFormatted(
-                 "%s"
-             ).format();
+            "%s"
+        ).format();
     }
 
 }

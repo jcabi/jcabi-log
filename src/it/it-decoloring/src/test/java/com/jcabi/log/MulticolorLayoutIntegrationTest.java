@@ -44,6 +44,7 @@ import org.mockito.Mockito;
  * by multiple threads at once)
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
+ * @since 0.17.1
  */
 public final class MulticolorLayoutIntegrationTest {
     /**
@@ -150,10 +151,10 @@ public final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
-                    StringEscapeUtils.escapeJava(layout.format(event)),
-                    Matchers.equalTo(
-                        "[DEBUG] no color text"
-                    )
+                StringEscapeUtils.escapeJava(layout.format(event)),
+                Matchers.equalTo(
+                    "[DEBUG] no color text"
+                )
             );
         } finally {
             System.getProperties().setProperty(
@@ -185,10 +186,10 @@ public final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
-                    StringEscapeUtils.escapeJava(layout.format(event)),
-                    Matchers.equalTo(
-                        "[DEBUG] test"
-                    )
+                StringEscapeUtils.escapeJava(layout.format(event)),
+                Matchers.equalTo(
+                    "[DEBUG] test"
+                )
             );
         } finally {
             System.getProperties().setProperty(

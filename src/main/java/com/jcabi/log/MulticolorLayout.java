@@ -112,8 +112,8 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     public void setConversionPattern(final String pattern) {
         this.base = pattern;
         super.setConversionPattern(new ConversionPattern(
-                this.base,
-                this.colors
+            this.base,
+            this.colors
             ).generate()
         );
     }
@@ -124,6 +124,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      *
      * @param cols JavaScript like map of color names
      * @since 0.9
+     * @checkstyle MethodBodyCommentsCheck (14 lines)
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setColors(final String cols) {
@@ -174,6 +175,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Generate a dull {@code Formatted}.
      * @param event Event to be formatted
      * @return A {@link Formatted} to format the event
+     * @checkstyle NonStaticMethodCheck (4 lines)
      */
     private Formatted dullFormatting(final LoggingEvent event) {
         return new DullyFormatted(super.format(event));
@@ -194,6 +196,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Level map.
      * @return Map of levels
+     * @checkstyle DiamondOperatorCheck (4 lines)
      */
     private static ConcurrentMap<String, String> levelMap() {
         final ConcurrentMap<String, String> map =
@@ -210,6 +213,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Should the logged text be colored or not.
      * @return True if the coloring is enabled, or false otherwise.
+     * @checkstyle NonStaticMethodCheck (6 lines)
      */
     private boolean isColoringEnabled() {
         return !"false".equals(

@@ -53,6 +53,7 @@ final class DecorsManager {
 
     /**
      * Storage of all found decors.
+     * @checkstyle DiamondOperatorCheck (4 lines)
      * @checkstyle LineLength (2 lines)
      */
     private static final ConcurrentMap<String, Class<? extends Formattable>> DECORS =

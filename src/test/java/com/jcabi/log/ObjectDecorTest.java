@@ -41,6 +41,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Marina Kosenko (marina.kosenko@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.1.2
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings("PMD.TestClassWithoutTestCases")
@@ -109,7 +110,7 @@ public final class ObjectDecorTest extends AbstractDecorTest {
          * @param number The number
          * @param nme The name
          */
-        public Foo(final int number, final String nme) {
+        Foo(final int number, final String nme) {
             this.num = number;
             this.name = nme;
         }

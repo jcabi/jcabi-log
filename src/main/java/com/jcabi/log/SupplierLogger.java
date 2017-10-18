@@ -98,6 +98,7 @@ final class SupplierLogger {
      * Return the results of the given suppliers.
      * @param args Suppliers
      * @return Object array
+     * @checkstyle NonStaticMethodCheck (8 lines)
      */
     private Object[] supplied(final Supplier<?>... args) {
         final Object[] supplied = new Object[args.length];

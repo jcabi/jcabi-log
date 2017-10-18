@@ -72,10 +72,7 @@ final class MsDecor implements Formattable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (3 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
@@ -108,8 +105,8 @@ final class MsDecor implements Formattable {
      * @checkstyle MagicNumber (50 lines)
      */
     private String toText(final int precision) {
-        double number;
-        String title;
+        final double number;
+        final String title;
         if (this.millis < 1000L) {
             number = this.millis;
             title = "ms";

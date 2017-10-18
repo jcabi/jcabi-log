@@ -42,7 +42,7 @@ import org.apache.log4j.Level;
  * @version $Id$
  * @since 0.18
  */
-class ParseableLevelInformation  {
+public class ParseableLevelInformation  {
 
     /**
      * Information content to be parsed.
@@ -60,6 +60,7 @@ class ParseableLevelInformation  {
     /**
      * Parse the level information.
      * @return A {@link Map} with key,value pair of strings
+     * @checkstyle DiamondOperatorCheck (7 lines)
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> information() {

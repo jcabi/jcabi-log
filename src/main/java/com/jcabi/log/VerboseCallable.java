@@ -54,6 +54,7 @@ import lombok.ToString;
  *
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @param <T> the result type of method call
  * @since 0.16
  * @see VerboseThreads
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
@@ -164,6 +165,7 @@ public final class VerboseCallable<T> implements Callable<T> {
         this.verbose = vrbs;
     }
 
+    // @checkstyle NoJavadocForOverriddenMethodsCheck (10 lines)
     /**
      * {@inheritDoc}
      *

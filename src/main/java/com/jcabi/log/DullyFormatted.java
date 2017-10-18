@@ -35,7 +35,7 @@ package com.jcabi.log;
  * @version $Id$
  * @since 0.18
  */
-class DullyFormatted implements Formatted {
+public class DullyFormatted implements Formatted {
 
     /**
      * String to be formatted.
@@ -50,13 +50,14 @@ class DullyFormatted implements Formatted {
         this.basic = bas;
     }
 
+    // @checkstyle NoJavadocForOverriddenMethodsCheck (7 lines)
     /**
      * Gets formatted log event without using ANSI color codes.
      * @return Text of a log event, not colored with ANSI color codes even
      *  if there is markup that tells to color it.
      */
     @Override
-    public String format() {
+    public final String format() {
         return this.basic.replaceAll(
             new ControlSequenceIndicatorFormatted("%s([0-9]*|\\?)m").format(),
             ""

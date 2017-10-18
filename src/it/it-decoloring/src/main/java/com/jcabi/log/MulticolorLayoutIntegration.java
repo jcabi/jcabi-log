@@ -36,6 +36,7 @@ package com.jcabi.log;
  * by multiple threads at once)
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
+ * @since 0.17.1
  */
 public final class MulticolorLayoutIntegration {
 

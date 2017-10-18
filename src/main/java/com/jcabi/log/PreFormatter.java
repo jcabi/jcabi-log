@@ -48,7 +48,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(of = { "format", "arguments" })
-final class PreFormatter {
+public final class PreFormatter {
 
     /**
      * Pattern used for matching format string arguments.
