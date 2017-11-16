@@ -11,7 +11,7 @@
 
 [![jpeek report](http://i.jpeek.org/com.jcabi/jcabi-log/badge.svg)](http://i.jpeek.org/com.jcabi/jcabi-log/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.jcabi/jcabi-log/badge.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-log)
+[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-log.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-log)
 [![Dependencies](https://www.versioneye.com/user/projects/561ac156a193340f280010de/badge.svg?style=flat)](https://www.versioneye.com/user/projects/561ac156a193340f280010de)
 
 More details are here: [log.jcabi.com](http://log.jcabi.com/index.html)
