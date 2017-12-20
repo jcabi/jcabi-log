@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2016, jcabi.com
+ * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  *   &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
  *
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @see <a href="http://www.jcabi.com/jcabi-log">project website</a>
  */

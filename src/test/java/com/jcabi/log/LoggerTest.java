@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2016, jcabi.com
+ * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,7 @@ package com.jcabi.log;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import org.apache.log4j.LogManager;
 import org.hamcrest.MatcherAssert;
@@ -40,7 +41,7 @@ import org.junit.Test;
 
 /**
  * Test case for {@link Logger}.
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public final class LoggerTest {
@@ -129,10 +130,12 @@ public final class LoggerTest {
 
     /**
      * Logger can correctly check the current logging level.
+     * @throws Exception If fails
      */
     @Test
-    public void checksLogLevel() {
+    public void checksLogLevel() throws Exception {
         LogManager.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
+        TimeUnit.MILLISECONDS.sleep(1L);
         MatcherAssert.assertThat(
             Logger.isEnabled(Level.INFO, LogManager.getRootLogger()),
             Matchers.is(true)

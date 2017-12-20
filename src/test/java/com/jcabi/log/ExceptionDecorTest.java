@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2016, jcabi.com
+ * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ import org.mockito.hamcrest.MockitoHamcrest;
 
 /**
  * Test case for {@link ExceptionDecor}.
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public final class ExceptionDecorTest {

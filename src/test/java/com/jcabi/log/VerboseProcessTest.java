@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2016, jcabi.com
+ * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,8 +62,8 @@ import org.mockito.stubbing.Answer;
 
 /**
  * Test case for {@link VerboseProcess}.
- * @author Yegor Bugayenko (yegor@teamed.io)
- * @version $Id: fe45863e43fce64be1e904eb401794c8cb60e543 $
+ * @author Yegor Bugayenko (yegor256@gmail.com)
+ * @version $Id$
  * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)
  * @todo #18 Locale/encoding problem in two test methods here. I'm not

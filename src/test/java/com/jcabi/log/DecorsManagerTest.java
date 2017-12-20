@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012-2016, jcabi.com
+ * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * Test case for {@link DecorsManager}.
  * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor@teamed.io)
+ * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  */
 public final class DecorsManagerTest {
