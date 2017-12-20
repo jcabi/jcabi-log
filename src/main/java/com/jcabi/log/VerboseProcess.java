@@ -403,22 +403,50 @@ public final class VerboseProcess implements Closeable {
      * Stream monitor.
      */
     private static final class Monitor implements Callable<Void> {
+
+        /**
+         * Maximum number of log lines for a stack trace. Set to 1000
+         * to avoid storing too many lines in memory before flushing.
+         */
+        private static final int MAX_STACK_LENGTH = 1000;
+
+        /**
+         * Format string for log statements.
+         */
+        private static final String LOG_FORMAT = ">> %s";
+
+        /**
+         * Empty String.
+         */
+        private static final String EMPTY_STRING = "";
+
+        /**
+         * Newline string.
+         */
+        private static final String NEW_LINE = System.getProperty(
+            "line.separator"
+        );
+
         /**
          * Stream to read.
          */
         private final transient InputStream input;
+
         /**
          * Latch to count down when done.
          */
         private final transient CountDownLatch done;
+
         /**
          * Buffer to save output.
          */
         private final transient OutputStream output;
+
         /**
          * Log level.
          */
         private final transient Level level;
+
         /**
          * Ctor.
          * @param inp Stream to monitor
@@ -434,12 +462,12 @@ public final class VerboseProcess implements Closeable {
             this.output = out;
             this.level = lvl;
         }
+
         @Override
         public Void call() throws Exception {
             final BufferedReader reader = new BufferedReader(
                 Channels.newReader(
-                    Channels.newChannel(this.input),
-                    VerboseProcess.UTF_8
+                    Channels.newChannel(this.input), VerboseProcess.UTF_8
                 )
             );
             try {
@@ -447,25 +475,7 @@ public final class VerboseProcess implements Closeable {
                     new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
                 );
                 try {
-                    while (true) {
-                        if (Thread.interrupted()) {
-                            Logger.debug(
-                                VerboseProcess.class,
-                                "explicitly interrupting read from buffer"
-                            );
-                            break;
-                        }
-                        final String line = reader.readLine();
-                        if (line == null) {
-                            break;
-                        }
-                        Logger.log(
-                            this.level, VerboseProcess.class,
-                            ">> %s", line
-                        );
-                        writer.write(line);
-                        writer.newLine();
-                    }
+                    this.logFromReader(reader, writer);
                 } catch (final ClosedByInterruptException ex) {
                     Thread.interrupted();
                     Logger.debug(
@@ -486,6 +496,90 @@ public final class VerboseProcess implements Closeable {
                 VerboseProcess.close(reader);
             }
             return null;
+        }
+
+        /**
+         * Logs supplied BufferedReader to Logger and supplied Writer.
+         * @param reader Reader to use
+         * @param writer Writer to use
+         * @throws IOException writer could throw this
+         */
+        private void logFromReader(final BufferedReader reader,
+                final BufferedWriter writer) throws IOException {
+            final StringBuilder builder = new StringBuilder();
+            String previous = EMPTY_STRING;
+            int count = 0;
+            while (true) {
+                if (Thread.interrupted()) {
+                    Logger.debug(
+                        VerboseProcess.class,
+                        "explicitly interrupting read from buffer"
+                    );
+                    break;
+                }
+                if (!previous.isEmpty()) {
+                    appendLine(previous, builder);
+                    previous = EMPTY_STRING;
+                }
+                final String line = reader.readLine();
+                if (line == null) {
+                    logAndClear(writer, this.level, builder);
+                    break;
+                }
+                if (shouldAppend(line)
+                        && count < MAX_STACK_LENGTH) {
+                    appendLine(line, builder);
+                    ++count;
+                } else {
+                    if (builder.length() > 0) {
+                        logAndClear(writer, this.level, builder);
+                    }
+                    count = 1;
+                    previous = line;
+                }
+            }
+        }
+
+        /**
+         * Appends a line and a newline character to the builder.
+         * @param line String to append
+         * @param builder StringBuilder with log statement
+         */
+        private static void appendLine(final String line,
+                final StringBuilder builder) {
+            builder.append(line);
+            builder.append(NEW_LINE);
+        }
+
+        /**
+         * Logs StringBuilder to Logger and supplied Writer then clears out
+         * the builder.
+         * @param writer Writer to use
+         * @param level Level to log at
+         * @param builder StringBuilder with log statement
+         * @throws IOException writer could throw this
+         */
+        private static void logAndClear(final BufferedWriter writer,
+                final Level level, final StringBuilder builder)
+                throws IOException {
+            if (builder.length() > 0) {
+                final String text = builder.toString();
+                Logger.log(level, VerboseProcess.class, LOG_FORMAT, text);
+                writer.write(text);
+            }
+            builder.setLength(0);
+        }
+
+        /**
+         * Checks if line is part of a stack trace and should be appended.
+         * @param input String to check
+         * @return Result, true or false
+         */
+        private static boolean shouldAppend(final String input) {
+            final String trimmed = input.trim();
+            return trimmed.startsWith("at ")
+                || trimmed.startsWith("Caused by")
+                || trimmed.startsWith("... ");
         }
     }
 

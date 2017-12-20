@@ -32,6 +32,7 @@ package com.jcabi.log;
 import org.apache.log4j.Level;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -42,6 +43,18 @@ import org.junit.Test;
  */
 @SuppressWarnings("PMD.MoreThanOneLogger")
 public final class SupplierLoggerTest {
+
+    /**
+     * Logs before method to avoid timing issue where loggers were
+     * created "during the default configuration phase of the underlying
+     * logging system" and failing tests in Travis CI.
+     */
+    @BeforeClass
+    public static void init() {
+        final org.apache.log4j.Logger logger =
+                org.apache.log4j.Logger.getRootLogger();
+        logger.info("Logging here to avoid timing issue with Travis CI");
+    }
 
     /**
      * SupplierLogger can tell if debug is disabled and the message is not

@@ -36,6 +36,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
@@ -43,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 import org.apache.log4j.spi.Filter;
@@ -68,7 +71,7 @@ import org.mockito.stubbing.Answer;
  *  machines, while run perfectly on others. They also fail when being
  *  executed from IntelliJ.
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.ExcessiveImports" })
 public final class VerboseProcessTest {
 
     /**
@@ -359,6 +362,79 @@ public final class VerboseProcessTest {
     }
 
     /**
+     * VerboseProcess can run a java process which will throw a stack trace and
+     * makes sure it will group the stack trace.
+     */
+    @Test
+    public void logCompleteStackTrace() {
+        final org.apache.log4j.Logger logger =
+                org.apache.log4j.Logger.getRootLogger();
+        final VerboseProcessTest.TestAppender appender =
+                new VerboseProcessTest.TestAppender();
+        logger.addAppender(appender);
+        final String[] commands = {
+            retrieveJavaExecLocation(), "-cp",
+            System.getProperty("java.class.path"),
+            "com.jcabi.log.VerboseProcessExample",
+        };
+        final ProcessBuilder builder = new ProcessBuilder(commands);
+        final VerboseProcess process = new VerboseProcess(
+            builder, Level.INFO, Level.SEVERE
+        );
+        try {
+            process.stdout();
+            Assert.fail();
+        } catch (final IllegalArgumentException ex) {
+            MatcherAssert.assertThat(
+                ex.getMessage(),
+                Matchers.allOf(
+                    Matchers.containsString(VerboseProcessExample.SYSOUT_1),
+                    Matchers.containsString(VerboseProcessExample.SYSOUT_2)
+                )
+            );
+        } finally {
+            logger.removeAppender(appender);
+            process.close();
+        }
+        verifyLogs(appender);
+    }
+
+    /**
+     * Gets the location of Java, whether on Linux of Windows.
+     * @return String with Java location
+     */
+    private static String retrieveJavaExecLocation() {
+        final String rootpath = System.getProperty("java.home");
+        final String finalpath;
+        if (SystemUtils.IS_OS_WINDOWS) {
+            finalpath = String.format("%s%s", rootpath, "\\bin\\java.exe");
+        } else {
+            finalpath = String.format("%s%s", rootpath, "/bin/java");
+        }
+        if (new File(finalpath).exists()) {
+            return finalpath;
+        }
+        throw new IllegalStateException("Unable to get the Java Path.");
+    }
+
+    /**
+     * Checks appender to make sure expected log statements are present.
+     * @param appender Log appender
+     */
+    private static void verifyLogs(
+            final VerboseProcessTest.TestAppender appender) {
+        boolean complete = false;
+        for (final LoggingEvent event : appender.listLogs()) {
+            final String message = (String) event.getMessage();
+            if (message.contains(VerboseProcessExample.THROWN_ERR_MSG)) {
+                complete =
+                        message.contains(VerboseProcessExample.CAUGHT_ERR_MSG);
+            }
+        }
+        Assert.assertTrue(complete);
+    }
+
+    /**
      * VerboseProcess can terminate its monitors and underlying Process if
      * closed after specified time since real usage.
      * @param delay Time in milliseconds between usage of vrbcPrc starts and
@@ -525,5 +601,44 @@ public final class VerboseProcessTest {
             }
             return decision;
         }
+    }
+
+    /**
+     * Logger appender that compiles a list of all LoggingEvents.
+     */
+    private class TestAppender extends AppenderSkeleton {
+        /**
+         * List of logging events.
+         */
+        private final transient List<LoggingEvent> logs =
+                new ArrayList<LoggingEvent>(10);
+
+        /**
+         * Provides all captured logging events.
+         * @return Copy of log list
+         */
+        public final List<LoggingEvent> listLogs() {
+            return new ArrayList<LoggingEvent>(this.logs);
+        }
+
+        /**
+         * I couldn't get PMD to stop triggering a `UncommentedEmptyMethodBody`
+         * error. I'm hoping a return statement makes it happy.
+         */
+        @Override
+        public final void close() {
+            return;
+        }
+
+        @Override
+        public final boolean requiresLayout() {
+            return false;
+        }
+
+        @Override
+        protected final void append(final LoggingEvent event) {
+            this.logs.add(event);
+        }
+
     }
 }
