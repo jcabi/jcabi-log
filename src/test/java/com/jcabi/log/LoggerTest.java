@@ -154,4 +154,16 @@ public final class LoggerTest {
         Logger.info("com.jcabi.log...why.not", "hello, %s!", "world!");
     }
 
+    /**
+     * Finds args by position numbers.
+     */
+    @Test
+    public void findsArgsByPositions() {
+        final String val = "xyz";
+        MatcherAssert.assertThat(
+            Logger.format("first: %s, first again: %1$s", val),
+            Matchers.endsWith(String.format(": %s, first again: %1$s", val))
+        );
+    }
+
 }

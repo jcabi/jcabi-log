@@ -55,7 +55,7 @@ final class PreFormatter {
      */
     private static final Pattern PATTERN = Pattern.compile(
         // @checkstyle LineLength (1 line)
-        "%(?:\\d+\\$)?(\\[([A-Za-z\\-\\.0-9]+)\\])?[\\+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
+        "%(\\d+\\$)?(\\[([A-Za-z\\-\\.0-9]+)\\])?[\\+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
     );
 
     /**
@@ -103,32 +103,36 @@ final class PreFormatter {
      * Process the data provided.
      * @param fmt The formatting string
      * @param args The list of arguments
+     * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
-    private void process(final String fmt, final Object... args) {
+    @SuppressWarnings("PMD.ConfusingTernary")
+    private void process(final CharSequence fmt, final Object... args) {
         this.arguments = new CopyOnWriteArrayList<Object>();
-        final StringBuffer buf = new StringBuffer();
-        final Matcher matcher = PATTERN.matcher(fmt);
+        final StringBuffer buf = new StringBuffer(fmt.length());
+        final Matcher matcher = PreFormatter.PATTERN.matcher(fmt);
         int pos = 0;
         while (matcher.find()) {
             final String group = matcher.group();
-            if (NO_ARG_SPECIFIERS.contains(group)) {
+            if (PreFormatter.NO_ARG_SPECIFIERS.contains(group)) {
                 matcher.appendReplacement(
-                    buf,
-                    Matcher.quoteReplacement(group)
+                    buf, Matcher.quoteReplacement(group)
                 );
             } else {
-                final String decor = matcher.group(2);
-                if (decor == null) {
+                final String decor = matcher.group(3);
+                if (matcher.group(1) != null) {
                     matcher.appendReplacement(
-                        buf,
-                        Matcher.quoteReplacement(group)
+                        buf, Matcher.quoteReplacement(group)
+                    );
+                } else if (decor == null) {
+                    matcher.appendReplacement(
+                        buf, Matcher.quoteReplacement(group)
                     );
                     this.arguments.add(args[pos]);
                 } else {
                     matcher.appendReplacement(
                         buf,
                         Matcher.quoteReplacement(
-                            group.replace(matcher.group(1), "")
+                            group.replace(matcher.group(2), "")
                         )
                     );
                     try {
