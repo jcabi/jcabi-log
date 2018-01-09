@@ -35,7 +35,9 @@ package com.jcabi.log;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 0.18
+ * @checkstyle HideUtilityClassConstructorCheck (500 lines)
  */
+@SuppressWarnings({ "PMD.ProhibitPublicStaticMethods", "PMD.UseUtilityClass" })
 final class SupplierLogger {
 
     /**
@@ -45,10 +47,10 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public void trace(
+    public static void trace(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isTraceEnabled(source)) {
-            Logger.traceForced(source, msg, this.supplied(args));
+            Logger.traceForced(source, msg, SupplierLogger.supplied(args));
         }
     }
 
@@ -59,10 +61,10 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public void debug(
+    public static void debug(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isDebugEnabled(source)) {
-            Logger.debugForced(source, msg, this.supplied(args));
+            Logger.debugForced(source, msg, SupplierLogger.supplied(args));
         }
     }
 
@@ -73,10 +75,10 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public void info(
+    public static void info(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isInfoEnabled(source)) {
-            Logger.infoForced(source, msg, this.supplied(args));
+            Logger.infoForced(source, msg, SupplierLogger.supplied(args));
         }
     }
 
@@ -87,10 +89,10 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public void warn(
+    public static void warn(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isWarnEnabled(source)) {
-            Logger.warnForced(source, msg, this.supplied(args));
+            Logger.warnForced(source, msg, SupplierLogger.supplied(args));
         }
     }
 
@@ -99,7 +101,7 @@ final class SupplierLogger {
      * @param args Suppliers
      * @return Object array
      */
-    private Object[] supplied(final Supplier<?>... args) {
+    private static Object[] supplied(final Supplier<?>... args) {
         final Object[] supplied = new Object[args.length];
         for (int idx = 0; idx < supplied.length; ++idx) {
             supplied[idx] = args[idx].get();

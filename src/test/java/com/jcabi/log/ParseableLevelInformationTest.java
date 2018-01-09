@@ -31,6 +31,7 @@ package com.jcabi.log;
 
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -53,8 +54,8 @@ public class ParseableLevelInformationTest {
         final Map<String, String> parsed = new ParseableLevelInformation(
             "INFO:2;10,WARN:2;32"
         ).information();
-        Assert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
-        Assert.assertThat(parsed, Matchers.hasEntry("WARN", "2;32"));
+        MatcherAssert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
+        MatcherAssert.assertThat(parsed, Matchers.hasEntry("WARN", "2;32"));
     }
 
     /**
@@ -68,7 +69,7 @@ public class ParseableLevelInformationTest {
             new ParseableLevelInformation(wrong).information();
             Assert.fail();
         } catch (final IllegalStateException ex) {
-            Assert.assertThat(
+            MatcherAssert.assertThat(
                 ex.getMessage(), Matchers.equalTo(
                     String.format(
                         StringUtils.join(
@@ -93,7 +94,7 @@ public class ParseableLevelInformationTest {
             ).information();
             Assert.fail();
         } catch (final IllegalStateException ex) {
-            Assert.assertThat(
+            MatcherAssert.assertThat(
                 ex.getMessage(),
                 Matchers.equalTo("Unknown level 'EXTREME'")
             );

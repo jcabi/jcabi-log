@@ -43,6 +43,7 @@ import org.mockito.Mockito;
  * @author Marina Kosenko (marina.kosenko@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.1
  */
 public abstract class AbstractDecorTest {
 
@@ -80,6 +81,7 @@ public abstract class AbstractDecorTest {
      * @param prcs Precission
      * @checkstyle ParameterNumber (3 lines)
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public AbstractDecorTest(final Object obj, final String txt,
         final int flgs, final int wdt, final int prcs) {
         this.sut = obj;

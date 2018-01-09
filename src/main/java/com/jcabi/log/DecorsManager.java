@@ -56,7 +56,7 @@ final class DecorsManager {
      * @checkstyle LineLength (2 lines)
      */
     private static final ConcurrentMap<String, Class<? extends Formattable>> DECORS =
-        new ConcurrentHashMap<String, Class<? extends Formattable>>();
+        new ConcurrentHashMap<>(0);
 
     static {
         DecorsManager.DECORS.put("dom", DomDecor.class);
@@ -85,6 +85,7 @@ final class DecorsManager {
      * @return The decor
      * @throws DecorException If some problem
      */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static Formattable decor(final String key, final Object arg)
         throws DecorException {
         final Class<? extends Formattable> type = DecorsManager.find(key);

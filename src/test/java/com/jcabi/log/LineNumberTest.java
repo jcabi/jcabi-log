@@ -31,6 +31,7 @@ package com.jcabi.log;
 
 import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.PatternLayout;
@@ -61,13 +62,12 @@ public final class LineNumberTest {
     @Test
     public void testLineNumber() throws Exception {
         final PatternLayout layout = new PatternLayout();
-        layout.setConversionPattern(CONV_PATTERN);
+        layout.setConversionPattern(LineNumberTest.CONV_PATTERN);
         final org.apache.log4j.Logger root = LogManager.getRootLogger();
         final Level level = root.getLevel();
         root.setLevel(Level.INFO);
         final StringWriter writer = new StringWriter();
-        final WriterAppender appender =
-            new WriterAppender(layout, writer);
+        final Appender appender = new WriterAppender(layout, writer);
         root.addAppender(appender);
         try {
             Logger.info(this, "Test");

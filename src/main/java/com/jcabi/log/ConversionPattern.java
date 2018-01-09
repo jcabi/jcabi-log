@@ -62,7 +62,7 @@ class ConversionPattern {
      * @param pat Pattern to be used
      * @param col Colors to be used
      */
-    public ConversionPattern(final String pat, final Colors col) {
+    ConversionPattern(final String pat, final Colors col) {
         this.pattern = pat;
         this.colors = col;
     }
@@ -78,11 +78,11 @@ class ConversionPattern {
         final StringBuffer buf = new StringBuffer(0);
         while (matcher.find()) {
             matcher.appendReplacement(buf, "");
-            buf.append(this.csi())
+            buf.append(ConversionPattern.csi())
                 .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
                 .append(matcher.group(2))
-                .append(this.csi())
+                .append(ConversionPattern.csi())
                 .append('m');
         }
         matcher.appendTail(buf);
@@ -93,10 +93,8 @@ class ConversionPattern {
      * Formats a string with a Control Sequence Information.
      * @return Formatted string
      */
-    private String csi() {
-        return new ControlSequenceIndicatorFormatted(
-                 "%s"
-             ).format();
+    private static String csi() {
+        return new ControlSequenceIndicatorFormatted("%s").format();
     }
 
 }

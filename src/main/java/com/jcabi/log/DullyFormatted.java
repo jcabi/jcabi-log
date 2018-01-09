@@ -46,15 +46,10 @@ class DullyFormatted implements Formatted {
      * Contructor.
      * @param bas String to be formatted
      */
-    public DullyFormatted(final String bas) {
+    DullyFormatted(final String bas) {
         this.basic = bas;
     }
 
-    /**
-     * Gets formatted log event without using ANSI color codes.
-     * @return Text of a log event, not colored with ANSI color codes even
-     *  if there is markup that tells to color it.
-     */
     @Override
     public String format() {
         return this.basic.replaceAll(

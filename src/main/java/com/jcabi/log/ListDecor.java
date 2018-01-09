@@ -56,6 +56,7 @@ final class ListDecor implements Formattable {
      * @param obj The object to format
      * @throws DecorException If some problem with it
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     ListDecor(final Object obj) throws DecorException {
         if (obj == null || obj instanceof Collection) {
             this.list = Collection.class.cast(obj);
@@ -71,10 +72,7 @@ final class ListDecor implements Formattable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

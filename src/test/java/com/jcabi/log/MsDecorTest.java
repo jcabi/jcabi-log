@@ -41,6 +41,7 @@ import org.junit.runners.Parameterized.Parameters;
  * Test case for {@link MsDecor}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.1
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings("PMD.TestClassWithoutTestCases")
@@ -65,6 +66,7 @@ public final class MsDecorTest extends AbstractDecorTest {
      * @return Array of arrays of params for ctor
      */
     @Parameters
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {

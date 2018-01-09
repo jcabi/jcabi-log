@@ -42,6 +42,7 @@ import org.junit.runners.Parameterized.Parameters;
  * @author Marina Kosenko (marina.kosenko@gmail.com)
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.1
  */
 @RunWith(Parameterized.class)
 @SuppressWarnings("PMD.TestClassWithoutTestCases")
@@ -66,6 +67,7 @@ public final class NanoDecorTest extends AbstractDecorTest {
      * @return Array of arrays of params for ctor
      */
     @Parameters
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {

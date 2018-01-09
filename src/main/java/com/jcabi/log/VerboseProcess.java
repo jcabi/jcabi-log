@@ -99,7 +99,7 @@ public final class VerboseProcess implements Closeable {
     /**
      * Stream monitors.
      */
-    private final transient Thread[] monitors = new Thread[N_MONITORS];
+    private final transient Thread[] monitors;
 
     /**
      * Flag to indicate the closure of this process.
@@ -133,6 +133,7 @@ public final class VerboseProcess implements Closeable {
      * @param stderr Log level for stderr
      * @since 0.11
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public VerboseProcess(final Process prc, final Level stdout,
         final Level stderr) {
         if (prc == null) {
@@ -159,6 +160,7 @@ public final class VerboseProcess implements Closeable {
         this.process = prc;
         this.olevel = stdout;
         this.elevel = stderr;
+        this.monitors = new Thread[VerboseProcess.N_MONITORS];
     }
 
     /**
@@ -212,8 +214,10 @@ public final class VerboseProcess implements Closeable {
      * @return Stdout produced by the process
      * @throws InterruptedException If interrupted in between
      */
-    public Result waitFor() throws InterruptedException {
-        final CountDownLatch done = new CountDownLatch(N_MONITORS);
+    public VerboseProcess.Result waitFor() throws InterruptedException {
+        final CountDownLatch done = new CountDownLatch(
+            VerboseProcess.N_MONITORS
+        );
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
         this.launchMonitors(done, stdout, stderr);
@@ -231,7 +235,7 @@ public final class VerboseProcess implements Closeable {
             }
         }
         try {
-            return new Result(
+            return new VerboseProcess.Result(
                 code,
                 stdout.toString(VerboseProcess.UTF_8),
                 stderr.toString(VerboseProcess.UTF_8)
@@ -282,7 +286,7 @@ public final class VerboseProcess implements Closeable {
     @SuppressWarnings("PMD.PrematureDeclaration")
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
-        final Result result;
+        final VerboseProcess.Result result;
         try {
             result = this.waitFor();
         } catch (final InterruptedException ex) {

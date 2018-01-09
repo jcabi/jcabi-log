@@ -101,7 +101,7 @@ public final class VerboseThreads implements ThreadFactory {
     /**
      * Number of the next thread to create.
      */
-    private final transient AtomicInteger number = new AtomicInteger(1);
+    private final transient AtomicInteger number;
 
     /**
      * Create threads as daemons?
@@ -160,6 +160,7 @@ public final class VerboseThreads implements ThreadFactory {
         this.daemon = dmn;
         this.priority = prt;
         this.group = new VerboseThreads.Group(pfx);
+        this.number = new AtomicInteger(1);
     }
 
     @Override

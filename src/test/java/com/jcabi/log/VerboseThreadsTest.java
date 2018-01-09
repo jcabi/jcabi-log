@@ -39,6 +39,7 @@ import org.junit.Test;
  * Test case for {@link VerboseThreads}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.1
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreadsTest {
@@ -52,11 +53,8 @@ public final class VerboseThreadsTest {
         final ExecutorService service = Executors
             .newSingleThreadExecutor(new VerboseThreads("foo"));
         service.execute(
-            new Runnable() {
-                @Override
-                public void run() {
-                    throw new IllegalArgumentException("oops");
-                }
+            () -> {
+                throw new IllegalArgumentException("oops");
             }
         );
         TimeUnit.SECONDS.sleep(1L);
@@ -72,11 +70,8 @@ public final class VerboseThreadsTest {
         final ExecutorService service = Executors
             .newSingleThreadExecutor(new VerboseThreads(this));
         final Future<?> future = service.submit(
-            new Runnable() {
-                @Override
-                public void run() {
-                    throw new IllegalArgumentException("boom");
-                }
+            (Runnable) () -> {
+                throw new IllegalArgumentException("boom");
             }
         );
         while (!future.isDone()) {

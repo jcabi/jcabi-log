@@ -55,7 +55,12 @@ final class SecretDecor implements Formattable {
      * Public ctor.
      * @param scrt The secret
      */
-    @SuppressWarnings("PMD.NullAssignment")
+    @SuppressWarnings(
+        {
+            "PMD.NullAssignment",
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
+        }
+    )
     SecretDecor(final Object scrt) {
         if (scrt == null) {
             this.secret = null;

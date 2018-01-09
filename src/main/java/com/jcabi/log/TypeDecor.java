@@ -62,14 +62,11 @@ final class TypeDecor implements Formattable {
      * Public ctor.
      * @param obj The object
      */
-    public TypeDecor(final Object obj) {
+    TypeDecor(final Object obj) {
         this.object = obj;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

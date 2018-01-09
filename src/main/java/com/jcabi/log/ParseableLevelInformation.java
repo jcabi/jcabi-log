@@ -53,7 +53,7 @@ class ParseableLevelInformation  {
      * Construtor.
      * @param cont Content to be parsed
      */
-    public ParseableLevelInformation(final String cont) {
+    ParseableLevelInformation(final String cont) {
         this.content = cont;
     }
 
@@ -66,7 +66,7 @@ class ParseableLevelInformation  {
         final Map<String, String> parsed = new ParseableInformation(
             this.content
         ).information();
-        final Map<String, String> converted = new HashMap<String, String>();
+        final Map<String, String> converted = new HashMap<>(0);
         for (final Entry<String, String> entry : parsed.entrySet()) {
             final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
             if (Level.toLevel(level, null) == null) {

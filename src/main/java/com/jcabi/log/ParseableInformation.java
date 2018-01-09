@@ -50,7 +50,7 @@ class ParseableInformation {
      * Construtor.
      * @param cont Content to be parsed
      */
-    public ParseableInformation(final String cont) {
+    ParseableInformation(final String cont) {
         super();
         this.content = cont;
     }
@@ -61,7 +61,7 @@ class ParseableInformation {
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> information() {
-        final Map<String, String> parsed = new HashMap<String, String>();
+        final Map<String, String> parsed = new HashMap<>(0);
         try {
             for (final String item : this.items()) {
                 final String[] values = item.split(":");

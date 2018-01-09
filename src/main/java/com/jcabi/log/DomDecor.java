@@ -70,6 +70,7 @@ final class DomDecor implements Formattable {
      * @param doc The document
      * @throws DecorException If some problem with it
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     DomDecor(final Object doc) throws DecorException {
         if (doc != null && !(doc instanceof Node)) {
             throw new DecorException(
@@ -82,10 +83,7 @@ final class DomDecor implements Formattable {
         this.node = (Node) doc;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

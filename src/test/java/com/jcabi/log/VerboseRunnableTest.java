@@ -43,6 +43,7 @@ import org.junit.Test;
  * Test case for {@link VerboseRunnable}.
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
+ * @since 0.1
  */
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
 public final class VerboseRunnableTest {
@@ -54,11 +55,8 @@ public final class VerboseRunnableTest {
     @Test(expected = IllegalArgumentException.class)
     public void logsExceptionsInRunnable() throws Exception {
         new VerboseRunnable(
-            new Runnable() {
-                @Override
-                public void run() {
-                    throw new IllegalArgumentException("oops");
-                }
+            (Runnable) () -> {
+                throw new IllegalArgumentException("oops");
             }
         ).run();
     }
@@ -70,11 +68,8 @@ public final class VerboseRunnableTest {
     @Test
     public void swallowsExceptionsInRunnable() throws Exception {
         new VerboseRunnable(
-            new Runnable() {
-                @Override
-                public void run() {
-                    throw new IllegalArgumentException("boom");
-                }
+            (Runnable) () -> {
+                throw new IllegalArgumentException("boom");
             },
             true
         ).run();
@@ -87,11 +82,8 @@ public final class VerboseRunnableTest {
     @Test
     public void swallowsExceptionsInCallable() throws Exception {
         new VerboseRunnable(
-            new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    throw new IllegalArgumentException("boom-2");
-                }
+            () -> {
+                throw new IllegalArgumentException("boom-2");
             },
             true
         ).run();
@@ -159,18 +151,15 @@ public final class VerboseRunnableTest {
     public void preservesInterruptedStatus() throws Exception {
         final ScheduledExecutorService svc =
             Executors.newSingleThreadScheduledExecutor();
-        final AtomicReference<Thread> thread = new AtomicReference<Thread>();
+        final AtomicReference<Thread> thread = new AtomicReference<>();
         final AtomicInteger runs = new AtomicInteger();
         svc.scheduleWithFixedDelay(
             new VerboseRunnable(
-                new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        runs.addAndGet(1);
-                        thread.set(Thread.currentThread());
-                        TimeUnit.HOURS.sleep(1L);
-                        return null;
-                    }
+                () -> {
+                    runs.addAndGet(1);
+                    thread.set(Thread.currentThread());
+                    TimeUnit.HOURS.sleep(1L);
+                    return null;
                 },
                 true,
                 false

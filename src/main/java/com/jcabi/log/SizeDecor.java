@@ -58,7 +58,7 @@ final class SizeDecor implements Formattable {
      * Map of prefixes for powers of 1024.
      */
     private static final ConcurrentMap<Integer, String> SUFFIXES =
-        new ConcurrentHashMap<Integer, String>();
+        new ConcurrentHashMap<>(0);
 
     /**
      * The size to work with.
@@ -80,14 +80,11 @@ final class SizeDecor implements Formattable {
      * Public ctor.
      * @param sze The size
      */
-    public SizeDecor(final Long sze) {
+    SizeDecor(final Long sze) {
         this.size = sze;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

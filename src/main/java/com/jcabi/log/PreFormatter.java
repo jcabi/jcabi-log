@@ -79,7 +79,8 @@ final class PreFormatter {
      * @param fmt The formatting string
      * @param args The list of arguments
      */
-    public PreFormatter(final String fmt, final Object... args) {
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
+    PreFormatter(final String fmt, final Object... args) {
         this.process(fmt, args);
     }
 

@@ -69,10 +69,7 @@ final class TextDecor implements Formattable {
         this.object = obj;
     }
 
-    /**
-     * {@inheritDoc}
-     * @checkstyle ParameterNumber (4 lines)
-     */
+    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

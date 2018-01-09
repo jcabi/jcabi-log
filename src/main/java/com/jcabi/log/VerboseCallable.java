@@ -55,6 +55,7 @@ import lombok.ToString;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @version $Id$
  * @since 0.16
+ * @param <T> Type of result
  * @see VerboseThreads
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
@@ -164,13 +165,6 @@ public final class VerboseCallable<T> implements Callable<T> {
         this.verbose = vrbs;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>We catch {@link RuntimeException} and {@link Error} here. All other
-     * types of exceptions are "checked exceptions" and won't be thrown out
-     * of {@code Callable@call()} method.
-     */
     @Override
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public T call() throws Exception {

@@ -48,16 +48,17 @@ public final class UnitTestAppender extends WriterAppender {
     /**
      * OutputStream where this Appender writes.
      */
-    private final transient ByteArrayOutputStream logs =
-        new ByteArrayOutputStream();
+    private final transient ByteArrayOutputStream logs;
 
     /**
      * Ctor.
      * @param name The appender's name
      */
+    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public UnitTestAppender(final String name) {
         super();
         this.setName(name);
+        this.logs = new ByteArrayOutputStream();
     }
 
     /**

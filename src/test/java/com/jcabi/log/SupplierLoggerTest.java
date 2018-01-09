@@ -50,22 +50,17 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void debugIsDisabled() throws Exception {
-        final String loggerName = "nodebug";
-        final String appenderName = "nodebugapp";
+        final String name = "nodebug";
+        final String appender = "nodebugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.ERROR
+            name, appender, Level.ERROR
         );
-        Logger.withSupplier().debug(
-            loggerName, "Debug disabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return "test1";
-                }
-            }
+        SupplierLogger.debug(
+            name, "Debug disabled: %s",
+            (Supplier<String>) () -> "test1"
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.isEmptyString()
         );
     }
@@ -76,23 +71,18 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void debugIsEnabled() throws Exception {
-        final String loggerName = "debugen";
-        final String appenderName = "debugapp";
+        final String name = "debugen";
+        final String appender = "debugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.DEBUG
+            name, appender, Level.DEBUG
         );
         final String text = "test2";
-        Logger.withSupplier().debug(
-            loggerName, "Debug enabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return text;
-                }
-            }
+        SupplierLogger.debug(
+            name, "Debug enabled: %s",
+            (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
     }
@@ -104,22 +94,17 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void traceIsDisabled() throws Exception {
-        final String loggerName = "notrace";
-        final String appenderName = "notraceapp";
+        final String name = "notrace";
+        final String appender = "notraceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.ERROR
+            name, appender, Level.ERROR
         );
-        Logger.withSupplier().trace(
-            loggerName, "Trace disabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return "test3";
-                }
-            }
+        SupplierLogger.trace(
+            name, "Trace disabled: %s",
+            (Supplier<String>) () -> "test3"
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.isEmptyString()
         );
     }
@@ -130,23 +115,18 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void traceIsEnabled() throws Exception {
-        final String loggerName = "enabledtrace";
-        final String appenderName = "traceapp";
+        final String name = "enabledtrace";
+        final String appender = "traceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.TRACE
+            name, appender, Level.TRACE
         );
         final String text = "text4";
-        Logger.withSupplier().trace(
-            loggerName, "Trace enabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return text;
-                }
-            }
+        SupplierLogger.trace(
+            name, "Trace enabled: %s",
+            (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
     }
@@ -158,22 +138,17 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void warnIsDisabled() throws Exception {
-        final String loggerName = "nowarn";
-        final String appenderName = "nowarnapp";
+        final String name = "nowarn";
+        final String appender = "nowarnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.ERROR
+            name, appender, Level.ERROR
         );
-        Logger.withSupplier().warn(
-            loggerName, "Warn disabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return "test5";
-                }
-            }
+        SupplierLogger.warn(
+            name, "Warn disabled: %s",
+            (Supplier<String>) () -> "test5"
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.isEmptyString()
         );
     }
@@ -184,23 +159,18 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void warnIsEnabled() throws Exception {
-        final String loggerName = "enwarn";
-        final String appenderName = "warnapp";
+        final String name = "enwarn";
+        final String appender = "warnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.WARN
+            name, appender, Level.WARN
         );
         final String text = "test6";
-        Logger.withSupplier().warn(
-            loggerName, "Warn enabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return text;
-                }
-            }
+        SupplierLogger.warn(
+            name, "Warn enabled: %s",
+            (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
     }
@@ -212,22 +182,17 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void infoIsDisabled() throws Exception {
-        final String loggerName = "noinfo";
-        final String appenderName = "noinfoapp";
+        final String name = "noinfo";
+        final String appender = "noinfoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.WARN
+            name, appender, Level.WARN
         );
-        Logger.withSupplier().info(
-            loggerName, "Info disabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return "test7";
-                }
-            }
+        SupplierLogger.info(
+            name, "Info disabled: %s",
+            (Supplier<String>) () -> "test7"
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.isEmptyString()
         );
     }
@@ -238,23 +203,18 @@ public final class SupplierLoggerTest {
      */
     @Test
     public void infoIsEnabled() throws Exception {
-        final String loggerName = "withinfo";
-        final String appenderName = "infoapp";
+        final String name = "withinfo";
+        final String appender = "infoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
-            loggerName, appenderName, Level.INFO
+            name, appender, Level.INFO
         );
         final String text = "text8";
-        Logger.withSupplier().info(
-            loggerName, "Info enabled: %s",
-            new Supplier<String>() {
-                @Override
-                public String get() {
-                    return text;
-                }
-            }
+        SupplierLogger.info(
+            name, "Info enabled: %s",
+            (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
-            ((UnitTestAppender) logger.getAppender(appenderName)).output(),
+            ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
     }

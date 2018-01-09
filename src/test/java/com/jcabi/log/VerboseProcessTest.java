@@ -54,8 +54,6 @@ import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 /**
  * Test case for {@link VerboseProcess}.
@@ -67,8 +65,9 @@ import org.mockito.stubbing.Answer;
  *  sure how to fix them, but they should be fixed. They fail on some
  *  machines, while run perfectly on others. They also fail when being
  *  executed from IntelliJ.
+ * @since 0.1
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 public final class VerboseProcessTest {
 
     /**
@@ -213,7 +212,7 @@ public final class VerboseProcessTest {
             new VerboseProcess(
                 Mockito.mock(Process.class), Level.INFO, Level.ALL
             );
-            Assert.fail("IllegalArgumentException expected");
+            Assert.fail("IllegalArgumentException expected here");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
@@ -241,13 +240,10 @@ public final class VerboseProcessTest {
         final CountDownLatch done = new CountDownLatch(1);
         new Thread(
             new VerboseRunnable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        start.countDown();
-                        process.stdoutQuietly();
-                        done.countDown();
-                    }
+                () -> {
+                    start.countDown();
+                    process.stdoutQuietly();
+                    done.countDown();
                 }
             )
         ).start();
@@ -308,7 +304,7 @@ public final class VerboseProcessTest {
         Mockito.doReturn(stdout).when(prc).getInputStream();
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
-        final VerboseProcess verboseProcess = new VerboseProcess(
+        final VerboseProcess process = new VerboseProcess(
             prc,
             Level.FINEST,
             Level.FINEST
@@ -316,9 +312,9 @@ public final class VerboseProcessTest {
         Logger.debug(
             this,
             "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
-            verboseProcess.hashCode()
+            process.hashCode()
         );
-        verboseProcess.stdout();
+        process.stdout();
         MatcherAssert.assertThat(
             writer.toString(),
             Matchers.containsString("Error reading from process stream")
@@ -364,26 +360,23 @@ public final class VerboseProcessTest {
      * @param delay Time in milliseconds between usage of vrbcPrc starts and
      *  its close() issued
      * @throws Exception If something goes wrong
+     * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
-        final InputStream inputStream = new InfiniteInputStream('i');
-        final InputStream errorStream = new InfiniteInputStream('e');
+        final InputStream input = new InfiniteInputStream('i');
+        final InputStream error = new InfiniteInputStream('e');
         final Process prc = Mockito.mock(Process.class);
-        Mockito.doReturn(inputStream).when(prc).getInputStream();
-        Mockito.doReturn(errorStream).when(prc).getErrorStream();
+        Mockito.doReturn(input).when(prc).getInputStream();
+        Mockito.doReturn(error).when(prc).getErrorStream();
         Mockito.doAnswer(
-            new Answer<Void>() {
-                @Override
-                public Void answer(final InvocationOnMock invocation)
-                    throws Exception {
-                    inputStream.close();
-                    errorStream.close();
-                    return null;
-                }
+            invocation -> {
+                input.close();
+                error.close();
+                return null;
             }
         ).when(prc).destroy();
-        final VerboseProcess verboseProcess = new VerboseProcess(
+        final VerboseProcess process = new VerboseProcess(
             prc,
             Level.FINEST,
             Level.FINEST
@@ -392,31 +385,31 @@ public final class VerboseProcessTest {
             this,
             "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
             delay,
-            verboseProcess.hashCode()
+            process.hashCode()
         );
         final StringWriter writer = new StringWriter();
         final WriterAppender appender = new WriterAppender(
             new SimpleLayout(),
             writer
         );
-        appender.addFilter(new VrbPrcMonitorFilter(verboseProcess));
+        appender.addFilter(new VrbPrcMonitorFilter(process));
         org.apache.log4j.Logger.getLogger(
             VerboseProcess.class
         ).addAppender(appender);
         if (delay == 0) {
-            verboseProcess.close();
+            process.close();
         } else {
             new Timer(true).schedule(
                 new TimerTask() {
                     @Override
                     public void run() {
-                        verboseProcess.close();
+                        process.close();
                     }
                 },
                 delay
             );
         }
-        verboseProcess.stdoutQuietly();
+        process.stdoutQuietly();
         TimeUnit.MILLISECONDS.sleep(Tv.THOUSAND);
         Mockito.verify(
             prc,
@@ -425,7 +418,7 @@ public final class VerboseProcessTest {
         MatcherAssert.assertThat(
             writer.toString(),
             Matchers.not(Matchers
-                    .containsString("Error reading from process stream")
+                .containsString("Error reading from process stream")
             )
         );
     }
@@ -457,7 +450,7 @@ public final class VerboseProcessTest {
          * character and end of line.
          * @param character Character to return in the stream
          */
-        public InfiniteInputStream(final char character) {
+        InfiniteInputStream(final char character) {
             super();
             this.chr = character;
         }
@@ -479,7 +472,7 @@ public final class VerboseProcessTest {
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
             this.closed = true;
         }
     }
@@ -507,7 +500,7 @@ public final class VerboseProcessTest {
          * <p>The messages from its monitor threads will be filtered in.
          * @param prc Process
          */
-        public VrbPrcMonitorFilter(final VerboseProcess prc) {
+        VrbPrcMonitorFilter(final VerboseProcess prc) {
             super();
             this.hash = prc.hashCode();
         }
@@ -517,7 +510,7 @@ public final class VerboseProcessTest {
             final String thread = event.getThreadName();
             final int decision;
             if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START
-                    + this.hash
+                + this.hash
             )) {
                 decision = Filter.ACCEPT;
             } else {

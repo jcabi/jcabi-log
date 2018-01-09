@@ -111,10 +111,8 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     @Override
     public void setConversionPattern(final String pattern) {
         this.base = pattern;
-        super.setConversionPattern(new ConversionPattern(
-                this.base,
-                this.colors
-            ).generate()
+        super.setConversionPattern(
+            new ConversionPattern(this.base, this.colors).generate()
         );
     }
 
@@ -133,11 +131,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         for (final Entry<String, String> entry : parsed.entrySet()) {
             this.colors.addColor(entry.getKey(), entry.getValue());
         }
-        /**
-         * If setConversionPattern was called before me must call again
-         * to be sure to replace all custom color constants with
-         * new values.
-         */
         if (this.base != null) {
             this.setConversionPattern(this.base);
         }
@@ -162,7 +155,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     @Override
     public String format(final LoggingEvent event) {
         final Formatted formatted;
-        if (this.isColoringEnabled()) {
+        if (MulticolorLayout.isColoringEnabled()) {
             formatted = this.colorfulFormatting(event);
         } else {
             formatted = this.dullFormatting(event);
@@ -174,6 +167,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Generate a dull {@code Formatted}.
      * @param event Event to be formatted
      * @return A {@link Formatted} to format the event
+     * @checkstyle NonStaticMethodCheck (10 lines)
      */
     private Formatted dullFormatting(final LoggingEvent event) {
         return new DullyFormatted(super.format(event));
@@ -196,8 +190,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @return Map of levels
      */
     private static ConcurrentMap<String, String> levelMap() {
-        final ConcurrentMap<String, String> map =
-            new ConcurrentHashMap<String, String>();
+        final ConcurrentMap<String, String> map = new ConcurrentHashMap<>(0);
         map.put(Level.TRACE.toString(), "2;33");
         map.put(Level.DEBUG.toString(), "2;37");
         map.put(Level.INFO.toString(), "0;37");
@@ -211,7 +204,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Should the logged text be colored or not.
      * @return True if the coloring is enabled, or false otherwise.
      */
-    private boolean isColoringEnabled() {
+    private static boolean isColoringEnabled() {
         return !"false".equals(
             System.getProperty(MulticolorLayout.COLORING_PROPERY)
         );

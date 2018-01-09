@@ -52,15 +52,11 @@ class ColorfullyFormatted implements Formatted {
      * @param bas Basic string to be formatted
      * @param col Color to be used to paint the output
      */
-    public ColorfullyFormatted(final String bas, final String col) {
+    ColorfullyFormatted(final String bas, final String col) {
         this.basic = bas;
         this.color = col;
     }
 
-    /**
-     * Gets the formatted log event using ANSI color codes.
-     * @return Text of a log event, colored with ANSI color codes
-     */
     @Override
     public String format() {
         return this.basic.replaceAll(
