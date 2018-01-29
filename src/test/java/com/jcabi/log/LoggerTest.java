@@ -160,10 +160,13 @@ public final class LoggerTest {
      */
     @Test
     public void findsArgsByPositions() {
-        final String val = "xyz";
+        final String first = "xyz";
+        final String second = "ddd";
         MatcherAssert.assertThat(
-            Logger.format("first: %s, first again: %1$s", val),
-            Matchers.endsWith(String.format(": %s, first again: %1$s", val))
+            Logger.format("first: %s, first again: %1$s %s", first, second),
+            Matchers.endsWith(
+                String.format(": %s, first again: %1$s %s", first, second)
+            )
         );
     }
 

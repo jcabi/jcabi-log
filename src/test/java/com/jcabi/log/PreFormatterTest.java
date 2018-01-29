@@ -49,8 +49,7 @@ public final class PreFormatterTest {
     public void decoratesArguments() {
         final PreFormatter pre = new PreFormatter(
             "%[com.jcabi.log.DecorMocker]-5.2f and %1$+.6f",
-            1d,
-            "some text"
+            1.0d
         );
         MatcherAssert.assertThat(
             pre.getFormat(),

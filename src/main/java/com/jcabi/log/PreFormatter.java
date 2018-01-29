@@ -124,6 +124,7 @@ final class PreFormatter {
                     matcher.appendReplacement(
                         buf, Matcher.quoteReplacement(group)
                     );
+                    --pos;
                 } else if (decor == null) {
                     matcher.appendReplacement(
                         buf, Matcher.quoteReplacement(group)
@@ -146,7 +147,7 @@ final class PreFormatter {
                         );
                     }
                 }
-                pos += 1;
+                ++pos;
             }
         }
         if (pos < args.length) {
