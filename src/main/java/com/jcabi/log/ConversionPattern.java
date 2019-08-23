@@ -44,7 +44,7 @@ class ConversionPattern {
      * Regular expression for all matches.
      */
     private static final Pattern METAS = Pattern.compile(
-        "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{(.*?)\\}"
+        "%color(?:-([a-z]+|[0-9]{1,3};[0-9]{1,3};[0-9]{1,3}))?\\{"
     );
 
     /**
@@ -68,22 +68,51 @@ class ConversionPattern {
     }
 
     /**
+     * Find the matching closing curly brace while keeping any nested curly brace pairs balanced.
+     * @param start index of first character after the opening curly brace
+     * @return index of the closing curly brace, or -1 if not found
+     */
+    private static int findArgumentEnd(final String pattern, final int start) {
+        int openBraceCount = 1;
+        for (int index = start; index < pattern.length(); ++index) {
+            final char character = pattern.charAt(index);
+            if (character == '}') {
+                --openBraceCount;
+                if (openBraceCount == 0) {
+                    return index;
+                }
+            } else if (character == '{') {
+                ++openBraceCount;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Generates the conversion pattern.
      * @return Conversion pattern
      */
     public String generate() {
+        String remainingPattern = this.pattern;
         final Matcher matcher = ConversionPattern.METAS.matcher(
-            this.pattern
+            remainingPattern
         );
         final StringBuffer buf = new StringBuffer(0);
         while (matcher.find()) {
+            final int argumentStart = matcher.end();
+            final int argumentEnd = findArgumentEnd(remainingPattern, argumentStart);
+            if (argumentEnd < 0) {
+                break;
+            }
             matcher.appendReplacement(buf, "");
             buf.append(ConversionPattern.csi())
                 .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
-                .append(matcher.group(2))
+                .append(remainingPattern, argumentStart, argumentEnd)
                 .append(ConversionPattern.csi())
                 .append('m');
+            remainingPattern = remainingPattern.substring(argumentEnd + 1);
+            matcher.reset(remainingPattern);
         }
         matcher.appendTail(buf);
         return buf.toString();
