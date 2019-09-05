@@ -68,54 +68,61 @@ class ConversionPattern {
     }
 
     /**
-     * Find the matching closing curly brace while keeping any nested curly brace pairs balanced.
-     * @param start index of first character after the opening curly brace
-     * @return index of the closing curly brace, or -1 if not found
-     */
-    private static int findArgumentEnd(final String pattern, final int start) {
-        int openBraceCount = 1;
-        for (int index = start; index < pattern.length(); ++index) {
-            final char character = pattern.charAt(index);
-            if (character == '}') {
-                --openBraceCount;
-                if (openBraceCount == 0) {
-                    return index;
-                }
-            } else if (character == '{') {
-                ++openBraceCount;
-            }
-        }
-        return -1;
-    }
-
-    /**
      * Generates the conversion pattern.
      * @return Conversion pattern
      */
     public String generate() {
-        String remainingPattern = this.pattern;
+        String remaining = this.pattern;
         final Matcher matcher = ConversionPattern.METAS.matcher(
-            remainingPattern
+            remaining
         );
         final StringBuffer buf = new StringBuffer(0);
         while (matcher.find()) {
-            final int argumentStart = matcher.end();
-            final int argumentEnd = findArgumentEnd(remainingPattern, argumentStart);
-            if (argumentEnd < 0) {
+            final int argstart = matcher.end();
+            final int argend = findArgumentEnd(remaining, argstart);
+            if (argend < 0) {
                 break;
             }
             matcher.appendReplacement(buf, "");
             buf.append(ConversionPattern.csi())
                 .append(this.colors.ansi(matcher.group(1)))
                 .append('m')
-                .append(remainingPattern, argumentStart, argumentEnd)
+                .append(remaining, argstart, argend)
                 .append(ConversionPattern.csi())
                 .append('m');
-            remainingPattern = remainingPattern.substring(argumentEnd + 1);
-            matcher.reset(remainingPattern);
+            remaining = remaining.substring(argend + 1);
+            matcher.reset(remaining);
         }
         matcher.appendTail(buf);
         return buf.toString();
+    }
+
+    /**
+     * Find the matching closing curly brace while keeping any nested curly
+     * brace pairs balanced.
+     * @param pattern Pattern to find the match in.
+     * @param start Index of first character after the opening curly brace
+     * @return Index of the closing curly brace, or -1 if not found
+     */
+    private static int findArgumentEnd(final String pattern, final int start) {
+        int count = 1;
+        int index = start;
+        while (index < pattern.length()) {
+            final char character = pattern.charAt(index);
+            if (character == '}') {
+                --count;
+                if (count == 0) {
+                    break;
+                }
+            } else if (character == '{') {
+                ++count;
+            }
+            ++index;
+        }
+        if (index == pattern.length()) {
+            index = -1;
+        }
+        return index;
     }
 
     /**
