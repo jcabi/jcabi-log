@@ -29,7 +29,6 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Immutable;
 import java.lang.reflect.Field;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -89,7 +88,6 @@ final class ObjectDecor implements Formattable {
      * @author Aleksey Popov (alopen@yandex.ru)
      * @version $Id$
      */
-    @Immutable
     private static final class ArrayFormatAction
         implements PrivilegedAction<String>  {
         /**
@@ -126,7 +124,6 @@ final class ObjectDecor implements Formattable {
      * @author Yegor Bugayenko (yegor256@gmail.com)
      * @version $Id$
      */
-    @Immutable
     private static final class ObjectContentsFormatAction
         implements PrivilegedAction<String> {
         /**

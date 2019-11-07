@@ -29,7 +29,6 @@
  */
 package com.jcabi.log;
 
-import com.jcabi.aspects.Immutable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Formattable;
@@ -46,7 +45,6 @@ import lombok.ToString;
  * @version $Id$
  * @since 0.1
  */
-@Immutable
 @ToString
 @EqualsAndHashCode
 final class DecorsManager {
