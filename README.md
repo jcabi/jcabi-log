@@ -15,9 +15,9 @@
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-log.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-log)
 [![Hits-of-Code](https://hitsofcode.com/github/jcabi/jcabi-log)](https://hitsofcode.com/view/github/jcabi/jcabi-log)
 
-More details are here: [log.jcabi.com](http://log.jcabi.com/index.html)
+More details are here: [log.jcabi.com](https://log.jcabi.com/index.html)
 
-Read this blog post: [Get Rid of Java Static Loggers](http://www.yegor256.com/2014/05/23/avoid-java-static-logger.html)
+Read this blog post: [_Get Rid of Java Static Loggers_](https://www.yegor256.com/2014/05/23/avoid-java-static-logger.html)
 
 `Logger` is a convenient static wrapper of [slf4j](http://www.slf4j.org/)
 (don't forget to include one of [SLF4J Bindings](http://www.slf4j.org/manual.html#binding)

@@ -56,7 +56,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   <distributionManagement>
     <site>
       <id>github-pages</id>
-      <url>http://log.jcabi.com/</url>
+      <url>https://log.jcabi.com/</url>
     </site>
   </distributionManagement>
   <dependencies>
