@@ -10,7 +10,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/tk5nksux8peh2n8o/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-log/branch/master)
 [![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-log/badge.svg?branch=master&service=github)](https://coveralls.io/github/jcabi/jcabi-log?branch=master)
 
-[![jpeek report](http://i.jpeek.org/com.jcabi/jcabi-log/badge.svg)](http://i.jpeek.org/com.jcabi/jcabi-log/)
+[![jpeek report](https://i.jpeek.org/com.jcabi/jcabi-log/badge.svg)](https://i.jpeek.org/com.jcabi/jcabi-log/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-log.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-log)
 [![Hits-of-Code](https://hitsofcode.com/github/jcabi/jcabi-log)](https://hitsofcode.com/view/github/jcabi/jcabi-log)
