@@ -127,6 +127,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             <configuration>
               <excludes combine.children="append">
                 <exclude>findbugs:.*</exclude>
+                <exclude>duplicatefinder:.*</exclude>
               </excludes>
             </configuration>
           </plugin>
