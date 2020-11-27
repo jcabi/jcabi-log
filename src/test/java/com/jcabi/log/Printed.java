@@ -29,54 +29,60 @@
  */
 package com.jcabi.log;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import java.io.ByteArrayOutputStream;
+import java.util.Formattable;
+import java.util.Formatter;
 
 /**
- * Test case for {@link TypeDecor}.
+ * Prints decor.
  *
  * @since 0.1
  */
-public final class TypeDecorTest {
-
-    @ParameterizedTest
-    @MethodSource("params")
-    public void testPrintsRight(final Object list, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
-        Locale.setDefault(Locale.US);
-        MatcherAssert.assertThat(
-            new Printed(new TypeDecor(list), flags, width, precision),
-            Matchers.hasToString(text)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("params")
-    public void testLogsRight(final Object list, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
-        Locale.setDefault(Locale.US);
-        MatcherAssert.assertThat(
-            new Logged(new TypeDecor(list), flags, width, precision),
-            Matchers.hasToString(text)
-        );
-    }
+public final class Printed {
 
     /**
-     * Params for this parametrized test.
-     * @return Array of arrays of params for ctor
+     * The decor.
      */
-    private static Collection<Object[]> params() {
-        return Arrays.asList(
-            new Object[][] {
-                {"testing", "java.lang.String", 0, 0, 0},
-                {null, "NULL", 0, 0, 0},
-                {1.0d, "java.lang.Double", 0, 0, 0},
-            }
-        );
+    private final transient Formattable decor;
+
+    /**
+     * Formatting flas.
+     */
+    private final transient int flags;
+
+    /**
+     * Formatting width.
+     */
+    private final transient int width;
+
+    /**
+     * Formatting precision.
+     */
+    private final transient int precision;
+
+    /**
+     * Public ctor.
+     * @param dcr Decor
+     * @param flgs Flags
+     * @param wdt Width
+     * @param prcs Precission
+     * @checkstyle ParameterNumber (3 lines)
+     */
+    public Printed(final Formattable dcr,
+        final int flgs, final int wdt, final int prcs) {
+        this.decor = dcr;
+        this.flags = flgs;
+        this.width = wdt;
+        this.precision = prcs;
     }
+
+    @Override
+    public String toString() {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final Formatter fmt = new Formatter(baos);
+        this.decor.formatTo(fmt, this.flags, this.width, this.precision);
+        fmt.flush();
+        return baos.toString();
+    }
+
 }

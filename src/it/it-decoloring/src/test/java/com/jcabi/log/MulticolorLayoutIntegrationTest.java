@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012-2017, jcabi.com
  * All rights reserved.
  *
@@ -29,12 +29,12 @@
  */
 package com.jcabi.log;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**

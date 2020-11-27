@@ -31,48 +31,60 @@ package com.jcabi.log;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Formattable;
 import java.util.FormattableFlags;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import java.util.Locale;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link MsDecor}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ *
  * @since 0.1
  */
-@RunWith(Parameterized.class)
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
-public final class MsDecorTest extends AbstractDecorTest {
+public final class MsDecorTest {
 
-    /**
-     * Public ctor.
-     * @param nano The amount of nanoseconds
-     * @param text Expected text
-     * @param flags Flags
-     * @param width Width
-     * @param precision Precission
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    public MsDecorTest(final Long nano, final String text,
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testPrintsRight(final long value, final String text,
         final int flags, final int width, final int precision) {
-        super(nano, text, flags, width, precision);
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Printed(new MsDecor(value), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testLogsRight(final long value, final String text,
+        final int flags, final int width, final int precision) {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Logged(new MsDecor(value), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @Test
+    public void testPrintsNullRight() {
+        MatcherAssert.assertThat(
+            new Logged(new MsDecor(null), 0, 0, 0),
+            Matchers.hasToString("NULL")
+        );
     }
 
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @Parameters
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Collection<Object[]> params() {
+    private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
                 // @checkstyle LineLength (20 lines)
                 // @checkstyle MagicNumber (20 lines)
-                {null, "NULL", 0, 0, 0},
                 {13L, "13ms", 0, 0, -1},
                 {13L, "13.0ms", 0, 0, 1},
                 {1024L, "1s", 0, 0, 0},
@@ -84,10 +96,4 @@ public final class MsDecorTest extends AbstractDecorTest {
             }
         );
     }
-
-    @Override
-    public Formattable decor() {
-        return new MsDecor((Long) this.object());
-    }
-
 }

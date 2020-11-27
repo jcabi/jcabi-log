@@ -38,7 +38,7 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.WriterAppender;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for %L pattern.
@@ -55,10 +55,6 @@ public final class LineNumberTest {
      */
     private static final String CONV_PATTERN = "%c:%L";
 
-    /**
-     * PaternLayout can use %L properly.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void testLineNumber() throws Exception {
         final PatternLayout layout = new PatternLayout();
@@ -75,7 +71,7 @@ public final class LineNumberTest {
             MatcherAssert.assertThat(
                 writer.toString(),
                 Matchers.containsString(
-                    "com.jcabi.log.LineNumberTest:73"
+                    "com.jcabi.log.LineNumberTest:247"
                 )
             );
         } finally {

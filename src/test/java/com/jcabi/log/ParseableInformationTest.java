@@ -33,8 +33,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * ParseableInformation test case.
@@ -66,7 +66,7 @@ public class ParseableInformationTest {
         final String white = "white";
         try {
             new ParseableInformation(white).information();
-            Assert.fail("Should never enter this assert!");
+            Assertions.fail("Should never enter this assert!");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(), Matchers.equalTo(

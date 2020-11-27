@@ -37,7 +37,8 @@ import java.util.logging.Level;
 import org.apache.log4j.LogManager;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Logger}.
@@ -47,46 +48,29 @@ import org.junit.Test;
  */
 public final class LoggerTest {
 
-    /**
-     * Logger can detect logging class name correctly.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void detectsLoggerNameCorrectly() throws Exception {
         // not implemented yet
     }
 
-    /**
-     * Logger can detect logging class with a static param.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void detectsNameOfStaticSource() throws Exception {
         // not implemented yet
     }
 
-    /**
-     * Logger can set logging level correctly.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void setsLoggingLevel() throws Exception {
         // not implemented yet
     }
 
-    /**
-     * Logger can not format arrays since they are interpreted as varags.
-     * @throws Exception If something goes wrong
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void doesntFormatArraysSinceTheyAreVarArgs() throws Exception {
-        Logger.format("array: %[list]s", new Object[] {"hi", 1});
+    @Test
+    public void doesntFormatArraysSinceTheyAreVarArgs() {
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> Logger.format("array: %[list]s", new Object[] {"hi", 1})
+        );
     }
 
-    /**
-     * Logger formats arrays as if they were separate arguments as they are
-     * interpreted as varargs.
-     */
     @Test
     public void interpretsArraysAsVarArgs() {
         MatcherAssert.assertThat(
@@ -95,10 +79,6 @@ public final class LoggerTest {
         );
     }
 
-    /**
-     * Logger can provide an output stream.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void providesOutputStream() throws Exception {
         final OutputStream stream = Logger.stream(Level.INFO, this);
@@ -111,28 +91,22 @@ public final class LoggerTest {
         writer.close();
     }
 
-    /**
-     * Logger throws an exception when there are less parameters than there
-     * are format args.
-     */
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test
     public void throwsWhenParamsLessThanFormatArgs() {
-        Logger.format("String %s Char %c Number %d", "howdy", 'x');
+        Assertions.assertThrows(
+            ArrayIndexOutOfBoundsException.class,
+            () -> Logger.format("String %s Char %c Number %d", "howdy", 'x')
+        );
     }
 
-    /**
-     * Logger throws an exception when there are more parameters than there
-     * are format args.
-     */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void throwsWhenParamsMoreThanFormatArgs() {
-        Logger.format("String %s Number %d Char %c", "hey", 1, 'x', 2);
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> Logger.format("String %s Number %d Char %c", "hey", 1, 'x', 2)
+        );
     }
 
-    /**
-     * Logger can correctly check the current logging level.
-     * @throws Exception If fails
-     */
     @Test
     public void checksLogLevel() throws Exception {
         LogManager.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
@@ -147,17 +121,11 @@ public final class LoggerTest {
         );
     }
 
-    /**
-     * Logger can use String as a logger name.
-     */
     @Test
     public void usesStringAsLoggerName() {
         Logger.info("com.jcabi.log...why.not", "hello, %s!", "world!");
     }
 
-    /**
-     * Finds args by position numbers.
-     */
     @Test
     public void findsArgsByPositions() {
         final String first = "xyz";

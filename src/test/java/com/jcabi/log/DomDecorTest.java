@@ -33,7 +33,7 @@ import java.util.Formattable;
 import java.util.Formatter;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.hamcrest.MockitoHamcrest;
 import org.w3c.dom.Document;
@@ -46,10 +46,6 @@ import org.w3c.dom.Document;
  */
 public final class DomDecorTest {
 
-    /**
-     * DocumentDecor can transform Document to text.
-     * @throws Exception If some problem
-     */
     @Test
     public void convertsDocumentToText() throws Exception {
         final Document doc = DocumentBuilderFactory.newInstance()
@@ -64,10 +60,6 @@ public final class DomDecorTest {
         );
     }
 
-    /**
-     * DocumentDecor can handle NULL properly.
-     * @throws Exception If some problem
-     */
     @Test
     public void convertsNullToText() throws Exception {
         final Formattable decor = new DomDecor(null);

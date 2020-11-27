@@ -31,7 +31,7 @@ package com.jcabi.log;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link ConversionPattern}.
@@ -51,9 +51,6 @@ public final class ConversionPatternTest {
      */
     private static final Colors COLORS = new Colors();
 
-    /**
-     * Test some edge cases: these shouldn't result in replacement.
-     */
     @Test
     public void testGenerateNoReplacement() {
         MatcherAssert.assertThat(
@@ -78,10 +75,6 @@ public final class ConversionPatternTest {
         );
     }
 
-    /**
-     * Test the empty edge case: should be replaced with the wrapped empty
-     * string.
-     */
     @Test
     public void testGenerateEmpty() {
         MatcherAssert.assertThat(
@@ -90,9 +83,6 @@ public final class ConversionPatternTest {
         );
     }
 
-    /**
-     * Normal test cases.
-     */
     @Test
     public void testGenerateSimple() {
         MatcherAssert.assertThat(
@@ -111,27 +101,32 @@ public final class ConversionPatternTest {
         );
     }
 
-    /**
-     * Test cases where the body includes curly braces. The correct (balanced)
-     * curly brace pair should be replaced.
-     */
     @Test
     public void testGenerateCurlyBraces() {
         MatcherAssert.assertThat(
-            convert("%color{%c{1}}"),
-            Matchers.equalTo(colorWrap("%c{1}"))
+            ConversionPatternTest.convert("%color{%c{1}}"),
+            Matchers.equalTo(ConversionPatternTest.colorWrap("%c{1}"))
         );
         MatcherAssert.assertThat(
-            convert("%color{%c{1}}foo"),
-            Matchers.equalTo(String.format("%sfoo", colorWrap("%c{1}")))
+            ConversionPatternTest.convert("%color{%c{1}}foo"),
+            Matchers.equalTo(
+                String.format("%sfoo", ConversionPatternTest.colorWrap("%c{1}"))
+            )
         );
         MatcherAssert.assertThat(
-            convert("%color{%c1}}foo"),
-            Matchers.equalTo(String.format("%s}foo", colorWrap("%c1")))
+            ConversionPatternTest.convert("%color{%c1}}foo"),
+            Matchers.equalTo(
+                String.format("%s}foo", ConversionPatternTest.colorWrap("%c1"))
+            )
         );
         MatcherAssert.assertThat(
-            convert("%color{%c{{{1}{2}}}}foo"),
-            Matchers.equalTo(String.format("%sfoo", colorWrap("%c{{{1}{2}}}")))
+            ConversionPatternTest.convert("%color{%c{{{1}{2}}}}foo"),
+            Matchers.equalTo(
+                String.format(
+                    "%sfoo",
+                    ConversionPatternTest.colorWrap("%c{{{1}{2}}}")
+                )
+            )
         );
     }
 

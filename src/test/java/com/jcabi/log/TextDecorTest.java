@@ -33,50 +33,49 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Formattable;
 import java.util.Formatter;
+import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link TextDecor}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ *
  * @since 0.1
  */
-@RunWith(Parameterized.class)
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
-public final class TextDecorTest extends AbstractDecorTest {
+public final class TextDecorTest {
 
-    /**
-     * Public ctor.
-     * @param obj The object
-     * @param text Expected text
-     * @param flags Flags
-     * @param width Width
-     * @param precision Precission
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    public TextDecorTest(final Object obj, final String text,
-        final int flags, final int width, final int precision) {
-        super(obj, text, flags, width, precision);
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testPrintsRight(final String obj, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Printed(new TextDecor(obj), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testLogsRight(final String obj, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Logged(new TextDecor(obj), flags, width, precision),
+            Matchers.hasToString(text)
+        );
     }
 
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @Parameters
-    @SuppressWarnings(
-        {
-            "PMD.ProhibitPublicStaticMethods",
-            "PMD.AvoidDuplicateLiterals"
-        }
-    )
-    public static Collection<Object[]> params() {
+    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+    private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
                 // @checkstyle MultipleStringLiterals (1 line)
@@ -106,10 +105,4 @@ public final class TextDecorTest extends AbstractDecorTest {
             )
         );
     }
-
-    @Override
-    public Formattable decor() {
-        return new TextDecor(this.object());
-    }
-
 }

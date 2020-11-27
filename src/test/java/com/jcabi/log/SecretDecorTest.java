@@ -31,44 +31,47 @@ package com.jcabi.log;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Formattable;
 import java.util.FormattableFlags;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import java.util.Locale;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link SecretDecor}.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ *
  * @since 0.1
  */
-@RunWith(Parameterized.class)
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
-public final class SecretDecorTest extends AbstractDecorTest {
+public final class SecretDecorTest {
 
-    /**
-     * Public ctor.
-     * @param secret The secret
-     * @param text Expected text
-     * @param flags Flags
-     * @param width Width
-     * @param precision Precission
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    public SecretDecorTest(final String secret, final String text,
-        final int flags, final int width, final int precision) {
-        super(secret, text, flags, width, precision);
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testPrintsRight(final Object list, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Printed(new SecretDecor(list), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testLogsRight(final Object list, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Logged(new SecretDecor(list), flags, width, precision),
+            Matchers.hasToString(text)
+        );
     }
 
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @Parameters
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Collection<Object[]> params() {
+    private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
                 // @checkstyle MagicNumber (4 lines)
@@ -79,10 +82,4 @@ public final class SecretDecorTest extends AbstractDecorTest {
             }
         );
     }
-
-    @Override
-    public Formattable decor() {
-        return new SecretDecor(this.object());
-    }
-
 }

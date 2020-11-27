@@ -32,10 +32,11 @@ package com.jcabi.log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Formattable;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import java.util.Locale;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link ListDecor}.
@@ -43,31 +44,35 @@ import org.junit.runners.Parameterized.Parameters;
  * @version $Id$
  * @since 0.1
  */
-@RunWith(Parameterized.class)
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
-public final class ListDecorTest extends AbstractDecorTest {
+public final class ListDecorTest {
 
-    /**
-     * Public ctor.
-     * @param list The list to test
-     * @param text Expected text
-     * @param flags Flags
-     * @param width Width
-     * @param precision Precission
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    public ListDecorTest(final Object list, final String text,
-        final int flags, final int width, final int precision) {
-        super(list, text, flags, width, precision);
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testPrintsRight(final Object list, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Printed(new ListDecor(list), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testLogsRight(final Object list, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Logged(new ListDecor(list), flags, width, precision),
+            Matchers.hasToString(text)
+        );
     }
 
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @Parameters
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Collection<Object[]> params() {
+    private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
                 // @checkstyle MultipleStringLiterals (8 lines)
@@ -83,10 +88,4 @@ public final class ListDecorTest extends AbstractDecorTest {
             }
         );
     }
-
-    @Override
-    public Formattable decor() throws Exception {
-        return new ListDecor(this.object());
-    }
-
 }

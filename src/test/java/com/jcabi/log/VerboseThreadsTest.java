@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link VerboseThreads}.
@@ -44,10 +44,6 @@ import org.junit.Test;
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreadsTest {
 
-    /**
-     * VerboseThreads can create new threads on demand.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void instantiatesThreadsOnDemand() throws Exception {
         final ExecutorService service = Executors
@@ -61,10 +57,6 @@ public final class VerboseThreadsTest {
         service.shutdown();
     }
 
-    /**
-     * VerboseThreads can log exceptions with {@link ExecutorService#submit()}.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void logsWhenThreadsAreNotDying() throws Exception {
         final ExecutorService service = Executors

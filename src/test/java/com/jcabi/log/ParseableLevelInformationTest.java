@@ -33,8 +33,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * ParseableLevelInformation test case.
@@ -67,7 +67,7 @@ public class ParseableLevelInformationTest {
         final String wrong = "INFO;10,WARN;32";
         try {
             new ParseableLevelInformation(wrong).information();
-            Assert.fail();
+            Assertions.fail("Something was wrong");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(), Matchers.equalTo(
@@ -92,7 +92,7 @@ public class ParseableLevelInformationTest {
             new ParseableLevelInformation(
                 "INFO:2;10,EXTREME:2;32"
             ).information();
-            Assert.fail();
+            Assertions.fail("");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),

@@ -29,18 +29,18 @@
  */
 package com.jcabi.log;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
  * Test case for {@link MulticolorLayout}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ *
  * @since 0.1
  */
 public final class MulticolorLayoutTest {
@@ -50,12 +50,8 @@ public final class MulticolorLayoutTest {
      */
     private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
 
-    /**
-     * MulticolorLayout can transform event to text.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void transformsLoggingEventToText() throws Exception {
+    public void transformsLoggingEventToText() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -69,12 +65,8 @@ public final class MulticolorLayoutTest {
         );
     }
 
-    /**
-     * MulticolorLayout can transform event to text.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void overwriteDefaultColor() throws Exception {
+    public void overwriteDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
         layout.setLevels("INFO:2;10");
@@ -89,12 +81,8 @@ public final class MulticolorLayoutTest {
         );
     }
 
-    /**
-     * MulticolorLayout can render custom color.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void rendersCustomConstantColor() throws Exception {
+    public void rendersCustomConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("%color-red{%p} %m");
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -106,12 +94,8 @@ public final class MulticolorLayoutTest {
         );
     }
 
-    /**
-     * MulticolorLayout can render custom color.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void overwriteCustomConstantColor() throws Exception {
+    public void overwriteCustomConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("%color-white{%p} %m");
         layout.setColors("white:10");
@@ -124,12 +108,8 @@ public final class MulticolorLayoutTest {
         );
     }
 
-    /**
-     * MulticolorLayout can render any ANSI color.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void rendersAnsiConstantColor() throws Exception {
+    public void rendersAnsiConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("%color-0;0;31{%p} %m");
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -141,18 +121,19 @@ public final class MulticolorLayoutTest {
         );
     }
 
-    /**
-     * MulticolorLayout can throw if color name is not valid.
-     * @throws Exception If something goes wrong
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void throwsOnIllegalColorName() throws Exception {
-        final MulticolorLayout layout = new MulticolorLayout();
-        layout.setConversionPattern("%color-oops{%p} %m");
-        final LoggingEvent event = Mockito.mock(LoggingEvent.class);
-        Mockito.doReturn(Level.DEBUG).when(event).getLevel();
-        Mockito.doReturn("text").when(event).getRenderedMessage();
-        layout.format(event);
+    @Test
+    public void throwsOnIllegalColorName() {
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+                final MulticolorLayout layout = new MulticolorLayout();
+                layout.setConversionPattern("%color-oops{%p} %m");
+                final LoggingEvent event = Mockito.mock(LoggingEvent.class);
+                Mockito.doReturn(Level.DEBUG).when(event).getLevel();
+                Mockito.doReturn("text").when(event).getRenderedMessage();
+                layout.format(event);
+            }
+        );
     }
 
 }

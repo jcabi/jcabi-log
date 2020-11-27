@@ -48,10 +48,10 @@ import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
@@ -69,15 +69,10 @@ import org.mockito.Mockito;
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 public final class VerboseProcessTest {
 
-    /**
-     * VerboseProcess can run a command line script.
-     * @throws Exception If something goes wrong
-     * @link http://stackoverflow.com/questions/24802042
-     */
     @Test
-    @Ignore
-    public void runsACommandLineScript() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+    @Disabled
+    public void runsACommandLineScript() {
+        Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
         );
@@ -87,15 +82,10 @@ public final class VerboseProcessTest {
         );
     }
 
-    /**
-     * VerboseProcess can run a command line script.
-     * @throws Exception If something goes wrong
-     * @link http://stackoverflow.com/questions/24802042
-     */
     @Test
-    @Ignore
-    public void echosUnicodeCorrectly() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+    @Disabled
+    public void echosUnicodeCorrectly() {
+        Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         MatcherAssert.assertThat(
             new VerboseProcess(
                 new ProcessBuilder(
@@ -107,20 +97,16 @@ public final class VerboseProcessTest {
         );
     }
 
-    /**
-     * VerboseProcess can run a command line script with exception.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void runsACommandLineScriptWithException() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+    public void runsACommandLineScriptWithException() {
+        Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
                 .redirectErrorStream(true)
         );
         try {
             process.stdout();
-            Assert.fail("exception expected");
+            Assertions.fail("exception expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
@@ -129,14 +115,9 @@ public final class VerboseProcessTest {
         }
     }
 
-    /**
-     * VerboseProcess can run a command line script with exception, without
-     * errorStream redirection.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
         );
@@ -151,13 +132,9 @@ public final class VerboseProcessTest {
         );
     }
 
-    /**
-     * VerboseProcess can handle a long running command.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void handlesLongRunningCommand() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+    public void handlesLongRunningCommand() {
+        Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
         );
@@ -167,27 +144,24 @@ public final class VerboseProcessTest {
         );
     }
 
-    /**
-     * VerboseProcess can reject NULL.
-     * @throws Exception If something goes wrong
-     */
-    @Test(expected = RuntimeException.class)
-    public void rejectsNullProcesses() throws Exception {
-        final ProcessBuilder builder = null;
-        new VerboseProcess(builder);
+    @Test
+    public void rejectsNullProcesses() {
+        Assertions.assertThrows(
+            RuntimeException.class,
+            () -> {
+                final ProcessBuilder builder = null;
+                new VerboseProcess(builder);
+            }
+        );
     }
 
-    /**
-     * VerboseProcess can reject ALL stdout level.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void rejectsStdoutWithLevelAll() throws Exception {
+    public void rejectsStdoutWithLevelAll() {
         try {
             new VerboseProcess(
                 Mockito.mock(Process.class), Level.ALL, Level.INFO
             );
-            Assert.fail("IllegalArgumentException expected");
+            Assertions.fail("IllegalArgumentException expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
@@ -201,17 +175,13 @@ public final class VerboseProcessTest {
         }
     }
 
-    /**
-     * VerboseProcess can reject ALL stderr level.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void rejectsStderrWithLevelAll() throws Exception {
+    public void rejectsStderrWithLevelAll() {
         try {
             new VerboseProcess(
                 Mockito.mock(Process.class), Level.INFO, Level.ALL
             );
-            Assert.fail("IllegalArgumentException expected here");
+            Assertions.fail("IllegalArgumentException expected here");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 ex.getMessage(),
@@ -225,14 +195,10 @@ public final class VerboseProcessTest {
         }
     }
 
-    /**
-     * VerboseProcess can quietly terminate a long-running process.
-     * @throws Exception If something goes wrong
-     */
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
     public void quietlyTerminatesLongRunningProcess() throws Exception {
-        Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final Process proc = new ProcessBuilder("sleep", "10000").start();
         final VerboseProcess process = new VerboseProcess(proc);
         final CountDownLatch start = new CountDownLatch(1);
@@ -255,12 +221,8 @@ public final class VerboseProcessTest {
         );
     }
 
-    /**
-     * VerboseProcess.stdoutQuietly() should log stderr messages.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void stdoutQuietlyLogsErrors() throws Exception {
+    public void stdoutQuietlyLogsErrors() {
         final StringWriter writer = new StringWriter();
         org.apache.log4j.Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
@@ -284,11 +246,6 @@ public final class VerboseProcessTest {
         );
     }
 
-    /**
-     * VerboseProcess exits "gracefully" when it can't read from the process
-     * stream, and logs the error that is thrown.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
         final StringWriter writer = new StringWriter();
@@ -320,22 +277,12 @@ public final class VerboseProcessTest {
         );
     }
 
-    /**
-     * VerboseProcess can terminate its monitors and underlying Process if
-     * closed before real usage.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void terminatesMonitorsAndProcessIfClosedInstantly()
         throws Exception {
         this.terminatesMonitorsAndProcessIfClosed(0);
     }
 
-    /**
-     * VerboseProcess can terminate its monitors and underlying Process if
-     * closed shortly after real usage.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void terminatesMonitorsAndProcessIfClosedShortly()
         throws Exception {
@@ -343,11 +290,6 @@ public final class VerboseProcessTest {
         this.terminatesMonitorsAndProcessIfClosed(50);
     }
 
-    /**
-     * VerboseProcess can terminate its monitors and underlying Process if
-     * closed after longer time since real usage.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void terminatesMonitorsAndProcessIfClosedNormal() throws Exception {
         final long delay = 400;

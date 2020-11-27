@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.Formattable;
 import java.util.Formatter;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.mockito.hamcrest.MockitoHamcrest;
 
@@ -45,10 +45,6 @@ import org.mockito.hamcrest.MockitoHamcrest;
  */
 public final class ExceptionDecorTest {
 
-    /**
-     * ExceptionDecor can transform exception to text.
-     * @throws Exception If some problem
-     */
     @Test
     public void convertsExceptionToText() throws Exception {
         final Formattable decor = new ExceptionDecor(new IOException("ouch!"));
@@ -69,10 +65,6 @@ public final class ExceptionDecorTest {
         );
     }
 
-    /**
-     * ExceptionDecor can handle NULL properly.
-     * @throws Exception If some problem
-     */
     @Test
     public void convertsNullToText() throws Exception {
         final Formattable decor = new ExceptionDecor(null);

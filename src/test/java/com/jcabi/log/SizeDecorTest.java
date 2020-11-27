@@ -31,48 +31,59 @@ package com.jcabi.log;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Formattable;
 import java.util.FormattableFlags;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import java.util.Locale;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link SizeDecor}.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ *
  * @since 0.1
  */
-@RunWith(Parameterized.class)
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
-public final class SizeDecorTest extends AbstractDecorTest {
+public final class SizeDecorTest {
 
-    /**
-     * Public ctor.
-     * @param size The size
-     * @param text Expected text
-     * @param flags Flags
-     * @param width Width
-     * @param precision Precission
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    public SizeDecorTest(final Long size, final String text,
-        final int flags, final int width, final int precision) {
-        super(size, text, flags, width, precision);
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testPrintsRight(final long size, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Printed(new SizeDecor(size), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testLogsRight(final long size, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Logged(new SizeDecor(size), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @Test
+    public void testPrintsNullRight() {
+        MatcherAssert.assertThat(
+            new Logged(new SizeDecor(null), 0, 0, 0),
+            Matchers.hasToString("NULL")
+        );
     }
 
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @Parameters
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Collection<Object[]> params() {
+    private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
                 // @checkstyle MagicNumber (14 lines)
-                {null, "NULL", 0, 0, 0},
                 {1L, "1b", 0, 0, 0},
                 {123L, "  123b", 0, 6, 0},
                 {1024L, "1.000Kb", 0, 0, 3},
@@ -87,11 +98,6 @@ public final class SizeDecorTest extends AbstractDecorTest {
                 {3L * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, "3Eb", 0, 0, 0},
             }
         );
-    }
-
-    @Override
-    public Formattable decor() {
-        return new SizeDecor((Long) this.object());
     }
 
 }

@@ -31,31 +31,18 @@ package com.jcabi.log;
 
 import java.util.Formattable;
 import java.util.FormattableFlags;
-import java.util.Formatter;
-import java.util.Locale;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
- * Abstract test case for all decors in the package.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ * Logs decor.
+ *
  * @since 0.1
  */
-public abstract class AbstractDecorTest {
+public final class Logged {
 
     /**
-     * Object/system under test.
+     * The decor.
      */
-    private final transient Object sut;
-
-    /**
-     * The text to expect as an output.
-     */
-    private final transient String text;
+    private final transient Formattable decor;
 
     /**
      * Formatting flas.
@@ -74,54 +61,33 @@ public abstract class AbstractDecorTest {
 
     /**
      * Public ctor.
-     * @param obj The object
-     * @param txt Expected text
+     * @param dcr Decor
      * @param flgs Flags
      * @param wdt Width
      * @param prcs Precission
      * @checkstyle ParameterNumber (3 lines)
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
-    public AbstractDecorTest(final Object obj, final String txt,
+    public Logged(final Formattable dcr,
         final int flgs, final int wdt, final int prcs) {
-        this.sut = obj;
-        this.text = txt;
+        this.decor = dcr;
         this.flags = flgs;
         this.width = wdt;
         this.precision = prcs;
-        Locale.setDefault(Locale.US);
     }
 
-    /**
-     * AbstractDecor can convert object to text.
-     * @throws Exception If some problem inside
-     */
-    @Test
-    public final void convertsDifferentFormats() throws Exception {
-        final Formattable decor = this.decor();
-        final Appendable dest = Mockito.mock(Appendable.class);
-        final Formatter fmt = new Formatter(dest);
-        decor.formatTo(fmt, this.flags, this.width, this.precision);
-        Mockito.verify(dest).append(this.text);
-    }
-
-    /**
-     * AbstractDecor can convert object to text, via Logger.
-     * @throws Exception If some problem inside
-     */
-    @Test
-    public final void convertsDifferentFormatsViaLogger() throws Exception {
-        final StringBuilder format = new StringBuilder();
+    @Override
+    public String toString() {
+        final StringBuilder format = new StringBuilder(0);
         format.append('%');
         if ((this.flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
             .LEFT_JUSTIFY) {
             format.append('-');
         }
         if (this.width > 0) {
-            format.append(Integer.toString(this.width));
+            format.append(this.width);
         }
         if (this.precision > 0) {
-            format.append('.').append(Integer.toString(this.precision));
+            format.append('.').append(this.precision);
         }
         if ((this.flags & FormattableFlags.UPPERCASE) == FormattableFlags
             .UPPERCASE) {
@@ -129,25 +95,7 @@ public abstract class AbstractDecorTest {
         } else {
             format.append('s');
         }
-        MatcherAssert.assertThat(
-            Logger.format(format.toString(), this.decor()),
-            Matchers.equalTo(this.text)
-        );
-    }
-
-    /**
-     * Get decor with the object.
-     * @return The decor to test
-     * @throws Exception If some problem
-     */
-    protected abstract Formattable decor() throws Exception;
-
-    /**
-     * Get object under test.
-     * @return The object
-     */
-    protected final Object object() {
-        return this.sut;
+        return Logger.format(format.toString(), this.decor);
     }
 
 }

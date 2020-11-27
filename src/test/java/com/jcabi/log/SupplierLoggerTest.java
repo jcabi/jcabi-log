@@ -32,8 +32,8 @@ package com.jcabi.log;
 import org.apache.log4j.Level;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link SupplierLogger}.
@@ -47,13 +47,8 @@ import org.junit.Test;
 @SuppressWarnings("PMD.MoreThanOneLogger")
 public final class SupplierLoggerTest {
 
-    /**
-     * SupplierLogger can tell if debug is disabled and the message is not
-     * logged enabled.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void debugIsDisabled() throws Exception {
+    public void debugIsDisabled() {
         final String name = "nodebug";
         final String appender = "nodebugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -65,17 +60,13 @@ public final class SupplierLoggerTest {
         );
         MatcherAssert.assertThat(
             ((UnitTestAppender) logger.getAppender(appender)).output(),
-            Matchers.isEmptyString()
+            Matchers.emptyString()
         );
     }
 
-    /**
-     * SupplierLogger can log a message with debug level.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    @Ignore
-    public void debugIsEnabled() throws Exception {
+    @Disabled
+    public void debugIsEnabled() {
         final String name = "debugen";
         final String appender = "debugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -92,11 +83,6 @@ public final class SupplierLoggerTest {
         );
     }
 
-    /**
-     * SupplierLogger can tell if trace is disabled and the message is not
-     * logged enabled.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void traceIsDisabled() throws Exception {
         final String name = "notrace";
@@ -110,17 +96,12 @@ public final class SupplierLoggerTest {
         );
         MatcherAssert.assertThat(
             ((UnitTestAppender) logger.getAppender(appender)).output(),
-            Matchers.isEmptyString()
+            Matchers.emptyString()
         );
     }
 
-    /**
-     * SupplierLogger can log a message with trace level.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    @Ignore
-    public void traceIsEnabled() throws Exception {
+    public void traceIsEnabled() {
         final String name = "enabledtrace";
         final String appender = "traceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -137,13 +118,8 @@ public final class SupplierLoggerTest {
         );
     }
 
-    /**
-     * SupplierLogger can tell if warn is disabled and the message is not
-     * logged enabled.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void warnIsDisabled() throws Exception {
+    public void warnIsDisabled() {
         final String name = "nowarn";
         final String appender = "nowarnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -155,17 +131,13 @@ public final class SupplierLoggerTest {
         );
         MatcherAssert.assertThat(
             ((UnitTestAppender) logger.getAppender(appender)).output(),
-            Matchers.isEmptyString()
+            Matchers.emptyString()
         );
     }
 
-    /**
-     * SupplierLogger can log a message with warn level.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    @Ignore
-    public void warnIsEnabled() throws Exception {
+    @Disabled
+    public void warnIsEnabled() {
         final String name = "enwarn";
         final String appender = "warnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -182,13 +154,8 @@ public final class SupplierLoggerTest {
         );
     }
 
-    /**
-     * SupplierLogger can tell if info is disabled and the message is not
-     * logged.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void infoIsDisabled() throws Exception {
+    public void infoIsDisabled() {
         final String name = "noinfo";
         final String appender = "noinfoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -200,17 +167,13 @@ public final class SupplierLoggerTest {
         );
         MatcherAssert.assertThat(
             ((UnitTestAppender) logger.getAppender(appender)).output(),
-            Matchers.isEmptyString()
+            Matchers.emptyString()
         );
     }
 
-    /**
-     * SupplierLogger can log a message with info level.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    @Ignore
-    public void infoIsEnabled() throws Exception {
+    @Disabled
+    public void infoIsEnabled() {
         final String name = "withinfo";
         final String appender = "infoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(

@@ -112,23 +112,23 @@ final class MsDecor implements Formattable {
     private String toText(final int precision) {
         final double number;
         final String title;
-        if (this.millis < 1000L) {
+        if (this.millis < 1000.0) {
             number = this.millis;
             title = "ms";
-        } else if (this.millis < 1000L * 60) {
-            number = this.millis / 1000L;
+        } else if (this.millis < (double) (1000L * 60L)) {
+            number = this.millis / 1000.0;
             title = "s";
-        } else if (this.millis < 1000L * 60 * 60) {
-            number = this.millis / (1000L * 60);
+        } else if (this.millis < (double) (1000L * 60L * 60L)) {
+            number = this.millis / (double) (1000L * 60L);
             title = "min";
-        } else if (this.millis < 1000L * 60 * 60 * 24) {
-            number = this.millis / (1000L * 60 * 60);
+        } else if (this.millis < (double) (1000L * 60L * 60L * 24L)) {
+            number = this.millis / (double) (1000L * 60L * 60L);
             title = "hr";
-        } else if (this.millis < 1000L * 60 * 60 * 24 * 30) {
-            number = this.millis / (1000L * 60 * 60 * 24);
+        } else if (this.millis < (double) (1000L * 60L * 60L * 24L * 30L)) {
+            number = this.millis / (double) (1000L * 60L * 60L * 24L);
             title = "days";
         } else {
-            number = this.millis / (1000L * 60 * 60 * 24 * 30);
+            number = this.millis / (double) (1000L * 60L * 60L * 24L * 30L);
             title = "mon";
         }
         final String format;

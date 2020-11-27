@@ -31,11 +31,13 @@ package com.jcabi.log;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Formattable;
 import java.util.FormattableFlags;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import java.util.Locale;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link NanoDecor}.
@@ -44,36 +46,47 @@ import org.junit.runners.Parameterized.Parameters;
  * @version $Id$
  * @since 0.1
  */
-@RunWith(Parameterized.class)
-@SuppressWarnings("PMD.TestClassWithoutTestCases")
-public final class NanoDecorTest extends AbstractDecorTest {
+public final class NanoDecorTest {
 
-    /**
-     * Public ctor.
-     * @param nano The amount of nanoseconds
-     * @param text Expected text
-     * @param flags Flags
-     * @param width Width
-     * @param precision Precission
-     * @checkstyle ParameterNumber (3 lines)
-     */
-    public NanoDecorTest(final Long nano, final String text,
-        final int flags, final int width, final int precision) {
-        super(nano, text, flags, width, precision);
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testPrintsRight(final long nano, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Printed(new NanoDecor(nano), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("params")
+    public void testLogsRight(final long nano, final String text,
+        final int flags, final int width, final int precision) throws DecorException {
+        Locale.setDefault(Locale.US);
+        MatcherAssert.assertThat(
+            new Logged(new NanoDecor(nano), flags, width, precision),
+            Matchers.hasToString(text)
+        );
+    }
+
+    @Test
+    public void testPrintsNullRight() {
+        MatcherAssert.assertThat(
+            new Logged(new NanoDecor(null), 0, 0, 0),
+            Matchers.hasToString("NULL")
+        );
     }
 
     /**
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @Parameters
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Collection<Object[]> params() {
+    private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
                 // @checkstyle LineLength (20 lines)
                 // @checkstyle MagicNumber (20 lines)
-                {null, "NULL", 0, 0, 0},
                 {13L, "13ns", 0, 0, -1},
                 {13L, "13.0ns", 0, 0, 1},
                 {25L, "25.00ns", 0, 0, 2},
@@ -94,11 +107,6 @@ public final class NanoDecorTest extends AbstractDecorTest {
                 {342000004004004L, "5700min", 0, 0, 0},
             }
         );
-    }
-
-    @Override
-    public Formattable decor() {
-        return new NanoDecor((Long) this.object());
     }
 
 }

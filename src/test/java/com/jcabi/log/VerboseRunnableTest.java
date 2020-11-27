@@ -37,7 +37,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link VerboseRunnable}.
@@ -48,25 +49,21 @@ import org.junit.Test;
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
 public final class VerboseRunnableTest {
 
-    /**
-     * VerboseRunnable can log exceptions inside Runnable.
-     * @throws Exception If something goes wrong
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void logsExceptionsInRunnable() throws Exception {
-        new VerboseRunnable(
-            (Runnable) () -> {
-                throw new IllegalArgumentException("oops");
-            }
-        ).run();
+    @Test
+    public void logsExceptionsInRunnable() {
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> new VerboseRunnable(
+                (Runnable) () -> {
+                    throw new IllegalArgumentException("oops");
+                }
+            ).run()
+        );
+
     }
 
-    /**
-     * VerboseRunnable can swallow exceptions.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void swallowsExceptionsInRunnable() throws Exception {
+    public void swallowsExceptionsInRunnable() {
         new VerboseRunnable(
             (Runnable) () -> {
                 throw new IllegalArgumentException("boom");
@@ -75,12 +72,8 @@ public final class VerboseRunnableTest {
         ).run();
     }
 
-    /**
-     * VerboseRunnable can swallow exceptions in Callable.
-     * @throws Exception If something goes wrong
-     */
     @Test
-    public void swallowsExceptionsInCallable() throws Exception {
+    public void swallowsExceptionsInCallable() {
         new VerboseRunnable(
             () -> {
                 throw new IllegalArgumentException("boom-2");
@@ -89,11 +82,6 @@ public final class VerboseRunnableTest {
         ).run();
     }
 
-    /**
-     * VerboseRunnable can translate {@code toString()}
-     * from an underlying {@link Runnable}.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void translatesToStringFromUnderlyingRunnable() throws Exception {
         final String text = "some text abc";
@@ -115,11 +103,6 @@ public final class VerboseRunnableTest {
         );
     }
 
-    /**
-     * VerboseRunnable can translate {@code toString()}
-     * from an underlying {@link Callable}.
-     * @throws Exception If something goes wrong
-     */
     @Test
     public void translatesToStringFromUnderlyingCallable() throws Exception {
         final String text = "some text abc-2";
@@ -142,11 +125,6 @@ public final class VerboseRunnableTest {
         );
     }
 
-    /**
-     * VerboseRunnable can preserve interrupted status.
-     * @throws Exception If something goes wrong
-     * @since 0.14
-     */
     @Test
     public void preservesInterruptedStatus() throws Exception {
         final ScheduledExecutorService svc =
