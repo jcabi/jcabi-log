@@ -30,6 +30,7 @@
 package com.jcabi.log;
 
 import java.io.ByteArrayInputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -56,8 +57,7 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link VerboseProcess}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ *
  * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
@@ -247,13 +247,14 @@ public final class VerboseProcessTest {
     }
 
     @Test
+    @SuppressWarnings("PMD.AvoidFileStream")
     public void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
         final StringWriter writer = new StringWriter();
         org.apache.log4j.Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         final Process prc = Mockito.mock(Process.class);
-        final InputStream stdout = new FileInputStream(
+        final Closeable stdout = new FileInputStream(
             File.createTempFile("temp", "test")
         );
         stdout.close();
@@ -368,6 +369,8 @@ public final class VerboseProcessTest {
 
     /**
      * {@link InputStream} returning endless flow of characters.
+     *
+     * @since 0.1
      */
     private final class InfiniteInputStream extends InputStream {
         /**
@@ -379,10 +382,12 @@ public final class VerboseProcessTest {
          * Character, endlessly repeated in the stream.
          */
         private final transient char chr;
+
         /**
          * Whether the next char in the stream should be EOL.
          */
         private transient boolean feed;
+
         /**
          * Whether this stream is closed.
          */
@@ -425,6 +430,8 @@ public final class VerboseProcessTest {
      *
      * <p>It filters out messages of monitor threads, that doesn't belong to
      * specific {@link VerboseProcess}.
+     *
+     * @since 0.1
      */
     private final class VrbPrcMonitorFilter extends Filter {
         /**

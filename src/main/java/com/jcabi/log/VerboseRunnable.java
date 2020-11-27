@@ -51,8 +51,6 @@ import lombok.ToString;
  *
  * <p>This class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1.3
  * @see VerboseThreads
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
@@ -138,6 +136,7 @@ public final class VerboseRunnable implements Runnable {
                         throw new IllegalStateException(ex);
                     }
                 }
+
                 @Override
                 public String toString() {
                     return callable.toString();

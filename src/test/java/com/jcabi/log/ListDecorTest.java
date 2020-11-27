@@ -40,9 +40,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link ListDecor}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+ *
  * @since 0.1
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class ListDecorTest {
 
@@ -72,6 +72,7 @@ public final class ListDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {

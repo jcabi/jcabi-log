@@ -37,8 +37,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link VerboseThreads}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @SuppressWarnings("PMD.DoNotUseThreads")

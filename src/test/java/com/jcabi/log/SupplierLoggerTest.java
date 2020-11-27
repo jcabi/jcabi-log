@@ -37,8 +37,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link SupplierLogger}.
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
  * @since 0.18
  * @todo #100:30min Some tests here are ignored since they conflict
  *  in multi-threading run. I don't know exactly how to fix them,

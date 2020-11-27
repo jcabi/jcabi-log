@@ -36,9 +36,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link DecorsManager}.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public final class DecorsManagerTest {
@@ -55,11 +52,8 @@ public final class DecorsManagerTest {
     public void throwsExceptionForAbsentDecor() {
         Assertions.assertThrows(
             DecorException.class,
-            () -> {
-                DecorsManager.decor("non-existing-formatter", null);
-            }
+            () -> DecorsManager.decor("non-existing-formatter", null)
         );
-
     }
 
 }

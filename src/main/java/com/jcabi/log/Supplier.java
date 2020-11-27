@@ -34,8 +34,6 @@ package com.jcabi.log;
  * or method references. <b>Can be used for method referencing when the method
  * signature respects the following: returns something and takes no arguments.
  * </b>
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
  * @param <T> The type of results supplied by this supplier
  * @since 0.18
  */

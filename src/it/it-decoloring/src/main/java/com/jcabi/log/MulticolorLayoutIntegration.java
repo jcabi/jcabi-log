@@ -34,8 +34,6 @@ package com.jcabi.log;
  * be run with maven-invoker-plugin because they set the system property
  * com.jcabi.log.coloring, which interferes with other tests (tests are run
  * by multiple threads at once)
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public final class MulticolorLayoutIntegration {

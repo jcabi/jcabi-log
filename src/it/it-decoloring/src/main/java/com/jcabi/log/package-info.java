@@ -30,7 +30,5 @@
 
 /**
  * Integration tests.
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
  */
 package com.jcabi.log;

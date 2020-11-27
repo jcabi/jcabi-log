@@ -46,8 +46,6 @@ import org.w3c.dom.Node;
 /**
  * Decorates XML Document.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @ToString

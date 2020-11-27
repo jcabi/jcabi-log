@@ -39,8 +39,6 @@
  *   &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @see <a href="http://www.jcabi.com/jcabi-log">project website</a>
  */
 package com.jcabi.log;

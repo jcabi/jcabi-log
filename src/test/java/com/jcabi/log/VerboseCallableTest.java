@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link VerboseCallable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.16
  */
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })

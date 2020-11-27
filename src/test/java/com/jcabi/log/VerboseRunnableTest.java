@@ -42,8 +42,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link VerboseRunnable}.
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
@@ -59,7 +57,6 @@ public final class VerboseRunnableTest {
                 }
             ).run()
         );
-
     }
 
     @Test
@@ -91,6 +88,7 @@ public final class VerboseRunnableTest {
                 public void run() {
                     assert true;
                 }
+
                 @Override
                 public String toString() {
                     return text;
@@ -112,6 +110,7 @@ public final class VerboseRunnableTest {
                 public Void call() {
                     return null;
                 }
+
                 @Override
                 public String toString() {
                     return text;

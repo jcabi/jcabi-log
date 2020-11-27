@@ -40,9 +40,6 @@ import lombok.ToString;
 /**
  * Manager of all decors.
  *
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @ToString

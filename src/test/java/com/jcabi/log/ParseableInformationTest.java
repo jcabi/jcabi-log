@@ -38,8 +38,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * ParseableInformation test case.
- * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
- * @version $Id$
  * @since 0.18
  */
 public class ParseableInformationTest {

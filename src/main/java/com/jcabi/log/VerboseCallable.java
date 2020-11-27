@@ -52,8 +52,6 @@ import lombok.ToString;
  *
  * <p>This class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.16
  * @param <T> Type of result
  * @see VerboseThreads
@@ -122,6 +120,7 @@ public final class VerboseCallable<T> implements Callable<T> {
                     runnable.run();
                     return null;
                 }
+
                 @Override
                 public String toString() {
                     return runnable.toString();

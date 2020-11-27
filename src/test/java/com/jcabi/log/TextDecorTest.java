@@ -45,6 +45,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * Test case for {@link TextDecor}.
  *
  * @since 0.1
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class TextDecorTest {
 
@@ -71,23 +72,6 @@ public final class TextDecorTest {
     }
 
     /**
-     * Params for this parametrized test.
-     * @return Array of arrays of params for ctor
-     */
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    private static Collection<Object[]> params() {
-        return Arrays.asList(
-            new Object[][] {
-                // @checkstyle MultipleStringLiterals (1 line)
-                {"simple text", "simple text", 0, 0, 0},
-                {null, "NULL", 0, 0, 0},
-                // @checkstyle MultipleStringLiteralsCheck (1 line)
-                {"\u0433!", "\u0433!", 0, 0, 0},
-            }
-        );
-    }
-
-    /**
      * Test for a long text.
      */
     @Test
@@ -103,6 +87,28 @@ public final class TextDecorTest {
                 output.toString(),
                 Matchers.equalTo(TextDecor.MAX)
             )
+        );
+    }
+
+    /**
+     * Params for this parametrized test.
+     * @return Array of arrays of params for ctor
+     */
+    @SuppressWarnings(
+        {
+            "PMD.AvoidDuplicateLiterals",
+            "PMD.UnusedPrivateMethod"
+        }
+    )
+    private static Collection<Object[]> params() {
+        return Arrays.asList(
+            new Object[][] {
+                // @checkstyle MultipleStringLiterals (1 line)
+                {"simple text", "simple text", 0, 0, 0},
+                {null, "NULL", 0, 0, 0},
+                // @checkstyle MultipleStringLiteralsCheck (1 line)
+                {"\u0433!", "\u0433!", 0, 0, 0},
+            }
         );
     }
 }

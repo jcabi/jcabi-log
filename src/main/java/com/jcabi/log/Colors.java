@@ -34,8 +34,6 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Store human readable color data.
- * @author Igor Piddubnyi (igor.piddubnyi@gmail.com)
- * @version $Id$
  * @since 0.18
  */
 public class Colors {

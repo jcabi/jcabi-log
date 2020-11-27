@@ -46,9 +46,6 @@ import lombok.ToString;
  * Logger.debug("completed in %[nano]s", System.nanoTime() - start);
  * </pre>
  *
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @ToString

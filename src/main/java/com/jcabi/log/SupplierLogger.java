@@ -32,8 +32,6 @@ package com.jcabi.log;
 /**
  * Logging methods which take {@link Supplier} arguments.
  * Used with Java 8 method referencing.
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
  * @since 0.18
  * @checkstyle HideUtilityClassConstructorCheck (500 lines)
  */

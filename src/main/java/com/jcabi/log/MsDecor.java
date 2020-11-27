@@ -46,8 +46,6 @@ import lombok.ToString;
  * Logger.debug("completed in %[ms]s", System.currentTimeMillis() - start);
  * </pre>
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @ToString

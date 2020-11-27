@@ -40,9 +40,6 @@ import lombok.ToString;
 
 /**
  * Format internal structure of an object.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @ToString
@@ -85,8 +82,8 @@ final class ObjectDecor implements Formattable {
 
     /**
      * {@link PrivilegedAction} for obtaining array contents.
-     * @author Aleksey Popov (alopen@yandex.ru)
-     * @version $Id$
+     *
+     * @since 0.1
      */
     private static final class ArrayFormatAction
         implements PrivilegedAction<String>  {
@@ -120,9 +117,8 @@ final class ObjectDecor implements Formattable {
 
     /**
      * {@link PrivilegedAction} for obtaining object contents.
-     * @author Marina Kosenko (marina.kosenko@gmail.com)
-     * @author Yegor Bugayenko (yegor256@gmail.com)
-     * @version $Id$
+     *
+     * @since 0.1
      */
     private static final class ObjectContentsFormatAction
         implements PrivilegedAction<String> {
@@ -161,6 +157,6 @@ final class ObjectDecor implements Formattable {
             }
             builder.replace(builder.length() - 2, builder.length(), "}");
             return builder.toString();
-        };
+        }
     }
 }

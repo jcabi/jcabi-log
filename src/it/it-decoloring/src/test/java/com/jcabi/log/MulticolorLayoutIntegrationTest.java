@@ -42,8 +42,6 @@ import org.mockito.Mockito;
  * be run with maven-invoker-plugin because they set the system property
  * com.jcabi.log.coloring, which interferes with other tests (tests are run
  * by multiple threads at once)
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public final class MulticolorLayoutIntegrationTest {
@@ -51,6 +49,7 @@ public final class MulticolorLayoutIntegrationTest {
      * Conversation pattern for test case.
      */
     private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
+
     /**
      * Property that dictates wheter the text should be coloured or not.
      */

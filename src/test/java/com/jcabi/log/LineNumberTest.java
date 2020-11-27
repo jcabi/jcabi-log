@@ -44,8 +44,6 @@ import org.junit.jupiter.api.Test;
  * Test case for %L pattern.
  * If you change this class, you have to care about line number
  * in "com.jcabi.log.LineNumberTest:72"
- * @author Haris Peco (snpe60@gmail.com)
- * @version $Id$
  * @since 1.18
  */
 public final class LineNumberTest {
@@ -71,7 +69,7 @@ public final class LineNumberTest {
             MatcherAssert.assertThat(
                 writer.toString(),
                 Matchers.containsString(
-                    "com.jcabi.log.LineNumberTest:247"
+                    "com.jcabi.log.LineNumberTest:245"
                 )
             );
         } finally {

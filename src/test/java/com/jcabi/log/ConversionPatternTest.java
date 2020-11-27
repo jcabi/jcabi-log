@@ -35,8 +35,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link ConversionPattern}.
- * @author Csaba Kos (csaba@indeed.com)
- * @version $Id$
  * @since 0.19
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")

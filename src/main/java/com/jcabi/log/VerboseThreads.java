@@ -78,8 +78,6 @@ import lombok.ToString;
  *
  * <p>This class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1.2
  * @see VerboseRunnable
  */
@@ -183,6 +181,8 @@ public final class VerboseThreads implements ThreadFactory {
 
     /**
      * Group to use.
+     *
+     * @since 0.1
      */
     private static final class Group extends ThreadGroup {
         /**
@@ -192,6 +192,7 @@ public final class VerboseThreads implements ThreadFactory {
         Group(final String name) {
             super(name);
         }
+
         @Override
         public void uncaughtException(final Thread thread,
             final Throwable throwable) {
@@ -201,12 +202,15 @@ public final class VerboseThreads implements ThreadFactory {
 
     /**
      * Runnable decorator.
+     *
+     * @since 0.1
      */
     private static final class Wrap implements Runnable {
         /**
          * Origin runnable.
          */
         private final transient Runnable origin;
+
         /**
          * Ctor.
          * @param runnable Origin runnable
@@ -214,6 +218,7 @@ public final class VerboseThreads implements ThreadFactory {
         Wrap(final Runnable runnable) {
             this.origin = runnable;
         }
+
         @Override
         @SuppressWarnings("PMD.AvoidCatchingGenericException")
         public void run() {

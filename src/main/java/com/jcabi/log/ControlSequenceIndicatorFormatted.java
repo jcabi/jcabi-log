@@ -31,8 +31,6 @@ package com.jcabi.log;
 
 /**
  * Replaces string format with a Control Sequence Indicator.
- * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
- * @version $Id$
  * @since 0.18
  */
 public class ControlSequenceIndicatorFormatted implements Formatted {

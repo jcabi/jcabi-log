@@ -43,6 +43,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * Test case for {@link SizeDecor}.
  *
  * @since 0.1
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class SizeDecorTest {
 
@@ -80,6 +81,7 @@ public final class SizeDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
@@ -88,10 +90,10 @@ public final class SizeDecorTest {
                 {123L, "  123b", 0, 6, 0},
                 {1024L, "1.000Kb", 0, 0, 3},
                 {5120L, "5Kb", 0, 0, 0},
-                {12345L, "12.056Kb", 0, 0, 3},
-                {12345L, "12.1Kb  ", FormattableFlags.LEFT_JUSTIFY, 8, 1},
-                {98765432L, "94.190MB", FormattableFlags.UPPERCASE, 0, 3},
-                {98765432L, "94.190Mb", 0, 0, 3},
+                {12_345L, "12.056Kb", 0, 0, 3},
+                {12_345L, "12.1Kb  ", FormattableFlags.LEFT_JUSTIFY, 8, 1},
+                {98_765_432L, "94.190MB", FormattableFlags.UPPERCASE, 0, 3},
+                {98_765_432L, "94.190Mb", 0, 0, 3},
                 {90L * 1024 * 1024 * 1024, "90Gb", 0, 0, 0},
                 {13L * 1024 * 1024 * 1024 * 1024, "13Tb", 0, 0, 0},
                 {33L * 1024 * 1024 * 1024 * 1024 * 1024, "33Pb", 0, 0, 0},

@@ -41,10 +41,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link NanoDecor}.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
+
  * @since 0.1
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class NanoDecorTest {
 
@@ -82,6 +81,7 @@ public final class NanoDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
@@ -94,17 +94,17 @@ public final class NanoDecorTest {
                 {1024L, "1µs", 0, 0, 0},
                 {1056L, "1.056µs", 0, 0, 3},
                 {9022L, "9.02µs", 0, 0, 2},
-                {53111L, "53.11µs   ", FormattableFlags.LEFT_JUSTIFY, 10, 2},
-                {53156L, "   53µs", 0, 7, 0},
-                {87090432L, "  87ms", 0, 6, 0},
-                {87090543L, "87.09ms", 0, 0, 2},
-                {87090548L, "87.0905ms", 0, 0, 4},
-                {6001001001L, "6.0010s", 0, 0, 4},
-                {122001001001L, "  2MIN", FormattableFlags.UPPERCASE, 6, 0},
-                {3789001001001L, "63.15002min", 0, 0, 5},
-                {3789002002002L, "63.2min", 0, 0, 1},
-                {3789003003003L, "63min", 0, 0, 0},
-                {342000004004004L, "5700min", 0, 0, 0},
+                {53_111L, "53.11µs   ", FormattableFlags.LEFT_JUSTIFY, 10, 2},
+                {53_156L, "   53µs", 0, 7, 0},
+                {87_090_432L, "  87ms", 0, 6, 0},
+                {87_090_543L, "87.09ms", 0, 0, 2},
+                {87_090_548L, "87.0905ms", 0, 0, 4},
+                {6_001_001_001L, "6.0010s", 0, 0, 4},
+                {122_001_001_001L, "  2MIN", FormattableFlags.UPPERCASE, 6, 0},
+                {3_789_001_001_001L, "63.15002min", 0, 0, 5},
+                {3_789_002_002_002L, "63.2min", 0, 0, 1},
+                {3_789_003_003_003L, "63min", 0, 0, 0},
+                {342_000_004_004_004L, "5700min", 0, 0, 0},
             }
         );
     }

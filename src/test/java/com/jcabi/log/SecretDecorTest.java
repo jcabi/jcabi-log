@@ -42,13 +42,14 @@ import org.junit.jupiter.params.provider.MethodSource;
  * Test case for {@link SecretDecor}.
  *
  * @since 0.1
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class SecretDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
     public void testPrintsRight(final Object list, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Printed(new SecretDecor(list), flags, width, precision),
@@ -59,7 +60,7 @@ public final class SecretDecorTest {
     @ParameterizedTest
     @MethodSource("params")
     public void testLogsRight(final Object list, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Logged(new SecretDecor(list), flags, width, precision),
@@ -71,6 +72,7 @@ public final class SecretDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {

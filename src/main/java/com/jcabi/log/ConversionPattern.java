@@ -34,8 +34,6 @@ import java.util.regex.Pattern;
 
 /**
  * Generates the conversion pattern.
- * @author Jose V. Dal Pra Junior (jrdalpra@gmail.com)
- * @version $Id$
  * @since 0.18
  */
 class ConversionPattern {

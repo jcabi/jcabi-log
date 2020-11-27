@@ -41,8 +41,9 @@ import org.junit.jupiter.params.provider.MethodSource;
  * Test case for {@link ObjectDecor}.
  *
  * @since 0.1
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
-public final class ObjectDecorProbe {
+public final class ObjectDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
@@ -70,6 +71,7 @@ public final class ObjectDecorProbe {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
@@ -92,6 +94,8 @@ public final class ObjectDecorProbe {
 
     /**
      * Test class for displaying object contents.
+     *
+     * @since 0.1
      */
     private static final class Foo {
         /**
@@ -99,11 +103,13 @@ public final class ObjectDecorProbe {
          */
         @SuppressWarnings("unused")
         private final transient int num;
+
         /**
          * The name.
          */
         @SuppressWarnings("unused")
         private final transient String name;
+
         /**
          * Ctor.
          * @param number The number

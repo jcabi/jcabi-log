@@ -35,8 +35,6 @@ import lombok.ToString;
 /**
  * Exception if some problem with decor.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 @ToString

@@ -34,9 +34,6 @@ import java.util.Formatter;
 
 /**
  * Primitive decor, for testing only.
- * @author Marina Kosenko (marina.kosenko@gmail.com)
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.1
  */
 public final class DecorMocker implements Formattable {

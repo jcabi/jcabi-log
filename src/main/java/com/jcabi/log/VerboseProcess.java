@@ -62,8 +62,6 @@ import lombok.ToString;
  *
  * <p>The class is thread-safe.
  *
- * @author Yegor Bugayenko (yegor256@gmail.com)
- * @version $Id$
  * @since 0.5
  */
 @ToString
@@ -405,24 +403,30 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Stream monitor.
+     *
+     * @since 0.1
      */
     private static final class Monitor implements Callable<Void> {
         /**
          * Stream to read.
          */
         private final transient InputStream input;
+
         /**
          * Latch to count down when done.
          */
         private final transient CountDownLatch done;
+
         /**
          * Buffer to save output.
          */
         private final transient OutputStream output;
+
         /**
          * Log level.
          */
         private final transient Level level;
+
         /**
          * Ctor.
          * @param inp Stream to monitor
@@ -438,6 +442,7 @@ public final class VerboseProcess implements Closeable {
             this.output = out;
             this.level = lvl;
         }
+
         @Override
         public Void call() throws Exception {
             final BufferedReader reader = new BufferedReader(
@@ -495,6 +500,8 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Class representing the result of a process.
+     *
+     * @since 0.1
      */
     public static final class Result {
 

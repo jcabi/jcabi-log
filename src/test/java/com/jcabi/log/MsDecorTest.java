@@ -43,6 +43,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * Test case for {@link MsDecor}.
  *
  * @since 0.1
+ * @checkstyle ParameterNumberCheck (500 lines)
  */
 public final class MsDecorTest {
 
@@ -80,6 +81,7 @@ public final class MsDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
@@ -89,10 +91,10 @@ public final class MsDecorTest {
                 {13L, "13.0ms", 0, 0, 1},
                 {1024L, "1s", 0, 0, 0},
                 {6001L, "6.0010s", 0, 0, 4},
-                {122001L, "  2MIN", FormattableFlags.UPPERCASE, 6, 0},
-                {3789003L, "1hr", 0, 0, 0},
-                {86400000L, "1days", 0, 0, 0},
-                {864000000L, "10days", 0, 0, 0},
+                {122_001L, "  2MIN", FormattableFlags.UPPERCASE, 6, 0},
+                {3_789_003L, "1hr", 0, 0, 0},
+                {86_400_000L, "1days", 0, 0, 0},
+                {864_000_000L, "10days", 0, 0, 0},
             }
         );
     }
