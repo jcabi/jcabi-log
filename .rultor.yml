@@ -1,22 +1,20 @@
-docker:
-  image: yegor256/java8
-install:
-- sudo gem install pdd -v 0.20.5
-- sudo gem install xcop -v 0.6
+env:
+  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   settings.xml: yegor256/home#assets/jcabi/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
+install: |
+  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
+  sudo gem install pdd
+  sudo gem install xcop
+  pdd --file=/dev/null
 merge:
   script: |-
-    pdd -f /dev/null
     mvn clean install -Pqulice --errors --settings ../settings.xml
 deploy:
   script: |-
-    pdd -f /dev/null
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
-env:
-  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 release:
   script: |-
     mvn versions:set "-DnewVersion=${tag}"
