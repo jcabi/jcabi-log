@@ -144,11 +144,10 @@ public final class VerboseRunnableTest {
             1L, 1L,
             TimeUnit.MICROSECONDS
         );
-        while (thread.get() == null) {
+        while (thread.compareAndSet(null, null)) {
             TimeUnit.MILLISECONDS.sleep(1L);
         }
         thread.get().interrupt();
-        TimeUnit.SECONDS.sleep(1L);
         svc.shutdown();
         MatcherAssert.assertThat(
             svc.awaitTermination(1L, TimeUnit.SECONDS),
