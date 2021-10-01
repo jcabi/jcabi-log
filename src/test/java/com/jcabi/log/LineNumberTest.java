@@ -69,7 +69,7 @@ public final class LineNumberTest {
             MatcherAssert.assertThat(
                 writer.toString(),
                 Matchers.containsString(
-                    "com.jcabi.log.LineNumberTest:245"
+                    "com.jcabi.log.LineNumberTest:241"
                 )
             );
         } finally {

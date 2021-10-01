@@ -29,16 +29,11 @@
  */
 package com.jcabi.log;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 /**
  * Exception if some problem with decor.
  *
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode(callSuper = false)
 final class DecorException extends Exception {
 
     /**

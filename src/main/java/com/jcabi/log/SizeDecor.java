@@ -34,15 +34,11 @@ import java.util.FormattableFlags;
 import java.util.Formatter;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Size decorator.
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode(of = "size")
 final class SizeDecor implements Formattable {
 
     /**

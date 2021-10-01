@@ -30,20 +30,15 @@
 package com.jcabi.log;
 
 import java.lang.reflect.Field;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Arrays;
 import java.util.Formattable;
 import java.util.Formatter;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Format internal structure of an object.
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode(of = "object")
 final class ObjectDecor implements Formattable {
 
     /**
@@ -67,15 +62,11 @@ final class ObjectDecor implements Formattable {
             formatter.format("NULL");
         } else if (this.object.getClass().isArray()) {
             formatter.format(
-                AccessController.doPrivileged(
-                    new ArrayFormatAction((Object[]) this.object)
-                )
+                new ArrayFormatAction((Object[]) this.object).run()
             );
         } else {
             final String output =
-                AccessController.doPrivileged(
-                    new ObjectDecor.ObjectContentsFormatAction(this.object)
-                );
+                new ObjectDecor.ObjectContentsFormatAction(this.object).run();
             formatter.format(output);
         }
     }

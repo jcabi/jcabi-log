@@ -31,8 +31,6 @@ package com.jcabi.log;
 
 import java.util.Formattable;
 import java.util.Formatter;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Decorator of a text.
@@ -45,8 +43,6 @@ import lombok.ToString;
  *
  * @since 0.1.5
  */
-@ToString
-@EqualsAndHashCode(of = "object")
 final class TextDecor implements Formattable {
 
     /**

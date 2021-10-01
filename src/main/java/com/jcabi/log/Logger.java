@@ -35,8 +35,6 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.logging.Level;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -85,8 +83,6 @@ import org.slf4j.LoggerFactory;
  *
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode
 @SuppressWarnings(
     {
         "PMD.TooManyMethods", "PMD.GodClass", "PMD.ProhibitPublicStaticMethods"

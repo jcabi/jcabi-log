@@ -34,16 +34,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Formattable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Manager of all decors.
  *
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode
 final class DecorsManager {
 
     /**

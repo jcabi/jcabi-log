@@ -31,8 +31,6 @@ package com.jcabi.log;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Wrapper of {@link Callable}, that logs all uncaught runtime exceptions.
@@ -57,8 +55,6 @@ import lombok.ToString;
  * @see VerboseThreads
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
-@ToString
-@EqualsAndHashCode(of = { "origin", "rethrow", "verbose" })
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseCallable<T> implements Callable<T> {
 
@@ -162,6 +158,11 @@ public final class VerboseCallable<T> implements Callable<T> {
         this.origin = callable;
         this.rethrow = !swallow;
         this.verbose = vrbs;
+    }
+
+    @Override
+    public String toString() {
+        return this.origin.toString();
     }
 
     @Override

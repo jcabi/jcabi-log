@@ -32,15 +32,11 @@ package com.jcabi.log;
 import java.util.Formattable;
 import java.util.FormattableFlags;
 import java.util.Formatter;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Decorator of a secret text.
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode(of = "secret")
 final class SecretDecor implements Formattable {
 
     /**

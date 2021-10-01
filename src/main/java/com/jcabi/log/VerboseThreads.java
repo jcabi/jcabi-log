@@ -31,8 +31,6 @@ package com.jcabi.log;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Convenient {@link ThreadFactory}, that logs all uncaught exceptions.
@@ -81,8 +79,6 @@ import lombok.ToString;
  * @since 0.1.2
  * @see VerboseRunnable
  */
-@ToString
-@EqualsAndHashCode(of = { "group", "prefix", "number", "daemon", "priority" })
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreads implements ThreadFactory {
 

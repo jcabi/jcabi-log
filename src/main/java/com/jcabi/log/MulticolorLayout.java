@@ -33,8 +33,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.apache.log4j.EnhancedPatternLayout;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
@@ -79,8 +77,6 @@ import org.apache.log4j.spi.LoggingEvent;
  * @see <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">PatternLayout from LOG4J</a>
  * @see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How to use with Maven</a>
  */
-@ToString
-@EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("PMD.NonStaticInitializer")
 public final class MulticolorLayout extends EnhancedPatternLayout {
 

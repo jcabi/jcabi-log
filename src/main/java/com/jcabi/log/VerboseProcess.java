@@ -44,8 +44,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Utility class for getting {@code stdout} from a running process
@@ -64,8 +62,6 @@ import lombok.ToString;
  *
  * @since 0.5
  */
-@ToString
-@EqualsAndHashCode(of = "process")
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
 public final class VerboseProcess implements Closeable {
 

@@ -34,8 +34,6 @@ import java.io.StringWriter;
 import java.util.Formattable;
 import java.util.FormattableFlags;
 import java.util.Formatter;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Decorates an exception.
@@ -53,8 +51,6 @@ import lombok.ToString;
  *
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode(of = "throwable")
 final class ExceptionDecor implements Formattable {
 
     /**

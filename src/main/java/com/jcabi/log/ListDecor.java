@@ -33,15 +33,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Formattable;
 import java.util.Formatter;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 /**
  * Format list.
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode(of = "list")
 final class ListDecor implements Formattable {
 
     /**
