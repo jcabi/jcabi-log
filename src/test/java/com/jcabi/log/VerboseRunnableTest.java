@@ -150,11 +150,11 @@ public final class VerboseRunnableTest {
         thread.get().interrupt();
         TimeUnit.SECONDS.sleep(1L);
         svc.shutdown();
+        MatcherAssert.assertThat(runs.get(), Matchers.is(1));
         MatcherAssert.assertThat(
             svc.awaitTermination(1L, TimeUnit.SECONDS),
             Matchers.is(true)
         );
-        MatcherAssert.assertThat(runs.get(), Matchers.is(1));
     }
 
 }
