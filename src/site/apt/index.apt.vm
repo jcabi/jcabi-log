@@ -48,7 +48,7 @@ Static Wrapper of SLF4J
 import com.jcabi.log.Logger;
 class Foo {
   void bar(int value) {
-    Logger.debug(this, "method #bar(%d) was called", value);
+    Logger.debug(this, "method #bar(d) was called", value);
   }
 }
 +--
