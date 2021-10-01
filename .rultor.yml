@@ -1,13 +1,8 @@
-env:
-  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   settings.xml: yegor256/home#assets/jcabi/settings.xml
   pubring.gpg: yegor256/home#assets/pubring.gpg
 install: |
-  sudo update-java-alternatives -s java-1.8.0-openjdk-amd64
-  sudo gem install pdd
-  sudo gem install xcop
   pdd --file=/dev/null
 merge:
   script: |-
@@ -20,4 +15,4 @@ release:
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
     mvn clean deploy -Pqulice -Psonatype -Pjcabi --errors --settings ../settings.xml
-    # mvn clean site-deploy -Pjcabi -Psite --errors --settings ../settings.xml
+    mvn clean site-deploy -Pjcabi -Psite --errors --settings ../settings.xml
