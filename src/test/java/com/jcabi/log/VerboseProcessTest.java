@@ -281,19 +281,19 @@ public final class VerboseProcessTest {
     @Test
     public void terminatesMonitorsAndProcessIfClosedInstantly()
         throws Exception {
-        this.terminatesMonitorsAndProcessIfClosed(0);
+        this.terminatesMonitorsAndProcessIfClosed(0L);
     }
 
     @Test
     public void terminatesMonitorsAndProcessIfClosedShortly()
         throws Exception {
         // @checkstyle MagicNumberCheck (1 line)
-        this.terminatesMonitorsAndProcessIfClosed(50);
+        this.terminatesMonitorsAndProcessIfClosed(50L);
     }
 
     @Test
     public void terminatesMonitorsAndProcessIfClosedNormal() throws Exception {
-        final long delay = 400;
+        final long delay = 400L;
         this.terminatesMonitorsAndProcessIfClosed(delay);
     }
 
@@ -339,7 +339,7 @@ public final class VerboseProcessTest {
         org.apache.log4j.Logger.getLogger(
             VerboseProcess.class
         ).addAppender(appender);
-        if (delay == 0) {
+        if (delay == 0L) {
             process.close();
         } else {
             new Timer(true).schedule(

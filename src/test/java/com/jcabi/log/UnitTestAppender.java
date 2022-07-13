@@ -63,8 +63,8 @@ public final class UnitTestAppender extends WriterAppender {
      * Prepares the appender for use.
      */
     public void activateOptions() {
-        setWriter(createWriter(this.logs));
-        setLayout(new PatternLayout("%d %c{1} - %m%n"));
+        this.setWriter(this.createWriter(this.logs));
+        this.setLayout(new PatternLayout("%d %c{1} - %m%n"));
         super.activateOptions();
     }
 

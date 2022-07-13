@@ -85,7 +85,7 @@ final class NanoDecor implements Formattable {
                 format.append('-');
             }
             if (width > 0) {
-                format.append(Integer.toString(width));
+                format.append(width);
             }
             if ((flags & FormattableFlags.UPPERCASE) == FormattableFlags
                 .UPPERCASE) {
@@ -106,20 +106,20 @@ final class NanoDecor implements Formattable {
         final double number;
         final String title;
         // @checkstyle MagicNumber (15 lines)
-        if (this.nano < 1000L) {
+        if (this.nano < 1000.0) {
             number = this.nano;
             title = "ns";
-        } else if (this.nano < 1000L * 1000) {
-            number = this.nano / 1000L;
+        } else if (this.nano < (double) (1000L * 1000L)) {
+            number = this.nano / 1000.0;
             title = "µs";
-        } else if (this.nano < 1000L * 1000 * 1000) {
-            number = this.nano / (1000L * 1000);
+        } else if (this.nano < (double) (1000L * 1000L * 1000L)) {
+            number = this.nano / (double) (1000L * 1000L);
             title = "ms";
-        } else if (this.nano < 1000L * 1000 * 1000 * 60) {
-            number = this.nano / (1000L * 1000 * 1000);
+        } else if (this.nano < (double) (1000L * 1000L * 1000L * 60L)) {
+            number = this.nano / (double) (1000L * 1000L * 1000L);
             title = "s";
         } else {
-            number = this.nano / (1000L * 1000 * 1000 * 60);
+            number = this.nano / (double) (1000L * 1000L * 1000L * 60L);
             title = "min";
         }
         final String format;

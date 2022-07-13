@@ -67,7 +67,7 @@ class ParseableInformation {
             }
         } catch (final ArrayIndexOutOfBoundsException ex) {
             throw new IllegalStateException(
-                String.format(new StringBuilder()
+                String.format(new StringBuilder(0)
                     .append("Information is not using the pattern ")
                     .append("KEY1:VALUE,KEY2:VALUE %s")
                     .toString(),

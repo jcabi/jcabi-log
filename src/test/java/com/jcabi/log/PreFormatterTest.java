@@ -84,7 +84,7 @@ public final class PreFormatterTest {
         final PreFormatter pre = new PreFormatter("test: %s", decor);
         MatcherAssert.assertThat(
             pre.getArguments()[0],
-            Matchers.equalTo((Object) decor)
+            Matchers.equalTo(decor)
         );
     }
 

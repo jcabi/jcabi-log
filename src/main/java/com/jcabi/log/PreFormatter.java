@@ -101,7 +101,7 @@ final class PreFormatter {
      */
     @SuppressWarnings("PMD.ConfusingTernary")
     private void process(final CharSequence fmt, final Object... args) {
-        this.arguments = new CopyOnWriteArrayList<Object>();
+        this.arguments = new CopyOnWriteArrayList<>();
         final StringBuffer buf = new StringBuffer(fmt.length());
         final Matcher matcher = PreFormatter.PATTERN.matcher(fmt);
         int pos = 0;

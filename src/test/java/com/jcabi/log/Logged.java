@@ -45,7 +45,7 @@ public final class Logged {
     private final transient Formattable decor;
 
     /**
-     * Formatting flas.
+     * Formatting flags.
      */
     private final transient int flags;
 
@@ -64,7 +64,7 @@ public final class Logged {
      * @param dcr Decor
      * @param flgs Flags
      * @param wdt Width
-     * @param prcs Precission
+     * @param prcs Precision
      * @checkstyle ParameterNumber (3 lines)
      */
     public Logged(final Formattable dcr,

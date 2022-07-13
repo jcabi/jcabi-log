@@ -112,8 +112,8 @@ final class SizeDecor implements Formattable {
         int power = 0;
         double number = this.size;
         // @checkstyle MagicNumber (2 lines)
-        while (number / 1024 >= 1 && power < SizeDecor.MAX_POWER) {
-            number = number / 1024;
+        while (number / 1024.0 >= 1.0 && power < SizeDecor.MAX_POWER) {
+            number = number / 1024.0;
             power += 1;
         }
         final String suffix = SizeDecor.SUFFIXES.get(power);
