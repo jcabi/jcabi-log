@@ -1,16 +1,13 @@
-<img src="http://img.jcabi.com/logo-square.png" width="64px" height="64px" />
+<img alt="logo" src="http://img.jcabi.com/logo-square.png" width="64px" height="64px" />
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![Managed by Zerocracy](https://www.0crat.com/badge/C3RUBL5H9.svg)](https://www.0crat.com/p/C3RUBL5H9)
 [![DevOps By Rultor.com](http://www.rultor.com/b/jcabi/jcabi-log)](http://www.rultor.com/p/jcabi/jcabi-log)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
-[![Build Status](https://travis-ci.org/jcabi/jcabi-log.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-log)
+[![mvn](https://github.com/jcabi/jcabi-log/actions/workflows/mvn.yml/badge.svg)](https://github.com/jcabi/jcabi-log/actions/workflows/mvn.yml)
 [![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-log)](http://www.0pdd.com/p?name=jcabi/jcabi-log)
-[![Build status](https://ci.appveyor.com/api/projects/status/tk5nksux8peh2n8o/branch/master?svg=true)](https://ci.appveyor.com/project/yegor256/jcabi-log/branch/master)
-[![Coverage Status](https://coveralls.io/repos/jcabi/jcabi-log/badge.svg?branch=master&service=github)](https://coveralls.io/github/jcabi/jcabi-log?branch=master)
+[![codecov](https://codecov.io/gh/jcabi/jcabi-log/branch/master/graph/badge.svg)](https://codecov.io/gh/jcabi/jcabi-log)
 
-[![jpeek report](https://i.jpeek.org/com.jcabi/jcabi-log/badge.svg)](https://i.jpeek.org/com.jcabi/jcabi-log/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-log.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-log)
 [![Hits-of-Code](https://hitsofcode.com/github/jcabi/jcabi-log)](https://hitsofcode.com/view/github/jcabi/jcabi-log)
