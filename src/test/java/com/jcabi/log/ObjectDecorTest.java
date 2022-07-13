@@ -78,11 +78,20 @@ public final class ObjectDecorTest {
                 {null, "NULL", 0, 0, 0},
                 {new SecretDecor("x"), "{secret: \"x\"", 0, 0, 0},
                 {new ObjectDecorTest.Foo(1, "one"), "{num: \"1\", name: \"one\"", 0, 0, 0},
-                //  @checkstyle MethodBodyComments (6 lines)
-                //  @checkstyle LineLength (3 lines)
                 {
-                    new Object[]{new ObjectDecorTest.Foo(0, "zero"), new ObjectDecorTest.Foo(2, "two")},
-                    "[{num: \"0\", name: \"zero\"}, {num: \"2\", name: \"two\"",
+                    new Object[]{
+                        new ObjectDecorTest.Foo(0, "zero"),
+                        new ObjectDecorTest.Foo(2, "two"),
+                    },
+                    "[{num: \"0\", name: \"zero\"",
+                    0, 0, 0,
+                },
+                {
+                    new Object[]{
+                        new ObjectDecorTest.Foo(0, "abc"),
+                        new ObjectDecorTest.Foo(2, "cde"),
+                    },
+                    ", {num: \"2\", name: \"cde\"",
                     0, 0, 0,
                 },
                 {
