@@ -50,7 +50,7 @@ public final class SizeDecorTest {
     @ParameterizedTest
     @MethodSource("params")
     public void testPrintsRight(final long size, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Printed(new SizeDecor(size), flags, width, precision),
@@ -61,7 +61,7 @@ public final class SizeDecorTest {
     @ParameterizedTest
     @MethodSource("params")
     public void testLogsRight(final long size, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Logged(new SizeDecor(size), flags, width, precision),

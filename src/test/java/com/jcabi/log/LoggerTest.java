@@ -47,17 +47,17 @@ import org.junit.jupiter.api.Test;
 public final class LoggerTest {
 
     @Test
-    public void detectsLoggerNameCorrectly() throws Exception {
+    public void detectsLoggerNameCorrectly() {
         // not implemented yet
     }
 
     @Test
-    public void detectsNameOfStaticSource() throws Exception {
+    public void detectsNameOfStaticSource() {
         // not implemented yet
     }
 
     @Test
-    public void setsLoggingLevel() throws Exception {
+    public void setsLoggingLevel() {
         // not implemented yet
     }
 

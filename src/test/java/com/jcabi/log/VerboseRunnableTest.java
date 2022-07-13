@@ -80,7 +80,7 @@ public final class VerboseRunnableTest {
     }
 
     @Test
-    public void translatesToStringFromUnderlyingRunnable() throws Exception {
+    public void translatesToStringFromUnderlyingRunnable() {
         final String text = "some text abc";
         final Runnable verbose = new VerboseRunnable(
             new Runnable() {
@@ -102,7 +102,7 @@ public final class VerboseRunnableTest {
     }
 
     @Test
-    public void translatesToStringFromUnderlyingCallable() throws Exception {
+    public void translatesToStringFromUnderlyingCallable() {
         final String text = "some text abc-2";
         final Runnable verbose = new VerboseRunnable(
             new Callable<Void>() {

@@ -48,7 +48,7 @@ public final class ObjectDecorTest {
     @ParameterizedTest
     @MethodSource("params")
     public void testPrintsRight(final Object obj, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Printed(new ObjectDecor(obj), flags, width, precision),
@@ -59,7 +59,7 @@ public final class ObjectDecorTest {
     @ParameterizedTest
     @MethodSource("params")
     public void testLogsRight(final Object obj, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Logged(new ObjectDecor(obj), flags, width, precision),

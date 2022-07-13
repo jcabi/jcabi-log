@@ -58,10 +58,9 @@ public final class MulticolorLayoutIntegrationTest {
     /**
      * MulticolorLayout disables default color
      * when -Dcom.jcabi.log.coloring=false.
-     * @throws Exception - if something goes wrong.
      */
     @Test
-    public void disablesDefaultColor() throws Exception {
+    public void disablesDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern(
             MulticolorLayoutIntegrationTest.CONV_PATTERN
@@ -96,10 +95,9 @@ public final class MulticolorLayoutIntegrationTest {
 
     /**
      * MulticolorLayout disables the color that overwrites the default one.
-     * @throws Exception - if something goes wrong.
      */
     @Test
-    public void disablesOverridenDefaultColor() throws Exception {
+    public void disablesOverridenDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color{%p}] %m");
         layout.setLevels("DEBUG:2;10");
@@ -134,10 +132,9 @@ public final class MulticolorLayoutIntegrationTest {
     /**
      * MulticolorLayout disables constant color
      * when -Dcom.jcabi.log.coloring=false.
-     * @throws Exception - if something goes wrong.
      */
     @Test
-    public void disablesConstantColor() throws Exception {
+    public void disablesConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-blue{%p}] %color-blue{%m}");
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -170,10 +167,9 @@ public final class MulticolorLayoutIntegrationTest {
 
     /**
      * MulticolorLayout disables the color that overwrites the constant one.
-     * @throws Exception - if something goes wrong.
      */
     @Test
-    public void disablesOverridenConstantColor() throws Exception {
+    public void disablesOverridenConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-red{%p}] %color-red{%m}");
         layout.setColors("red:12");

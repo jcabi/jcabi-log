@@ -82,7 +82,7 @@ public final class SupplierLoggerTest {
     }
 
     @Test
-    public void traceIsDisabled() throws Exception {
+    public void traceIsDisabled() {
         final String name = "notrace";
         final String appender = "notraceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(

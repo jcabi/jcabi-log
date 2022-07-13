@@ -112,7 +112,7 @@ public final class VerboseCallable<T> implements Callable<T> {
         this(
             new Callable<T>() {
                 @Override
-                public T call() throws Exception {
+                public T call() {
                     runnable.run();
                     return null;
                 }

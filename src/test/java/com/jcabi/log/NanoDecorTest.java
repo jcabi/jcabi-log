@@ -50,7 +50,7 @@ public final class NanoDecorTest {
     @ParameterizedTest
     @MethodSource("params")
     public void testPrintsRight(final long nano, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Printed(new NanoDecor(nano), flags, width, precision),
@@ -61,7 +61,7 @@ public final class NanoDecorTest {
     @ParameterizedTest
     @MethodSource("params")
     public void testLogsRight(final long nano, final String text,
-        final int flags, final int width, final int precision) throws DecorException {
+        final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Logged(new NanoDecor(nano), flags, width, precision),
