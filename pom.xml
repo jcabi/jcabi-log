@@ -33,7 +33,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>jcabi</artifactId>
-    <version>1.31.0</version>
+    <version>1.33.0</version>
   </parent>
   <artifactId>jcabi-log</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -79,6 +79,12 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
       <version>2.0.0-alpha5</version>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>2.0.0-alpha5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
       <version>5.6.2</version>
@@ -106,7 +112,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M3</version>
         <configuration>
           <systemPropertyVariables>
             <file.encoding>Cp1251</file.encoding>
@@ -123,7 +128,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.19.0</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>findbugs:.*</exclude>
