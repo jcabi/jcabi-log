@@ -85,7 +85,7 @@ final class ListDecor implements Formattable {
             }
         }
         builder.append(']');
-        formatter.format("%s", builder.toString());
+        formatter.format("%s", builder);
     }
 
 }

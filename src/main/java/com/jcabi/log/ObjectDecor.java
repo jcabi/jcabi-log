@@ -62,7 +62,7 @@ final class ObjectDecor implements Formattable {
             formatter.format("NULL");
         } else if (this.object.getClass().isArray()) {
             formatter.format(
-                new ArrayFormatAction((Object[]) this.object).run()
+                new ObjectDecor.ArrayFormatAction((Object[]) this.object).run()
             );
         } else {
             final String output =

@@ -93,13 +93,11 @@ final class DomDecor implements Formattable {
                     new DOMSource(this.node),
                     new StreamResult(writer)
                 );
-            } catch (final TransformerConfigurationException ex) {
-                throw new IllegalStateException(ex);
             } catch (final TransformerException ex) {
                 throw new IllegalStateException(ex);
             }
         }
-        formatter.format("%s", writer.toString());
+        formatter.format("%s", writer);
     }
 
 }

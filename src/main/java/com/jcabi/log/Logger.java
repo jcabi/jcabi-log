@@ -490,9 +490,7 @@ public final class Logger {
                 final Field fqcn = logger.getClass()
                     .getDeclaredField("FQCN");
                 setFinalStatic(fqcn, Logger.class.getName());
-            } catch (final NoSuchFieldException ex) {
-                throw new IllegalStateException(ex);
-            } catch (final IllegalAccessException ex) {
+            } catch (final NoSuchFieldException | IllegalAccessException ex) {
                 throw new IllegalStateException(ex);
             }
         }

@@ -87,7 +87,7 @@ public class Colors {
      */
     private static ConcurrentMap<String, String> colorMap() {
         final ConcurrentMap<String, String> map =
-            new ConcurrentHashMap<>();
+            new ConcurrentHashMap<>(0);
         map.put("black", "30");
         map.put("blue", "34");
         map.put("cyan", "36");

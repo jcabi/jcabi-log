@@ -307,8 +307,8 @@ public final class VerboseProcessTest {
      */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
-        final InputStream input = new InfiniteInputStream('i');
-        final InputStream error = new InfiniteInputStream('e');
+        final InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
+        final InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
         final Process prc = Mockito.mock(Process.class);
         Mockito.doReturn(input).when(prc).getInputStream();
         Mockito.doReturn(error).when(prc).getErrorStream();
@@ -335,7 +335,7 @@ public final class VerboseProcessTest {
             new SimpleLayout(),
             writer
         );
-        appender.addFilter(new VrbPrcMonitorFilter(process));
+        appender.addFilter(new VerboseProcessTest.VrbPrcMonitorFilter(process));
         org.apache.log4j.Logger.getLogger(
             VerboseProcess.class
         ).addAppender(appender);
@@ -411,7 +411,7 @@ public final class VerboseProcessTest {
             final int next;
             if (this.feed) {
                 this.feed = false;
-                next = InfiniteInputStream.LINE_FEED;
+                next = VerboseProcessTest.InfiniteInputStream.LINE_FEED;
             } else {
                 this.feed = true;
                 next = this.chr;
@@ -459,7 +459,7 @@ public final class VerboseProcessTest {
         public int decide(final LoggingEvent event) {
             final String thread = event.getThreadName();
             final int decision;
-            if (thread.startsWith(VrbPrcMonitorFilter.THREADNAME_START
+            if (thread.startsWith(VerboseProcessTest.VrbPrcMonitorFilter.THREADNAME_START
                 + this.hash
             )) {
                 decision = Filter.ACCEPT;

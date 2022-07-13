@@ -32,7 +32,6 @@ package com.jcabi.log;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.apache.log4j.Level;
 
 /**
@@ -65,7 +64,7 @@ class ParseableLevelInformation  {
             this.content
         ).information();
         final Map<String, String> converted = new HashMap<>(0);
-        for (final Entry<String, String> entry : parsed.entrySet()) {
+        for (final Map.Entry<String, String> entry : parsed.entrySet()) {
             final String level = entry.getKey().toUpperCase(Locale.ENGLISH);
             if (Level.toLevel(level, null) == null) {
                 throw new IllegalStateException(
