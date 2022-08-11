@@ -7,7 +7,6 @@
 [![mvn](https://github.com/jcabi/jcabi-log/actions/workflows/mvn.yml/badge.svg)](https://github.com/jcabi/jcabi-log/actions/workflows/mvn.yml)
 [![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-log)](http://www.0pdd.com/p?name=jcabi/jcabi-log)
 [![codecov](https://codecov.io/gh/jcabi/jcabi-log/branch/master/graph/badge.svg)](https://codecov.io/gh/jcabi/jcabi-log)
-
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-log.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-log)
 [![Hits-of-Code](https://hitsofcode.com/github/jcabi/jcabi-log)](https://hitsofcode.com/view/github/jcabi/jcabi-log)
