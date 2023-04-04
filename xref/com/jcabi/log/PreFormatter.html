@@ -49,7 +49,7 @@
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/PreFormatter.html">PreFormatter</a> {
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="PreFormatter" href="../../../com/jcabi/log/PreFormatter.html#PreFormatter">PreFormatter</a> {
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">     * Pattern used for matching format string arguments.</em>
@@ -81,7 +81,7 @@
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * @param args The list of arguments</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      @SuppressWarnings(<span class="jxr_string">"PMD.ConstructorOnlyInitializesOrCallOtherConstructors"</span>)
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <a href="../../../com/jcabi/log/PreFormatter.html">PreFormatter</a>(<strong class="jxr_keyword">final</strong> String fmt, <strong class="jxr_keyword">final</strong> Object... args) {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <a name="PreFormatter" href="../../../com/jcabi/log/PreFormatter.html#PreFormatter">PreFormatter</a>(<strong class="jxr_keyword">final</strong> String fmt, <strong class="jxr_keyword">final</strong> Object... args) {
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">this</strong>.process(fmt, args);
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      }
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  
@@ -142,7 +142,7 @@
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>                         <strong class="jxr_keyword">this</strong>.arguments.add(
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>                             DecorsManager.decor(decor, args[pos])
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>                         );
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>                     } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> DecorException ex) {
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>                     } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a> ex) {
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>                         <strong class="jxr_keyword">this</strong>.arguments.add(
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>                             String.format(<span class="jxr_string">"[%s]"</span>, ex.getMessage())
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>                         );
@@ -168,6 +168,6 @@
 <a class="jxr_linenumber" name="L160" href="#L160">160</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

@@ -96,7 +96,7 @@
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          <span class="jxr_string">"PMD.TooManyMethods"</span>, <span class="jxr_string">"PMD.GodClass"</span>, <span class="jxr_string">"PMD.ProhibitPublicStaticMethods"</span>
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  )
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/Logger.html">Logger</a> {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> Logger {
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>  
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment">     * Empty array of objects.</em>
@@ -111,7 +111,7 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> <em class="jxr_javadoccomment">     * This is utility class.</em>
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     <strong class="jxr_keyword">private</strong> <a href="../../../com/jcabi/log/Logger.html">Logger</a>() {
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>     <strong class="jxr_keyword">private</strong> Logger() {
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         <em class="jxr_comment">// intentionally empty</em>
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
 <a class="jxr_linenumber" name="L109" href="#L109">109</a> 
@@ -126,7 +126,7 @@
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>         <strong class="jxr_keyword">if</strong> (args.length == 0) {
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>             result = fmt;
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>             <strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/log/PreFormatter.html">PreFormatter</a> pre = <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/PreFormatter.html">PreFormatter</a>(fmt, args);
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>             <strong class="jxr_keyword">final</strong> <a name="PreFormatter" href="../../../com/jcabi/log/PreFormatter.html#PreFormatter">PreFormatter</a> pre = <strong class="jxr_keyword">new</strong> <a name="PreFormatter" href="../../../com/jcabi/log/PreFormatter.html#PreFormatter">PreFormatter</a>(fmt, args);
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>             result = String.format(pre.getFormat(), pre.getArguments());
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>         }
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>         <strong class="jxr_keyword">return</strong> result;
@@ -457,8 +457,8 @@
 <a class="jxr_linenumber" name="L449" href="#L449">449</a> <em class="jxr_javadoccomment">     * @return Object containing methods for logging with Supplier-constructed</em>
 <a class="jxr_linenumber" name="L450" href="#L450">450</a> <em class="jxr_javadoccomment">     *  messages</em>
 <a class="jxr_linenumber" name="L451" href="#L451">451</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../com/jcabi/log/SupplierLogger.html">SupplierLogger</a> withSupplier() {
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/SupplierLogger.html">SupplierLogger</a>();
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> SupplierLogger withSupplier() {
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> SupplierLogger();
 <a class="jxr_linenumber" name="L454" href="#L454">454</a>     }
 <a class="jxr_linenumber" name="L455" href="#L455">455</a> 
 <a class="jxr_linenumber" name="L456" href="#L456">456</a>     <em class="jxr_javadoccomment">/**</em>
@@ -508,6 +508,6 @@
 <a class="jxr_linenumber" name="L500" href="#L500">500</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

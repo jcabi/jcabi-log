@@ -71,7 +71,7 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment"> * @since 0.5</em>
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  @SuppressWarnings({ <span class="jxr_string">"PMD.DoNotUseThreads"</span>, <span class="jxr_string">"PMD.TooManyMethods"</span> })
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/VerboseProcess.html">VerboseProcess</a> <strong class="jxr_keyword">implements</strong> Closeable {
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> VerboseProcess <strong class="jxr_keyword">implements</strong> Closeable {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * Charset.</em>
@@ -112,7 +112,7 @@
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> <em class="jxr_javadoccomment">     * Public ctor.</em>
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> <em class="jxr_javadoccomment">     * @param prc The process to work with</em>
 <a class="jxr_linenumber" name="L106" href="#L106">106</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/log/VerboseProcess.html">VerboseProcess</a>(<strong class="jxr_keyword">final</strong> Process prc) {
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">public</strong> VerboseProcess(<strong class="jxr_keyword">final</strong> Process prc) {
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">this</strong>(prc, Level.INFO, Level.WARNING);
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>     }
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> 
@@ -121,7 +121,7 @@
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     * the {@code stdout} and will receive an empty {@code stdin}).</em>
 <a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment">     * @param builder Process builder to work with</em>
 <a class="jxr_linenumber" name="L115" href="#L115">115</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/log/VerboseProcess.html">VerboseProcess</a>(<strong class="jxr_keyword">final</strong> ProcessBuilder builder) {
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>     <strong class="jxr_keyword">public</strong> VerboseProcess(<strong class="jxr_keyword">final</strong> ProcessBuilder builder) {
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>         <strong class="jxr_keyword">this</strong>(VerboseProcess.start(builder));
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>     }
 <a class="jxr_linenumber" name="L119" href="#L119">119</a> 
@@ -136,7 +136,7 @@
 <a class="jxr_linenumber" name="L128" href="#L128">128</a> <em class="jxr_javadoccomment">     * @since 0.11</em>
 <a class="jxr_linenumber" name="L129" href="#L129">129</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>     @SuppressWarnings(<span class="jxr_string">"PMD.ConstructorOnlyInitializesOrCallOtherConstructors"</span>)
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/log/VerboseProcess.html">VerboseProcess</a>(<strong class="jxr_keyword">final</strong> Process prc, <strong class="jxr_keyword">final</strong> Level stdout,
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">public</strong> VerboseProcess(<strong class="jxr_keyword">final</strong> Process prc, <strong class="jxr_keyword">final</strong> Level stdout,
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         <strong class="jxr_keyword">final</strong> Level stderr) {
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>         <strong class="jxr_keyword">if</strong> (prc == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"process can't be NULL"</span>);
@@ -173,7 +173,7 @@
 <a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * @param stderr Log level for stderr</em>
 <a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     * @since 0.12</em>
 <a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <strong class="jxr_keyword">public</strong> <a href="../../../com/jcabi/log/VerboseProcess.html">VerboseProcess</a>(<strong class="jxr_keyword">final</strong> ProcessBuilder bdr, <strong class="jxr_keyword">final</strong> Level stdout,
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <strong class="jxr_keyword">public</strong> VerboseProcess(<strong class="jxr_keyword">final</strong> ProcessBuilder bdr, <strong class="jxr_keyword">final</strong> Level stdout,
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>         <strong class="jxr_keyword">final</strong> Level stderr) {
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>         <strong class="jxr_keyword">this</strong>(VerboseProcess.start(bdr), stdout, stderr);
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>     }
@@ -372,7 +372,7 @@
 <a class="jxr_linenumber" name="L364" href="#L364">364</a>         <strong class="jxr_keyword">final</strong> CountDownLatch done,
 <a class="jxr_linenumber" name="L365" href="#L365">365</a>         <strong class="jxr_keyword">final</strong> OutputStream output, <strong class="jxr_keyword">final</strong> Level level, <strong class="jxr_keyword">final</strong> String name) {
 <a class="jxr_linenumber" name="L366" href="#L366">366</a>         <strong class="jxr_keyword">final</strong> Thread thread = <strong class="jxr_keyword">new</strong> Thread(
-<a class="jxr_linenumber" name="L367" href="#L367">367</a>             <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/VerboseRunnable.html">VerboseRunnable</a>(
+<a class="jxr_linenumber" name="L367" href="#L367">367</a>             <strong class="jxr_keyword">new</strong> <a name="VerboseRunnable" href="../../../com/jcabi/log/VerboseRunnable.html#VerboseRunnable">VerboseRunnable</a>(
 <a class="jxr_linenumber" name="L368" href="#L368">368</a>                 <strong class="jxr_keyword">new</strong> VerboseProcess.Monitor(input, done, output, level),
 <a class="jxr_linenumber" name="L369" href="#L369">369</a>                 false
 <a class="jxr_linenumber" name="L370" href="#L370">370</a>             )
@@ -410,7 +410,7 @@
 <a class="jxr_linenumber" name="L402" href="#L402">402</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L403" href="#L403">403</a> <em class="jxr_javadoccomment">     * @since 0.1</em>
 <a class="jxr_linenumber" name="L404" href="#L404">404</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/VerboseProcess.html">Monitor</a> <strong class="jxr_keyword">implements</strong> Callable&lt;Void&gt; {
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> Monitor <strong class="jxr_keyword">implements</strong> Callable&lt;Void&gt; {
 <a class="jxr_linenumber" name="L406" href="#L406">406</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L407" href="#L407">407</a> <em class="jxr_javadoccomment">         * Stream to read.</em>
 <a class="jxr_linenumber" name="L408" href="#L408">408</a> <em class="jxr_javadoccomment">         */</em>
@@ -439,7 +439,7 @@
 <a class="jxr_linenumber" name="L431" href="#L431">431</a> <em class="jxr_javadoccomment">         * @param lvl Logging level</em>
 <a class="jxr_linenumber" name="L432" href="#L432">432</a> <em class="jxr_javadoccomment">         * @checkstyle ParameterNumber (5 lines)</em>
 <a class="jxr_linenumber" name="L433" href="#L433">433</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>         <a href="../../../com/jcabi/log/VerboseProcess.html">Monitor</a>(<strong class="jxr_keyword">final</strong> InputStream inp, <strong class="jxr_keyword">final</strong> CountDownLatch latch,
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>         Monitor(<strong class="jxr_keyword">final</strong> InputStream inp, <strong class="jxr_keyword">final</strong> CountDownLatch latch,
 <a class="jxr_linenumber" name="L435" href="#L435">435</a>             <strong class="jxr_keyword">final</strong> OutputStream out, <strong class="jxr_keyword">final</strong> Level lvl) {
 <a class="jxr_linenumber" name="L436" href="#L436">436</a>             <strong class="jxr_keyword">this</strong>.input = inp;
 <a class="jxr_linenumber" name="L437" href="#L437">437</a>             <strong class="jxr_keyword">this</strong>.done = latch;
@@ -507,7 +507,7 @@
 <a class="jxr_linenumber" name="L499" href="#L499">499</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L500" href="#L500">500</a> <em class="jxr_javadoccomment">     * @since 0.1</em>
 <a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L502" href="#L502">502</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/VerboseProcess.html">Result</a> {
+<a class="jxr_linenumber" name="L502" href="#L502">502</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> Result {
 <a class="jxr_linenumber" name="L503" href="#L503">503</a> 
 <a class="jxr_linenumber" name="L504" href="#L504">504</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">         * Returned code from the process.</em>
@@ -530,7 +530,7 @@
 <a class="jxr_linenumber" name="L522" href="#L522">522</a> <em class="jxr_javadoccomment">         * @param stdout The {@code stdout} from the process.</em>
 <a class="jxr_linenumber" name="L523" href="#L523">523</a> <em class="jxr_javadoccomment">         * @param stderr The {@code stderr} from the process.</em>
 <a class="jxr_linenumber" name="L524" href="#L524">524</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L525" href="#L525">525</a>         <a href="../../../com/jcabi/log/VerboseProcess.html">Result</a>(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> code, <strong class="jxr_keyword">final</strong> String stdout, <strong class="jxr_keyword">final</strong> String stderr) {
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>         Result(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> code, <strong class="jxr_keyword">final</strong> String stdout, <strong class="jxr_keyword">final</strong> String stderr) {
 <a class="jxr_linenumber" name="L526" href="#L526">526</a>             <strong class="jxr_keyword">this</strong>.exit = code;
 <a class="jxr_linenumber" name="L527" href="#L527">527</a>             <strong class="jxr_keyword">this</strong>.out = stdout;
 <a class="jxr_linenumber" name="L528" href="#L528">528</a>             <strong class="jxr_keyword">this</strong>.err = stderr;
@@ -563,6 +563,6 @@
 <a class="jxr_linenumber" name="L555" href="#L555">555</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

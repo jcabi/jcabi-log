@@ -51,7 +51,7 @@
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> *  but we need to fix and remove the "Ignore" annotations.</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  @SuppressWarnings(<span class="jxr_string">"PMD.MoreThanOneLogger"</span>)
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/SupplierLoggerTest.html">SupplierLoggerTest</a> {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="SupplierLoggerTest" href="../../../com/jcabi/log/SupplierLoggerTest.html#SupplierLoggerTest">SupplierLoggerTest</a> {
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      @Test
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> debugIsDisabled() {
@@ -65,7 +65,7 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>              (Supplier&lt;String&gt;) () -&gt; <span class="jxr_string">"test1"</span>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          );
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>              ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>              ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>              Matchers.emptyString()
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          );
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
@@ -84,7 +84,7 @@
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>              (Supplier&lt;String&gt;) () -&gt; text
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          );
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>              ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>              ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>              Matchers.containsString(text)
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>          );
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
@@ -101,7 +101,7 @@
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>              (Supplier&lt;String&gt;) () -&gt; <span class="jxr_string">"test3"</span>
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          );
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>              ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>              ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>              Matchers.emptyString()
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          );
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>      }
@@ -119,7 +119,7 @@
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>             (Supplier&lt;String&gt;) () -&gt; text
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         );
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>         MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>             ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>             Matchers.containsString(text)
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         );
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>     }
@@ -136,7 +136,7 @@
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>             (Supplier&lt;String&gt;) () -&gt; <span class="jxr_string">"test5"</span>
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>         );
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>             ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>             ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>             Matchers.emptyString()
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>         );
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>     }
@@ -155,7 +155,7 @@
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>             (Supplier&lt;String&gt;) () -&gt; text
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>         );
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>         MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>             ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>             ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>             Matchers.containsString(text)
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>         );
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>     }
@@ -172,7 +172,7 @@
 <a class="jxr_linenumber" name="L164" href="#L164">164</a>             (Supplier&lt;String&gt;) () -&gt; <span class="jxr_string">"test7"</span>
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>         );
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>         MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>             ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>             ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>             Matchers.emptyString()
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>         );
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>     }
@@ -191,7 +191,7 @@
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>             (Supplier&lt;String&gt;) () -&gt; text
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>         );
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>         MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>             ((<a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>) logger.getAppender(appender)).output(),
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>             ((<a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>) logger.getAppender(appender)).output(),
 <a class="jxr_linenumber" name="L187" href="#L187">187</a>             Matchers.containsString(text)
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>         );
 <a class="jxr_linenumber" name="L189" href="#L189">189</a>     }
@@ -207,7 +207,7 @@
 <a class="jxr_linenumber" name="L199" href="#L199">199</a>         <strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> String appender, <strong class="jxr_keyword">final</strong> Level level) {
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>         <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = org.apache.log4j.Logger
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>             .getLogger(name);
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>         <strong class="jxr_keyword">final</strong> <a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a> app = <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/UnitTestAppender.html">UnitTestAppender</a>(appender);
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>         <strong class="jxr_keyword">final</strong> <a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a> app = <strong class="jxr_keyword">new</strong> <a name="UnitTestAppender" href="../../../com/jcabi/log/UnitTestAppender.html#UnitTestAppender">UnitTestAppender</a>(appender);
 <a class="jxr_linenumber" name="L203" href="#L203">203</a>         app.activateOptions();
 <a class="jxr_linenumber" name="L204" href="#L204">204</a>         logger.addAppender(app);
 <a class="jxr_linenumber" name="L205" href="#L205">205</a>         logger.setLevel(level);
@@ -217,6 +217,6 @@
 <a class="jxr_linenumber" name="L209" href="#L209">209</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

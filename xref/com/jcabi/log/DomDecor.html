@@ -54,7 +54,7 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/DomDecor.html">DomDecor</a> <strong class="jxr_keyword">implements</strong> Formattable {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="DomDecor" href="../../../com/jcabi/log/DomDecor.html#DomDecor">DomDecor</a> <strong class="jxr_keyword">implements</strong> Formattable {
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment">     * DOM transformer factory, DOM.</em>
@@ -73,9 +73,9 @@
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * @throws DecorException If some problem with it</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      @SuppressWarnings(<span class="jxr_string">"PMD.ConstructorOnlyInitializesOrCallOtherConstructors"</span>)
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <a href="../../../com/jcabi/log/DomDecor.html">DomDecor</a>(<strong class="jxr_keyword">final</strong> Object doc) <strong class="jxr_keyword">throws</strong> DecorException {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <a name="DomDecor" href="../../../com/jcabi/log/DomDecor.html#DomDecor">DomDecor</a>(<strong class="jxr_keyword">final</strong> Object doc) <strong class="jxr_keyword">throws</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a> {
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          <strong class="jxr_keyword">if</strong> (doc != <strong class="jxr_keyword">null</strong> &amp;&amp; !(doc instanceof Node)) {
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a>(
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a>(
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>                  String.format(
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>                      <span class="jxr_string">"Instance of org.w3c.dom.Node required, while %s provided"</span>,
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>                      doc.getClass().getName()
@@ -111,6 +111,6 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

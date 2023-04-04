@@ -48,7 +48,7 @@
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../com/jcabi/log/DecorsManager.html">DecorsManager</a> {
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="DecorsManager" href="../../../com/jcabi/log/DecorsManager.html#DecorsManager">DecorsManager</a> {
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     * Storage of all found decors.</em>
@@ -73,7 +73,7 @@
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * Private ctor.</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">private</strong> <a href="../../../com/jcabi/log/DecorsManager.html">DecorsManager</a>() {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">private</strong> <a name="DecorsManager" href="../../../com/jcabi/log/DecorsManager.html#DecorsManager">DecorsManager</a>() {
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          <em class="jxr_comment">// empty</em>
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      }
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  
@@ -86,27 +86,27 @@
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      @SuppressWarnings(<span class="jxr_string">"PMD.ProhibitPublicStaticMethods"</span>)
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Formattable decor(<strong class="jxr_keyword">final</strong> String key, <strong class="jxr_keyword">final</strong> Object arg)
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          <strong class="jxr_keyword">throws</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a> {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          <strong class="jxr_keyword">throws</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a> {
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">final</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> Formattable&gt; type = DecorsManager.find(key);
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">final</strong> Formattable decor;
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>              decor = (Formattable) DecorsManager.ctor(type).newInstance(arg);
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> InstantiationException ex) {
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a>(
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a>(
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>                  ex,
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>                  <span class="jxr_string">"Can't instantiate %s(%s)"</span>,
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>                  type.getName(),
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>                  arg.getClass().getName()
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>              );
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IllegalAccessException ex) {
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a>(
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a>(
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>                  ex,
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>                  <span class="jxr_string">"Can't access %s(%s)"</span>,
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>                  type.getName(),
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>                  arg.getClass().getName()
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>              );
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> InvocationTargetException ex) {
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a>(
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a>(
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                 ex,
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>                 <span class="jxr_string">"Can't invoke %s(%s)"</span>,
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>                 type.getName(),
@@ -124,7 +124,7 @@
 <a class="jxr_linenumber" name="L116" href="#L116">116</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>     @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> Formattable&gt; find(<strong class="jxr_keyword">final</strong> String key)
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         <strong class="jxr_keyword">throws</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a> {
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>         <strong class="jxr_keyword">throws</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a> {
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>         <strong class="jxr_keyword">final</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> Formattable&gt; type;
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>         <strong class="jxr_keyword">if</strong> (DecorsManager.DECORS.containsKey(key)) {
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>             type = DecorsManager.DECORS.get(key);
@@ -132,7 +132,7 @@
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>                 type = (Class&lt;Formattable&gt;) Class.forName(key);
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> ClassNotFoundException ex) {
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a>(
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a>(
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>                     ex,
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>                     <span class="jxr_string">"Decor '%s' not found and class can't be instantiated"</span>,
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>                     key
@@ -149,10 +149,10 @@
 <a class="jxr_linenumber" name="L141" href="#L141">141</a> <em class="jxr_javadoccomment">     * @throws DecorException If some problem</em>
 <a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Constructor&lt;?&gt; ctor(<strong class="jxr_keyword">final</strong> Class&lt;? <strong class="jxr_keyword">extends</strong> Formattable&gt; type)
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">throws</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a> {
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">throws</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a> {
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">final</strong> Constructor&lt;?&gt;[] ctors = type.getDeclaredConstructors();
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>         <strong class="jxr_keyword">if</strong> (ctors.length != 1) {
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a>(
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a>(
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>                 <span class="jxr_string">"%s should have just one one-arg ctor, but there are %d"</span>,
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>                 type.getName(),
 <a class="jxr_linenumber" name="L150" href="#L150">150</a>                 ctors.length
@@ -160,7 +160,7 @@
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>         }
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>         <strong class="jxr_keyword">final</strong> Constructor&lt;?&gt; ctor = ctors[0];
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>         <strong class="jxr_keyword">if</strong> (ctor.getParameterTypes().length != 1) {
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../com/jcabi/log/DecorException.html">DecorException</a>(
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="DecorException" href="../../../com/jcabi/log/DecorException.html#DecorException">DecorException</a>(
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>                 <span class="jxr_string">"%s public ctor should have just once parameter"</span>,
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>                 type.getName()
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>             );
@@ -171,6 +171,6 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2022 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>
