@@ -30,8 +30,11 @@
 package com.jcabi.log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Formattable;
 import java.util.Formatter;
+import java.util.Locale;
 
 /**
  * Prints decor.

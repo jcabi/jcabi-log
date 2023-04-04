@@ -29,6 +29,7 @@
  */
 package com.jcabi.log;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Formattable;
@@ -37,6 +38,8 @@ import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -53,6 +56,7 @@ public final class TextDecorTest {
     @MethodSource("params")
     public void testPrintsRight(final String obj, final String text,
         final int flags, final int width, final int precision) {
+        Assumptions.assumeTrue("UTF-8".equals(Charset.defaultCharset().name()));
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Printed(new TextDecor(obj), flags, width, precision),
@@ -64,6 +68,7 @@ public final class TextDecorTest {
     @MethodSource("params")
     public void testLogsRight(final String obj, final String text,
         final int flags, final int width, final int precision) {
+        Assumptions.assumeTrue("UTF-8".equals(Charset.defaultCharset().name()));
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
             new Logged(new TextDecor(obj), flags, width, precision),
