@@ -44,7 +44,7 @@ import org.mockito.hamcrest.MockitoHamcrest;
 public final class ExceptionDecorTest {
 
     @Test
-    public void convertsExceptionToText() throws Exception {
+    void convertsExceptionToText() throws Exception {
         final Formattable decor = new ExceptionDecor(new IOException("ouch!"));
         final Appendable dest = Mockito.mock(Appendable.class);
         final Formatter fmt = new Formatter(dest);
@@ -64,7 +64,7 @@ public final class ExceptionDecorTest {
     }
 
     @Test
-    public void convertsNullToText() throws Exception {
+    void convertsNullToText() throws Exception {
         final Formattable decor = new ExceptionDecor(null);
         final Appendable dest = Mockito.mock(Appendable.class);
         final Formatter fmt = new Formatter(dest);

@@ -70,7 +70,7 @@ public final class NanoDecorTest {
     }
 
     @Test
-    public void testPrintsNullRight() {
+    void testPrintsNullRight() {
         MatcherAssert.assertThat(
             new Logged(new NanoDecor(null), 0, 0, 0),
             Matchers.hasToString("NULL")

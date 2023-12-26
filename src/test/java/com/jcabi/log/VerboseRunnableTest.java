@@ -48,7 +48,7 @@ import org.junit.jupiter.api.Test;
 public final class VerboseRunnableTest {
 
     @Test
-    public void logsExceptionsInRunnable() {
+    void logsExceptionsInRunnable() {
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> new VerboseRunnable(
@@ -60,7 +60,7 @@ public final class VerboseRunnableTest {
     }
 
     @Test
-    public void swallowsExceptionsInRunnable() {
+    void swallowsExceptionsInRunnable() {
         new VerboseRunnable(
             (Runnable) () -> {
                 throw new IllegalArgumentException("boom");
@@ -70,7 +70,7 @@ public final class VerboseRunnableTest {
     }
 
     @Test
-    public void swallowsExceptionsInCallable() {
+    void swallowsExceptionsInCallable() {
         new VerboseRunnable(
             () -> {
                 throw new IllegalArgumentException("boom-2");
@@ -80,7 +80,7 @@ public final class VerboseRunnableTest {
     }
 
     @Test
-    public void translatesToStringFromUnderlyingRunnable() {
+    void translatesToStringFromUnderlyingRunnable() {
         final String text = "some text abc";
         final Runnable verbose = new VerboseRunnable(
             new Runnable() {
@@ -102,7 +102,7 @@ public final class VerboseRunnableTest {
     }
 
     @Test
-    public void translatesToStringFromUnderlyingCallable() {
+    void translatesToStringFromUnderlyingCallable() {
         final String text = "some text abc-2";
         final Runnable verbose = new VerboseRunnable(
             new Callable<Void>() {
@@ -125,7 +125,7 @@ public final class VerboseRunnableTest {
     }
 
     @Test
-    public void preservesInterruptedStatus() throws Exception {
+    void preservesInterruptedStatus() throws Exception {
         final ScheduledExecutorService svc =
             Executors.newSingleThreadScheduledExecutor();
         final AtomicReference<Thread> thread = new AtomicReference<>();

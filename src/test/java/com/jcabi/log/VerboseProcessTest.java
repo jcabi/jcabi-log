@@ -98,7 +98,7 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void runsACommandLineScriptWithException() {
+    void runsACommandLineScriptWithException() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
@@ -116,7 +116,7 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
+    void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
@@ -133,7 +133,7 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void handlesLongRunningCommand() {
+    void handlesLongRunningCommand() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
@@ -145,7 +145,7 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void rejectsNullProcesses() {
+    void rejectsNullProcesses() {
         Assertions.assertThrows(
             RuntimeException.class,
             () -> {
@@ -156,7 +156,7 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void rejectsStdoutWithLevelAll() {
+    void rejectsStdoutWithLevelAll() {
         try {
             new VerboseProcess(
                 Mockito.mock(Process.class), Level.ALL, Level.INFO
@@ -176,7 +176,7 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void rejectsStderrWithLevelAll() {
+    void rejectsStderrWithLevelAll() {
         try {
             new VerboseProcess(
                 Mockito.mock(Process.class), Level.INFO, Level.ALL
@@ -222,7 +222,7 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void stdoutQuietlyLogsErrors() {
+    void stdoutQuietlyLogsErrors() {
         final StringWriter writer = new StringWriter();
         org.apache.log4j.Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
@@ -279,20 +279,20 @@ public final class VerboseProcessTest {
     }
 
     @Test
-    public void terminatesMonitorsAndProcessIfClosedInstantly()
+    void terminatesMonitorsAndProcessIfClosedInstantly()
         throws Exception {
         this.terminatesMonitorsAndProcessIfClosed(0L);
     }
 
     @Test
-    public void terminatesMonitorsAndProcessIfClosedShortly()
+    void terminatesMonitorsAndProcessIfClosedShortly()
         throws Exception {
         // @checkstyle MagicNumberCheck (1 line)
         this.terminatesMonitorsAndProcessIfClosed(50L);
     }
 
     @Test
-    public void terminatesMonitorsAndProcessIfClosedNormal() throws Exception {
+    void terminatesMonitorsAndProcessIfClosedNormal() throws Exception {
         final long delay = 400L;
         this.terminatesMonitorsAndProcessIfClosed(delay);
     }

@@ -79,7 +79,7 @@ public final class TextDecorTest {
      * Test for a long text.
      */
     @Test
-    public void compressesLongText() {
+    void compressesLongText() {
         final int len = 1000;
         final String text = StringUtils.repeat('x', len);
         final Formattable fmt = new TextDecor(text);

@@ -61,7 +61,7 @@ public class ParseableLevelInformationTest {
      * not with the right pattern.
      */
     @Test
-    public final void throwsAnExceptionWhenParsingIncorrectInformation() {
+    final void throwsAnExceptionWhenParsingIncorrectInformation() {
         final String wrong = "INFO;10,WARN;32";
         try {
             new ParseableLevelInformation(wrong).information();
@@ -85,7 +85,7 @@ public class ParseableLevelInformationTest {
      * with a wrong type of level.
      */
     @Test
-    public final void throwsAnExceptionWhenParsingWrongLevelType() {
+    final void throwsAnExceptionWhenParsingWrongLevelType() {
         try {
             new ParseableLevelInformation(
                 "INFO:2;10,EXTREME:2;32"

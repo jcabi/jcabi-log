@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
 public final class DecorsManagerTest {
 
     @Test
-    public void hasBuiltInDecors() throws Exception {
+    void hasBuiltInDecors() throws Exception {
         MatcherAssert.assertThat(
             DecorsManager.decor("nano", 1L),
             Matchers.instanceOf(NanoDecor.class)
@@ -49,7 +49,7 @@ public final class DecorsManagerTest {
     }
 
     @Test
-    public void throwsExceptionForAbsentDecor() {
+    void throwsExceptionForAbsentDecor() {
         Assertions.assertThrows(
             DecorException.class,
             () -> DecorsManager.decor("non-existing-formatter", null)

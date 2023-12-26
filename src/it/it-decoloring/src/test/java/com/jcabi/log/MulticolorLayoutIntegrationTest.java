@@ -60,7 +60,7 @@ public final class MulticolorLayoutIntegrationTest {
      * when -Dcom.jcabi.log.coloring=false.
      */
     @Test
-    public void disablesDefaultColor() {
+    void disablesDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern(
             MulticolorLayoutIntegrationTest.CONV_PATTERN
@@ -97,7 +97,7 @@ public final class MulticolorLayoutIntegrationTest {
      * MulticolorLayout disables the color that overwrites the default one.
      */
     @Test
-    public void disablesOverridenDefaultColor() {
+    void disablesOverridenDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color{%p}] %m");
         layout.setLevels("DEBUG:2;10");
@@ -134,7 +134,7 @@ public final class MulticolorLayoutIntegrationTest {
      * when -Dcom.jcabi.log.coloring=false.
      */
     @Test
-    public void disablesConstantColor() {
+    void disablesConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-blue{%p}] %color-blue{%m}");
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -169,7 +169,7 @@ public final class MulticolorLayoutIntegrationTest {
      * MulticolorLayout disables the color that overwrites the constant one.
      */
     @Test
-    public void disablesOverridenConstantColor() {
+    void disablesOverridenConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-red{%p}] %color-red{%m}");
         layout.setColors("red:12");

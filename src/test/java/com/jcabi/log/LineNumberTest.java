@@ -54,7 +54,7 @@ public final class LineNumberTest {
     private static final String CONV_PATTERN = "%c:%L";
 
     @Test
-    public void testLineNumber() throws Exception {
+    void testLineNumber() throws Exception {
         final PatternLayout layout = new PatternLayout();
         layout.setConversionPattern(LineNumberTest.CONV_PATTERN);
         final org.apache.log4j.Logger root = LogManager.getRootLogger();

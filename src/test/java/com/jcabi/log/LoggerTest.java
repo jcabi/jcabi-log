@@ -47,22 +47,22 @@ import org.junit.jupiter.api.Test;
 public final class LoggerTest {
 
     @Test
-    public void detectsLoggerNameCorrectly() {
+    void detectsLoggerNameCorrectly() {
         // not implemented yet
     }
 
     @Test
-    public void detectsNameOfStaticSource() {
+    void detectsNameOfStaticSource() {
         // not implemented yet
     }
 
     @Test
-    public void setsLoggingLevel() {
+    void setsLoggingLevel() {
         // not implemented yet
     }
 
     @Test
-    public void doesntFormatArraysSinceTheyAreVarArgs() {
+    void doesntFormatArraysSinceTheyAreVarArgs() {
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> Logger.format("array: %[list]s", new Object[] {"hi", 1})
@@ -70,7 +70,7 @@ public final class LoggerTest {
     }
 
     @Test
-    public void interpretsArraysAsVarArgs() {
+    void interpretsArraysAsVarArgs() {
         MatcherAssert.assertThat(
             Logger.format("array: %s : %d", new Object[] {"hello", 2}),
             Matchers.is("array: hello : 2")
@@ -78,7 +78,7 @@ public final class LoggerTest {
     }
 
     @Test
-    public void providesOutputStream() throws Exception {
+    void providesOutputStream() throws Exception {
         final OutputStream stream = Logger.stream(Level.INFO, this);
         final PrintWriter writer = new PrintWriter(
             new OutputStreamWriter(stream, "UTF-8")
@@ -90,7 +90,7 @@ public final class LoggerTest {
     }
 
     @Test
-    public void throwsWhenParamsLessThanFormatArgs() {
+    void throwsWhenParamsLessThanFormatArgs() {
         Assertions.assertThrows(
             ArrayIndexOutOfBoundsException.class,
             () -> Logger.format("String %s Char %c Number %d", "howdy", 'x')
@@ -98,7 +98,7 @@ public final class LoggerTest {
     }
 
     @Test
-    public void throwsWhenParamsMoreThanFormatArgs() {
+    void throwsWhenParamsMoreThanFormatArgs() {
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> Logger.format("String %s Number %d Char %c", "hey", 1, 'x', 2)
@@ -106,7 +106,7 @@ public final class LoggerTest {
     }
 
     @Test
-    public void checksLogLevel() throws Exception {
+    void checksLogLevel() throws Exception {
         LogManager.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
         TimeUnit.MILLISECONDS.sleep(1L);
         MatcherAssert.assertThat(
@@ -120,12 +120,12 @@ public final class LoggerTest {
     }
 
     @Test
-    public void usesStringAsLoggerName() {
+    void usesStringAsLoggerName() {
         Logger.info("com.jcabi.log...why.not", "hello, %s!", "world!");
     }
 
     @Test
-    public void findsArgsByPositions() {
+void findsArgsByPositions() {
         final String first = "xyz";
         final String second = "ddd";
         MatcherAssert.assertThat(

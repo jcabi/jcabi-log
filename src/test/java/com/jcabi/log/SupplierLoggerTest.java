@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
 public final class SupplierLoggerTest {
 
     @Test
-    public void debugIsDisabled() {
+    void debugIsDisabled() {
         final String name = "nodebug";
         final String appender = "nodebugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -82,7 +82,7 @@ public final class SupplierLoggerTest {
     }
 
     @Test
-    public void traceIsDisabled() {
+    void traceIsDisabled() {
         final String name = "notrace";
         final String appender = "notraceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -99,7 +99,7 @@ public final class SupplierLoggerTest {
     }
 
     @Test
-    public void traceIsEnabled() {
+    void traceIsEnabled() {
         final String name = "enabledtrace";
         final String appender = "traceapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -117,7 +117,7 @@ public final class SupplierLoggerTest {
     }
 
     @Test
-    public void warnIsDisabled() {
+    void warnIsDisabled() {
         final String name = "nowarn";
         final String appender = "nowarnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -153,7 +153,7 @@ public final class SupplierLoggerTest {
     }
 
     @Test
-    public void infoIsDisabled() {
+    void infoIsDisabled() {
         final String name = "noinfo";
         final String appender = "noinfoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(

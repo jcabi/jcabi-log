@@ -51,7 +51,7 @@ public final class MulticolorLayoutTest {
     private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
 
     @Test
-    public void transformsLoggingEventToText() {
+    void transformsLoggingEventToText() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -66,7 +66,7 @@ public final class MulticolorLayoutTest {
     }
 
     @Test
-    public void overwriteDefaultColor() {
+    void overwriteDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern(MulticolorLayoutTest.CONV_PATTERN);
         layout.setLevels("INFO:2;10");
@@ -82,7 +82,7 @@ public final class MulticolorLayoutTest {
     }
 
     @Test
-    public void rendersCustomConstantColor() {
+    void rendersCustomConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("%color-red{%p} %m");
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -95,7 +95,7 @@ public final class MulticolorLayoutTest {
     }
 
     @Test
-    public void overwriteCustomConstantColor() {
+    void overwriteCustomConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("%color-white{%p} %m");
         layout.setColors("white:10");
@@ -109,7 +109,7 @@ public final class MulticolorLayoutTest {
     }
 
     @Test
-    public void rendersAnsiConstantColor() {
+    void rendersAnsiConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("%color-0;0;31{%p} %m");
         final LoggingEvent event = Mockito.mock(LoggingEvent.class);
@@ -122,7 +122,7 @@ public final class MulticolorLayoutTest {
     }
 
     @Test
-    public void throwsOnIllegalColorName() {
+    void throwsOnIllegalColorName() {
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> {

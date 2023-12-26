@@ -50,7 +50,7 @@ public final class ConversionPatternTest {
     private static final Colors COLORS = new Colors();
 
     @Test
-    public void testGenerateNoReplacement() {
+    void testGenerateNoReplacement() {
         MatcherAssert.assertThat(
             convert(""),
             Matchers.equalTo("")
@@ -74,7 +74,7 @@ public final class ConversionPatternTest {
     }
 
     @Test
-    public void testGenerateEmpty() {
+    void testGenerateEmpty() {
         MatcherAssert.assertThat(
             convert("%color{}"),
             Matchers.equalTo(colorWrap(""))
@@ -82,7 +82,7 @@ public final class ConversionPatternTest {
     }
 
     @Test
-    public void testGenerateSimple() {
+    void testGenerateSimple() {
         MatcherAssert.assertThat(
             convert("%color{Hello World}"),
             Matchers.equalTo(colorWrap("Hello World"))
@@ -100,7 +100,7 @@ public final class ConversionPatternTest {
     }
 
     @Test
-    public void testGenerateCurlyBraces() {
+    void testGenerateCurlyBraces() {
         MatcherAssert.assertThat(
             ConversionPatternTest.convert("%color{%c{1}}"),
             Matchers.equalTo(ConversionPatternTest.colorWrap("%c{1}"))

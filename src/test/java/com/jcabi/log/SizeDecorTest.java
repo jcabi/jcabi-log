@@ -70,7 +70,7 @@ public final class SizeDecorTest {
     }
 
     @Test
-    public void testPrintsNullRight() {
+    void testPrintsNullRight() {
         MatcherAssert.assertThat(
             new Logged(new SizeDecor(null), 0, 0, 0),
             Matchers.hasToString("NULL")

@@ -43,7 +43,7 @@ public final class PreFormatterTest {
      * PreFormatter can format simple texts.
      */
     @Test
-    public void decoratesArguments() {
+    void decoratesArguments() {
         final PreFormatter pre = new PreFormatter(
             "%[com.jcabi.log.DecorMocker]-5.2f and %1$+.6f",
             1.0d
@@ -62,7 +62,7 @@ public final class PreFormatterTest {
      * PreFormatter can handle missed decors.
      */
     @Test
-    public void formatsEvenWithMissedDecors() {
+    void formatsEvenWithMissedDecors() {
         final PreFormatter pre =
             new PreFormatter("ouch: %[missed]s", "test");
         MatcherAssert.assertThat(
@@ -79,7 +79,7 @@ public final class PreFormatterTest {
      * PreFormatter can handle directly provided decors.
      */
     @Test
-    public void formatsWithDirectlyProvidedDecors() {
+    void formatsWithDirectlyProvidedDecors() {
         final DecorMocker decor = new DecorMocker("a");
         final PreFormatter pre = new PreFormatter("test: %s", decor);
         MatcherAssert.assertThat(
@@ -92,7 +92,7 @@ public final class PreFormatterTest {
      * PreFormatter can handle new line specifier.
      */
     @Test
-    public void handleNewLineSpecifier() {
+    void handleNewLineSpecifier() {
         final String fmt = "%s%n%s";
         final Object[] args = {"new", "line"};
         final PreFormatter pre = new PreFormatter(fmt, args);
@@ -110,7 +110,7 @@ public final class PreFormatterTest {
      * PreFormatter can handle percent specifier.
      */
     @Test
-    public void handlePercentSpecifier() {
+    void handlePercentSpecifier() {
         final String fmt = "%s%%";
         final Object[] args = {"percent: "};
         final PreFormatter pre = new PreFormatter(fmt, args);

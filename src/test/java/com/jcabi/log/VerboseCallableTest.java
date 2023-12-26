@@ -43,7 +43,7 @@ public final class VerboseCallableTest {
      * VerboseCallable can log exceptions inside Callable.
      */
     @Test
-    public void logsExceptionsInCallable() {
+    void logsExceptionsInCallable() {
         Assertions.assertThrows(
             IllegalArgumentException.class,
             () -> new VerboseCallable<Integer>(

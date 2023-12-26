@@ -49,7 +49,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public final class FileDecorTest {
 
     @Test
-    public void simplyWorks() {
+    void simplyWorks() {
         MatcherAssert.assertThat(
             new Printed(new FileDecor("/tmp/test-me.txt"), 0, 0, 0).toString(),
             Matchers.endsWith("test-me.txt")

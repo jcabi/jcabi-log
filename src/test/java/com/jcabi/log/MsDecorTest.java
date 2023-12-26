@@ -70,7 +70,7 @@ public final class MsDecorTest {
     }
 
     @Test
-    public void testPrintsNullRight() {
+    void testPrintsNullRight() {
         MatcherAssert.assertThat(
             new Logged(new MsDecor(null), 0, 0, 0),
             Matchers.hasToString("NULL")

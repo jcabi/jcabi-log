@@ -46,7 +46,7 @@ import org.w3c.dom.Document;
 public final class DomDecorTest {
 
     @Test
-    public void convertsDocumentToText() throws Exception {
+    void convertsDocumentToText() throws Exception {
         final Document doc = DocumentBuilderFactory.newInstance()
             .newDocumentBuilder().newDocument();
         doc.appendChild(doc.createElement("root"));
@@ -60,7 +60,7 @@ public final class DomDecorTest {
     }
 
     @Test
-    public void convertsNullToText() throws Exception {
+    void convertsNullToText() throws Exception {
         final Formattable decor = new DomDecor(null);
         final Appendable dest = Mockito.mock(Appendable.class);
         final Formatter fmt = new Formatter(dest);

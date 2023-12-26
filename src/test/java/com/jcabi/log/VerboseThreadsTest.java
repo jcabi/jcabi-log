@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
 public final class VerboseThreadsTest {
 
     @Test
-    public void instantiatesThreadsOnDemand() throws Exception {
+    void instantiatesThreadsOnDemand() throws Exception {
         final ExecutorService service = Executors
             .newSingleThreadExecutor(new VerboseThreads("foo"));
         service.execute(
@@ -56,7 +56,7 @@ public final class VerboseThreadsTest {
     }
 
     @Test
-    public void logsWhenThreadsAreNotDying() throws Exception {
+    void logsWhenThreadsAreNotDying() throws Exception {
         final ExecutorService service = Executors
             .newSingleThreadExecutor(new VerboseThreads(this));
         final Future<?> future = service.submit(
