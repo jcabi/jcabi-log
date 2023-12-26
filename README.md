@@ -40,6 +40,7 @@ other custom ones, which help formatting common values faster:
   * `%[nano]s` --- nanoseconds ➜ µs, ms, sec, min, hours, etc.
   * `%[type]s` --- `Class<?>` ➜ name of it
   * `%[secret]s` --- any string ➜ stars
+  * `%[dom]s` --- `org.w3c.domDocument` ➜ pretty printed/formatted XML
 
 You are welcome to suggest your own "decors".
 

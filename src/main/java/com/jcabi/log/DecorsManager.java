@@ -50,6 +50,7 @@ final class DecorsManager {
         new ConcurrentHashMap<>(0);
 
     static {
+        DecorsManager.DECORS.put("file", FileDecor.class);
         DecorsManager.DECORS.put("dom", DomDecor.class);
         DecorsManager.DECORS.put("exception", ExceptionDecor.class);
         DecorsManager.DECORS.put("list", ListDecor.class);
