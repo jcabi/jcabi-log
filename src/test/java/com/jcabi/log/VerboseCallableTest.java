@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  * @since 0.16
  */
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
-public final class VerboseCallableTest {
+final class VerboseCallableTest {
 
     /**
      * VerboseCallable can log exceptions inside Callable.

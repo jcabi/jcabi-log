@@ -46,7 +46,7 @@ import org.junit.jupiter.api.Test;
  * in "com.jcabi.log.LineNumberTest:72"
  * @since 1.18
  */
-public final class LineNumberTest {
+final class LineNumberTest {
 
     /**
      * Conversation pattern for test case.

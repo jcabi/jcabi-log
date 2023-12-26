@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link Logger}.
  * @since 0.1
  */
-public final class LoggerTest {
+final class LoggerTest {
 
     @Test
     void detectsLoggerNameCorrectly() {

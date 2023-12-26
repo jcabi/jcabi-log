@@ -43,7 +43,7 @@ import org.w3c.dom.Document;
  *
  * @since 0.1
  */
-public final class DomDecorTest {
+final class DomDecorTest {
 
     @Test
     void convertsDocumentToText() throws Exception {

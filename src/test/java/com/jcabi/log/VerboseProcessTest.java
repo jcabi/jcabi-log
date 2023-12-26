@@ -67,7 +67,7 @@ import org.mockito.Mockito;
  * @since 0.1
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
-public final class VerboseProcessTest {
+final class VerboseProcessTest {
 
     @Test
     @Disabled

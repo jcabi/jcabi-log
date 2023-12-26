@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * @since 0.1
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
-public final class VerboseThreadsTest {
+final class VerboseThreadsTest {
 
     @Test
     void instantiatesThreadsOnDemand() throws Exception {

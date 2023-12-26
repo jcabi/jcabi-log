@@ -41,7 +41,7 @@ import org.apache.log4j.WriterAppender;
  * have log4j in the classpath anyway, for {@link MulticolorLayout}.
  * @since 0.18
  */
-public final class UnitTestAppender extends WriterAppender {
+final class UnitTestAppender extends WriterAppender {
 
     /**
      * OutputStream where this Appender writes.

@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
  * @since 0.19
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class ConversionPatternTest {
+final class ConversionPatternTest {
     /**
      * Control Sequence Indicator.
      */

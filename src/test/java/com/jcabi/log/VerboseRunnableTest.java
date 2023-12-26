@@ -45,7 +45,7 @@ import org.junit.jupiter.api.Test;
  * @since 0.1
  */
 @SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
-public final class VerboseRunnableTest {
+final class VerboseRunnableTest {
 
     @Test
     void logsExceptionsInRunnable() {

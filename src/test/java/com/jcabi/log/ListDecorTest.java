@@ -44,7 +44,7 @@ import org.junit.jupiter.params.provider.MethodSource;
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
-public final class ListDecorTest {
+final class ListDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")

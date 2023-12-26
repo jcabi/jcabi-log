@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link PreFormatter}.
  * @since 0.1
  */
-public final class PreFormatterTest {
+final class PreFormatterTest {
 
     /**
      * PreFormatter can format simple texts.

@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
  *  but we need to fix and remove the "Ignore" annotations.
  */
 @SuppressWarnings("PMD.MoreThanOneLogger")
-public final class SupplierLoggerTest {
+final class SupplierLoggerTest {
 
     @Test
     void debugIsDisabled() {

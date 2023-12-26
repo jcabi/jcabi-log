@@ -43,7 +43,7 @@ import org.mockito.Mockito;
  *
  * @since 0.1
  */
-public final class MulticolorLayoutTest {
+final class MulticolorLayoutTest {
 
     /**
      * Conversation pattern for test case.
