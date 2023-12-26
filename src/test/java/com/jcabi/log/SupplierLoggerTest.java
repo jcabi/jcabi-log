@@ -64,7 +64,7 @@ final class SupplierLoggerTest {
 
     @Test
     @Disabled
-    public void debugIsEnabled() {
+    void debugIsEnabled() {
         final String name = "debugen";
         final String appender = "debugapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -135,7 +135,7 @@ final class SupplierLoggerTest {
 
     @Test
     @Disabled
-    public void warnIsEnabled() {
+    void warnIsEnabled() {
         final String name = "enwarn";
         final String appender = "warnapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -171,7 +171,7 @@ final class SupplierLoggerTest {
 
     @Test
     @Disabled
-    public void infoIsEnabled() {
+    void infoIsEnabled() {
         final String name = "withinfo";
         final String appender = "infoapp";
         final org.apache.log4j.Logger logger = this.loggerForTest(
@@ -195,7 +195,7 @@ final class SupplierLoggerTest {
      * @param level Logging level
      * @return Logger for test
      */
-    public org.apache.log4j.Logger loggerForTest(
+    private org.apache.log4j.Logger loggerForTest(
         final String name, final String appender, final Level level) {
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger
             .getLogger(name);

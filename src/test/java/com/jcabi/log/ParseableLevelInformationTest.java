@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * ParseableLevelInformation test case.
  * @since 0.18
  */
-public class ParseableLevelInformationTest {
+class ParseableLevelInformationTest {
 
     /**
      * ParseableLevelInformation can parse the information correctly when it's
@@ -48,7 +48,7 @@ public class ParseableLevelInformationTest {
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
-    public final void parsesCorrectlyTheInformation() {
+    final void parsesCorrectlyTheInformation() {
         final Map<String, String> parsed = new ParseableLevelInformation(
             "INFO:2;10,WARN:2;32"
         ).information();

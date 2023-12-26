@@ -49,7 +49,7 @@ final class MsDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
-    public void testPrintsRight(final long value, final String text,
+    void testPrintsRight(final long value, final String text,
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
@@ -60,7 +60,7 @@ final class MsDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
-    public void testLogsRight(final long value, final String text,
+    void testLogsRight(final long value, final String text,
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(

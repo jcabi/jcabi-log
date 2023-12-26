@@ -53,7 +53,7 @@ final class UnitTestAppender extends WriterAppender {
      * @param name The appender's name
      */
     @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
-    public UnitTestAppender(final String name) {
+    UnitTestAppender(final String name) {
         super();
         this.setName(name);
         this.logs = new ByteArrayOutputStream();

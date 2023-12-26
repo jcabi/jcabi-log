@@ -53,7 +53,7 @@ final class TextDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
-    public void testPrintsRight(final String obj, final String text,
+    void testPrintsRight(final String obj, final String text,
         final int flags, final int width, final int precision) {
         Assumptions.assumeTrue("UTF-8".equals(Charset.defaultCharset().name()));
         Locale.setDefault(Locale.US);
@@ -65,7 +65,7 @@ final class TextDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
-    public void testLogsRight(final String obj, final String text,
+    void testLogsRight(final String obj, final String text,
         final int flags, final int width, final int precision) {
         Assumptions.assumeTrue("UTF-8".equals(Charset.defaultCharset().name()));
         Locale.setDefault(Locale.US);

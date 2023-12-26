@@ -125,7 +125,7 @@ final class LoggerTest {
     }
 
     @Test
-void findsArgsByPositions() {
+    void findsArgsByPositions() {
         final String first = "xyz";
         final String second = "ddd";
         MatcherAssert.assertThat(

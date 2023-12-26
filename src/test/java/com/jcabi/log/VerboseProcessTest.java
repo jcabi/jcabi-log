@@ -71,7 +71,7 @@ final class VerboseProcessTest {
 
     @Test
     @Disabled
-    public void runsACommandLineScript() {
+    void runsACommandLineScript() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
@@ -84,7 +84,7 @@ final class VerboseProcessTest {
 
     @Test
     @Disabled
-    public void echosUnicodeCorrectly() {
+    void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         MatcherAssert.assertThat(
             new VerboseProcess(
@@ -197,7 +197,7 @@ final class VerboseProcessTest {
 
     @Test
     @SuppressWarnings("PMD.DoNotUseThreads")
-    public void quietlyTerminatesLongRunningProcess() throws Exception {
+    void quietlyTerminatesLongRunningProcess() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final Process proc = new ProcessBuilder("sleep", "10000").start();
         final VerboseProcess process = new VerboseProcess(proc);
@@ -248,7 +248,7 @@ final class VerboseProcessTest {
 
     @Test
     @SuppressWarnings("PMD.AvoidFileStream")
-    public void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
+    void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
         final StringWriter writer = new StringWriter();
         org.apache.log4j.Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)

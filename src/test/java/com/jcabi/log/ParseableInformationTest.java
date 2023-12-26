@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * ParseableInformation test case.
  * @since 0.18
  */
-public class ParseableInformationTest {
+class ParseableInformationTest {
 
     /**
      * ParseableInformation can parse if the information correctly if is using
@@ -48,7 +48,7 @@ public class ParseableInformationTest {
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
-    public final void parsesTheInformationCorrectly() {
+    final void parsesTheInformationCorrectly() {
         final Map<String, String> parsed = new ParseableInformation(
             "red:10,black:20"
         ).information();

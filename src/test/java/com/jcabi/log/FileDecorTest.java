@@ -58,7 +58,7 @@ final class FileDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
-    public void testPrintsRight(final Object path, final String text,
+    void testPrintsRight(final Object path, final String text,
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
@@ -69,7 +69,7 @@ final class FileDecorTest {
 
     @ParameterizedTest
     @MethodSource("params")
-    public void testLogsRight(final Object path, final String text,
+    void testLogsRight(final Object path, final String text,
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
