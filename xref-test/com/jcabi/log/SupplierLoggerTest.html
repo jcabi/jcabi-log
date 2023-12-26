@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../testapidocs/com/jcabi/log/SupplierLoggerTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2022, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -51,10 +51,10 @@
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> *  but we need to fix and remove the "Ignore" annotations.</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  @SuppressWarnings(<span class="jxr_string">"PMD.MoreThanOneLogger"</span>)
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="SupplierLoggerTest" href="../../../com/jcabi/log/SupplierLoggerTest.html#SupplierLoggerTest">SupplierLoggerTest</a> {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="SupplierLoggerTest" href="../../../com/jcabi/log/SupplierLoggerTest.html#SupplierLoggerTest">SupplierLoggerTest</a> {
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      @Test
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> debugIsDisabled() {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">void</strong> debugIsDisabled() {
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"nodebug"</span>;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"nodebugapp"</span>;
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -72,7 +72,7 @@
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      @Test
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      @Disabled
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> debugIsEnabled() {
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">void</strong> debugIsEnabled() {
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"debugen"</span>;
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"debugapp"</span>;
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -90,7 +90,7 @@
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>  
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>      @Test
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> traceIsDisabled() {
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">void</strong> traceIsDisabled() {
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"notrace"</span>;
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"notraceapp"</span>;
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -107,7 +107,7 @@
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>      }
 <a class="jxr_linenumber" name="L100" href="#L100">100</a> 
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>     @Test
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> traceIsEnabled() {
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">void</strong> traceIsEnabled() {
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"enabledtrace"</span>;
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>         <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"traceapp"</span>;
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>         <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -125,7 +125,7 @@
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>     }
 <a class="jxr_linenumber" name="L118" href="#L118">118</a> 
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>     @Test
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> warnIsDisabled() {
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>     <strong class="jxr_keyword">void</strong> warnIsDisabled() {
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>         <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"nowarn"</span>;
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>         <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"nowarnapp"</span>;
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>         <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -143,7 +143,7 @@
 <a class="jxr_linenumber" name="L135" href="#L135">135</a> 
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>     @Test
 <a class="jxr_linenumber" name="L137" href="#L137">137</a>     @Disabled
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> warnIsEnabled() {
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>     <strong class="jxr_keyword">void</strong> warnIsEnabled() {
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>         <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"enwarn"</span>;
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"warnapp"</span>;
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -161,7 +161,7 @@
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>     }
 <a class="jxr_linenumber" name="L154" href="#L154">154</a> 
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>     @Test
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> infoIsDisabled() {
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">void</strong> infoIsDisabled() {
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>         <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"noinfo"</span>;
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>         <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"noinfoapp"</span>;
 <a class="jxr_linenumber" name="L159" href="#L159">159</a>         <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -179,7 +179,7 @@
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> 
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>     @Test
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>     @Disabled
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> infoIsEnabled() {
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>     <strong class="jxr_keyword">void</strong> infoIsEnabled() {
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>         <strong class="jxr_keyword">final</strong> String name = <span class="jxr_string">"withinfo"</span>;
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         <strong class="jxr_keyword">final</strong> String appender = <span class="jxr_string">"infoapp"</span>;
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>         <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = <strong class="jxr_keyword">this</strong>.loggerForTest(
@@ -203,7 +203,7 @@
 <a class="jxr_linenumber" name="L195" href="#L195">195</a> <em class="jxr_javadoccomment">     * @param level Logging level</em>
 <a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     * @return Logger for test</em>
 <a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>     <strong class="jxr_keyword">public</strong> org.apache.log4j.Logger loggerForTest(
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>     <strong class="jxr_keyword">private</strong> org.apache.log4j.Logger loggerForTest(
 <a class="jxr_linenumber" name="L199" href="#L199">199</a>         <strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> String appender, <strong class="jxr_keyword">final</strong> Level level) {
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>         <strong class="jxr_keyword">final</strong> org.apache.log4j.Logger logger = org.apache.log4j.Logger
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>             .getLogger(name);

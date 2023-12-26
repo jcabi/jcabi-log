@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../testapidocs/com/jcabi/log/PreFormatterTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2022, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -45,13 +45,13 @@
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> * Test case for {@link PreFormatter}.</em>
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="PreFormatterTest" href="../../../com/jcabi/log/PreFormatterTest.html#PreFormatterTest">PreFormatterTest</a> {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="PreFormatterTest" href="../../../com/jcabi/log/PreFormatterTest.html#PreFormatterTest">PreFormatterTest</a> {
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * PreFormatter can format simple texts.</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>      @Test
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> decoratesArguments() {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">void</strong> decoratesArguments() {
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">final</strong> PreFormatter pre = <strong class="jxr_keyword">new</strong> PreFormatter(
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>              <span class="jxr_string">"%[com.jcabi.log.DecorMocker]-5.2f and %1$+.6f"</span>,
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>              1.0d
@@ -70,7 +70,7 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     * PreFormatter can handle missed decors.</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      @Test
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> formatsEvenWithMissedDecors() {
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">void</strong> formatsEvenWithMissedDecors() {
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">final</strong> PreFormatter pre =
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>              <strong class="jxr_keyword">new</strong> PreFormatter(<span class="jxr_string">"ouch: %[missed]s"</span>, <span class="jxr_string">"test"</span>);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          MatcherAssert.assertThat(
@@ -87,7 +87,7 @@
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * PreFormatter can handle directly provided decors.</em>
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>      @Test
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> formatsWithDirectlyProvidedDecors() {
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      <strong class="jxr_keyword">void</strong> formatsWithDirectlyProvidedDecors() {
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">final</strong> <a name="DecorMocker" href="../../../com/jcabi/log/DecorMocker.html#DecorMocker">DecorMocker</a> decor = <strong class="jxr_keyword">new</strong> <a name="DecorMocker" href="../../../com/jcabi/log/DecorMocker.html#DecorMocker">DecorMocker</a>(<span class="jxr_string">"a"</span>);
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          <strong class="jxr_keyword">final</strong> PreFormatter pre = <strong class="jxr_keyword">new</strong> PreFormatter(<span class="jxr_string">"test: %s"</span>, decor);
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          MatcherAssert.assertThat(
@@ -100,7 +100,7 @@
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     * PreFormatter can handle new line specifier.</em>
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>      @Test
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> handleNewLineSpecifier() {
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">void</strong> handleNewLineSpecifier() {
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">final</strong> String fmt = <span class="jxr_string">"%s%n%s"</span>;
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">final</strong> Object[] args = {<span class="jxr_string">"new"</span>, <span class="jxr_string">"line"</span>};
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          <strong class="jxr_keyword">final</strong> PreFormatter pre = <strong class="jxr_keyword">new</strong> PreFormatter(fmt, args);
@@ -118,7 +118,7 @@
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">     * PreFormatter can handle percent specifier.</em>
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>     @Test
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> handlePercentSpecifier() {
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>     <strong class="jxr_keyword">void</strong> handlePercentSpecifier() {
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">final</strong> String fmt = <span class="jxr_string">"%s%%"</span>;
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>         <strong class="jxr_keyword">final</strong> Object[] args = {<span class="jxr_string">"percent: "</span>};
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         <strong class="jxr_keyword">final</strong> PreFormatter pre = <strong class="jxr_keyword">new</strong> PreFormatter(fmt, args);

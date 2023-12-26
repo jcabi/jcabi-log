@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../testapidocs/com/jcabi/log/VerboseRunnableTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2022, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -53,10 +53,10 @@
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  @SuppressWarnings({ <span class="jxr_string">"PMD.DoNotUseThreads"</span>, <span class="jxr_string">"PMD.TooManyMethods"</span> })
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> VerboseRunnableTest {
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> VerboseRunnableTest {
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      @Test
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> logsExceptionsInRunnable() {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">void</strong> logsExceptionsInRunnable() {
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          Assertions.assertThrows(
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>              IllegalArgumentException.<strong class="jxr_keyword">class</strong>,
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>              () -&gt; <strong class="jxr_keyword">new</strong> VerboseRunnable(
@@ -68,7 +68,7 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      }
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      @Test
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> swallowsExceptionsInRunnable() {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">void</strong> swallowsExceptionsInRunnable() {
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">new</strong> VerboseRunnable(
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>              (Runnable) () -&gt; {
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"boom"</span>);
@@ -78,7 +78,7 @@
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      }
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      @Test
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> swallowsExceptionsInCallable() {
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">void</strong> swallowsExceptionsInCallable() {
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">new</strong> VerboseRunnable(
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>              () -&gt; {
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"boom-2"</span>);
@@ -88,7 +88,7 @@
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>      }
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>      @Test
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> translatesToStringFromUnderlyingRunnable() {
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">void</strong> translatesToStringFromUnderlyingRunnable() {
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>          <strong class="jxr_keyword">final</strong> String text = <span class="jxr_string">"some text abc"</span>;
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          <strong class="jxr_keyword">final</strong> Runnable verbose = <strong class="jxr_keyword">new</strong> VerboseRunnable(
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>              <strong class="jxr_keyword">new</strong> Runnable() {
@@ -110,7 +110,7 @@
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>     }
 <a class="jxr_linenumber" name="L103" href="#L103">103</a> 
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>     @Test
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> translatesToStringFromUnderlyingCallable() {
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     <strong class="jxr_keyword">void</strong> translatesToStringFromUnderlyingCallable() {
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">final</strong> String text = <span class="jxr_string">"some text abc-2"</span>;
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">final</strong> Runnable verbose = <strong class="jxr_keyword">new</strong> VerboseRunnable(
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>             <strong class="jxr_keyword">new</strong> Callable&lt;Void&gt;() {
@@ -133,7 +133,7 @@
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>     }
 <a class="jxr_linenumber" name="L126" href="#L126">126</a> 
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>     @Test
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> preservesInterruptedStatus() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>     <strong class="jxr_keyword">void</strong> preservesInterruptedStatus() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>         <strong class="jxr_keyword">final</strong> ScheduledExecutorService svc =
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>             Executors.newSingleThreadScheduledExecutor();
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>         <strong class="jxr_keyword">final</strong> AtomicReference&lt;Thread&gt; thread = <strong class="jxr_keyword">new</strong> AtomicReference&lt;&gt;();

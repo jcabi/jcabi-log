@@ -33,7 +33,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.23.0/index.html" title="JavaDoc 0.23.0">JavaDoc 0.23.0</a>
+                            <span>                        <a href="apidocs-0.24.0/index.html" title="JavaDoc 0.24.0">JavaDoc 0.24.0</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -124,13 +124,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.23.0</strong>
+                                    <strong itemprop="version">0.24.0</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2023-04-04T10:45:02Z">
+                                    <time itemprop="datePublished" datetime="2023-12-26T12:17:25Z">
                                         
-                                        04-Apr-2023
+                                        26-Dec-2023
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -143,8 +143,8 @@
                                                 <article itemprop="articleBody">
                             <section>
 <h2><a name="Thread_Factory_that_Logs_Exceptions"></a>Thread Factory that Logs Exceptions</h2>
-<p><a href="./apidocs-0.23.0/com/jcabi/log/VerboseThreads.html"><code>VerboseThreads</code></a> is an implementation of <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ThreadFactory.html"><code>ThreadFactory</code></a> that instantiates threads that log all runtime exceptions through SLF4J.</p>
-<p><a href="./apidocs-0.23.0/com/jcabi/log/VerboseThreads.html"><code>VerboseThreads</code></a> factory should be used together with executor services from <code>java.util.concurrent</code> package. Without this &quot;verbose&quot; thread factory your runnable tasks will not report anything to console once they die because of a runtime exception, for example:</p>
+<p><a href="./apidocs-0.24.0/com/jcabi/log/VerboseThreads.html"><code>VerboseThreads</code></a> is an implementation of <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ThreadFactory.html"><code>ThreadFactory</code></a> that instantiates threads that log all runtime exceptions through SLF4J.</p>
+<p><a href="./apidocs-0.24.0/com/jcabi/log/VerboseThreads.html"><code>VerboseThreads</code></a> factory should be used together with executor services from <code>java.util.concurrent</code> package. Without this &quot;verbose&quot; thread factory your runnable tasks will not report anything to console once they die because of a runtime exception, for example:</p>
 <div class="source">
 <pre>public class Main {
   public static void main(String[] args) {
@@ -159,7 +159,7 @@
     );
   }
 }</pre></div>
-<p>The exception in this example will never be caught by nobody. It will just terminate current execution of the <code>Runnable</code> task. Moreover, it won't reach any <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.UncaughtExceptionHandler.html"><code>Thread.UncaughtExceptionHandler</code></a>, because this is how <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ScheduledExecutorService.html"><code>ScheduledExecutorService</code></a> is behaving by default. This is how we solve the problem with <a href="./apidocs-0.23.0/com/jcabi/log/VerboseThreads.html"><code>VerboseThreads</code></a>:</p>
+<p>The exception in this example will never be caught by nobody. It will just terminate current execution of the <code>Runnable</code> task. Moreover, it won't reach any <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Thread.UncaughtExceptionHandler.html"><code>Thread.UncaughtExceptionHandler</code></a>, because this is how <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ScheduledExecutorService.html"><code>ScheduledExecutorService</code></a> is behaving by default. This is how we solve the problem with <a href="./apidocs-0.24.0/com/jcabi/log/VerboseThreads.html"><code>VerboseThreads</code></a>:</p>
 <div class="source">
 <pre>public class Main {
   public static void main(String[] args) {
@@ -175,13 +175,13 @@
     );
   }
 }</pre></div>
-<p>Now, every runtime exception that is not caught inside your <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html"><code>Runnable</code></a> will be reported to log (using <a href="./apidocs-0.23.0/com/jcabi/log/Logger.html"><code>Logger</code></a>).</p>
-<p>The only dependency you need is (you can also download <a class="externalLink" href="http://repo1.maven.org/maven2/com/jcabi/jcabi-log/0.23.0/jcabi-log-0.23.0.jar"><code>jcabi-log-0.23.0.jar</code></a> and add it to the classpath):</p>
+<p>Now, every runtime exception that is not caught inside your <a class="externalLink" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html"><code>Runnable</code></a> will be reported to log (using <a href="./apidocs-0.24.0/com/jcabi/log/Logger.html"><code>Logger</code></a>).</p>
+<p>The only dependency you need is (you can also download <a class="externalLink" href="http://repo1.maven.org/maven2/com/jcabi/jcabi-log/0.24.0/jcabi-log-0.24.0.jar"><code>jcabi-log-0.24.0.jar</code></a> and add it to the classpath):</p>
 <div class="source">
 <pre>&lt;dependency&gt;
   &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
   &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
-  &lt;version&gt;0.23.0&lt;/version&gt;
+  &lt;version&gt;0.24.0&lt;/version&gt;
 &lt;/dependency&gt;</pre></div></section>
                         </article>
                     </div>
