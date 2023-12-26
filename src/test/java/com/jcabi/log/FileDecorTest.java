@@ -37,6 +37,8 @@ import java.util.Locale;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -56,6 +58,7 @@ final class FileDecorTest {
         );
     }
 
+    @DisabledOnOs(OS.WINDOWS)
     @ParameterizedTest
     @MethodSource("params")
     void testPrintsRight(final Object path, final String text,
@@ -67,6 +70,7 @@ final class FileDecorTest {
         );
     }
 
+    @DisabledOnOs(OS.WINDOWS)
     @ParameterizedTest
     @MethodSource("params")
     void testLogsRight(final Object path, final String text,
