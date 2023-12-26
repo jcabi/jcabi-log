@@ -42,7 +42,8 @@ other custom ones, which help formatting common values faster:
   * `%[secret]s` --- any string ➜ stars
   * `%[dom]s` --- `org.w3c.domDocument` ➜ pretty printed/formatted XML
 
-You are welcome to suggest your own "decors".
+You are welcome to [suggest](https://github.com/jcabi/jcabi-log/blob/master/src/main/java/com/jcabi/log/DecorsManager.java) 
+your own "decors".
 
 ## How to contribute?
 
