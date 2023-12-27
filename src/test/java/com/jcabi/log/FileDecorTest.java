@@ -64,7 +64,7 @@ final class FileDecorTest {
     @EnabledOnOs(OS.WINDOWS)
     void simplyWorksOnWindows() {
         MatcherAssert.assertThat(
-            new Printed(new FileDecor("D:\\a\\b\\foo.txt"), 0, 0, 0).toString(),
+            new Printed(new FileDecor("F:\\hahaha\\b\\foo.txt"), 0, 0, 0).toString(),
             Matchers.endsWith("foo.txt")
         );
     }
