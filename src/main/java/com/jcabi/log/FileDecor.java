@@ -65,7 +65,13 @@ final class FileDecor implements Formattable {
         } else {
             final Path self = Paths.get(this.path.toString()).toAbsolutePath();
             final Path root = Paths.get("").toAbsolutePath();
-            String rel = root.relativize(self).toString();
+            Path rlt;
+            try {
+                rlt = root.relativize(self);
+            } catch (final IllegalArgumentException ex) {
+                rlt = self;
+            }
+            String rel = rlt.toString();
             if (rel.startsWith("..")) {
                 rel = self.toString();
             }
