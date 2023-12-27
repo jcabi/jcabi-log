@@ -38,6 +38,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -51,10 +52,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 final class FileDecorTest {
 
     @Test
-    void simplyWorks() {
+    @DisabledOnOs(OS.WINDOWS)
+    void simplyWorksOnUnix() {
         MatcherAssert.assertThat(
             new Printed(new FileDecor("/tmp/test-me.txt"), 0, 0, 0).toString(),
             Matchers.endsWith("test-me.txt")
+        );
+    }
+
+    @Test
+    @EnabledOnOs(OS.WINDOWS)
+    void simplyWorksOnWindows() {
+        MatcherAssert.assertThat(
+            new Printed(new FileDecor("D:\\a\\b\\foo.txt"), 0, 0, 0).toString(),
+            Matchers.endsWith("foo.txt")
         );
     }
 
