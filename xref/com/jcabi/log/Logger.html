@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../apidocs/com/jcabi/log/Logger.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2024, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -406,108 +406,107 @@
 <a class="jxr_linenumber" name="L398" href="#L398">398</a> <em class="jxr_javadoccomment">     * @return Output stream directly pointed to the logging facility</em>
 <a class="jxr_linenumber" name="L399" href="#L399">399</a> <em class="jxr_javadoccomment">     * @see &lt;a href="<a href="http://stackoverflow.com/questions/17258325" target="alexandria_uri">http://stackoverflow.com/questions/17258325</a>"&gt;some discussion&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L400" href="#L400">400</a> <em class="jxr_javadoccomment">     * @since 0.8</em>
-<a class="jxr_linenumber" name="L401" href="#L401">401</a> <em class="jxr_javadoccomment">     * @checkstyle MagicNumberCheck (20 lines)</em>
-<a class="jxr_linenumber" name="L402" href="#L402">402</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L403" href="#L403">403</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> OutputStream stream(<strong class="jxr_keyword">final</strong> Level level, <strong class="jxr_keyword">final</strong> Object source) {
-<a class="jxr_linenumber" name="L404" href="#L404">404</a>         <em class="jxr_comment">// @checkstyle AnonInnerLengthCheck (50 lines)</em>
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> OutputStream() {
-<a class="jxr_linenumber" name="L406" href="#L406">406</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> ByteArrayOutputStream buffer =
-<a class="jxr_linenumber" name="L407" href="#L407">407</a>                 <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a class="jxr_linenumber" name="L408" href="#L408">408</a>             @Override
-<a class="jxr_linenumber" name="L409" href="#L409">409</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> write(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> data) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L410" href="#L410">410</a>                 <strong class="jxr_keyword">if</strong> (data == '\n') {
-<a class="jxr_linenumber" name="L411" href="#L411">411</a>                     Logger.log(
-<a class="jxr_linenumber" name="L412" href="#L412">412</a>                         level, source,
-<a class="jxr_linenumber" name="L413" href="#L413">413</a>                         <strong class="jxr_keyword">this</strong>.buffer.toString(Logger.UTF_8)
-<a class="jxr_linenumber" name="L414" href="#L414">414</a>                     );
-<a class="jxr_linenumber" name="L415" href="#L415">415</a>                     <strong class="jxr_keyword">this</strong>.buffer.reset();
-<a class="jxr_linenumber" name="L416" href="#L416">416</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (data &gt;= 0x20 &amp;&amp; data &lt;= 0x7f) {
-<a class="jxr_linenumber" name="L417" href="#L417">417</a>                     <strong class="jxr_keyword">this</strong>.buffer.write(data);
-<a class="jxr_linenumber" name="L418" href="#L418">418</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L419" href="#L419">419</a>                     <strong class="jxr_keyword">this</strong>.buffer.write(
-<a class="jxr_linenumber" name="L420" href="#L420">420</a>                         String.format(
-<a class="jxr_linenumber" name="L421" href="#L421">421</a>                             <span class="jxr_string">"&#92;&#92;x%02x"</span>, data &amp; 0xff
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>                         ).getBytes(Logger.UTF_8)
-<a class="jxr_linenumber" name="L423" href="#L423">423</a>                     );
-<a class="jxr_linenumber" name="L424" href="#L424">424</a>                 }
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>             }
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>         };
-<a class="jxr_linenumber" name="L427" href="#L427">427</a>     }
-<a class="jxr_linenumber" name="L428" href="#L428">428</a> 
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L430" href="#L430">430</a> <em class="jxr_javadoccomment">     * Log messages constructed from Suppliers.</em>
-<a class="jxr_linenumber" name="L431" href="#L431">431</a> <em class="jxr_javadoccomment">     * It is more efficient to use method referencing because the method</em>
-<a class="jxr_linenumber" name="L432" href="#L432">432</a> <em class="jxr_javadoccomment">     * won't be called unless the specified logging level is enabled.</em>
-<a class="jxr_linenumber" name="L433" href="#L433">433</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L434" href="#L434">434</a> <em class="jxr_javadoccomment">     * This saves you the effort of having to check if the level is enabled</em>
-<a class="jxr_linenumber" name="L435" href="#L435">435</a> <em class="jxr_javadoccomment">     * before calling the logging method.</em>
-<a class="jxr_linenumber" name="L436" href="#L436">436</a> <em class="jxr_javadoccomment">     * E.g.</em>
-<a class="jxr_linenumber" name="L437" href="#L437">437</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="L438" href="#L438">438</a> <em class="jxr_javadoccomment">     *     if (Logger.isDebugEnabled(this)) {</em>
-<a class="jxr_linenumber" name="L439" href="#L439">439</a> <em class="jxr_javadoccomment">     *         Logger.debug(this, "Some %s", calculate());</em>
-<a class="jxr_linenumber" name="L440" href="#L440">440</a> <em class="jxr_javadoccomment">     *     }</em>
-<a class="jxr_linenumber" name="L441" href="#L441">441</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;&lt;br&gt;</em>
-<a class="jxr_linenumber" name="L442" href="#L442">442</a> <em class="jxr_javadoccomment">     * turns into &lt;br&gt;</em>
-<a class="jxr_linenumber" name="L443" href="#L443">443</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
-<a class="jxr_linenumber" name="L444" href="#L444">444</a> <em class="jxr_javadoccomment">     *     Logger.withSupplier().debug(this, "Some %s", this::calculate());</em>
-<a class="jxr_linenumber" name="L445" href="#L445">445</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;&lt;br&gt;</em>
-<a class="jxr_linenumber" name="L446" href="#L446">446</a> <em class="jxr_javadoccomment">     * and the calculate() method won't be called unless the debug level is</em>
-<a class="jxr_linenumber" name="L447" href="#L447">447</a> <em class="jxr_javadoccomment">     * active.</em>
-<a class="jxr_linenumber" name="L448" href="#L448">448</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L449" href="#L449">449</a> <em class="jxr_javadoccomment">     * @return Object containing methods for logging with Supplier-constructed</em>
-<a class="jxr_linenumber" name="L450" href="#L450">450</a> <em class="jxr_javadoccomment">     *  messages</em>
-<a class="jxr_linenumber" name="L451" href="#L451">451</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> SupplierLogger withSupplier() {
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> SupplierLogger();
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>     }
-<a class="jxr_linenumber" name="L455" href="#L455">455</a> 
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L457" href="#L457">457</a> <em class="jxr_javadoccomment">     * Set final static field in order to fix the %L log4j parameter.</em>
-<a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     * @param field Field</em>
-<a class="jxr_linenumber" name="L459" href="#L459">459</a> <em class="jxr_javadoccomment">     * @param value New value</em>
-<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     * @throws NoSuchFieldException If some problem</em>
-<a class="jxr_linenumber" name="L461" href="#L461">461</a> <em class="jxr_javadoccomment">     * @throws IllegalAccessException If some problem</em>
-<a class="jxr_linenumber" name="L462" href="#L462">462</a> <em class="jxr_javadoccomment">     * @checkstyle ThrowsCountCheck (4 lines)</em>
-<a class="jxr_linenumber" name="L463" href="#L463">463</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setFinalStatic(<strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> Object value)
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>         <strong class="jxr_keyword">throws</strong> NoSuchFieldException, IllegalAccessException {
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>         field.setAccessible(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>         <strong class="jxr_keyword">final</strong> Field modifiers = Field.<strong class="jxr_keyword">class</strong>.getDeclaredField(<span class="jxr_string">"modifiers"</span>);
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>         modifiers.setAccessible(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>         modifiers.setInt(field, field.getModifiers() &amp; ~Modifier.FINAL);
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>         field.set(<strong class="jxr_keyword">null</strong>, value);
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>     }
-<a class="jxr_linenumber" name="L472" href="#L472">472</a> 
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L474" href="#L474">474</a> <em class="jxr_javadoccomment">     * Get the instance of the logger for this particular caller.</em>
-<a class="jxr_linenumber" name="L475" href="#L475">475</a> <em class="jxr_javadoccomment">     * @param source Source of the logging operation</em>
-<a class="jxr_linenumber" name="L476" href="#L476">476</a> <em class="jxr_javadoccomment">     * @return The instance of {@code Logger} class</em>
-<a class="jxr_linenumber" name="L477" href="#L477">477</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L478" href="#L478">478</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> org.slf4j.Logger logger(<strong class="jxr_keyword">final</strong> Object source) {
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>         <strong class="jxr_keyword">final</strong> org.slf4j.Logger logger;
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>         <strong class="jxr_keyword">if</strong> (source instanceof Class) {
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>             logger = LoggerFactory.getLogger((Class&lt;?&gt;) source);
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (source instanceof String) {
-<a class="jxr_linenumber" name="L483" href="#L483">483</a>             logger = LoggerFactory.getLogger(String.<strong class="jxr_keyword">class</strong>.<strong class="jxr_keyword">cast</strong>(source));
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>             logger = LoggerFactory.getLogger(source.getClass());
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>         }
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>         <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"org.slf4j.impl.Log4jLoggerAdapter"</span>
-<a class="jxr_linenumber" name="L488" href="#L488">488</a>             .equals(logger.getClass().getName())) {
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L490" href="#L490">490</a>                 <strong class="jxr_keyword">final</strong> Field fqcn = logger.getClass()
-<a class="jxr_linenumber" name="L491" href="#L491">491</a>                     .getDeclaredField(<span class="jxr_string">"FQCN"</span>);
-<a class="jxr_linenumber" name="L492" href="#L492">492</a>                 setFinalStatic(fqcn, Logger.<strong class="jxr_keyword">class</strong>.getName());
-<a class="jxr_linenumber" name="L493" href="#L493">493</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> NoSuchFieldException | IllegalAccessException ex) {
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(ex);
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>             }
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>         }
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>         <strong class="jxr_keyword">return</strong> logger;
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>     }
-<a class="jxr_linenumber" name="L499" href="#L499">499</a> 
-<a class="jxr_linenumber" name="L500" href="#L500">500</a> }
+<a class="jxr_linenumber" name="L401" href="#L401">401</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L402" href="#L402">402</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> OutputStream stream(<strong class="jxr_keyword">final</strong> Level level, <strong class="jxr_keyword">final</strong> Object source) {
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>         <em class="jxr_comment">// @checkstyle AnonInnerLengthCheck (50 lines)</em>
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> OutputStream() {
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">transient</strong> ByteArrayOutputStream buffer =
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>                 <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
+<a class="jxr_linenumber" name="L407" href="#L407">407</a>             @Override
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> write(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> data) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L409" href="#L409">409</a>                 <strong class="jxr_keyword">if</strong> (data == '\n') {
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>                     Logger.log(
+<a class="jxr_linenumber" name="L411" href="#L411">411</a>                         level, source,
+<a class="jxr_linenumber" name="L412" href="#L412">412</a>                         <strong class="jxr_keyword">this</strong>.buffer.toString(Logger.UTF_8)
+<a class="jxr_linenumber" name="L413" href="#L413">413</a>                     );
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>                     <strong class="jxr_keyword">this</strong>.buffer.reset();
+<a class="jxr_linenumber" name="L415" href="#L415">415</a>                 } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (data &gt;= 0x20 &amp;&amp; data &lt;= 0x7f) {
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>                     <strong class="jxr_keyword">this</strong>.buffer.write(data);
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>                     <strong class="jxr_keyword">this</strong>.buffer.write(
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>                         String.format(
+<a class="jxr_linenumber" name="L420" href="#L420">420</a>                             <span class="jxr_string">"&#92;&#92;x%02x"</span>, data &amp; 0xff
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>                         ).getBytes(Logger.UTF_8)
+<a class="jxr_linenumber" name="L422" href="#L422">422</a>                     );
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>                 }
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>             }
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>         };
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>     }
+<a class="jxr_linenumber" name="L427" href="#L427">427</a> 
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L429" href="#L429">429</a> <em class="jxr_javadoccomment">     * Log messages constructed from Suppliers.</em>
+<a class="jxr_linenumber" name="L430" href="#L430">430</a> <em class="jxr_javadoccomment">     * It is more efficient to use method referencing because the method</em>
+<a class="jxr_linenumber" name="L431" href="#L431">431</a> <em class="jxr_javadoccomment">     * won't be called unless the specified logging level is enabled.</em>
+<a class="jxr_linenumber" name="L432" href="#L432">432</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L433" href="#L433">433</a> <em class="jxr_javadoccomment">     * This saves you the effort of having to check if the level is enabled</em>
+<a class="jxr_linenumber" name="L434" href="#L434">434</a> <em class="jxr_javadoccomment">     * before calling the logging method.</em>
+<a class="jxr_linenumber" name="L435" href="#L435">435</a> <em class="jxr_javadoccomment">     * E.g.</em>
+<a class="jxr_linenumber" name="L436" href="#L436">436</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
+<a class="jxr_linenumber" name="L437" href="#L437">437</a> <em class="jxr_javadoccomment">     *     if (Logger.isDebugEnabled(this)) {</em>
+<a class="jxr_linenumber" name="L438" href="#L438">438</a> <em class="jxr_javadoccomment">     *         Logger.debug(this, "Some %s", calculate());</em>
+<a class="jxr_linenumber" name="L439" href="#L439">439</a> <em class="jxr_javadoccomment">     *     }</em>
+<a class="jxr_linenumber" name="L440" href="#L440">440</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;&lt;br&gt;</em>
+<a class="jxr_linenumber" name="L441" href="#L441">441</a> <em class="jxr_javadoccomment">     * turns into &lt;br&gt;</em>
+<a class="jxr_linenumber" name="L442" href="#L442">442</a> <em class="jxr_javadoccomment">     * &lt;pre&gt;</em>
+<a class="jxr_linenumber" name="L443" href="#L443">443</a> <em class="jxr_javadoccomment">     *     Logger.withSupplier().debug(this, "Some %s", this::calculate());</em>
+<a class="jxr_linenumber" name="L444" href="#L444">444</a> <em class="jxr_javadoccomment">     * &lt;/pre&gt;&lt;br&gt;</em>
+<a class="jxr_linenumber" name="L445" href="#L445">445</a> <em class="jxr_javadoccomment">     * and the calculate() method won't be called unless the debug level is</em>
+<a class="jxr_linenumber" name="L446" href="#L446">446</a> <em class="jxr_javadoccomment">     * active.</em>
+<a class="jxr_linenumber" name="L447" href="#L447">447</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L448" href="#L448">448</a> <em class="jxr_javadoccomment">     * @return Object containing methods for logging with Supplier-constructed</em>
+<a class="jxr_linenumber" name="L449" href="#L449">449</a> <em class="jxr_javadoccomment">     *  messages</em>
+<a class="jxr_linenumber" name="L450" href="#L450">450</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> SupplierLogger withSupplier() {
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> SupplierLogger();
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>     }
+<a class="jxr_linenumber" name="L454" href="#L454">454</a> 
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L456" href="#L456">456</a> <em class="jxr_javadoccomment">     * Set final static field in order to fix the %L log4j parameter.</em>
+<a class="jxr_linenumber" name="L457" href="#L457">457</a> <em class="jxr_javadoccomment">     * @param field Field</em>
+<a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     * @param value New value</em>
+<a class="jxr_linenumber" name="L459" href="#L459">459</a> <em class="jxr_javadoccomment">     * @throws NoSuchFieldException If some problem</em>
+<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     * @throws IllegalAccessException If some problem</em>
+<a class="jxr_linenumber" name="L461" href="#L461">461</a> <em class="jxr_javadoccomment">     * @checkstyle ThrowsCountCheck (4 lines)</em>
+<a class="jxr_linenumber" name="L462" href="#L462">462</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> setFinalStatic(<strong class="jxr_keyword">final</strong> Field field, <strong class="jxr_keyword">final</strong> Object value)
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>         <strong class="jxr_keyword">throws</strong> NoSuchFieldException, IllegalAccessException {
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>         field.setAccessible(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>         <strong class="jxr_keyword">final</strong> Field modifiers = Field.<strong class="jxr_keyword">class</strong>.getDeclaredField(<span class="jxr_string">"modifiers"</span>);
+<a class="jxr_linenumber" name="L467" href="#L467">467</a>         modifiers.setAccessible(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>         modifiers.setInt(field, field.getModifiers() &amp; ~Modifier.FINAL);
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>         field.set(<strong class="jxr_keyword">null</strong>, value);
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>     }
+<a class="jxr_linenumber" name="L471" href="#L471">471</a> 
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L473" href="#L473">473</a> <em class="jxr_javadoccomment">     * Get the instance of the logger for this particular caller.</em>
+<a class="jxr_linenumber" name="L474" href="#L474">474</a> <em class="jxr_javadoccomment">     * @param source Source of the logging operation</em>
+<a class="jxr_linenumber" name="L475" href="#L475">475</a> <em class="jxr_javadoccomment">     * @return The instance of {@code Logger} class</em>
+<a class="jxr_linenumber" name="L476" href="#L476">476</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> org.slf4j.Logger logger(<strong class="jxr_keyword">final</strong> Object source) {
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>         <strong class="jxr_keyword">final</strong> org.slf4j.Logger logger;
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>         <strong class="jxr_keyword">if</strong> (source instanceof Class) {
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>             logger = LoggerFactory.getLogger((Class&lt;?&gt;) source);
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (source instanceof String) {
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>             logger = LoggerFactory.getLogger(String.<strong class="jxr_keyword">class</strong>.<strong class="jxr_keyword">cast</strong>(source));
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>             logger = LoggerFactory.getLogger(source.getClass());
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>         }
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>         <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"org.slf4j.impl.Log4jLoggerAdapter"</span>
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>             .equals(logger.getClass().getName())) {
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>                 <strong class="jxr_keyword">final</strong> Field fqcn = logger.getClass()
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>                     .getDeclaredField(<span class="jxr_string">"FQCN"</span>);
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>                 setFinalStatic(fqcn, Logger.<strong class="jxr_keyword">class</strong>.getName());
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> NoSuchFieldException | IllegalAccessException ex) {
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(ex);
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>             }
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>         }
+<a class="jxr_linenumber" name="L496" href="#L496">496</a>         <strong class="jxr_keyword">return</strong> logger;
+<a class="jxr_linenumber" name="L497" href="#L497">497</a>     }
+<a class="jxr_linenumber" name="L498" href="#L498">498</a> 
+<a class="jxr_linenumber" name="L499" href="#L499">499</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2024 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>

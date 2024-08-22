@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../testapidocs/com/jcabi/log/NanoDecorTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2023, jcabi.com</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright (c) 2012-2024, jcabi.com</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * All rights reserved.</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * Redistribution and use in source and binary forms, with or without</em>
@@ -93,33 +93,31 @@
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Collection&lt;Object[]&gt; params() {
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">return</strong> Arrays.asList(
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>              <strong class="jxr_keyword">new</strong> Object[][] {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>                  <em class="jxr_comment">// @checkstyle LineLength (20 lines)</em>
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  <em class="jxr_comment">// @checkstyle MagicNumber (20 lines)</em>
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>                  {13L, <span class="jxr_string">"13ns"</span>, 0, 0, -1},
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>                  {13L, <span class="jxr_string">"13.0ns"</span>, 0, 0, 1},
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>                  {25L, <span class="jxr_string">"25.00ns"</span>, 0, 0, 2},
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>                  {234L, <span class="jxr_string">"234.0ns"</span>, 0, 0, 1},
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>                  {1024L, <span class="jxr_string">"1µs"</span>, 0, 0, 0},
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>                  {1056L, <span class="jxr_string">"1.056µs"</span>, 0, 0, 3},
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>                  {9022L, <span class="jxr_string">"9.02µs"</span>, 0, 0, 2},
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  {53_111L, <span class="jxr_string">"53.11µs   "</span>, FormattableFlags.LEFT_JUSTIFY, 10, 2},
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>                  {53_156L, <span class="jxr_string">"   53µs"</span>, 0, 7, 0},
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>                  {87_090_432L, <span class="jxr_string">"  87ms"</span>, 0, 6, 0},
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>                 {87_090_543L, <span class="jxr_string">"87.09ms"</span>, 0, 0, 2},
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 {87_090_548L, <span class="jxr_string">"87.0905ms"</span>, 0, 0, 4},
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>                 {6_001_001_001L, <span class="jxr_string">"6.0010s"</span>, 0, 0, 4},
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>                 {122_001_001_001L, <span class="jxr_string">"  2MIN"</span>, FormattableFlags.UPPERCASE, 6, 0},
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 {3_789_001_001_001L, <span class="jxr_string">"63.15002min"</span>, 0, 0, 5},
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 {3_789_002_002_002L, <span class="jxr_string">"63.2min"</span>, 0, 0, 1},
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>                 {3_789_003_003_003L, <span class="jxr_string">"63min"</span>, 0, 0, 0},
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>                 {342_000_004_004_004L, <span class="jxr_string">"5700min"</span>, 0, 0, 0},
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>             }
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>         );
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>     }
-<a class="jxr_linenumber" name="L111" href="#L111">111</a> 
-<a class="jxr_linenumber" name="L112" href="#L112">112</a> }
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>                  {13L, <span class="jxr_string">"13ns"</span>, 0, 0, -1},
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  {13L, <span class="jxr_string">"13.0ns"</span>, 0, 0, 1},
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>                  {25L, <span class="jxr_string">"25.00ns"</span>, 0, 0, 2},
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>                  {234L, <span class="jxr_string">"234.0ns"</span>, 0, 0, 1},
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>                  {1024L, <span class="jxr_string">"1µs"</span>, 0, 0, 0},
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>                  {1056L, <span class="jxr_string">"1.056µs"</span>, 0, 0, 3},
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>                  {9022L, <span class="jxr_string">"9.02µs"</span>, 0, 0, 2},
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                  {53_111L, <span class="jxr_string">"53.11µs   "</span>, FormattableFlags.LEFT_JUSTIFY, 10, 2},
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>                  {53_156L, <span class="jxr_string">"   53µs"</span>, 0, 7, 0},
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  {87_090_432L, <span class="jxr_string">"  87ms"</span>, 0, 6, 0},
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>                  {87_090_543L, <span class="jxr_string">"87.09ms"</span>, 0, 0, 2},
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>                  {87_090_548L, <span class="jxr_string">"87.0905ms"</span>, 0, 0, 4},
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>                 {6_001_001_001L, <span class="jxr_string">"6.0010s"</span>, 0, 0, 4},
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 {122_001_001_001L, <span class="jxr_string">"  2MIN"</span>, FormattableFlags.UPPERCASE, 6, 0},
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>                 {3_789_001_001_001L, <span class="jxr_string">"63.15002min"</span>, 0, 0, 5},
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>                 {3_789_002_002_002L, <span class="jxr_string">"63.2min"</span>, 0, 0, 1},
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 {3_789_003_003_003L, <span class="jxr_string">"63min"</span>, 0, 0, 0},
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 {342_000_004_004_004L, <span class="jxr_string">"5700min"</span>, 0, 0, 0},
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>             }
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         );
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> 
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2012&#x2013;2023 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2012&#x2013;2024 <a href="https://www.jcabi.com">jcabi.com</a>. All rights reserved.</div>
 </body>
 </html>
