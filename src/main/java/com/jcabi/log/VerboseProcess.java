@@ -141,13 +141,11 @@ public final class VerboseProcess implements Closeable {
         }
         if (Level.ALL.equals(stdout)) {
             throw new IllegalArgumentException(
-                // @checkstyle LineLength (1 line)
                 "stdout LEVEL can't be set to ALL because it is intended only for internal configuration"
             );
         }
         if (Level.ALL.equals(stderr)) {
             throw new IllegalArgumentException(
-                // @checkstyle LineLength (1 line)
                 "stderr LEVEL can't be set to ALL because it is intended only for internal configuration"
             );
         }
@@ -247,11 +245,11 @@ public final class VerboseProcess implements Closeable {
         for (final Thread monitor : this.monitors) {
             if (monitor != null) {
                 monitor.interrupt();
-                Logger.debug(this, "monitor interrupted");
+                Logger.debug(this, "Monitor interrupted");
             }
         }
         this.process.destroy();
-        Logger.debug(this, "underlying process destroyed");
+        Logger.debug(this, "Underlying process destroyed");
     }
 
     /**
@@ -261,8 +259,13 @@ public final class VerboseProcess implements Closeable {
      */
     private static Process start(final ProcessBuilder builder) {
         if (builder == null) {
-            throw new IllegalArgumentException("builder can't be NULL");
+            throw new IllegalArgumentException("Builder can't be NULL");
         }
+        Logger.debug(
+            VerboseProcess.class,
+            "#start(): %s",
+            String.join(" ", builder.command())
+        );
         try {
             final Process process = builder.start();
             process.getOutputStream().close();
@@ -391,7 +394,7 @@ public final class VerboseProcess implements Closeable {
         } catch (final IOException ex) {
             Logger.error(
                 VerboseProcess.class,
-                "failed to close resource: %[exception]s",
+                "Failed to close resource: %[exception]s",
                 ex
             );
         }
@@ -456,7 +459,7 @@ public final class VerboseProcess implements Closeable {
                         if (Thread.interrupted()) {
                             Logger.debug(
                                 VerboseProcess.class,
-                                "explicitly interrupting read from buffer"
+                                "Explicitly interrupting read from buffer"
                             );
                             break;
                         }

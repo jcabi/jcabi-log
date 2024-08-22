@@ -105,7 +105,6 @@ final class NanoDecor implements Formattable {
     private String toText(final int precision) {
         final double number;
         final String title;
-        // @checkstyle MagicNumber (15 lines)
         if (this.nano < 1000.0) {
             number = this.nano;
             title = "ns";

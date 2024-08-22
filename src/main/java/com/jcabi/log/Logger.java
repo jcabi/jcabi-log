@@ -398,7 +398,6 @@ public final class Logger {
      * @return Output stream directly pointed to the logging facility
      * @see <a href="http://stackoverflow.com/questions/17258325">some discussion</a>
      * @since 0.8
-     * @checkstyle MagicNumberCheck (20 lines)
      */
     public static OutputStream stream(final Level level, final Object source) {
         // @checkstyle AnonInnerLengthCheck (50 lines)

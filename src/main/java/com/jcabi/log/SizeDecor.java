@@ -58,7 +58,6 @@ final class SizeDecor implements Formattable {
     private final transient Long size;
 
     static {
-        // @checkstyle MagicNumber (9 lines)
         SizeDecor.SUFFIXES.put(0, "b");
         SizeDecor.SUFFIXES.put(1, "Kb");
         SizeDecor.SUFFIXES.put(2, "Mb");
@@ -89,7 +88,7 @@ final class SizeDecor implements Formattable {
                 format.append('-');
             }
             if (width > 0) {
-                format.append(Integer.toString(width));
+                format.append(width);
             }
             if ((flags & FormattableFlags.UPPERCASE) == FormattableFlags
                 .UPPERCASE) {
@@ -111,9 +110,8 @@ final class SizeDecor implements Formattable {
     private String formatSizeWithSuffix(final int precision) {
         int power = 0;
         double number = this.size;
-        // @checkstyle MagicNumber (2 lines)
         while (number / 1024.0 >= 1.0 && power < SizeDecor.MAX_POWER) {
-            number = number / 1024.0;
+            number /= 1024.0;
             power += 1;
         }
         final String suffix = SizeDecor.SUFFIXES.get(power);

@@ -175,25 +175,25 @@ public final class VerboseCallable<T> implements Callable<T> {
         } catch (final RuntimeException ex) {
             if (this.rethrow) {
                 Logger.warn(
-                    this, "escalated runtime exception: %s", this.tail(ex)
+                    this, "Escalated runtime exception: %s", this.tail(ex)
                 );
                 throw ex;
             }
-            Logger.warn(this, "swallowed runtime exception: %s", this.tail(ex));
+            Logger.warn(this, "Swallowed runtime exception: %s", this.tail(ex));
             // @checkstyle IllegalCatch (1 line)
         } catch (final Exception ex) {
             if (this.rethrow) {
-                Logger.warn(this, "escalated exception: %s", this.tail(ex));
+                Logger.warn(this, "Escalated exception: %s", this.tail(ex));
                 throw ex;
             }
-            Logger.warn(this, "swallowed exception: %s", this.tail(ex));
+            Logger.warn(this, "Swallowed exception: %s", this.tail(ex));
             // @checkstyle IllegalCatch (1 line)
         } catch (final Error error) {
             if (this.rethrow) {
-                Logger.error(this, "escalated error: %s", this.tail(error));
+                Logger.error(this, "Escalated error: %s", this.tail(error));
                 throw error;
             }
-            Logger.error(this, "swallowed error: %s", this.tail(error));
+            Logger.error(this, "Swallowed error: %s", this.tail(error));
         }
         try {
             TimeUnit.MICROSECONDS.sleep(1L);

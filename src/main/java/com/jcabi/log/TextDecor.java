@@ -88,8 +88,7 @@ final class TextDecor implements Formattable {
             final int skip = text.length() - TextDecor.MAX;
             final StringBuilder output = new StringBuilder(text.length());
             output.append(text.substring(0, (text.length() - skip) / 2));
-            // @checkstyle MultipleStringLiterals (1 line)
-            output.append("..").append(Integer.toString(skip)).append("..");
+            output.append("..").append(skip).append("..");
             output.append(
                 text.substring(text.length() - TextDecor.MAX + output.length())
             );

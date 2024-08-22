@@ -85,7 +85,6 @@ final class SizeDecorTest {
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
-                // @checkstyle MagicNumber (14 lines)
                 {1L, "1b", 0, 0, 0},
                 {123L, "  123b", 0, 6, 0},
                 {1024L, "1.000Kb", 0, 0, 3},

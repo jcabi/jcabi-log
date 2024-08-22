@@ -41,7 +41,7 @@ public class ControlSequenceIndicatorFormatted implements Formatted {
     private final transient String pattern;
 
     /**
-     * Construtor.
+     * Ctor.
      * @param pat Pattern to be used to find replacement points
      */
     public ControlSequenceIndicatorFormatted(final String pat) {

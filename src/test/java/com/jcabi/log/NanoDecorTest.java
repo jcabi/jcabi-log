@@ -85,8 +85,6 @@ final class NanoDecorTest {
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
-                // @checkstyle LineLength (20 lines)
-                // @checkstyle MagicNumber (20 lines)
                 {13L, "13ns", 0, 0, -1},
                 {13L, "13.0ns", 0, 0, 1},
                 {25L, "25.00ns", 0, 0, 2},

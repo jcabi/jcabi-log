@@ -44,7 +44,6 @@ final class DecorsManager {
 
     /**
      * Storage of all found decors.
-     * @checkstyle LineLength (2 lines)
      */
     private static final ConcurrentMap<String, Class<? extends Formattable>> DECORS =
         new ConcurrentHashMap<>(0);

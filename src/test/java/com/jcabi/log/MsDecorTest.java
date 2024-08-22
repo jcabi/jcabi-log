@@ -85,8 +85,6 @@ final class MsDecorTest {
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[][] {
-                // @checkstyle LineLength (20 lines)
-                // @checkstyle MagicNumber (20 lines)
                 {13L, "13ms", 0, 0, -1},
                 {13L, "13.0ms", 0, 0, 1},
                 {1024L, "1s", 0, 0, 0},

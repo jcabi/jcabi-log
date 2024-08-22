@@ -287,7 +287,6 @@ final class VerboseProcessTest {
     @Test
     void terminatesMonitorsAndProcessIfClosedShortly()
         throws Exception {
-        // @checkstyle MagicNumberCheck (1 line)
         this.terminatesMonitorsAndProcessIfClosed(50L);
     }
 
@@ -353,7 +352,6 @@ final class VerboseProcessTest {
             );
         }
         process.stdoutQuietly();
-        // @checkstyle MagicNumberCheck (1 line)
         TimeUnit.MILLISECONDS.sleep(1000L);
         Mockito.verify(
             prc,

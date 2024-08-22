@@ -47,8 +47,7 @@ final class PreFormatter {
      * Pattern used for matching format string arguments.
      */
     private static final Pattern PATTERN = Pattern.compile(
-        // @checkstyle LineLength (1 line)
-        "%(\\d+\\$)?(\\[([A-Za-z\\-\\.0-9]+)\\])?[\\+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
+        "%(\\d+\\$)?(\\[([A-Za-z\\-.0-9]+)])?[+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
     );
 
     /**
@@ -146,7 +145,6 @@ final class PreFormatter {
         if (pos < args.length) {
             throw new IllegalArgumentException(
                 String.format(
-                    // @checkstyle LineLength (1 line)
                     "There are %d parameter(s) but only %d format argument(s) were provided.",
                     args.length,
                     pos

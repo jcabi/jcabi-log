@@ -101,7 +101,6 @@ final class MsDecor implements Formattable {
      * Create text.
      * @param precision The precision
      * @return The text
-     * @checkstyle MagicNumber (50 lines)
      */
     private String toText(final int precision) {
         final double number;

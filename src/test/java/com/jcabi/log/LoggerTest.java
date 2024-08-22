@@ -83,7 +83,6 @@ final class LoggerTest {
         final PrintWriter writer = new PrintWriter(
             new OutputStreamWriter(stream, "UTF-8")
         );
-        // @checkstyle LineLength (1 line)
         writer.print("hello, \u20ac, how're\u040a?\nI'm fine, \u0000\u0007!\n");
         writer.flush();
         writer.close();
