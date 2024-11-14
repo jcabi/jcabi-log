@@ -13,10 +13,13 @@
 
 More details are here: [log.jcabi.com](https://log.jcabi.com/index.html)
 
-Read this blog post: [_Get Rid of Java Static Loggers_](https://www.yegor256.com/2014/05/23/avoid-java-static-logger.html)
+Read this blog post: 
+[_Get Rid of Java Static Loggers_](https://www.yegor256.com/2014/05/23/avoid-java-static-logger.html)
 
-`Logger` is a convenient static wrapper of [slf4j](http://www.slf4j.org/)
-(don't forget to include one of [SLF4J Bindings](http://www.slf4j.org/manual.html#binding)
+`Logger` is a convenient static wrapper of 
+[slf4j](http://www.slf4j.org/)
+(don't forget to include one of 
+[SLF4J Bindings](http://www.slf4j.org/manual.html#binding)
 into the project):
 
 ```java
@@ -31,18 +34,19 @@ class Foo {
 Besides standard `%s` placeholders inside the format string, you can use
 other custom ones, which help formatting common values faster:
 
-  * `%[file]s` --- absolute file name ➜ file name relative to current directory
-  * `%[text]s` --- any string ➜ pretty looking text, short enough, and escaped
-  * `%[exception]s` --- `Exception` ➜ stacktrace
-  * `%[list]s` --- `Iterable` ➜ pretty formatted list, in one line
-  * `%[size]s` --- size in bytes ➜ Kb, Mb, Gb, Tb, and so on
-  * `%[msec]s` --- milliseconds ➜ ms, sec, min, hours, etc.
-  * `%[nano]s` --- nanoseconds ➜ µs, ms, sec, min, hours, etc.
-  * `%[type]s` --- `Class<?>` ➜ name of it
-  * `%[secret]s` --- any string ➜ stars
-  * `%[dom]s` --- `org.w3c.domDocument` ➜ pretty printed/formatted XML
+* `%[file]s` --- absolute file name ➜ file name relative to current directory
+* `%[text]s` --- any string ➜ pretty looking text, short enough, and escaped
+* `%[exception]s` --- `Exception` ➜ stacktrace
+* `%[list]s` --- `Iterable` ➜ pretty formatted list, in one line
+* `%[size]s` --- size in bytes ➜ Kb, Mb, Gb, Tb, and so on
+* `%[msec]s` --- milliseconds ➜ ms, sec, min, hours, etc.
+* `%[nano]s` --- nanoseconds ➜ µs, ms, sec, min, hours, etc.
+* `%[type]s` --- `Class<?>` ➜ name of it
+* `%[secret]s` --- any string ➜ stars
+* `%[dom]s` --- `org.w3c.domDocument` ➜ pretty printed/formatted XML
 
-You are welcome to [suggest](https://github.com/jcabi/jcabi-log/blob/master/src/main/java/com/jcabi/log/DecorsManager.java) 
+You are welcome to 
+[suggest](https://github.com/jcabi/jcabi-log/blob/master/src/main/java/com/jcabi/log/DecorsManager.java) 
 your own "decors".
 
 ## How to contribute?
@@ -53,6 +57,6 @@ the `master` branch, if they look correct.
 
 Please run Maven build before submitting a pull request:
 
-```
-$ mvn clean install -Pqulice
+```bash
+mvn clean install -Pqulice
 ```
