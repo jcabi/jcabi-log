@@ -75,6 +75,9 @@ final class FileDecor implements Formattable {
             if (rel.startsWith("..")) {
                 rel = self.toString();
             }
+            if (rel.isEmpty()) {
+                rel = "./";
+            }
             writer.write(rel);
         }
         formatter.format("%s", writer);

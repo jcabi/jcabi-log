@@ -103,6 +103,8 @@ final class FileDecorTest {
             new Object[][] {
                 {null, "NULL", 0, 0, 0},
                 {"foo.txt", "foo.txt", 0, 0, 0},
+                {".", "./", 0, 0, 0},
+                {"/tmp", "/tmp", 0, 0, 0},
                 {new File("/tmp/x.txt"), "/tmp/x.txt", 0, 0, 0},
                 {Paths.get("/a/b/c.txt"), "/a/b/c.txt", 0, 0, 0},
             }
