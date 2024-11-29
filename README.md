@@ -39,7 +39,7 @@ other custom ones, which help formatting common values faster:
 * `%[exception]s` --- `Exception` ➜ stacktrace
 * `%[list]s` --- `Iterable` ➜ pretty formatted list, in one line
 * `%[size]s` --- size in bytes ➜ Kb, Mb, Gb, Tb, and so on
-* `%[msec]s` --- milliseconds ➜ ms, sec, min, hours, etc.
+* `%[ms]s` --- milliseconds ➜ ms, sec, min, hours, etc.
 * `%[nano]s` --- nanoseconds ➜ µs, ms, sec, min, hours, etc.
 * `%[type]s` --- `Class<?>` ➜ name of it
 * `%[secret]s` --- any string ➜ stars
