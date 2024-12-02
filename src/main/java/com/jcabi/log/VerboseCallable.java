@@ -50,9 +50,9 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>This class is thread-safe.
  *
- * @since 0.16
  * @param <T> Type of result
  * @see VerboseThreads
+ * @since 0.16
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
