@@ -152,6 +152,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "warn should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
