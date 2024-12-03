@@ -57,6 +57,7 @@ final class ConversionPatternTest {
             Matchers.equalTo("")
         );
         MatcherAssert.assertThat(
+            "should be foo",
             convert("foo"),
             Matchers.equalTo("foo")
         );
