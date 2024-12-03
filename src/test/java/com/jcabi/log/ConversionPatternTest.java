@@ -67,6 +67,7 @@ final class ConversionPatternTest {
             Matchers.equalTo("%color")
         );
         MatcherAssert.assertThat(
+            "should be %color-",
             convert("%color-"),
             Matchers.equalTo("%color-")
         );
