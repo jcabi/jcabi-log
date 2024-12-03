@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * ParseableInformation test case.
  * @since 0.18
  */
-class ParseableInformationTest {
+final class ParseableInformationTest {
 
     /**
      * ParseableInformation can parse if the information correctly if is using
