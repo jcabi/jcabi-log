@@ -60,7 +60,7 @@ final class ParseableInformationTest {
      * ParseableInformation can throw an an exception when parsing wrong info.
      */
     @Test
-    final void throwsAnExceptionWhenParsingSomethingWrong() {
+    void throwsAnExceptionWhenParsingSomethingWrong() {
         final String white = "white";
         try {
             new ParseableInformation(white).information();
