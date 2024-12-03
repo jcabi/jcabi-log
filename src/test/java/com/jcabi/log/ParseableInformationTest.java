@@ -48,7 +48,7 @@ final class ParseableInformationTest {
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
-    final void parsesTheInformationCorrectly() {
+    void parsesTheInformationCorrectly() {
         final Map<String, String> parsed = new ParseableInformation(
             "red:10,black:20"
         ).information();
