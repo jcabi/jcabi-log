@@ -52,8 +52,8 @@ final class ParseableInformationTest {
         final Map<String, String> parsed = new ParseableInformation(
             "red:10,black:20"
         ).information();
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("red", "10"));
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("black", "20"));
+        MatcherAssert.assertThat("should be red 10", parsed, Matchers.hasEntry("red", "10"));
+        MatcherAssert.assertThat("should be black 20", parsed, Matchers.hasEntry("black", "20"));
     }
 
     /**
