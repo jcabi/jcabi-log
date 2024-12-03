@@ -77,6 +77,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "debug should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
