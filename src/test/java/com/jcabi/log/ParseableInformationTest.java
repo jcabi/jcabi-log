@@ -67,6 +67,7 @@ final class ParseableInformationTest {
             Assertions.fail("Should never enter this assert!");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
+                "should be wrong info",
                 ex.getMessage(), Matchers.equalTo(
                     String.format(
                         StringUtils.join(
