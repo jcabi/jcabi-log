@@ -170,6 +170,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> "test7"
         );
         MatcherAssert.assertThat(
+            "info should be disabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.emptyString()
         );
