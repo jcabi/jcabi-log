@@ -95,6 +95,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> "test3"
         );
         MatcherAssert.assertThat(
+            "debug should be disabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.emptyString()
         );
