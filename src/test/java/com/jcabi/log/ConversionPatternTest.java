@@ -52,6 +52,7 @@ final class ConversionPatternTest {
     @Test
     void testGenerateNoReplacement() {
         MatcherAssert.assertThat(
+            "should be empty",
             convert(""),
             Matchers.equalTo("")
         );
