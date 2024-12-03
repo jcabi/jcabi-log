@@ -114,6 +114,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "trace should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
