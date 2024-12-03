@@ -190,6 +190,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "info should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
