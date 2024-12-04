@@ -100,6 +100,7 @@ final class ConversionPatternTest {
             Matchers.equalTo(String.format("%sfoo", colorWrap("Hello World")))
         );
         MatcherAssert.assertThat(
+            "should be %color{Hello}%color{World}",
             convert("%color{Hello}%color{World}"),
             Matchers.equalTo(
                 String.format("%s%s", colorWrap("Hello"), colorWrap("World"))
