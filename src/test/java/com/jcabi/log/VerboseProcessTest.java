@@ -87,6 +87,7 @@ final class VerboseProcessTest {
     void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         MatcherAssert.assertThat(
+            "should echo unicode",
             new VerboseProcess(
                 new ProcessBuilder(
                     "/bin/bash", "-c",
