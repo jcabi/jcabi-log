@@ -81,6 +81,7 @@ final class ConversionPatternTest {
     @Test
     void testGenerateEmpty() {
         MatcherAssert.assertThat(
+            "should be %color{}",
             convert("%color{}"),
             Matchers.equalTo(colorWrap(""))
         );
