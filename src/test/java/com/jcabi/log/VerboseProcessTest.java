@@ -125,6 +125,7 @@ final class VerboseProcessTest {
         );
         final VerboseProcess.Result result = process.waitFor();
         MatcherAssert.assertThat(
+            "should be 1",
             result.code(),
             Matchers.equalTo(1)
         );
