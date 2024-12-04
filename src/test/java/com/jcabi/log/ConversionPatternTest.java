@@ -116,6 +116,7 @@ final class ConversionPatternTest {
             Matchers.equalTo(ConversionPatternTest.colorWrap("%c{1}"))
         );
         MatcherAssert.assertThat(
+            "should be %color{%c{1}}foo",
             ConversionPatternTest.convert("%color{%c{1}}foo"),
             Matchers.equalTo(
                 String.format("%sfoo", ConversionPatternTest.colorWrap("%c{1}"))
