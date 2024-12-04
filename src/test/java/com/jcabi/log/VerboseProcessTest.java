@@ -130,6 +130,7 @@ final class VerboseProcessTest {
             Matchers.equalTo(1)
         );
         MatcherAssert.assertThat(
+            "should be no such file",
             result.stderr(),
             Matchers.containsString("No such file or directory")
         );
