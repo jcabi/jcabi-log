@@ -95,6 +95,7 @@ final class ConversionPatternTest {
             Matchers.equalTo(colorWrap("Hello World"))
         );
         MatcherAssert.assertThat(
+            "should be %color{Hello World}foo",
             convert("%color{Hello World}foo"),
             Matchers.equalTo(String.format("%sfoo", colorWrap("Hello World")))
         );
