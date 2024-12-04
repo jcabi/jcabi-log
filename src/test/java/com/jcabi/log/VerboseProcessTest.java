@@ -76,6 +76,7 @@ final class VerboseProcessTest {
             new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
         );
         MatcherAssert.assertThat(
+            "should be \u20ac!",
             process.stdout(),
             Matchers.containsString("\u20ac!")
         );
