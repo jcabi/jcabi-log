@@ -143,6 +143,7 @@ final class VerboseProcessTest {
             new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
         );
         MatcherAssert.assertThat(
+            "should be done",
             process.stdout(),
             Matchers.startsWith("done")
         );
