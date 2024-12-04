@@ -90,6 +90,7 @@ final class ConversionPatternTest {
     @Test
     void testGenerateSimple() {
         MatcherAssert.assertThat(
+            "should be %color{Hello World}",
             convert("%color{Hello World}"),
             Matchers.equalTo(colorWrap("Hello World"))
         );
