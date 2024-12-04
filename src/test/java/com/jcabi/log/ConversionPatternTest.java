@@ -130,6 +130,7 @@ final class ConversionPatternTest {
             )
         );
         MatcherAssert.assertThat(
+            "should be %color{%c{{{1}{2}}}}foo",
             ConversionPatternTest.convert("%color{%c{{{1}{2}}}}foo"),
             Matchers.equalTo(
                 String.format(
