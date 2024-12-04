@@ -111,6 +111,7 @@ final class ConversionPatternTest {
     @Test
     void testGenerateCurlyBraces() {
         MatcherAssert.assertThat(
+            "should be %color{%c{1}}",
             ConversionPatternTest.convert("%color{%c{1}}"),
             Matchers.equalTo(ConversionPatternTest.colorWrap("%c{1}"))
         );
