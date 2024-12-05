@@ -249,6 +249,7 @@ final class VerboseProcessTest {
         );
         process.stdoutQuietly();
         MatcherAssert.assertThat(
+            "should be contains 'hello dear friend' message",
             writer.toString(),
             Matchers.containsString(message)
         );
