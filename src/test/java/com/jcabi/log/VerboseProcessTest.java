@@ -282,6 +282,7 @@ final class VerboseProcessTest {
         );
         process.stdout();
         MatcherAssert.assertThat(
+            "should be error reading from process stream",
             writer.toString(),
             Matchers.containsString("Error reading from process stream")
         );
