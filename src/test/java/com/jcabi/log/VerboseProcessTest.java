@@ -223,6 +223,7 @@ final class VerboseProcessTest {
         TimeUnit.SECONDS.sleep(1L);
         proc.destroy();
         MatcherAssert.assertThat(
+            "should be 1 minute",
             done.await(1L, TimeUnit.MINUTES),
             Matchers.is(true)
         );
