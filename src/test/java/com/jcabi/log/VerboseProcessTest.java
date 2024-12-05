@@ -368,6 +368,7 @@ final class VerboseProcessTest {
             Mockito.atLeastOnce()
         ).destroy();
         MatcherAssert.assertThat(
+            "should be error reading from process stream",
             writer.toString(),
             Matchers.not(Matchers
                 .containsString("Error reading from process stream")
