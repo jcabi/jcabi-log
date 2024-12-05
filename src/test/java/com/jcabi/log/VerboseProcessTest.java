@@ -169,6 +169,7 @@ final class VerboseProcessTest {
             Assertions.fail("IllegalArgumentException expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
+                "should be IllegalArgumentException",
                 ex.getMessage(),
                 Matchers.equalTo(
                     StringUtils.join(
