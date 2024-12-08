@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * ParseableInformation test case.
  * @since 0.18
  */
-class ParseableInformationTest {
+final class ParseableInformationTest {
 
     /**
      * ParseableInformation can parse if the information correctly if is using
@@ -48,25 +48,26 @@ class ParseableInformationTest {
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
-    final void parsesTheInformationCorrectly() {
+    void parsesTheInformationCorrectly() {
         final Map<String, String> parsed = new ParseableInformation(
             "red:10,black:20"
         ).information();
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("red", "10"));
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("black", "20"));
+        MatcherAssert.assertThat("should be red 10", parsed, Matchers.hasEntry("red", "10"));
+        MatcherAssert.assertThat("should be black 20", parsed, Matchers.hasEntry("black", "20"));
     }
 
     /**
      * ParseableInformation can throw an an exception when parsing wrong info.
      */
     @Test
-    final void throwsAnExceptionWhenParsingSomethingWrong() {
+    void throwsAnExceptionWhenParsingSomethingWrong() {
         final String white = "white";
         try {
             new ParseableInformation(white).information();
             Assertions.fail("Should never enter this assert!");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
+                "should be wrong info",
                 ex.getMessage(), Matchers.equalTo(
                     String.format(
                         StringUtils.join(
