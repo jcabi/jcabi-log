@@ -51,6 +51,7 @@ final class TypeDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new TypeDecor(list), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -62,6 +63,7 @@ final class TypeDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new TypeDecor(list), flags, width, precision),
             Matchers.hasToString(text)
         );

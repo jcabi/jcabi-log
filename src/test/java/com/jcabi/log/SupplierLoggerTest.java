@@ -57,6 +57,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> "test1"
         );
         MatcherAssert.assertThat(
+            "debug should be disabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.emptyString()
         );
@@ -76,6 +77,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "debug should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
@@ -93,6 +95,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> "test3"
         );
         MatcherAssert.assertThat(
+            "debug should be disabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.emptyString()
         );
@@ -111,6 +114,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "trace should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
@@ -128,6 +132,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> "test5"
         );
         MatcherAssert.assertThat(
+            "warn should be disabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.emptyString()
         );
@@ -147,6 +152,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "warn should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
@@ -164,6 +170,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> "test7"
         );
         MatcherAssert.assertThat(
+            "info should be disabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.emptyString()
         );
@@ -183,6 +190,7 @@ final class SupplierLoggerTest {
             (Supplier<String>) () -> text
         );
         MatcherAssert.assertThat(
+            "info should be enabled",
             ((UnitTestAppender) logger.getAppender(appender)).output(),
             Matchers.containsString(text)
         );
