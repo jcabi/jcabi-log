@@ -213,7 +213,7 @@ public final class VerboseProcess implements Closeable {
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
         this.launchMonitors(done, stdout, stderr);
-        int code = 0;
+        final int code;
         try {
             code = this.process.waitFor();
         } finally {
