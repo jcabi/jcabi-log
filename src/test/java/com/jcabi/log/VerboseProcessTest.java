@@ -217,12 +217,12 @@ final class VerboseProcessTest {
             start = new CountDownLatch(1);
             done = new CountDownLatch(1);
             new Thread(
-            new VerboseRunnable(
+                new VerboseRunnable(
                     () -> {
-                                start.countDown();
-                                process.stdoutQuietly();
-                                done.countDown();
-                            }
+                        start.countDown();
+                        process.stdoutQuietly();
+                        done.countDown();
+                    }
                     )
             ).start();
         }
@@ -252,7 +252,7 @@ final class VerboseProcessTest {
             );
         }
         try (VerboseProcess process = new VerboseProcess(
-                builder, Level.OFF, Level.WARNING
+            builder, Level.OFF, Level.WARNING
         )) {
             process.stdoutQuietly();
         }
