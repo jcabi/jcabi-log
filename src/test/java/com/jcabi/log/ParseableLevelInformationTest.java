@@ -52,8 +52,8 @@ final class ParseableLevelInformationTest {
         final Map<String, String> parsed = new ParseableLevelInformation(
             "INFO:2;10,WARN:2;32"
         ).information();
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("WARN", "2;32"));
+        MatcherAssert.assertThat("should be parsed", parsed, Matchers.hasEntry("INFO", "2;10"));
+        MatcherAssert.assertThat("should be parsed", parsed, Matchers.hasEntry("WARN", "2;32"));
     }
 
     /**
@@ -68,6 +68,7 @@ final class ParseableLevelInformationTest {
             Assertions.fail("Something was wrong");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
+                "should not be parsed",
                 ex.getMessage(), Matchers.equalTo(
                     String.format(
                         StringUtils.join(
@@ -93,6 +94,7 @@ final class ParseableLevelInformationTest {
             Assertions.fail("");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
+                "should not be parsed",
                 ex.getMessage(),
                 Matchers.equalTo("Unknown level 'EXTREME'")
             );
