@@ -278,17 +278,18 @@ final class VerboseProcessTest {
         Mockito.doReturn(stdout).when(prc).getInputStream();
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             prc,
             Level.FINEST,
             Level.FINEST
-        );
-        Logger.debug(
-            this,
-            "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
-            process.hashCode()
-        );
-        process.stdout();
+        )) {
+            Logger.debug(
+                this,
+                "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
+                process.hashCode()
+            );
+            process.stdout();
+        }
         MatcherAssert.assertThat(
             "should be error reading from process stream",
             writer.toString(),
