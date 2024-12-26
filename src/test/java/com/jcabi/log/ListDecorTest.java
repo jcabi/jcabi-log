@@ -52,6 +52,7 @@ final class ListDecorTest {
         final int flags, final int width, final int precision) throws DecorException {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new ListDecor(list), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -63,6 +64,7 @@ final class ListDecorTest {
         final int flags, final int width, final int precision) throws DecorException {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new ListDecor(list), flags, width, precision),
             Matchers.hasToString(text)
         );
