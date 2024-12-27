@@ -126,35 +126,35 @@ final class VerboseRunnableTest {
 
     @Test
     void preservesInterruptedStatus() throws Exception {
-        final ScheduledExecutorService svc =
-            Executors.newSingleThreadScheduledExecutor();
-        final AtomicReference<Thread> thread = new AtomicReference<>();
-        final AtomicInteger runs = new AtomicInteger();
-        svc.scheduleWithFixedDelay(
-            new VerboseRunnable(
-                () -> {
-                    runs.addAndGet(1);
-                    thread.set(Thread.currentThread());
-                    TimeUnit.HOURS.sleep(1L);
-                    return null;
-                },
-                true,
-                false
-            ),
-            1L, 1L,
-            TimeUnit.MICROSECONDS
-        );
-        while (thread.get() == null) {
-            TimeUnit.MILLISECONDS.sleep(1L);
+        try (ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor()) {
+            final AtomicReference<Thread> thread = new AtomicReference<>();
+            final AtomicInteger runs = new AtomicInteger();
+            svc.scheduleWithFixedDelay(
+                new VerboseRunnable(
+                    () -> {
+                        runs.addAndGet(1);
+                        thread.set(Thread.currentThread());
+                        TimeUnit.HOURS.sleep(1L);
+                        return null;
+                    },
+                    true,
+                    false
+                ),
+                1L, 1L,
+                TimeUnit.MICROSECONDS
+            );
+            while (thread.get() == null) {
+                TimeUnit.MILLISECONDS.sleep(1L);
+            }
+            thread.get().interrupt();
+            TimeUnit.SECONDS.sleep(1L);
+            svc.shutdown();
+            MatcherAssert.assertThat(runs.get(), Matchers.is(1));
+            MatcherAssert.assertThat(
+                svc.awaitTermination(1L, TimeUnit.SECONDS),
+                Matchers.is(true)
+            );
         }
-        thread.get().interrupt();
-        TimeUnit.SECONDS.sleep(1L);
-        svc.shutdown();
-        MatcherAssert.assertThat(runs.get(), Matchers.is(1));
-        MatcherAssert.assertThat(
-            svc.awaitTermination(1L, TimeUnit.SECONDS),
-            Matchers.is(true)
-        );
     }
 
 }
