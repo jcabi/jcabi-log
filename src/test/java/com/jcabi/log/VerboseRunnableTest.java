@@ -96,6 +96,7 @@ final class VerboseRunnableTest {
             }
         );
         MatcherAssert.assertThat(
+            "should contains 'some text abc'",
             verbose,
             Matchers.hasToString(Matchers.containsString(text))
         );
@@ -119,6 +120,7 @@ final class VerboseRunnableTest {
             true
         );
         MatcherAssert.assertThat(
+            "should contains 'some text abc-2'",
             verbose,
             Matchers.hasToString(Matchers.containsString(text))
         );
@@ -149,8 +151,9 @@ final class VerboseRunnableTest {
             thread.get().interrupt();
             TimeUnit.SECONDS.sleep(1L);
             svc.shutdown();
-            MatcherAssert.assertThat(runs.get(), Matchers.is(1));
+            MatcherAssert.assertThat("should match 1", runs.get(), Matchers.is(1));
             MatcherAssert.assertThat(
+                "should match 'true'",
                 svc.awaitTermination(1L, TimeUnit.SECONDS),
                 Matchers.is(true)
             );
