@@ -43,6 +43,7 @@ final class DecorsManagerTest {
     @Test
     void hasBuiltInDecors() throws Exception {
         MatcherAssert.assertThat(
+            "should be an instance of NanoDecor class",
             DecorsManager.decor("nano", 1L),
             Matchers.instanceOf(NanoDecor.class)
         );
