@@ -49,6 +49,7 @@ final class PreFormatterTest {
             1.0d
         );
         MatcherAssert.assertThat(
+            "should be equal to '%-5.2f and %1$+.6f'",
             pre.getFormat(),
             Matchers.equalTo("%-5.2f and %1$+.6f")
         );
