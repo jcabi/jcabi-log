@@ -54,6 +54,7 @@ final class PreFormatterTest {
             Matchers.equalTo("%-5.2f and %1$+.6f")
         );
         MatcherAssert.assertThat(
+            "should be instance of DecorMocker class",
             pre.getArguments()[0],
             Matchers.instanceOf(DecorMocker.class)
         );
