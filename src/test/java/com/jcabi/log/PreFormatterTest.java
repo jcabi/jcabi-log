@@ -68,10 +68,12 @@ final class PreFormatterTest {
         final PreFormatter pre =
             new PreFormatter("ouch: %[missed]s", "test");
         MatcherAssert.assertThat(
+            "should equal to 'ouch: %s'",
             pre.getFormat(),
             Matchers.equalTo("ouch: %s")
         );
         MatcherAssert.assertThat(
+            "should be instance of String class",
             pre.getArguments()[0],
             Matchers.instanceOf(String.class)
         );
@@ -85,6 +87,7 @@ final class PreFormatterTest {
         final DecorMocker decor = new DecorMocker("a");
         final PreFormatter pre = new PreFormatter("test: %s", decor);
         MatcherAssert.assertThat(
+            "should equal to decor",
             pre.getArguments()[0],
             Matchers.equalTo(decor)
         );
