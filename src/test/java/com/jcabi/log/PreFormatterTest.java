@@ -102,10 +102,12 @@ final class PreFormatterTest {
         final Object[] args = {"new", "line"};
         final PreFormatter pre = new PreFormatter(fmt, args);
         MatcherAssert.assertThat(
+            "should be formatted",
             pre.getFormat(),
             Matchers.is(fmt)
         );
         MatcherAssert.assertThat(
+            "should be arguments",
             pre.getArguments(),
             Matchers.is(args)
         );
@@ -120,10 +122,12 @@ final class PreFormatterTest {
         final Object[] args = {"percent: "};
         final PreFormatter pre = new PreFormatter(fmt, args);
         MatcherAssert.assertThat(
+            "should be formatted",
             pre.getFormat(),
             Matchers.is(fmt)
         );
         MatcherAssert.assertThat(
+            "should be arguments",
             pre.getArguments(),
             Matchers.is(args)
         );
