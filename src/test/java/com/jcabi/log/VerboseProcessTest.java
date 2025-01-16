@@ -32,10 +32,10 @@ package com.jcabi.log;
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
@@ -272,9 +272,7 @@ final class VerboseProcessTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         final Process prc = Mockito.mock(Process.class);
-        final Closeable stdout = new FileInputStream(
-            File.createTempFile("temp", "test")
-        );
+        final Closeable stdout = Files.newInputStream(File.createTempFile("temp", "test").toPath());
         stdout.close();
         Mockito.doReturn(stdout).when(prc).getInputStream();
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
