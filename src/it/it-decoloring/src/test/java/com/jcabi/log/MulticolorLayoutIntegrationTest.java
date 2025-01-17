@@ -195,6 +195,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equals to '[DEBUG] test'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] test"
