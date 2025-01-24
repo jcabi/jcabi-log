@@ -272,9 +272,9 @@ final class VerboseProcessTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         final Process prc = Mockito.mock(Process.class);
-        final Closeable stdout = Files.newInputStream(File.createTempFile("temp", "test").toPath());
-        stdout.close();
-        Mockito.doReturn(stdout).when(prc).getInputStream();
+        try (Closeable stdo = Files.newInputStream(File.createTempFile("temp", "test").toPath())) {
+            Mockito.doReturn(stdo).when(prc).getInputStream();
+        }
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
         try (VerboseProcess process = new VerboseProcess(
