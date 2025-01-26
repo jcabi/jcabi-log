@@ -47,8 +47,9 @@ final class ExceptionDecorTest {
     void convertsExceptionToText() throws Exception {
         final Formattable decor = new ExceptionDecor(new IOException("ouch!"));
         final Appendable dest = Mockito.mock(Appendable.class);
-        final Formatter fmt = new Formatter(dest);
-        decor.formatTo(fmt, 0, 0, 0);
+        try (Formatter fmt = new Formatter(dest)) {
+            decor.formatTo(fmt, 0, 0, 0);
+        }
         Mockito.verify(dest).append(
             MockitoHamcrest.argThat(
                 Matchers.allOf(
@@ -67,8 +68,9 @@ final class ExceptionDecorTest {
     void convertsNullToText() throws Exception {
         final Formattable decor = new ExceptionDecor(null);
         final Appendable dest = Mockito.mock(Appendable.class);
-        final Formatter fmt = new Formatter(dest);
-        decor.formatTo(fmt, 0, 0, 0);
+        try (Formatter fmt = new Formatter(dest)) {
+            decor.formatTo(fmt, 0, 0, 0);
+        }
         Mockito.verify(dest).append("NULL");
     }
 
