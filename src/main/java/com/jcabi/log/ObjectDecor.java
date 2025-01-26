@@ -95,11 +95,12 @@ final class ObjectDecor implements Formattable {
         @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
         public String run() {
             final StringBuilder builder = new StringBuilder("[");
-            final Formatter formatter = new Formatter(builder);
-            for (final Object obj : this.array) {
-                new ObjectDecor(obj).formatTo(formatter, 0, 0, 0);
-                // @checkstyle MultipleStringLiteralsCheck (1 line)
-                builder.append(", ");
+            try (Formatter formatter = new Formatter(builder)) {
+                for (final Object obj : this.array) {
+                    new ObjectDecor(obj).formatTo(formatter, 0, 0, 0);
+                    // @checkstyle MultipleStringLiteralsCheck (1 line)
+                    builder.append(", ");
+                }
             }
             builder.replace(builder.length() - 2, builder.length(), "]");
             return builder.toString();
