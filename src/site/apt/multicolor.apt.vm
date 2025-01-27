@@ -88,4 +88,3 @@ log4j.appender.CONSOLE.layout.Colors=white:10
   <version>${project.version}</version>
 </dependency>
 +--
-
