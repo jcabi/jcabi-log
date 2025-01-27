@@ -36,8 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Files;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -336,40 +334,29 @@ final class VerboseProcessTest {
                 return null;
             }
         ).when(prc).destroy();
-        final VerboseProcess process = new VerboseProcess(
+        final StringWriter writer;
+        try (VerboseProcess process = new VerboseProcess(
             prc,
             Level.FINEST,
             Level.FINEST
-        );
-        Logger.debug(
-            this,
-            "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
-            delay,
-            process.hashCode()
-        );
-        final StringWriter writer = new StringWriter();
-        final WriterAppender appender = new WriterAppender(
-            new SimpleLayout(),
-            writer
-        );
-        appender.addFilter(new VerboseProcessTest.VrbPrcMonitorFilter(process));
-        org.apache.log4j.Logger.getLogger(
-            VerboseProcess.class
-        ).addAppender(appender);
-        if (delay == 0L) {
-            process.close();
-        } else {
-            new Timer(true).schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        process.close();
-                    }
-                },
-                delay
+        )) {
+            Logger.debug(
+                this,
+                "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
+                delay,
+                process.hashCode()
             );
+            writer = new StringWriter();
+            final WriterAppender appender = new WriterAppender(
+                new SimpleLayout(),
+                writer
+            );
+            appender.addFilter(new VrbPrcMonitorFilter(process));
+            org.apache.log4j.Logger.getLogger(
+                VerboseProcess.class
+            ).addAppender(appender);
+            process.stdoutQuietly();
         }
-        process.stdoutQuietly();
         TimeUnit.MILLISECONDS.sleep(1000L);
         Mockito.verify(
             prc,
