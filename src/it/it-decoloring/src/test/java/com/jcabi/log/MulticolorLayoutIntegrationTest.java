@@ -69,6 +69,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("no color").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mno color\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mno color\\u001B[m"
@@ -80,6 +81,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equal to '[DEBUG] no color'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] no color"
@@ -105,6 +107,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("no colour text").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[DEBUG] no color'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[2;10mDEBUG\\u001B[m] no colour text"
@@ -116,6 +119,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equal to '[DEBUG] no colour text'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] no colour text"
@@ -141,6 +145,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("no color text").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[34mDEBUG\\u001B[m] \\u001B[34mno color text\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[34mDEBUG\\u001B[m] \\u001B[34mno color text\\u001B[m"
@@ -152,6 +157,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equal to '[DEBUG] no color text'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] no color text"
@@ -177,6 +183,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("test").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[12mDEBUG\\u001B[m] \\u001B[12mtest\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[12mDEBUG\\u001B[m] \\u001B[12mtest\\u001B[m"
@@ -188,6 +195,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equals to '[DEBUG] test'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] test"

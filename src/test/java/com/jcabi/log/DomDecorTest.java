@@ -52,8 +52,9 @@ final class DomDecorTest {
         doc.appendChild(doc.createElement("root"));
         final Formattable decor = new DomDecor(doc);
         final Appendable dest = Mockito.mock(Appendable.class);
-        final Formatter fmt = new Formatter(dest);
-        decor.formatTo(fmt, 0, 0, 0);
+        try (Formatter fmt = new Formatter(dest)) {
+            decor.formatTo(fmt, 0, 0, 0);
+        }
         Mockito.verify(dest).append(
             MockitoHamcrest.argThat(Matchers.containsString("<root/>"))
         );
@@ -63,8 +64,9 @@ final class DomDecorTest {
     void convertsNullToText() throws Exception {
         final Formattable decor = new DomDecor(null);
         final Appendable dest = Mockito.mock(Appendable.class);
-        final Formatter fmt = new Formatter(dest);
-        decor.formatTo(fmt, 0, 0, 0);
+        try (Formatter fmt = new Formatter(dest)) {
+            decor.formatTo(fmt, 0, 0, 0);
+        }
         Mockito.verify(dest).append("NULL");
     }
 

@@ -49,8 +49,8 @@ import java.util.concurrent.Callable;
  *
  * <p>This class is thread-safe.
  *
- * @since 0.1.3
  * @see VerboseThreads
+ * @since 0.1.3
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
 @SuppressWarnings("PMD.DoNotUseThreads")

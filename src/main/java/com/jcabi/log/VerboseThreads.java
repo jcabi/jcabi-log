@@ -76,17 +76,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * <p>This class is thread-safe.
  *
- * @since 0.1.2
  * @see VerboseRunnable
+ * @since 0.1.2
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreads implements ThreadFactory {
-
-    /**
-     * Thread group.
-     */
-    private final transient ThreadGroup group;
-
     /**
      * Prefix to use.
      */
@@ -146,32 +140,28 @@ public final class VerboseThreads implements ThreadFactory {
      * Detailed constructor.
      * @param pfx Prefix for thread names
      * @param dmn Threads should be daemons?
-     * @param prt Default priority for all threads
+     * @param prt Default prt for all threads
      */
-    public VerboseThreads(final String pfx, final boolean dmn,
-        final int prt) {
+    public VerboseThreads(final String pfx, final boolean dmn, final int prt) {
         this.prefix = pfx;
         this.daemon = dmn;
         this.priority = prt;
-        this.group = new VerboseThreads.Group(pfx);
         this.number = new AtomicInteger(1);
     }
 
     @Override
-    public Thread newThread(final Runnable runnable) {
+    public Thread newThread(final Runnable rnbl) {
         final Thread thread = new Thread(
-            this.group,
-            new VerboseThreads.Wrap(runnable)
-        );
-        thread.setName(
-            String.format(
-                "%s-%d",
-                this.prefix,
-                this.number.getAndIncrement()
-            )
+            rnbl,
+            String.format("%s-%d", this.prefix, this.number.getAndIncrement())
         );
         thread.setDaemon(this.daemon);
         thread.setPriority(this.priority);
+        thread.setUncaughtExceptionHandler(
+            (t, e) -> Logger.warn(
+                this,
+                String.format("Thread %s threw an exception: %s", t.getName(), e.toString())
+        ));
         return thread;
     }
 
