@@ -448,11 +448,11 @@ public final class VerboseProcess implements Closeable {
                 Channels.newReader(
                     Channels.newChannel(this.input),
                     VerboseProcess.UTF_8
-                )
-            )) {
-                final BufferedWriter writer = new BufferedWriter(
+                ));
+                BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
-                );
+                 )
+            ) {
                 try {
                     while (true) {
                         if (Thread.interrupted()) {
