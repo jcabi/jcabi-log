@@ -320,54 +320,34 @@ final class VerboseProcessTest {
      * @throws Exception If something goes wrong
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
-    private void terminatesMonitorsAndProcessIfClosed(final long delay)
-        throws Exception {
-        final InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
-        final InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
+    private void terminatesMonitorsAndProcessIfClosed(final long delay) throws Exception {
         final Process prc = Mockito.mock(Process.class);
-        Mockito.doReturn(input).when(prc).getInputStream();
-        Mockito.doReturn(error).when(prc).getErrorStream();
-        Mockito.doAnswer(
-            invocation -> {
-                input.close();
-                error.close();
-                return null;
-            }
-        ).when(prc).destroy();
-        final StringWriter writer;
-        try (VerboseProcess process = new VerboseProcess(
-            prc,
-            Level.FINEST,
-            Level.FINEST
-        )) {
+        final StringWriter writer = new StringWriter();
+        try (
+            InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
+            InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
+            VerboseProcess process = new VerboseProcess(prc, Level.FINEST, Level.FINEST)
+        ) {
+            Mockito.doReturn(input).when(prc).getInputStream();
+            Mockito.doReturn(error).when(prc).getErrorStream();
+            final WriterAppender appender = new WriterAppender(new SimpleLayout(), writer);
+            Mockito.doAnswer(invocation -> null).when(prc).destroy();
             Logger.debug(
                 this,
                 "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
                 delay,
                 process.hashCode()
             );
-            writer = new StringWriter();
-            final WriterAppender appender = new WriterAppender(
-                new SimpleLayout(),
-                writer
-            );
             appender.addFilter(new VrbPrcMonitorFilter(process));
-            org.apache.log4j.Logger.getLogger(
-                VerboseProcess.class
-            ).addAppender(appender);
+            org.apache.log4j.Logger.getLogger(VerboseProcess.class).addAppender(appender);
             process.stdoutQuietly();
         }
         TimeUnit.MILLISECONDS.sleep(1000L);
-        Mockito.verify(
-            prc,
-            Mockito.atLeastOnce()
-        ).destroy();
+        Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
         MatcherAssert.assertThat(
             "should be error reading from process stream",
             writer.toString(),
-            Matchers.not(Matchers
-                .containsString("Error reading from process stream")
-            )
+            Matchers.not(Matchers.containsString("Error reading from process stream"))
         );
     }
 
