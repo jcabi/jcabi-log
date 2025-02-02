@@ -444,13 +444,12 @@ public final class VerboseProcess implements Closeable {
 
         @Override
         public Void call() throws Exception {
-            final BufferedReader reader = new BufferedReader(
+            try (BufferedReader reader = new BufferedReader(
                 Channels.newReader(
                     Channels.newChannel(this.input),
                     VerboseProcess.UTF_8
                 )
-            );
-            try {
+            )) {
                 final BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
                 );
@@ -490,8 +489,6 @@ public final class VerboseProcess implements Closeable {
                     VerboseProcess.close(writer);
                     this.done.countDown();
                 }
-            } finally {
-                VerboseProcess.close(reader);
             }
             return null;
         }
