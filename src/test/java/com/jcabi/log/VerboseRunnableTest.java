@@ -126,6 +126,7 @@ final class VerboseRunnableTest {
         );
     }
 
+    @SuppressWarnings("PMD.CloseResource")
     @Test
     void preservesInterruptedStatus() throws Exception {
         try (ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor()) {
