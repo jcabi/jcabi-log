@@ -39,35 +39,35 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseThreads}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
+@SuppressWarnings({"PMD.DoNotUseThreads", "PMD.CloseResource"})
 final class VerboseThreadsTest {
 
     @Test
     void instantiatesThreadsOnDemand() throws Exception {
-        try (ExecutorService svc = Executors.newSingleThreadExecutor(new VerboseThreads("foo"))) {
-            svc.execute(
-                () -> {
-                    throw new IllegalArgumentException("oops");
-                }
-            );
-            TimeUnit.SECONDS.sleep(1L);
-            svc.shutdown();
-        }
+        final ExecutorService service = Executors
+            .newSingleThreadExecutor(new VerboseThreads("foo"));
+        service.execute(
+            () -> {
+                throw new IllegalArgumentException("oops");
+            }
+        );
+        TimeUnit.SECONDS.sleep(1L);
+        service.shutdown();
     }
 
     @Test
     void logsWhenThreadsAreNotDying() throws Exception {
-        try (ExecutorService svc = Executors.newSingleThreadExecutor(new VerboseThreads(this))) {
-            final Future<?> future = svc.submit(
-                (Runnable) () -> {
-                    throw new IllegalArgumentException("boom");
-                }
-            );
-            while (!future.isDone()) {
-                TimeUnit.SECONDS.sleep(1L);
+        final ExecutorService service = Executors
+            .newSingleThreadExecutor(new VerboseThreads(this));
+        final Future<?> future = service.submit(
+            (Runnable) () -> {
+                throw new IllegalArgumentException("boom");
             }
-            svc.shutdown();
+        );
+        while (!future.isDone()) {
+            TimeUnit.SECONDS.sleep(1L);
         }
+        service.shutdown();
     }
 
 }
