@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseRunnable}.
  * @since 0.1
  */
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods", "PMD.CloseResource" })
 final class VerboseRunnableTest {
 
     @Test
@@ -126,7 +126,6 @@ final class VerboseRunnableTest {
         );
     }
 
-    @SuppressWarnings("PMD.CloseResource")
     @Test
     void preservesInterruptedStatus() throws Exception {
         try (ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor()) {
