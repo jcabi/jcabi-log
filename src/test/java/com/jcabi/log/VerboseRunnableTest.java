@@ -151,9 +151,9 @@ final class VerboseRunnableTest {
             thread.get().interrupt();
             TimeUnit.SECONDS.sleep(1L);
             svc.shutdown();
-            MatcherAssert.assertThat("should match 1", runs.get(), Matchers.is(1));
+            MatcherAssert.assertThat("should be 1", runs.get(), Matchers.is(1));
             MatcherAssert.assertThat(
-                "should match 'true'",
+                "should be true",
                 svc.awaitTermination(1L, TimeUnit.SECONDS),
                 Matchers.is(true)
             );
