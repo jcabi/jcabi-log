@@ -72,6 +72,7 @@ final class LoggerTest {
     @Test
     void interpretsArraysAsVarArgs() {
         MatcherAssert.assertThat(
+            "should be 'array: hello : 2'",
             Logger.format("array: %s : %d", new Object[] {"hello", 2}),
             Matchers.is("array: hello : 2")
         );
@@ -79,13 +80,11 @@ final class LoggerTest {
 
     @Test
     void providesOutputStream() throws Exception {
-        final OutputStream stream = Logger.stream(Level.INFO, this);
-        final PrintWriter writer = new PrintWriter(
-            new OutputStreamWriter(stream, "UTF-8")
-        );
-        writer.print("hello, \u20ac, how're\u040a?\nI'm fine, \u0000\u0007!\n");
-        writer.flush();
-        writer.close();
+        try (OutputStream stream = Logger.stream(Level.INFO, this);
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(stream, "UTF-8"))) {
+            writer.print("hello, \u20ac, how're\u040a?\nI'm fine, \u0000\u0007!\n");
+            writer.flush();
+        }
     }
 
     @Test
@@ -109,10 +108,12 @@ final class LoggerTest {
         LogManager.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
         TimeUnit.MILLISECONDS.sleep(1L);
         MatcherAssert.assertThat(
+            "should be true",
             Logger.isEnabled(Level.INFO, LogManager.getRootLogger()),
             Matchers.is(true)
         );
         MatcherAssert.assertThat(
+            "should be false",
             Logger.isEnabled(Level.FINEST, LogManager.getRootLogger()),
             Matchers.is(false)
         );
@@ -128,6 +129,7 @@ final class LoggerTest {
         final String first = "xyz";
         final String second = "ddd";
         MatcherAssert.assertThat(
+            String.format("should be ends with ': %s, first again: %1$s %s'", first, second),
             Logger.format("first: %s, first again: %1$s %s", first, second),
             Matchers.endsWith(
                 String.format(": %s, first again: %1$s %s", first, second)

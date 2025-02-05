@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseRunnable}.
  * @since 0.1
  */
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods", "PMD.CloseResource" })
 final class VerboseRunnableTest {
 
     @Test
@@ -96,6 +96,7 @@ final class VerboseRunnableTest {
             }
         );
         MatcherAssert.assertThat(
+            "should contains 'some text abc'",
             verbose,
             Matchers.hasToString(Matchers.containsString(text))
         );
@@ -119,6 +120,7 @@ final class VerboseRunnableTest {
             true
         );
         MatcherAssert.assertThat(
+            "should contains 'some text abc-2'",
             verbose,
             Matchers.hasToString(Matchers.containsString(text))
         );
@@ -126,8 +128,7 @@ final class VerboseRunnableTest {
 
     @Test
     void preservesInterruptedStatus() throws Exception {
-        final ScheduledExecutorService svc =
-            Executors.newSingleThreadScheduledExecutor();
+        final ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor();
         final AtomicReference<Thread> thread = new AtomicReference<>();
         final AtomicInteger runs = new AtomicInteger();
         svc.scheduleWithFixedDelay(
@@ -150,8 +151,9 @@ final class VerboseRunnableTest {
         thread.get().interrupt();
         TimeUnit.SECONDS.sleep(1L);
         svc.shutdown();
-        MatcherAssert.assertThat(runs.get(), Matchers.is(1));
+        MatcherAssert.assertThat("should be 1", runs.get(), Matchers.is(1));
         MatcherAssert.assertThat(
+            "should be true",
             svc.awaitTermination(1L, TimeUnit.SECONDS),
             Matchers.is(true)
         );

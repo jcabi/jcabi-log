@@ -213,7 +213,7 @@ public final class VerboseProcess implements Closeable {
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
         this.launchMonitors(done, stdout, stderr);
-        int code = 0;
+        final int code;
         try {
             code = this.process.waitFor();
         } finally {
@@ -385,22 +385,6 @@ public final class VerboseProcess implements Closeable {
     }
 
     /**
-     * Close quietly.
-     * @param res Resource to close
-     */
-    private static void close(final Closeable res) {
-        try {
-            res.close();
-        } catch (final IOException ex) {
-            Logger.error(
-                VerboseProcess.class,
-                "Failed to close resource: %[exception]s",
-                ex
-            );
-        }
-    }
-
-    /**
      * Stream monitor.
      *
      * @since 0.1
@@ -444,54 +428,48 @@ public final class VerboseProcess implements Closeable {
 
         @Override
         public Void call() throws Exception {
-            final BufferedReader reader = new BufferedReader(
+            try (BufferedReader reader = new BufferedReader(
                 Channels.newReader(
                     Channels.newChannel(this.input),
                     VerboseProcess.UTF_8
-                )
-            );
-            try {
-                final BufferedWriter writer = new BufferedWriter(
+                ));
+                BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
-                );
-                try {
-                    while (true) {
-                        if (Thread.interrupted()) {
-                            Logger.debug(
-                                VerboseProcess.class,
-                                "Explicitly interrupting read from buffer"
-                            );
-                            break;
-                        }
-                        final String line = reader.readLine();
-                        if (line == null) {
-                            break;
-                        }
-                        Logger.log(
-                            this.level, VerboseProcess.class,
-                            ">> %s", line
+                 )
+            ) {
+                while (true) {
+                    if (Thread.interrupted()) {
+                        Logger.debug(
+                            VerboseProcess.class,
+                            "Explicitly interrupting read from buffer"
                         );
-                        writer.write(line);
-                        writer.newLine();
+                        break;
                     }
-                } catch (final ClosedByInterruptException ex) {
-                    Thread.interrupted();
-                    Logger.debug(
-                        VerboseProcess.class,
-                        "Monitor is interrupted in the expected way"
+                    final String line = reader.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    Logger.log(
+                        this.level, VerboseProcess.class,
+                        ">> %s", line
                     );
-                } catch (final IOException ex) {
-                    Logger.error(
-                        VerboseProcess.class,
-                        "Error reading from process stream: %[exception]s",
-                        ex
-                    );
-                } finally {
-                    VerboseProcess.close(writer);
-                    this.done.countDown();
+                    writer.write(line);
+                    writer.newLine();
                 }
+            } catch (final ClosedByInterruptException ex) {
+                Thread.interrupted();
+                Logger.debug(
+                    VerboseProcess.class,
+                    "Monitor is interrupted in the expected way"
+                );
+            } catch (final IOException ex) {
+                Logger.error(
+                    VerboseProcess.class,
+                    "Error reading from process stream: %[exception]s",
+                    ex
+                );
             } finally {
-                VerboseProcess.close(reader);
+                this.done.countDown();
             }
             return null;
         }

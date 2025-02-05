@@ -32,12 +32,10 @@ package com.jcabi.log;
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.nio.file.Files;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -57,14 +55,14 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link VerboseProcess}.
- *
- * @checkstyle MultipleStringLiterals (500 lines)
- * @checkstyle ClassDataAbstractionCoupling (200 lines)
+
+ * @since 0.1
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
  *  sure how to fix them, but they should be fixed. They fail on some
  *  machines, while run perfectly on others. They also fail when being
  *  executed from IntelliJ.
- * @since 0.1
+ * @checkstyle MultipleStringLiterals (500 lines)
+ * @checkstyle ClassDataAbstractionCoupling (200 lines)
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 final class VerboseProcessTest {
@@ -73,13 +71,15 @@ final class VerboseProcessTest {
     @Disabled
     void runsACommandLineScript() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
-        );
-        MatcherAssert.assertThat(
-            process.stdout(),
-            Matchers.containsString("\u20ac!")
-        );
+        )) {
+            MatcherAssert.assertThat(
+                "should be \u20ac!",
+                process.stdout(),
+                Matchers.containsString("\u20ac!")
+            );
+        }
     }
 
     @Test
@@ -87,6 +87,7 @@ final class VerboseProcessTest {
     void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         MatcherAssert.assertThat(
+            "should echo unicode",
             new VerboseProcess(
                 new ProcessBuilder(
                     "/bin/bash", "-c",
@@ -100,33 +101,38 @@ final class VerboseProcessTest {
     @Test
     void runsACommandLineScriptWithException() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("cat", "/non-existing-file.txt")
-                .redirectErrorStream(true)
-        );
-        try {
-            process.stdout();
-            Assertions.fail("exception expected");
-        } catch (final IllegalArgumentException ex) {
-            MatcherAssert.assertThat(
-                ex.getMessage(),
-                Matchers.containsString("No such file or directory")
-            );
+        try (VerboseProcess process = new VerboseProcess(
+            new ProcessBuilder("cat", "/non-existing-file.txt").redirectErrorStream(true)
+        )) {
+            try {
+                process.stdout();
+                Assertions.fail("exception expected");
+            } catch (final IllegalArgumentException ex) {
+                MatcherAssert.assertThat(
+                    "should be no such file exception",
+                    ex.getMessage(),
+                    Matchers.containsString("No such file or directory")
+                );
+            }
         }
     }
 
     @Test
     void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
+        final VerboseProcess.Result result;
+        try (VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
-        );
-        final VerboseProcess.Result result = process.waitFor();
+        )) {
+            result = process.waitFor();
+        }
         MatcherAssert.assertThat(
+            "should be 1",
             result.code(),
             Matchers.equalTo(1)
         );
         MatcherAssert.assertThat(
+            "should be no such file",
             result.stderr(),
             Matchers.containsString("No such file or directory")
         );
@@ -135,13 +141,15 @@ final class VerboseProcessTest {
     @Test
     void handlesLongRunningCommand() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
-        );
-        MatcherAssert.assertThat(
-            process.stdout(),
-            Matchers.startsWith("done")
-        );
+        )) {
+            MatcherAssert.assertThat(
+                "should be done",
+                process.stdout(),
+                Matchers.startsWith("done")
+            );
+        }
     }
 
     @Test
@@ -164,6 +172,7 @@ final class VerboseProcessTest {
             Assertions.fail("IllegalArgumentException expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
+                "should be IllegalArgumentException",
                 ex.getMessage(),
                 Matchers.equalTo(
                     StringUtils.join(
@@ -184,6 +193,7 @@ final class VerboseProcessTest {
             Assertions.fail("IllegalArgumentException expected here");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
+                "should be IllegalArgumentException",
                 ex.getMessage(),
                 Matchers.equalTo(
                     StringUtils.join(
@@ -200,22 +210,26 @@ final class VerboseProcessTest {
     void quietlyTerminatesLongRunningProcess() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final Process proc = new ProcessBuilder("sleep", "10000").start();
-        final VerboseProcess process = new VerboseProcess(proc);
-        final CountDownLatch start = new CountDownLatch(1);
-        final CountDownLatch done = new CountDownLatch(1);
-        new Thread(
-            new VerboseRunnable(
-                () -> {
-                    start.countDown();
-                    process.stdoutQuietly();
-                    done.countDown();
-                }
-            )
-        ).start();
+        final CountDownLatch start;
+        final CountDownLatch done;
+        try (VerboseProcess process = new VerboseProcess(proc)) {
+            start = new CountDownLatch(1);
+            done = new CountDownLatch(1);
+            new Thread(
+                new VerboseRunnable(
+                    () -> {
+                        start.countDown();
+                        process.stdoutQuietly();
+                        done.countDown();
+                    }
+                    )
+            ).start();
+        }
         start.await();
         TimeUnit.SECONDS.sleep(1L);
         proc.destroy();
         MatcherAssert.assertThat(
+            "should be 1 minute",
             done.await(1L, TimeUnit.MINUTES),
             Matchers.is(true)
         );
@@ -236,11 +250,13 @@ final class VerboseProcessTest {
                 "cat", String.format("/non-existing-file-%s ", message)
             );
         }
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             builder, Level.OFF, Level.WARNING
-        );
-        process.stdoutQuietly();
+        )) {
+            process.stdoutQuietly();
+        }
         MatcherAssert.assertThat(
+            "should be contains 'hello dear friend' message",
             writer.toString(),
             Matchers.containsString(message)
         );
@@ -254,25 +270,25 @@ final class VerboseProcessTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         final Process prc = Mockito.mock(Process.class);
-        final Closeable stdout = new FileInputStream(
-            File.createTempFile("temp", "test")
-        );
-        stdout.close();
-        Mockito.doReturn(stdout).when(prc).getInputStream();
+        try (Closeable stdo = Files.newInputStream(File.createTempFile("temp", "test").toPath())) {
+            Mockito.doReturn(stdo).when(prc).getInputStream();
+        }
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             prc,
             Level.FINEST,
             Level.FINEST
-        );
-        Logger.debug(
-            this,
-            "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
-            process.hashCode()
-        );
-        process.stdout();
+        )) {
+            Logger.debug(
+                this,
+                "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
+                process.hashCode()
+            );
+            process.stdout();
+        }
         MatcherAssert.assertThat(
+            "should be error reading from process stream",
             writer.toString(),
             Matchers.containsString("Error reading from process stream")
         );
@@ -304,64 +320,34 @@ final class VerboseProcessTest {
      * @throws Exception If something goes wrong
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
-    private void terminatesMonitorsAndProcessIfClosed(final long delay)
-        throws Exception {
-        final InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
-        final InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
+    private void terminatesMonitorsAndProcessIfClosed(final long delay) throws Exception {
         final Process prc = Mockito.mock(Process.class);
-        Mockito.doReturn(input).when(prc).getInputStream();
-        Mockito.doReturn(error).when(prc).getErrorStream();
-        Mockito.doAnswer(
-            invocation -> {
-                input.close();
-                error.close();
-                return null;
-            }
-        ).when(prc).destroy();
-        final VerboseProcess process = new VerboseProcess(
-            prc,
-            Level.FINEST,
-            Level.FINEST
-        );
-        Logger.debug(
-            this,
-            "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
-            delay,
-            process.hashCode()
-        );
         final StringWriter writer = new StringWriter();
-        final WriterAppender appender = new WriterAppender(
-            new SimpleLayout(),
-            writer
-        );
-        appender.addFilter(new VerboseProcessTest.VrbPrcMonitorFilter(process));
-        org.apache.log4j.Logger.getLogger(
-            VerboseProcess.class
-        ).addAppender(appender);
-        if (delay == 0L) {
-            process.close();
-        } else {
-            new Timer(true).schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        process.close();
-                    }
-                },
-                delay
+        try (
+            InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
+            InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
+            VerboseProcess process = new VerboseProcess(prc, Level.FINEST, Level.FINEST)
+        ) {
+            Mockito.doReturn(input).when(prc).getInputStream();
+            Mockito.doReturn(error).when(prc).getErrorStream();
+            final WriterAppender appender = new WriterAppender(new SimpleLayout(), writer);
+            Mockito.doAnswer(invocation -> null).when(prc).destroy();
+            Logger.debug(
+                this,
+                "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
+                delay,
+                process.hashCode()
             );
+            appender.addFilter(new VrbPrcMonitorFilter(process));
+            org.apache.log4j.Logger.getLogger(VerboseProcess.class).addAppender(appender);
+            process.stdoutQuietly();
         }
-        process.stdoutQuietly();
         TimeUnit.MILLISECONDS.sleep(1000L);
-        Mockito.verify(
-            prc,
-            Mockito.atLeastOnce()
-        ).destroy();
+        Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
         MatcherAssert.assertThat(
+            "should be error reading from process stream",
             writer.toString(),
-            Matchers.not(Matchers
-                .containsString("Error reading from process stream")
-            )
+            Matchers.not(Matchers.containsString("Error reading from process stream"))
         );
     }
 

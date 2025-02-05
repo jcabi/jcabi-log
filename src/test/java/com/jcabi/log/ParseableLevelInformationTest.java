@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  * ParseableLevelInformation test case.
  * @since 0.18
  */
-class ParseableLevelInformationTest {
+final class ParseableLevelInformationTest {
 
     /**
      * ParseableLevelInformation can parse the information correctly when it's
@@ -48,12 +48,12 @@ class ParseableLevelInformationTest {
      */
     @Test
     @SuppressWarnings("PMD.UseConcurrentHashMap")
-    final void parsesCorrectlyTheInformation() {
+    void parsesCorrectlyTheInformation() {
         final Map<String, String> parsed = new ParseableLevelInformation(
             "INFO:2;10,WARN:2;32"
         ).information();
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("INFO", "2;10"));
-        MatcherAssert.assertThat(parsed, Matchers.hasEntry("WARN", "2;32"));
+        MatcherAssert.assertThat("should be parsed", parsed, Matchers.hasEntry("INFO", "2;10"));
+        MatcherAssert.assertThat("should be parsed", parsed, Matchers.hasEntry("WARN", "2;32"));
     }
 
     /**
@@ -61,13 +61,14 @@ class ParseableLevelInformationTest {
      * not with the right pattern.
      */
     @Test
-    final void throwsAnExceptionWhenParsingIncorrectInformation() {
+    void throwsAnExceptionWhenParsingIncorrectInformation() {
         final String wrong = "INFO;10,WARN;32";
         try {
             new ParseableLevelInformation(wrong).information();
             Assertions.fail("Something was wrong");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
+                "should not be parsed",
                 ex.getMessage(), Matchers.equalTo(
                     String.format(
                         StringUtils.join(
@@ -85,7 +86,7 @@ class ParseableLevelInformationTest {
      * with a wrong type of level.
      */
     @Test
-    final void throwsAnExceptionWhenParsingWrongLevelType() {
+    void throwsAnExceptionWhenParsingWrongLevelType() {
         try {
             new ParseableLevelInformation(
                 "INFO:2;10,EXTREME:2;32"
@@ -93,6 +94,7 @@ class ParseableLevelInformationTest {
             Assertions.fail("");
         } catch (final IllegalStateException ex) {
             MatcherAssert.assertThat(
+                "should not be parsed",
                 ex.getMessage(),
                 Matchers.equalTo("Unknown level 'EXTREME'")
             );

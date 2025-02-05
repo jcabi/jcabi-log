@@ -53,6 +53,7 @@ final class MsDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new MsDecor(value), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -64,6 +65,7 @@ final class MsDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new MsDecor(value), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -72,6 +74,7 @@ final class MsDecorTest {
     @Test
     void testPrintsNullRight() {
         MatcherAssert.assertThat(
+            "should prints null right",
             new Logged(new MsDecor(null), 0, 0, 0),
             Matchers.hasToString("NULL")
         );

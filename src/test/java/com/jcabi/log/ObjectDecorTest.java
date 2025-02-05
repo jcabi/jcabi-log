@@ -51,6 +51,7 @@ final class ObjectDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new ObjectDecor(obj), flags, width, precision),
             Matchers.hasToString(Matchers.containsString(text))
         );
@@ -62,6 +63,7 @@ final class ObjectDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new ObjectDecor(obj), flags, width, precision),
             Matchers.hasToString(Matchers.containsString(text))
         );
