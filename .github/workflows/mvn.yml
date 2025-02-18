@@ -26,6 +26,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 ---
+# yamllint disable rule:line-length
 name: mvn
 'on':
   push:
@@ -51,7 +52,6 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          # yamllint disable-line rule:line-length
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
