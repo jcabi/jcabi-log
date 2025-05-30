@@ -26,7 +26,7 @@ final class MulticolorLayoutIntegrationTest {
     private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
 
     /**
-     * Property that dictates wheter the text should be coloured or not.
+     * Property that dictates whether the text should be coloured or not.
      */
     private static final String COLORING_PROPERTY = "com.jcabi.log.coloring";
 
