@@ -35,10 +35,10 @@ final class ExceptionDecor implements Formattable {
 
     /**
      * Public ctor.
-     * @param thr The exception
+     * @param th The exception
      */
-    ExceptionDecor(final Throwable thr) {
-        this.throwable = thr;
+    ExceptionDecor(final Throwable th) {
+        this.throwable = th;
     }
 
     // @checkstyle ParameterNumber (4 lines)
