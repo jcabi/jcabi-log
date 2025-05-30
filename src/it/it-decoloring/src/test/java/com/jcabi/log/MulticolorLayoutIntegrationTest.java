@@ -72,7 +72,7 @@ final class MulticolorLayoutIntegrationTest {
      * MulticolorLayout disables the color that overwrites the default one.
      */
     @Test
-    void disablesOverridenDefaultColor() {
+    void disablesOverriddenDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color{%p}] %m");
         layout.setLevels("DEBUG:2;10");
@@ -144,7 +144,7 @@ final class MulticolorLayoutIntegrationTest {
      * MulticolorLayout disables the color that overwrites the constant one.
      */
     @Test
-    void disablesOverridenConstantColor() {
+    void disablesOverriddenConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-red{%p}] %color-red{%m}");
         layout.setColors("red:12");
