@@ -57,7 +57,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Name of the property that is used to disable log coloring.
      */
-    private static final String COLORING_PROPERY = "com.jcabi.log.coloring";
+    private static final String COLORING_PROPERTY = "com.jcabi.log.coloring";
 
     /**
      * Colors of levels.
@@ -174,7 +174,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      */
     private static boolean isColoringEnabled() {
         return !"false".equals(
-            System.getProperty(MulticolorLayout.COLORING_PROPERY)
+            System.getProperty(MulticolorLayout.COLORING_PROPERTY)
         );
     }
 
