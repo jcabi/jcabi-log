@@ -16,7 +16,7 @@ class DullyFormatted implements Formatted {
     private final transient String basic;
 
     /**
-     * Contructor.
+     * Constructor.
      * @param bas String to be formatted
      */
     DullyFormatted(final String bas) {

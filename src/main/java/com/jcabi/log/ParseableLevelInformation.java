@@ -22,7 +22,7 @@ class ParseableLevelInformation  {
     private final transient String content;
 
     /**
-     * Construtor.
+     * Constructor.
      * @param cont Content to be parsed
      */
     ParseableLevelInformation(final String cont) {
