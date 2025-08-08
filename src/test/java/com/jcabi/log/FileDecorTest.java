@@ -30,6 +30,7 @@ final class FileDecorTest {
     @DisabledOnOs(OS.WINDOWS)
     void simplyWorksOnUnix() {
         MatcherAssert.assertThat(
+            "should ends with 'test-me.txt'",
             new Printed(new FileDecor("/tmp/test-me.txt"), 0, 0, 0).toString(),
             Matchers.endsWith("test-me.txt")
         );
@@ -39,6 +40,7 @@ final class FileDecorTest {
     @EnabledOnOs(OS.WINDOWS)
     void simplyWorksOnWindows() {
         MatcherAssert.assertThat(
+            "should ends with 'foo.txt'",
             new Printed(new FileDecor("F:\\hahaha\\b\\foo.txt"), 0, 0, 0).toString(),
             Matchers.endsWith("foo.txt")
         );
@@ -51,6 +53,7 @@ final class FileDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new FileDecor(path), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -63,6 +66,7 @@ final class FileDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new FileDecor(path), flags, width, precision),
             Matchers.hasToString(text)
         );

@@ -435,6 +435,7 @@ public final class Logger {
      * @throws IllegalAccessException If some problem
      * @checkstyle ThrowsCountCheck (4 lines)
      */
+    @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
     private static void setFinalStatic(final Field field, final Object value)
         throws NoSuchFieldException, IllegalAccessException {
         field.setAccessible(true);
