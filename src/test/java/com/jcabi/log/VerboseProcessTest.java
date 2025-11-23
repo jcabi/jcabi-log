@@ -33,13 +33,13 @@ import org.mockito.Mockito;
 /**
  * Test case for {@link VerboseProcess}.
  *
- * @checkstyle MultipleStringLiterals (500 lines)
- * @checkstyle ClassDataAbstractionCoupling (200 lines)
+ * @since 0.1
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
  *  sure how to fix them, but they should be fixed. They fail on some
  *  machines, while run perfectly on others. They also fail when being
  *  executed from IntelliJ.
- * @since 0.1
+ * @checkstyle MultipleStringLiterals (500 lines)
+ * @checkstyle ClassDataAbstractionCoupling (200 lines)
  */
 @SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 final class VerboseProcessTest {

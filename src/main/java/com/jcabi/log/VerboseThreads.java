@@ -51,8 +51,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * <p>This class is thread-safe.
  *
- * @since 0.1.2
  * @see VerboseRunnable
+ * @since 0.1.2
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreads implements ThreadFactory {
