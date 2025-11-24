@@ -52,6 +52,7 @@ final class VerboseProcessTest {
             new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
         );
         MatcherAssert.assertThat(
+            "should contains string '\u20ac!'",
             process.stdout(),
             Matchers.containsString("\u20ac!")
         );
@@ -62,6 +63,7 @@ final class VerboseProcessTest {
     void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         MatcherAssert.assertThat(
+            "should contains string '0000000 d1 82 d0 b5 d1 81 d1 82'",
             new VerboseProcess(
                 new ProcessBuilder(
                     "/bin/bash", "-c",
@@ -84,6 +86,7 @@ final class VerboseProcessTest {
             Assertions.fail("exception expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
+                "should throws an exception",
                 ex.getMessage(),
                 Matchers.containsString("No such file or directory")
             );
@@ -98,10 +101,12 @@ final class VerboseProcessTest {
         );
         final VerboseProcess.Result result = process.waitFor();
         MatcherAssert.assertThat(
+            "should equals 1",
             result.code(),
             Matchers.equalTo(1)
         );
         MatcherAssert.assertThat(
+            "should contains string 'No such file or directory'",
             result.stderr(),
             Matchers.containsString("No such file or directory")
         );
