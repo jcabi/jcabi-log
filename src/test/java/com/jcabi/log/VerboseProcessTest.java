@@ -119,6 +119,7 @@ final class VerboseProcessTest {
             new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
         );
         MatcherAssert.assertThat(
+            "should starts with 'done'",
             process.stdout(),
             Matchers.startsWith("done")
         );
@@ -144,6 +145,7 @@ final class VerboseProcessTest {
             Assertions.fail("IllegalArgumentException expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
+                "should rejects stdout with ALL level",
                 ex.getMessage(),
                 Matchers.equalTo(
                     StringUtils.join(
@@ -164,6 +166,7 @@ final class VerboseProcessTest {
             Assertions.fail("IllegalArgumentException expected here");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
+                "should rejects stderr with ALL level",
                 ex.getMessage(),
                 Matchers.equalTo(
                     StringUtils.join(
@@ -196,6 +199,7 @@ final class VerboseProcessTest {
         TimeUnit.SECONDS.sleep(1L);
         proc.destroy();
         MatcherAssert.assertThat(
+            "should be true",
             done.await(1L, TimeUnit.MINUTES),
             Matchers.is(true)
         );
@@ -221,6 +225,7 @@ final class VerboseProcessTest {
         );
         process.stdoutQuietly();
         MatcherAssert.assertThat(
+            "should quietly logs errors",
             writer.toString(),
             Matchers.containsString(message)
         );
@@ -253,6 +258,7 @@ final class VerboseProcessTest {
         );
         process.stdout();
         MatcherAssert.assertThat(
+            "should contains 'Error reading from process stream'",
             writer.toString(),
             Matchers.containsString("Error reading from process stream")
         );
@@ -338,6 +344,7 @@ final class VerboseProcessTest {
             Mockito.atLeastOnce()
         ).destroy();
         MatcherAssert.assertThat(
+            "should not contains 'Error reading from process stream'",
             writer.toString(),
             Matchers.not(Matchers
                 .containsString("Error reading from process stream")
