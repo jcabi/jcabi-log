@@ -7,7 +7,6 @@ package com.jcabi.log;
 import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -252,7 +251,8 @@ final class VerboseProcessTest {
         );
         final Process prc = Mockito.mock(Process.class);
         try (Closeable stdout = Files.newInputStream(File.createTempFile("temp", "test")
-            .toPath())) {
+            .toPath())
+        ) {
             Mockito.doReturn(stdout).when(prc).getInputStream();
         }
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
