@@ -48,30 +48,33 @@ final class VerboseProcessTest {
     @Disabled
     void runsACommandLineScript() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
-        );
-        MatcherAssert.assertThat(
-            "should contains string '\u20ac!'",
-            process.stdout(),
-            Matchers.containsString("\u20ac!")
-        );
+        )) {
+            MatcherAssert.assertThat(
+                "should contains string '\u20ac!'",
+                process.stdout(),
+                Matchers.containsString("\u20ac!")
+            );
+        }
     }
 
     @Test
     @Disabled
     void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        MatcherAssert.assertThat(
-            "should contains string '0000000 d1 82 d0 b5 d1 81 d1 82'",
-            new VerboseProcess(
-                new ProcessBuilder(
-                    "/bin/bash", "-c",
-                    "echo -n \u0442\u0435\u0441\u0442 | hexdump"
-                )
-            ).stdout(),
-            Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
-        );
+        try (VerboseProcess process = new VerboseProcess(
+            new ProcessBuilder(
+                "/bin/bash", "-c",
+                "echo -n \u0442\u0435\u0441\u0442 | hexdump"
+            )
+        )) {
+            MatcherAssert.assertThat(
+                "should contains string '0000000 d1 82 d0 b5 d1 81 d1 82'",
+                process.stdout(),
+                Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
+            );
+        }
     }
 
     @Test
