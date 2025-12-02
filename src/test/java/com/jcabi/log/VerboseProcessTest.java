@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
@@ -80,29 +81,32 @@ final class VerboseProcessTest {
     @Test
     void runsACommandLineScriptWithException() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
                 .redirectErrorStream(true)
-        );
-        try {
-            process.stdout();
-            Assertions.fail("exception expected");
-        } catch (final IllegalArgumentException ex) {
-            MatcherAssert.assertThat(
-                "should throws an exception",
-                ex.getMessage(),
-                Matchers.containsString("No such file or directory")
-            );
+        )) {
+            try {
+                process.stdout();
+                Assertions.fail("exception expected");
+            } catch (final IllegalArgumentException ex) {
+                MatcherAssert.assertThat(
+                    "should throws an exception",
+                    ex.getMessage(),
+                    Matchers.containsString("No such file or directory")
+                );
+            }
         }
     }
 
     @Test
     void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
+        final VerboseProcess.Result result;
+        try (VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("cat", "/non-existing-file.txt")
-        );
-        final VerboseProcess.Result result = process.waitFor();
+        )) {
+            result = process.waitFor();
+        }
         MatcherAssert.assertThat(
             "should equals 1",
             result.code(),
@@ -118,14 +122,15 @@ final class VerboseProcessTest {
     @Test
     void handlesLongRunningCommand() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
-        );
-        MatcherAssert.assertThat(
-            "should starts with 'done'",
-            process.stdout(),
-            Matchers.startsWith("done")
-        );
+        )) {
+            MatcherAssert.assertThat(
+                "should starts with 'done'",
+                process.stdout(),
+                Matchers.startsWith("done")
+            );
+        }
     }
 
     @Test
@@ -186,18 +191,21 @@ final class VerboseProcessTest {
     void quietlyTerminatesLongRunningProcess() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final Process proc = new ProcessBuilder("sleep", "10000").start();
-        final VerboseProcess process = new VerboseProcess(proc);
-        final CountDownLatch start = new CountDownLatch(1);
-        final CountDownLatch done = new CountDownLatch(1);
-        new Thread(
-            new VerboseRunnable(
-                () -> {
-                    start.countDown();
-                    process.stdoutQuietly();
-                    done.countDown();
-                }
-            )
-        ).start();
+        final CountDownLatch start;
+        final CountDownLatch done;
+        try (VerboseProcess process = new VerboseProcess(proc)) {
+            start = new CountDownLatch(1);
+            done = new CountDownLatch(1);
+            new Thread(
+                new VerboseRunnable(
+                    () -> {
+                        start.countDown();
+                        process.stdoutQuietly();
+                        done.countDown();
+                    }
+                )
+            ).start();
+        }
         start.await();
         TimeUnit.SECONDS.sleep(1L);
         proc.destroy();
@@ -223,10 +231,11 @@ final class VerboseProcessTest {
                 "cat", String.format("/non-existing-file-%s ", message)
             );
         }
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             builder, Level.OFF, Level.WARNING
-        );
-        process.stdoutQuietly();
+        )) {
+            process.stdoutQuietly();
+        }
         MatcherAssert.assertThat(
             "should quietly logs errors",
             writer.toString(),
@@ -242,24 +251,24 @@ final class VerboseProcessTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         final Process prc = Mockito.mock(Process.class);
-        final Closeable stdout = new FileInputStream(
-            File.createTempFile("temp", "test")
-        );
-        stdout.close();
-        Mockito.doReturn(stdout).when(prc).getInputStream();
+        try (Closeable stdout = Files.newInputStream(File.createTempFile("temp", "test")
+            .toPath())) {
+            Mockito.doReturn(stdout).when(prc).getInputStream();
+        }
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
-        final VerboseProcess process = new VerboseProcess(
+        try (VerboseProcess process = new VerboseProcess(
             prc,
             Level.FINEST,
             Level.FINEST
-        );
-        Logger.debug(
-            this,
-            "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
-            process.hashCode()
-        );
-        process.stdout();
+        )) {
+            Logger.debug(
+                this,
+                "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
+                process.hashCode()
+            );
+            process.stdout();
+        }
         MatcherAssert.assertThat(
             "should contains 'Error reading from process stream'",
             writer.toString(),
