@@ -63,6 +63,7 @@ final class TextDecorTest {
         final StringBuilder output = new StringBuilder(100);
         fmt.formatTo(new Formatter(output), 0, 0, 0);
         MatcherAssert.assertThat(
+            "should compresses long text",
             output.length(),
             Matchers.describedAs(
                 output.toString(),

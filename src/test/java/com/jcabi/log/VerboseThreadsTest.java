@@ -19,30 +19,32 @@ final class VerboseThreadsTest {
 
     @Test
     void instantiatesThreadsOnDemand() throws Exception {
-        final ExecutorService service = Executors
-            .newSingleThreadExecutor(new VerboseThreads("foo"));
-        service.execute(
-            () -> {
-                throw new IllegalArgumentException("oops");
-            }
-        );
-        TimeUnit.SECONDS.sleep(1L);
-        service.shutdown();
+        try (ExecutorService service = Executors
+            .newSingleThreadExecutor(new VerboseThreads("foo"))) {
+            service.execute(
+                () -> {
+                    throw new IllegalArgumentException("oops");
+                }
+            );
+            TimeUnit.SECONDS.sleep(1L);
+            service.shutdown();
+        }
     }
 
     @Test
     void logsWhenThreadsAreNotDying() throws Exception {
-        final ExecutorService service = Executors
-            .newSingleThreadExecutor(new VerboseThreads(this));
-        final Future<?> future = service.submit(
-            (Runnable) () -> {
-                throw new IllegalArgumentException("boom");
+        try (ExecutorService service = Executors
+            .newSingleThreadExecutor(new VerboseThreads(this))) {
+            final Future<?> future = service.submit(
+                (Runnable) () -> {
+                    throw new IllegalArgumentException("boom");
+                }
+            );
+            while (!future.isDone()) {
+                TimeUnit.SECONDS.sleep(1L);
             }
-        );
-        while (!future.isDone()) {
-            TimeUnit.SECONDS.sleep(1L);
+            service.shutdown();
         }
-        service.shutdown();
     }
 
 }
