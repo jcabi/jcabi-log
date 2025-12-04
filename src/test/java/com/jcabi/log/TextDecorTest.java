@@ -33,6 +33,7 @@ final class TextDecorTest {
         Assumptions.assumeTrue("UTF-8".equals(Charset.defaultCharset().name()));
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new TextDecor(obj), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -45,6 +46,7 @@ final class TextDecorTest {
         Assumptions.assumeTrue("UTF-8".equals(Charset.defaultCharset().name()));
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new TextDecor(obj), flags, width, precision),
             Matchers.hasToString(text)
         );
