@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.file.Files;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -251,8 +249,8 @@ final class VerboseProcessTest {
         );
         final Process prc = Mockito.mock(Process.class);
         try (Closeable stdout = Files.newInputStream(File.createTempFile("temp", "test")
-            .toPath())
-        ) {
+            .toPath()
+        )) {
             Mockito.doReturn(stdout).when(prc).getInputStream();
         }
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
@@ -304,64 +302,47 @@ final class VerboseProcessTest {
      */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
-        final InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
-        final InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
-        final Process prc = Mockito.mock(Process.class);
-        Mockito.doReturn(input).when(prc).getInputStream();
-        Mockito.doReturn(error).when(prc).getErrorStream();
-        Mockito.doAnswer(
-            invocation -> {
-                input.close();
-                error.close();
-                return null;
+        try (InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
+            InputStream error = new VerboseProcessTest.InfiniteInputStream('e')) {
+            final Process prc = Mockito.mock(Process.class);
+            Mockito.doReturn(input).when(prc).getInputStream();
+            Mockito.doReturn(error).when(prc).getErrorStream();
+            final StringWriter writer;
+            try (VerboseProcess process = new VerboseProcess(
+                prc,
+                Level.FINEST,
+                Level.FINEST
+            )) {
+                Logger.debug(
+                    this,
+                    "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
+                    delay,
+                    process.hashCode()
+                );
+                writer = new StringWriter();
+                final WriterAppender appender = new WriterAppender(
+                    new SimpleLayout(),
+                    writer
+                );
+                appender.addFilter(new VrbPrcMonitorFilter(process));
+                org.apache.log4j.Logger.getLogger(
+                    VerboseProcess.class
+                ).addAppender(appender);
+                process.stdoutQuietly();
             }
-        ).when(prc).destroy();
-        final VerboseProcess process = new VerboseProcess(
-            prc,
-            Level.FINEST,
-            Level.FINEST
-        );
-        Logger.debug(
-            this,
-            "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
-            delay,
-            process.hashCode()
-        );
-        final StringWriter writer = new StringWriter();
-        final WriterAppender appender = new WriterAppender(
-            new SimpleLayout(),
-            writer
-        );
-        appender.addFilter(new VerboseProcessTest.VrbPrcMonitorFilter(process));
-        org.apache.log4j.Logger.getLogger(
-            VerboseProcess.class
-        ).addAppender(appender);
-        if (delay == 0L) {
-            process.close();
-        } else {
-            new Timer(true).schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        process.close();
-                    }
-                },
-                delay
+            TimeUnit.MILLISECONDS.sleep(1000L);
+            Mockito.verify(
+                prc,
+                Mockito.atLeastOnce()
+            ).destroy();
+            MatcherAssert.assertThat(
+                "should not contains 'Error reading from process stream'",
+                writer.toString(),
+                Matchers.not(
+                    Matchers.containsString("Error reading from process stream")
+                )
             );
         }
-        process.stdoutQuietly();
-        TimeUnit.MILLISECONDS.sleep(1000L);
-        Mockito.verify(
-            prc,
-            Mockito.atLeastOnce()
-        ).destroy();
-        MatcherAssert.assertThat(
-            "should not contains 'Error reading from process stream'",
-            writer.toString(),
-            Matchers.not(Matchers
-                .containsString("Error reading from process stream")
-            )
-        );
     }
 
     /**
