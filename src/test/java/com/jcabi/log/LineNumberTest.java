@@ -42,6 +42,7 @@ final class LineNumberTest {
             Logger.info(this, "Test");
             TimeUnit.MILLISECONDS.sleep(1L);
             MatcherAssert.assertThat(
+                "should contains a 'com.jcabi.log.LineNumberTest:216'",
                 writer.toString(),
                 Matchers.containsString(
                     "com.jcabi.log.LineNumberTest:216"
