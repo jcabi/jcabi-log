@@ -47,6 +47,7 @@ final class LoggerTest {
     @Test
     void interpretsArraysAsVarArgs() {
         MatcherAssert.assertThat(
+            "should interprets arrays as var args",
             Logger.format("array: %s : %d", new Object[] {"hello", 2}),
             Matchers.is("array: hello : 2")
         );
@@ -84,10 +85,12 @@ final class LoggerTest {
         LogManager.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
         TimeUnit.MILLISECONDS.sleep(1L);
         MatcherAssert.assertThat(
+            "should checks log level success",
             Logger.isEnabled(Level.INFO, LogManager.getRootLogger()),
             Matchers.is(true)
         );
         MatcherAssert.assertThat(
+            "should checks log level fail",
             Logger.isEnabled(Level.FINEST, LogManager.getRootLogger()),
             Matchers.is(false)
         );
@@ -103,6 +106,7 @@ final class LoggerTest {
         final String first = "xyz";
         final String second = "ddd";
         MatcherAssert.assertThat(
+            "should finds args by positions",
             Logger.format("first: %s, first again: %1$s %s", first, second),
             Matchers.endsWith(
                 String.format(": %s, first again: %1$s %s", first, second)
