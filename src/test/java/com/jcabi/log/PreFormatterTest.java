@@ -24,10 +24,12 @@ final class PreFormatterTest {
             1.0d
         );
         MatcherAssert.assertThat(
+            "should equal to '%-5.2f and %1$+.6f'",
             pre.getFormat(),
             Matchers.equalTo("%-5.2f and %1$+.6f")
         );
         MatcherAssert.assertThat(
+            "should be an instance of DecorMocker class",
             pre.getArguments()[0],
             Matchers.instanceOf(DecorMocker.class)
         );
@@ -41,10 +43,12 @@ final class PreFormatterTest {
         final PreFormatter pre =
             new PreFormatter("ouch: %[missed]s", "test");
         MatcherAssert.assertThat(
+            "should equal to 'ouch: %s'",
             pre.getFormat(),
             Matchers.equalTo("ouch: %s")
         );
         MatcherAssert.assertThat(
+            "should be an instance of String class",
             pre.getArguments()[0],
             Matchers.instanceOf(String.class)
         );
@@ -58,6 +62,7 @@ final class PreFormatterTest {
         final DecorMocker decor = new DecorMocker("a");
         final PreFormatter pre = new PreFormatter("test: %s", decor);
         MatcherAssert.assertThat(
+            "should equal to decor 'a'",
             pre.getArguments()[0],
             Matchers.equalTo(decor)
         );
@@ -72,10 +77,12 @@ final class PreFormatterTest {
         final Object[] args = {"new", "line"};
         final PreFormatter pre = new PreFormatter(fmt, args);
         MatcherAssert.assertThat(
+            "should equal to '%s%n%s'",
             pre.getFormat(),
             Matchers.is(fmt)
         );
         MatcherAssert.assertThat(
+            "should be an array of args ['new','line']",
             pre.getArguments(),
             Matchers.is(args)
         );
@@ -90,10 +97,12 @@ final class PreFormatterTest {
         final Object[] args = {"percent: "};
         final PreFormatter pre = new PreFormatter(fmt, args);
         MatcherAssert.assertThat(
+            "should equal to '%s%%'",
             pre.getFormat(),
             Matchers.is(fmt)
         );
         MatcherAssert.assertThat(
+            "should be an array of args ['percent: ']",
             pre.getArguments(),
             Matchers.is(args)
         );
