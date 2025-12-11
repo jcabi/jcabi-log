@@ -55,13 +55,13 @@ final class LoggerTest {
 
     @Test
     void providesOutputStream() throws Exception {
-        final OutputStream stream = Logger.stream(Level.INFO, this);
-        final PrintWriter writer = new PrintWriter(
-            new OutputStreamWriter(stream, "UTF-8")
-        );
-        writer.print("hello, \u20ac, how're\u040a?\nI'm fine, \u0000\u0007!\n");
-        writer.flush();
-        writer.close();
+        try (
+            OutputStream stream = Logger.stream(Level.INFO, this);
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(stream, "UTF-8"))
+        ) {
+            writer.print("hello, \u20ac, how're\u040a?\nI'm fine, \u0000\u0007!\n");
+            writer.flush();
+        }
     }
 
     @Test
