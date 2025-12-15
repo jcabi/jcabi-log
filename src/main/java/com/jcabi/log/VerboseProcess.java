@@ -463,7 +463,7 @@ public final class VerboseProcess implements Closeable {
                     VerboseProcess.close(writer);
                     this.done.countDown();
                 }
-                }
+            }
             return null;
         }
     }
