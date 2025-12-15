@@ -188,7 +188,7 @@ public final class VerboseProcess implements Closeable {
         final ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         final ByteArrayOutputStream stderr = new ByteArrayOutputStream();
         this.launchMonitors(done, stdout, stderr);
-        int code = 0;
+        final int code;
         try {
             code = this.process.waitFor();
         } finally {
@@ -419,16 +419,14 @@ public final class VerboseProcess implements Closeable {
 
         @Override
         public Void call() throws Exception {
-            final BufferedReader reader = new BufferedReader(
-                Channels.newReader(
-                    Channels.newChannel(this.input),
-                    VerboseProcess.UTF_8
-                )
-            );
-            try {
-                final BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
+            try (
+                BufferedReader reader = new BufferedReader(
+                    Channels.newReader(Channels.newChannel(this.input), VerboseProcess.UTF_8)
                 );
+                BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
+                )
+            ) {
                 try {
                     while (true) {
                         if (Thread.interrupted()) {
@@ -465,9 +463,7 @@ public final class VerboseProcess implements Closeable {
                     VerboseProcess.close(writer);
                     this.done.countDown();
                 }
-            } finally {
-                VerboseProcess.close(reader);
-            }
+                }
             return null;
         }
     }
