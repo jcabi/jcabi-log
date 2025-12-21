@@ -58,11 +58,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class VerboseThreads implements ThreadFactory {
 
     /**
-     * Thread group.
-     */
-    private final transient ThreadGroup group;
-
-    /**
      * Prefix to use.
      */
     private final transient String prefix;
@@ -123,21 +118,16 @@ public final class VerboseThreads implements ThreadFactory {
      * @param dmn Threads should be daemons?
      * @param prt Default priority for all threads
      */
-    public VerboseThreads(final String pfx, final boolean dmn,
-        final int prt) {
+    public VerboseThreads(final String pfx, final boolean dmn, final int prt) {
         this.prefix = pfx;
         this.daemon = dmn;
         this.priority = prt;
-        this.group = new VerboseThreads.Group(pfx);
         this.number = new AtomicInteger(1);
     }
 
     @Override
     public Thread newThread(final Runnable runnable) {
-        final Thread thread = new Thread(
-            this.group,
-            new VerboseThreads.Wrap(runnable)
-        );
+        final Thread thread = new Thread(new VerboseThreads.Wrap(runnable));
         thread.setName(
             String.format(
                 "%s-%d",
@@ -147,28 +137,10 @@ public final class VerboseThreads implements ThreadFactory {
         );
         thread.setDaemon(this.daemon);
         thread.setPriority(this.priority);
+        thread.setUncaughtExceptionHandler(
+            (t, e) -> Logger.warn(this, "%[exception]s", e)
+        );
         return thread;
-    }
-
-    /**
-     * Group to use.
-     *
-     * @since 0.1
-     */
-    private static final class Group extends ThreadGroup {
-        /**
-         * Ctor.
-         * @param name Name of it
-         */
-        Group(final String name) {
-            super(name);
-        }
-
-        @Override
-        public void uncaughtException(final Thread thread,
-            final Throwable throwable) {
-            Logger.warn(this, "%[exception]s", throwable);
-        }
     }
 
     /**
