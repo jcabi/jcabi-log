@@ -18,15 +18,25 @@ final class VerboseThreadsTest {
 
     @Test
     void instantiatesThreadsOnDemand() throws Exception {
-        try (ExecutorService service = Executors
-            .newSingleThreadExecutor(new VerboseThreads("foo"))) {
-            service.execute(
+        final ExecutorService svc = Executors
+                .newSingleThreadExecutor(new VerboseThreads("foo"));
+        try {
+            svc.execute(
                 () -> {
                     throw new IllegalArgumentException("oops");
                 }
             );
             TimeUnit.SECONDS.sleep(1L);
-            service.shutdown();
+        } finally {
+            svc.shutdown();
+            try {
+                if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
+                    svc.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                svc.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
