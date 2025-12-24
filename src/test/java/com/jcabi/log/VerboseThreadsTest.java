@@ -53,7 +53,6 @@ final class VerboseThreadsTest {
             while (!future.isDone()) {
                 TimeUnit.SECONDS.sleep(1L);
             }
-            svc.shutdown();
         } finally {
             svc.shutdown();
             try {
