@@ -103,7 +103,8 @@ final class VerboseRunnableTest {
 
     @Test
     void preservesInterruptedStatus() throws Exception {
-        try (ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor()) {
+        final ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor();
+        try {
             final AtomicReference<Thread> thread = new AtomicReference<>();
             final AtomicInteger runs = new AtomicInteger();
             svc.scheduleWithFixedDelay(
@@ -132,6 +133,16 @@ final class VerboseRunnableTest {
                 svc.awaitTermination(1L, TimeUnit.SECONDS),
                 Matchers.is(true)
             );
+        } finally {
+            svc.shutdown();
+            try {
+                if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
+                    svc.shutdownNow();
+                }
+            } catch (final InterruptedException ex) {
+                svc.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
