@@ -26,7 +26,7 @@ final class MulticolorLayoutIntegrationTest {
     private static final String CONV_PATTERN = "[%color{%p}] %color{%m}";
 
     /**
-     * Property that dictates wheter the text should be coloured or not.
+     * Property that dictates whether the text should be coloured or not.
      */
     private static final String COLORING_PROPERTY = "com.jcabi.log.coloring";
 
@@ -44,6 +44,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("no color").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mno color\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mno color\\u001B[m"
@@ -55,6 +56,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equal to '[DEBUG] no color'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] no color"
@@ -72,7 +74,7 @@ final class MulticolorLayoutIntegrationTest {
      * MulticolorLayout disables the color that overwrites the default one.
      */
     @Test
-    void disablesOverridenDefaultColor() {
+    void disablesOverriddenDefaultColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color{%p}] %m");
         layout.setLevels("DEBUG:2;10");
@@ -80,6 +82,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("no colour text").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[2;10mDEBUG\\u001B[m] no colour text'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[2;10mDEBUG\\u001B[m] no colour text"
@@ -91,6 +94,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equal to '[DEBUG] no colour text'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] no colour text"
@@ -116,6 +120,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("no color text").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[34mDEBUG\\u001B[m] \\u001B[34mno color text\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[34mDEBUG\\u001B[m] \\u001B[34mno color text\\u001B[m"
@@ -127,6 +132,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equal to '[DEBUG] no color text'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] no color text"
@@ -144,7 +150,7 @@ final class MulticolorLayoutIntegrationTest {
      * MulticolorLayout disables the color that overwrites the constant one.
      */
     @Test
-    void disablesOverridenConstantColor() {
+    void disablesOverriddenConstantColor() {
         final MulticolorLayout layout = new MulticolorLayout();
         layout.setConversionPattern("[%color-red{%p}] %color-red{%m}");
         layout.setColors("red:12");
@@ -152,6 +158,7 @@ final class MulticolorLayoutIntegrationTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("test").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[12mDEBUG\\u001B[m] \\u001B[12mtest\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[12mDEBUG\\u001B[m] \\u001B[12mtest\\u001B[m"
@@ -163,6 +170,7 @@ final class MulticolorLayoutIntegrationTest {
         );
         try {
             MatcherAssert.assertThat(
+                "should equal to '[DEBUG] test'",
                 StringEscapeUtils.escapeJava(layout.format(event)),
                 Matchers.equalTo(
                     "[DEBUG] test"

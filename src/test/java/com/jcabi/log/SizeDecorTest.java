@@ -28,6 +28,7 @@ final class SizeDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new SizeDecor(size), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -39,6 +40,7 @@ final class SizeDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new SizeDecor(size), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -47,6 +49,7 @@ final class SizeDecorTest {
     @Test
     void testPrintsNullRight() {
         MatcherAssert.assertThat(
+            "should prints null right",
             new Logged(new SizeDecor(null), 0, 0, 0),
             Matchers.hasToString("NULL")
         );

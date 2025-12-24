@@ -28,6 +28,7 @@ final class NanoDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should prints right",
             new Printed(new NanoDecor(nano), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -39,6 +40,7 @@ final class NanoDecorTest {
         final int flags, final int width, final int precision) {
         Locale.setDefault(Locale.US);
         MatcherAssert.assertThat(
+            "should logs right",
             new Logged(new NanoDecor(nano), flags, width, precision),
             Matchers.hasToString(text)
         );
@@ -47,6 +49,7 @@ final class NanoDecorTest {
     @Test
     void testPrintsNullRight() {
         MatcherAssert.assertThat(
+            "should prints null right",
             new Logged(new NanoDecor(null), 0, 0, 0),
             Matchers.hasToString("NULL")
         );

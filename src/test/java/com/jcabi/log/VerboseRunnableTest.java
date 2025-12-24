@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseRunnable}.
  * @since 0.1
  */
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.TooManyMethods")
 final class VerboseRunnableTest {
 
     @Test
@@ -71,6 +71,7 @@ final class VerboseRunnableTest {
             }
         );
         MatcherAssert.assertThat(
+            "should has 'some text abc'",
             verbose,
             Matchers.hasToString(Matchers.containsString(text))
         );
@@ -94,6 +95,7 @@ final class VerboseRunnableTest {
             true
         );
         MatcherAssert.assertThat(
+            "should has 'some text abc-2'",
             verbose,
             Matchers.hasToString(Matchers.containsString(text))
         );
@@ -101,35 +103,47 @@ final class VerboseRunnableTest {
 
     @Test
     void preservesInterruptedStatus() throws Exception {
-        final ScheduledExecutorService svc =
-            Executors.newSingleThreadScheduledExecutor();
-        final AtomicReference<Thread> thread = new AtomicReference<>();
-        final AtomicInteger runs = new AtomicInteger();
-        svc.scheduleWithFixedDelay(
-            new VerboseRunnable(
-                () -> {
-                    runs.addAndGet(1);
-                    thread.set(Thread.currentThread());
-                    TimeUnit.HOURS.sleep(1L);
-                    return null;
-                },
-                true,
-                false
-            ),
-            1L, 1L,
-            TimeUnit.MICROSECONDS
-        );
-        while (thread.get() == null) {
-            TimeUnit.MILLISECONDS.sleep(1L);
+        final ScheduledExecutorService svc = Executors.newSingleThreadScheduledExecutor();
+        try {
+            final AtomicReference<Thread> thread = new AtomicReference<>();
+            final AtomicInteger runs = new AtomicInteger();
+            svc.scheduleWithFixedDelay(
+                new VerboseRunnable(
+                    () -> {
+                        runs.addAndGet(1);
+                        thread.set(Thread.currentThread());
+                        TimeUnit.HOURS.sleep(1L);
+                        return null;
+                    },
+                    true,
+                    false
+                ),
+                1L, 1L,
+                TimeUnit.MICROSECONDS
+            );
+            while (thread.get() == null) {
+                TimeUnit.MILLISECONDS.sleep(1L);
+            }
+            thread.get().interrupt();
+            TimeUnit.SECONDS.sleep(1L);
+            svc.shutdown();
+            MatcherAssert.assertThat("should be 1", runs.get(), Matchers.is(1));
+            MatcherAssert.assertThat(
+                "should be true",
+                svc.awaitTermination(1L, TimeUnit.SECONDS),
+                Matchers.is(true)
+            );
+        } finally {
+            svc.shutdown();
+            try {
+                if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
+                    svc.shutdownNow();
+                }
+            } catch (final InterruptedException ex) {
+                svc.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
         }
-        thread.get().interrupt();
-        TimeUnit.SECONDS.sleep(1L);
-        svc.shutdown();
-        MatcherAssert.assertThat(runs.get(), Matchers.is(1));
-        MatcherAssert.assertThat(
-            svc.awaitTermination(1L, TimeUnit.SECONDS),
-            Matchers.is(true)
-        );
     }
 
 }

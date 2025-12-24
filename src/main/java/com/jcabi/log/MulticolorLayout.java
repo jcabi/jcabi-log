@@ -46,10 +46,10 @@ import org.apache.log4j.spi.LoggingEvent;
  *  &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
  *  &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
- * @since 0.1.10
  * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
  * @see <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">PatternLayout from LOG4J</a>
  * @see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How to use with Maven</a>
+ * @since 0.1.10
  */
 @SuppressWarnings("PMD.NonStaticInitializer")
 public final class MulticolorLayout extends EnhancedPatternLayout {
@@ -57,7 +57,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Name of the property that is used to disable log coloring.
      */
-    private static final String COLORING_PROPERY = "com.jcabi.log.coloring";
+    private static final String COLORING_PROPERTY = "com.jcabi.log.coloring";
 
     /**
      * Colors of levels.
@@ -174,7 +174,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      */
     private static boolean isColoringEnabled() {
         return !"false".equals(
-            System.getProperty(MulticolorLayout.COLORING_PROPERY)
+            System.getProperty(MulticolorLayout.COLORING_PROPERTY)
         );
     }
 

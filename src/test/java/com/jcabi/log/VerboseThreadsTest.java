@@ -14,35 +14,56 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseThreads}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
 final class VerboseThreadsTest {
 
     @Test
     void instantiatesThreadsOnDemand() throws Exception {
-        final ExecutorService service = Executors
+        final ExecutorService svc = Executors
             .newSingleThreadExecutor(new VerboseThreads("foo"));
-        service.execute(
-            () -> {
-                throw new IllegalArgumentException("oops");
+        try {
+            svc.execute(
+                () -> {
+                    throw new IllegalArgumentException("oops");
+                }
+            );
+            TimeUnit.SECONDS.sleep(1L);
+        } finally {
+            svc.shutdown();
+            try {
+                if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
+                    svc.shutdownNow();
+                }
+            } catch (final InterruptedException ex) {
+                svc.shutdownNow();
+                Thread.currentThread().interrupt();
             }
-        );
-        TimeUnit.SECONDS.sleep(1L);
-        service.shutdown();
+        }
     }
 
     @Test
     void logsWhenThreadsAreNotDying() throws Exception {
-        final ExecutorService service = Executors
+        final ExecutorService svc = Executors
             .newSingleThreadExecutor(new VerboseThreads(this));
-        final Future<?> future = service.submit(
-            (Runnable) () -> {
-                throw new IllegalArgumentException("boom");
+        try {
+            final Future<?> future = svc.submit(
+                (Runnable) () -> {
+                    throw new IllegalArgumentException("boom");
+                }
+            );
+            while (!future.isDone()) {
+                TimeUnit.SECONDS.sleep(1L);
             }
-        );
-        while (!future.isDone()) {
-            TimeUnit.SECONDS.sleep(1L);
+        } finally {
+            svc.shutdown();
+            try {
+                if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
+                    svc.shutdownNow();
+                }
+            } catch (final InterruptedException ex) {
+                svc.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
         }
-        service.shutdown();
     }
 
 }

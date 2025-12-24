@@ -78,6 +78,29 @@ final class PreFormatter {
         this.arguments = new CopyOnWriteArrayList<>();
         final StringBuffer buf = new StringBuffer(fmt.length());
         final Matcher matcher = PreFormatter.PATTERN.matcher(fmt);
+        final int pos = this.getPos(args, matcher, buf);
+        if (pos < args.length) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "There are %d parameter(s) but only %d format argument(s) were provided.",
+                    args.length,
+                    pos
+                )
+            );
+        }
+        matcher.appendTail(buf);
+        this.format = buf.toString();
+    }
+
+    /**
+     * Get the position.
+     * @param args The list of arguments
+     * @param matcher The matcher that finds matches
+     * @param buf The string buffer
+     * @return The result position
+     */
+    @SuppressWarnings("PMD.ConfusingTernary")
+    private int getPos(final Object[] args, final Matcher matcher, final StringBuffer buf) {
         int pos = 0;
         while (matcher.find()) {
             final String group = matcher.group();
@@ -117,17 +140,7 @@ final class PreFormatter {
                 ++pos;
             }
         }
-        if (pos < args.length) {
-            throw new IllegalArgumentException(
-                String.format(
-                    "There are %d parameter(s) but only %d format argument(s) were provided.",
-                    args.length,
-                    pos
-                )
-            );
-        }
-        matcher.appendTail(buf);
-        this.format = buf.toString();
+        return pos;
     }
 
 }

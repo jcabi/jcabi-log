@@ -33,6 +33,7 @@ final class MulticolorLayoutTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("hello").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mhello\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[2;37mDEBUG\\u001B[m] \\u001B[2;37mhello\\u001B[m"
@@ -49,6 +50,7 @@ final class MulticolorLayoutTest {
         Mockito.doReturn(Level.INFO).when(event).getLevel();
         Mockito.doReturn("change").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '[\\u001B[2;10mINFO\\u001B[m] \\u001B[2;10mchange\\u001B[m'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo(
                 "[\\u001B[2;10mINFO\\u001B[m] \\u001B[2;10mchange\\u001B[m"
@@ -64,6 +66,7 @@ final class MulticolorLayoutTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("foo").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '\\u001B[31mDEBUG\\u001B[m foo'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo("\\u001B[31mDEBUG\\u001B[m foo")
         );
@@ -78,6 +81,7 @@ final class MulticolorLayoutTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("const").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '\\u001B[10mDEBUG\\u001B[m const'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo("\\u001B[10mDEBUG\\u001B[m const")
         );
@@ -91,6 +95,7 @@ final class MulticolorLayoutTest {
         Mockito.doReturn(Level.DEBUG).when(event).getLevel();
         Mockito.doReturn("bar").when(event).getRenderedMessage();
         MatcherAssert.assertThat(
+            "should equal to '\\u001B[0;0;31mDEBUG\\u001B[m bar'",
             StringEscapeUtils.escapeJava(layout.format(event)),
             Matchers.equalTo("\\u001B[0;0;31mDEBUG\\u001B[m bar")
         );

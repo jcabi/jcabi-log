@@ -27,22 +27,27 @@ final class ConversionPatternTest {
     @Test
     void testGenerateNoReplacement() {
         MatcherAssert.assertThat(
+            "should be empty",
             convert(""),
             Matchers.equalTo("")
         );
         MatcherAssert.assertThat(
+            "should be 'foo'",
             convert("foo"),
             Matchers.equalTo("foo")
         );
         MatcherAssert.assertThat(
+            "should be '%color'",
             convert("%color"),
             Matchers.equalTo("%color")
         );
         MatcherAssert.assertThat(
+            "should be '%color-'",
             convert("%color-"),
             Matchers.equalTo("%color-")
         );
         MatcherAssert.assertThat(
+            "should be '%color{%c{1}foo'",
             convert("%color{%c{1}foo"),
             Matchers.equalTo("%color{%c{1}foo")
         );
@@ -51,6 +56,7 @@ final class ConversionPatternTest {
     @Test
     void testGenerateEmpty() {
         MatcherAssert.assertThat(
+            "should generate empty",
             convert("%color{}"),
             Matchers.equalTo(colorWrap(""))
         );
@@ -59,14 +65,17 @@ final class ConversionPatternTest {
     @Test
     void testGenerateSimple() {
         MatcherAssert.assertThat(
+            "should generate simple",
             convert("%color{Hello World}"),
             Matchers.equalTo(colorWrap("Hello World"))
         );
         MatcherAssert.assertThat(
+            "should generate simple",
             convert("%color{Hello World}foo"),
             Matchers.equalTo(String.format("%sfoo", colorWrap("Hello World")))
         );
         MatcherAssert.assertThat(
+            "should generate simple",
             convert("%color{Hello}%color{World}"),
             Matchers.equalTo(
                 String.format("%s%s", colorWrap("Hello"), colorWrap("World"))
@@ -77,22 +86,26 @@ final class ConversionPatternTest {
     @Test
     void testGenerateCurlyBraces() {
         MatcherAssert.assertThat(
+            "should generate curly braced",
             ConversionPatternTest.convert("%color{%c{1}}"),
             Matchers.equalTo(ConversionPatternTest.colorWrap("%c{1}"))
         );
         MatcherAssert.assertThat(
+            "should generate curly braced",
             ConversionPatternTest.convert("%color{%c{1}}foo"),
             Matchers.equalTo(
                 String.format("%sfoo", ConversionPatternTest.colorWrap("%c{1}"))
             )
         );
         MatcherAssert.assertThat(
+            "should generate curly braced",
             ConversionPatternTest.convert("%color{%c1}}foo"),
             Matchers.equalTo(
                 String.format("%s}foo", ConversionPatternTest.colorWrap("%c1"))
             )
         );
         MatcherAssert.assertThat(
+            "should generate curly braced",
             ConversionPatternTest.convert("%color{%c{{{1}{2}}}}foo"),
             Matchers.equalTo(
                 String.format(
