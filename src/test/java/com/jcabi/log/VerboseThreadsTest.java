@@ -42,9 +42,10 @@ final class VerboseThreadsTest {
 
     @Test
     void logsWhenThreadsAreNotDying() throws Exception {
-        try (ExecutorService service = Executors
-            .newSingleThreadExecutor(new VerboseThreads(this))) {
-            final Future<?> future = service.submit(
+        final ExecutorService svc = Executors
+                .newSingleThreadExecutor(new VerboseThreads(this));
+        try {
+            final Future<?> future = svc.submit(
                 (Runnable) () -> {
                     throw new IllegalArgumentException("boom");
                 }
@@ -52,7 +53,17 @@ final class VerboseThreadsTest {
             while (!future.isDone()) {
                 TimeUnit.SECONDS.sleep(1L);
             }
-            service.shutdown();
+            svc.shutdown();
+        } finally {
+            svc.shutdown();
+            try {
+                if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
+                    svc.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                svc.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
