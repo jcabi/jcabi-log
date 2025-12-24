@@ -19,7 +19,7 @@ final class VerboseThreadsTest {
     @Test
     void instantiatesThreadsOnDemand() throws Exception {
         final ExecutorService svc = Executors
-                .newSingleThreadExecutor(new VerboseThreads("foo"));
+            .newSingleThreadExecutor(new VerboseThreads("foo"));
         try {
             svc.execute(
                 () -> {
@@ -33,7 +33,7 @@ final class VerboseThreadsTest {
                 if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
                     svc.shutdownNow();
                 }
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException ex) {
                 svc.shutdownNow();
                 Thread.currentThread().interrupt();
             }
@@ -43,7 +43,7 @@ final class VerboseThreadsTest {
     @Test
     void logsWhenThreadsAreNotDying() throws Exception {
         final ExecutorService svc = Executors
-                .newSingleThreadExecutor(new VerboseThreads(this));
+            .newSingleThreadExecutor(new VerboseThreads(this));
         try {
             final Future<?> future = svc.submit(
                 (Runnable) () -> {
@@ -59,7 +59,7 @@ final class VerboseThreadsTest {
                 if (!svc.awaitTermination(1, TimeUnit.SECONDS)) {
                     svc.shutdownNow();
                 }
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException ex) {
                 svc.shutdownNow();
                 Thread.currentThread().interrupt();
             }
