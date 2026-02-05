@@ -1,14 +1,14 @@
-<img alt="logo" src="https://www.jcabi.com/logo-square.svg" width="64px" height="64px" />
+# [![logo](https://www.jcabi.com/logo-square.svg)](https://www.jcabi.com/logo-square.svg)
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
-[![DevOps By Rultor.com](http://www.rultor.com/b/jcabi/jcabi-log)](http://www.rultor.com/p/jcabi/jcabi-log)
+[![DevOps By Rultor.com](https://www.rultor.com/b/jcabi/jcabi-log)](https://www.rultor.com/p/jcabi/jcabi-log)
 [![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![mvn](https://github.com/jcabi/jcabi-log/actions/workflows/mvn.yml/badge.svg)](https://github.com/jcabi/jcabi-log/actions/workflows/mvn.yml)
-[![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-log)](http://www.0pdd.com/p?name=jcabi/jcabi-log)
+[![PDD status](https://www.0pdd.com/svg?name=jcabi/jcabi-log)](https://www.0pdd.com/p?name=jcabi/jcabi-log)
 [![codecov](https://codecov.io/gh/jcabi/jcabi-log/branch/master/graph/badge.svg)](https://codecov.io/gh/jcabi/jcabi-log)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-log)
-[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-log.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-log)
+[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-log.svg)](https://www.javadoc.io/doc/com.jcabi/jcabi-log)
 [![Hits-of-Code](https://hitsofcode.com/github/jcabi/jcabi-log)](https://hitsofcode.com/view/github/jcabi/jcabi-log)
 
 More details are here: [log.jcabi.com](https://log.jcabi.com/index.html)

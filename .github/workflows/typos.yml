@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: pdd
+name: typos
 'on':
   push:
     branches:
@@ -11,9 +11,9 @@ name: pdd
     branches:
       - master
 jobs:
-  pdd:
+  typos:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-      - uses: volodya-lombrozo/pdd-action@master
+      - uses: crate-ci/typos@v1.42.3

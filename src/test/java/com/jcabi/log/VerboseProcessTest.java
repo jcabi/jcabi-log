@@ -1,31 +1,6 @@
 /*
- * Copyright (c) 2012-2025, jcabi.com
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met: 1) Redistributions of source code must retain the above
- * copyright notice, this list of conditions and the following
- * disclaimer. 2) Redistributions in binary form must reproduce the above
- * copyright notice, this list of conditions and the following
- * disclaimer in the documentation and/or other materials provided
- * with the distribution. 3) Neither the name of the jcabi.com nor
- * the names of its contributors may be used to endorse or promote
- * products derived from this software without specific prior written
- * permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
- * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- * THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-FileCopyrightText: Copyright (c) 2012-2026 Yegor Bugayenko
+ * SPDX-License-Identifier: MIT
  */
 package com.jcabi.log;
 
@@ -55,7 +30,7 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link VerboseProcess}.
-
+ *
  * @since 0.1
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
  *  sure how to fix them, but they should be fixed. They fail on some
@@ -75,7 +50,7 @@ final class VerboseProcessTest {
             new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
         )) {
             MatcherAssert.assertThat(
-                "should be \u20ac!",
+                "should contains string '\u20ac!'",
                 process.stdout(),
                 Matchers.containsString("\u20ac!")
             );
@@ -86,30 +61,33 @@ final class VerboseProcessTest {
     @Disabled
     void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        MatcherAssert.assertThat(
-            "should echo unicode",
-            new VerboseProcess(
-                new ProcessBuilder(
-                    "/bin/bash", "-c",
-                    "echo -n \u0442\u0435\u0441\u0442 | hexdump"
-                )
-            ).stdout(),
-            Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
-        );
+        try (VerboseProcess process = new VerboseProcess(
+            new ProcessBuilder(
+                "/bin/bash", "-c",
+                "echo -n \u0442\u0435\u0441\u0442 | hexdump"
+            )
+        )) {
+            MatcherAssert.assertThat(
+                "should contains string '0000000 d1 82 d0 b5 d1 81 d1 82'",
+                process.stdout(),
+                Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
+            );
+        }
     }
 
     @Test
     void runsACommandLineScriptWithException() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         try (VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("cat", "/non-existing-file.txt").redirectErrorStream(true)
+            new ProcessBuilder("cat", "/non-existing-file.txt")
+                .redirectErrorStream(true)
         )) {
             try {
                 process.stdout();
                 Assertions.fail("exception expected");
             } catch (final IllegalArgumentException ex) {
                 MatcherAssert.assertThat(
-                    "should be no such file exception",
+                    "should throws an exception",
                     ex.getMessage(),
                     Matchers.containsString("No such file or directory")
                 );
@@ -127,12 +105,12 @@ final class VerboseProcessTest {
             result = process.waitFor();
         }
         MatcherAssert.assertThat(
-            "should be 1",
+            "should equals 1",
             result.code(),
             Matchers.equalTo(1)
         );
         MatcherAssert.assertThat(
-            "should be no such file",
+            "should contains string 'No such file or directory'",
             result.stderr(),
             Matchers.containsString("No such file or directory")
         );
@@ -145,7 +123,7 @@ final class VerboseProcessTest {
             new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
         )) {
             MatcherAssert.assertThat(
-                "should be done",
+                "should starts with 'done'",
                 process.stdout(),
                 Matchers.startsWith("done")
             );
@@ -172,7 +150,7 @@ final class VerboseProcessTest {
             Assertions.fail("IllegalArgumentException expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
-                "should be IllegalArgumentException",
+                "should rejects stdout with ALL level",
                 ex.getMessage(),
                 Matchers.equalTo(
                     StringUtils.join(
@@ -193,7 +171,7 @@ final class VerboseProcessTest {
             Assertions.fail("IllegalArgumentException expected here");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
-                "should be IllegalArgumentException",
+                "should rejects stderr with ALL level",
                 ex.getMessage(),
                 Matchers.equalTo(
                     StringUtils.join(
@@ -222,14 +200,14 @@ final class VerboseProcessTest {
                         process.stdoutQuietly();
                         done.countDown();
                     }
-                    )
+                )
             ).start();
         }
         start.await();
         TimeUnit.SECONDS.sleep(1L);
         proc.destroy();
         MatcherAssert.assertThat(
-            "should be 1 minute",
+            "should be true",
             done.await(1L, TimeUnit.MINUTES),
             Matchers.is(true)
         );
@@ -256,7 +234,7 @@ final class VerboseProcessTest {
             process.stdoutQuietly();
         }
         MatcherAssert.assertThat(
-            "should be contains 'hello dear friend' message",
+            "should quietly logs errors",
             writer.toString(),
             Matchers.containsString(message)
         );
@@ -270,8 +248,10 @@ final class VerboseProcessTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         final Process prc = Mockito.mock(Process.class);
-        try (Closeable stdo = Files.newInputStream(File.createTempFile("temp", "test").toPath())) {
-            Mockito.doReturn(stdo).when(prc).getInputStream();
+        try (Closeable stdout = Files.newInputStream(File.createTempFile("temp", "test")
+            .toPath()
+        )) {
+            Mockito.doReturn(stdout).when(prc).getInputStream();
         }
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
@@ -288,7 +268,7 @@ final class VerboseProcessTest {
             process.stdout();
         }
         MatcherAssert.assertThat(
-            "should be error reading from process stream",
+            "should contains 'Error reading from process stream'",
             writer.toString(),
             Matchers.containsString("Error reading from process stream")
         );
@@ -320,35 +300,52 @@ final class VerboseProcessTest {
      * @throws Exception If something goes wrong
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
-    private void terminatesMonitorsAndProcessIfClosed(final long delay) throws Exception {
-        final Process prc = Mockito.mock(Process.class);
-        final StringWriter writer = new StringWriter();
-        try (
-            InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
-            InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
-            VerboseProcess process = new VerboseProcess(prc, Level.FINEST, Level.FINEST)
-        ) {
+    private void terminatesMonitorsAndProcessIfClosed(final long delay)
+        throws Exception {
+        try (InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
+            InputStream error = new VerboseProcessTest.InfiniteInputStream('e')) {
+            final Process prc = Mockito.mock(Process.class);
             Mockito.doReturn(input).when(prc).getInputStream();
             Mockito.doReturn(error).when(prc).getErrorStream();
-            final WriterAppender appender = new WriterAppender(new SimpleLayout(), writer);
-            Mockito.doAnswer(invocation -> null).when(prc).destroy();
-            Logger.debug(
-                this,
-                "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
-                delay,
-                process.hashCode()
+            final StringWriter writer;
+            try (VerboseProcess process = new VerboseProcess(
+                prc,
+                Level.FINEST,
+                Level.FINEST
+            )) {
+                Logger.debug(
+                    this,
+                    "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
+                    delay,
+                    process.hashCode()
+                );
+                writer = new StringWriter();
+                final WriterAppender appender = new WriterAppender(
+                    new SimpleLayout(),
+                    writer
+                );
+                appender.addFilter(new VrbPrcMonitorFilter(process));
+                org.apache.log4j.Logger.getLogger(
+                    VerboseProcess.class
+                ).addAppender(appender);
+                process.stdoutQuietly();
+            }
+            TimeUnit.MILLISECONDS.sleep(1000L);
+            Mockito.verify(
+                prc,
+                Mockito.atLeastOnce()
+            ).destroy();
+            MatcherAssert.assertThat(
+                "should not contains 'Error reading from process stream'",
+                writer.toString(),
+                Matchers.not(
+                    Matchers.containsString("Error reading from process stream")
+                )
             );
             appender.addFilter(new VrbPrcMonitorFilter(process));
             org.apache.log4j.Logger.getLogger(VerboseProcess.class).addAppender(appender);
             process.stdoutQuietly();
         }
-        TimeUnit.MILLISECONDS.sleep(1000L);
-        Mockito.verify(prc, Mockito.atLeastOnce()).destroy();
-        MatcherAssert.assertThat(
-            "should be error reading from process stream",
-            writer.toString(),
-            Matchers.not(Matchers.containsString("Error reading from process stream"))
-        );
     }
 
     /**

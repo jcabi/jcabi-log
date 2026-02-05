@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: pdd
+name: markdown-lint
 'on':
   push:
     branches:
@@ -11,9 +11,9 @@ name: pdd
     branches:
       - master
 jobs:
-  pdd:
+  markdown-lint:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-      - uses: volodya-lombrozo/pdd-action@master
+      - uses: DavidAnson/markdownlint-cli2-action@v22.0.0

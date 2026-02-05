@@ -1,6 +1,9 @@
-target/
+.DS_Store
 .idea
-jcabi-log.iml
-/.project
+.idea/
 .settings
 /.classpath
+/.project
+jcabi-log.iml
+node_modules/
+target/
