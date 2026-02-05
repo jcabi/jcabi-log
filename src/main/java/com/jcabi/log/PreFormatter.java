@@ -140,7 +140,21 @@ final class PreFormatter {
                 ++pos;
             }
         }
-        return pos;
+        this.validateArgumentCount(pos, args.length);
+        matcher.appendTail(buf);
+        this.format = buf.toString();
     }
 
+    private void validateArgumentCount(final int pos, final int count) {
+        if (pos < count) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "There are %d parameter(s) but only %d format argument(s) were provided.",
+                    count,
+                    pos
+                )
+            );
+        }
+        return pos;
+    }
 }

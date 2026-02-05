@@ -116,7 +116,7 @@ public final class VerboseThreads implements ThreadFactory {
      * Detailed constructor.
      * @param pfx Prefix for thread names
      * @param dmn Threads should be daemons?
-     * @param prt Default priority for all threads
+     * @param prt Default prt for all threads
      */
     public VerboseThreads(final String pfx, final boolean dmn, final int prt) {
         this.prefix = pfx;

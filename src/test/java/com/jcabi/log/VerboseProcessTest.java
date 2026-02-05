@@ -342,6 +342,9 @@ final class VerboseProcessTest {
                     Matchers.containsString("Error reading from process stream")
                 )
             );
+            appender.addFilter(new VrbPrcMonitorFilter(process));
+            org.apache.log4j.Logger.getLogger(VerboseProcess.class).addAppender(appender);
+            process.stdoutQuietly();
         }
     }
 
