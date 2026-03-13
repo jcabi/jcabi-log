@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseThreads}.
  * @since 0.1
  */
+@SuppressWarnings("PMD.CloseResource")
 final class VerboseThreadsTest {
 
     @Test

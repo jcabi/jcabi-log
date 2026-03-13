@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseRunnable}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.TooManyMethods")
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.CloseResource"})
 final class VerboseRunnableTest {
 
     @Test
