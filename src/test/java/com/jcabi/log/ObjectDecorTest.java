@@ -48,32 +48,29 @@ final class ObjectDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
-            new Object[][] {
-                {null, "NULL", 0, 0, 0},
-                {new SecretDecor("x"), "{secret: \"x\"", 0, 0, 0},
-                {new ObjectDecorTest.Foo(1, "one"), "{num: \"1\", name: \"one\"", 0, 0, 0},
-                {
-                    new Object[]{
-                        new ObjectDecorTest.Foo(0, "zero"),
-                        new ObjectDecorTest.Foo(2, "two"),
-                    },
-                    "[{num: \"0\", name: \"zero\"",
-                    0, 0, 0,
+            new Object[] {null, "NULL", 0, 0, 0},
+            new Object[] {new SecretDecor("x"), "{secret: \"x\"", 0, 0, 0},
+            new Object[] {new ObjectDecorTest.Foo(1, "one"), "{num: \"1\", name: \"one\"", 0, 0, 0},
+            new Object[] {
+                new Object[] {
+                    new ObjectDecorTest.Foo(0, "zero"),
+                    new ObjectDecorTest.Foo(2, "two"),
                 },
-                {
-                    new Object[]{
-                        new ObjectDecorTest.Foo(0, "abc"),
-                        new ObjectDecorTest.Foo(2, "cde"),
-                    },
-                    ", {num: \"2\", name: \"cde\"",
-                    0, 0, 0,
+                "[{num: \"0\", name: \"zero\"",
+                0, 0, 0,
+            },
+            new Object[] {
+                new Object[] {
+                    new ObjectDecorTest.Foo(0, "abc"),
+                    new ObjectDecorTest.Foo(2, "cde"),
                 },
-                {
-                    new Object[] {new Object[] {null}, }, "[[NULL", 0, 0, 0,
-                },
+                ", {num: \"2\", name: \"cde\"",
+                0, 0, 0,
+            },
+            new Object[] {
+                new Object[] {new Object[] {null}}, "[[NULL", 0, 0, 0,
             }
         );
     }

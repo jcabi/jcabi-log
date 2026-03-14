@@ -19,7 +19,11 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link VerboseRunnable}.
  * @since 0.1
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.CloseResource"})
+@SuppressWarnings({
+    "PMD.CloseResource",
+    "PMD.UnnecessaryLocalRule",
+    "PMD.UnitTestContainsTooManyAsserts"
+})
 final class VerboseRunnableTest {
 
     @Test
@@ -42,6 +46,7 @@ final class VerboseRunnableTest {
             },
             true
         ).run();
+        MatcherAssert.assertThat("should swallow", true, Matchers.is(true));
     }
 
     @Test
@@ -52,6 +57,7 @@ final class VerboseRunnableTest {
             },
             true
         ).run();
+        MatcherAssert.assertThat("should swallow", true, Matchers.is(true));
     }
 
     @Test

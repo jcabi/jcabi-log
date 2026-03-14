@@ -22,7 +22,7 @@ final class ParseableLevelInformationTest {
      * with the right pattern.
      */
     @Test
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void parsesCorrectlyTheInformation() {
         final Map<String, String> parsed = new ParseableLevelInformation(
             "INFO:2;10,WARN:2;32"
@@ -44,6 +44,7 @@ final class ParseableLevelInformationTest {
      * not with the right pattern.
      */
     @Test
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void throwsAnExceptionWhenParsingIncorrectInformation() {
         final String wrong = "INFO;10,WARN;32";
         try {
@@ -69,6 +70,7 @@ final class ParseableLevelInformationTest {
      * with a wrong type of level.
      */
     @Test
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void throwsAnExceptionWhenParsingWrongLevelType() {
         try {
             new ParseableLevelInformation(

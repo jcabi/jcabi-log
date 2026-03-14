@@ -48,14 +48,11 @@ final class TypeDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
-            new Object[][] {
-                {"testing", "java.lang.String", 0, 0, 0},
-                {null, "NULL", 0, 0, 0},
-                {1.0d, "java.lang.Double", 0, 0, 0},
-            }
+            new Object[] {"testing", "java.lang.String", 0, 0, 0},
+            new Object[] {null, "NULL", 0, 0, 0},
+            new Object[] {1.0d, "java.lang.Double", 0, 0, 0}
         );
     }
 }

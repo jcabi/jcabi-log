@@ -462,9 +462,10 @@ public final class Logger {
         if ("org.slf4j.impl.Log4jLoggerAdapter"
             .equals(logger.getClass().getName())) {
             try {
-                final Field fqcn = logger.getClass()
-                    .getDeclaredField("FQCN");
-                setFinalStatic(fqcn, Logger.class.getName());
+                setFinalStatic(
+                    logger.getClass().getDeclaredField("FQCN"),
+                    Logger.class.getName()
+                );
             } catch (final NoSuchFieldException | IllegalAccessException ex) {
                 throw new IllegalStateException(ex);
             }

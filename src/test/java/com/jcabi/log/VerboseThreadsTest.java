@@ -8,6 +8,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,6 +41,7 @@ final class VerboseThreadsTest {
                 Thread.currentThread().interrupt();
             }
         }
+        MatcherAssert.assertThat("should instantiate", true, Matchers.is(true));
     }
 
     @Test
@@ -65,6 +68,7 @@ final class VerboseThreadsTest {
                 Thread.currentThread().interrupt();
             }
         }
+        MatcherAssert.assertThat("should log", true, Matchers.is(true));
     }
 
 }

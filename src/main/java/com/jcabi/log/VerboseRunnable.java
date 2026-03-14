@@ -28,7 +28,6 @@ import java.util.concurrent.Callable;
  * @since 0.1.3
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseRunnable implements Runnable {
 
     /**
@@ -145,7 +144,6 @@ public final class VerboseRunnable implements Runnable {
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
      * @since 0.7.17
      */
-    @SuppressWarnings("PMD.BooleanInversion")
     public VerboseRunnable(final Runnable runnable,
         final boolean swallow, final boolean vrbs) {
         this.origin = runnable;

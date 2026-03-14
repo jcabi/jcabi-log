@@ -29,6 +29,7 @@ final class LineNumberTest {
     private static final String CONV_PATTERN = "%c:%L";
 
     @Test
+    @SuppressWarnings("PMD.UnnecessaryLocalRule")
     void testLineNumber() throws Exception {
         final PatternLayout layout = new PatternLayout();
         layout.setConversionPattern(LineNumberTest.CONV_PATTERN);

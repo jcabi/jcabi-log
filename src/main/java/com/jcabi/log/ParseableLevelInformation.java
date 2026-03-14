@@ -33,7 +33,6 @@ class ParseableLevelInformation  {
      * Parse the level information.
      * @return A {@link Map} with key,value pair of strings
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public final Map<String, String> information() {
         final Map<String, String> parsed = new ParseableInformation(
             this.content

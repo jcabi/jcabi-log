@@ -51,7 +51,6 @@ import org.apache.log4j.spi.LoggingEvent;
  * @see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How to use with Maven</a>
  * @since 0.1.10
  */
-@SuppressWarnings("PMD.NonStaticInitializer")
 public final class MulticolorLayout extends EnhancedPatternLayout {
 
     /**
@@ -91,7 +90,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @param cols JavaScript like map of color names
      * @since 0.9
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setColors(final String cols) {
         final Map<String, String> parsed = new ParseableInformation(
             cols
@@ -110,7 +108,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @param lev JavaScript like map of levels
      * @since 0.9
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setLevels(final String lev) {
         final Map<String, String> parsed = new ParseableLevelInformation(
             lev

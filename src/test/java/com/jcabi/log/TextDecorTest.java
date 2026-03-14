@@ -57,9 +57,7 @@ final class TextDecorTest {
      */
     @Test
     void compressesLongText() {
-        final int len = 1000;
-        final String text = StringUtils.repeat('x', len);
-        final Formattable fmt = new TextDecor(text);
+        final Formattable fmt = new TextDecor(StringUtils.repeat('x', 1000));
         final StringBuilder output = new StringBuilder(100);
         fmt.formatTo(new Formatter(output), 0, 0, 0);
         MatcherAssert.assertThat(
@@ -76,21 +74,12 @@ final class TextDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @SuppressWarnings(
-        {
-            "PMD.AvoidDuplicateLiterals",
-            "PMD.UnusedPrivateMethod"
-        }
-    )
     private static Collection<Object[]> params() {
+        // @checkstyle MultipleStringLiterals (4 lines)
         return Arrays.asList(
-            new Object[][] {
-                // @checkstyle MultipleStringLiterals (1 line)
-                {"simple text", "simple text", 0, 0, 0},
-                {null, "NULL", 0, 0, 0},
-                // @checkstyle MultipleStringLiteralsCheck (1 line)
-                {"\u0433!", "\u0433!", 0, 0, 0},
-            }
+            new Object[] {"simple text", "simple text", 0, 0, 0},
+            new Object[] {null, "NULL", 0, 0, 0},
+            new Object[] {"\u0433!", "\u0433!", 0, 0, 0}
         );
     }
 }

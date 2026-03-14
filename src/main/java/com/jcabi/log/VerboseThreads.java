@@ -54,7 +54,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @see VerboseRunnable
  * @since 0.1.2
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreads implements ThreadFactory {
 
     /**

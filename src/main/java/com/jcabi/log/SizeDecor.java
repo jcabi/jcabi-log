@@ -89,14 +89,13 @@ final class SizeDecor implements Formattable {
             number /= 1024.0;
             power += 1;
         }
-        final String suffix = SizeDecor.SUFFIXES.get(power);
         final String format;
         if (precision >= 0) {
             format = String.format("%%.%df%%s", precision);
         } else {
             format = "%.0f%s";
         }
-        return String.format(format, number, suffix);
+        return String.format(format, number, SizeDecor.SUFFIXES.get(power));
     }
 
 }

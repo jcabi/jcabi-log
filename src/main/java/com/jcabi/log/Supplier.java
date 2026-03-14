@@ -12,6 +12,7 @@ package com.jcabi.log;
  * @param <T> The type of results supplied by this supplier
  * @since 0.18
  */
+@FunctionalInterface
 public interface Supplier<T> {
 
     /**

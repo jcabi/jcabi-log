@@ -38,7 +38,6 @@ final class DomDecor implements Formattable {
      * @param doc The document
      * @throws DecorException If some problem with it
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     DomDecor(final Object doc) throws DecorException {
         if (doc != null && !(doc instanceof Node)) {
             throw new DecorException(

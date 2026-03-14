@@ -22,7 +22,7 @@ final class ParseableInformationTest {
      * the right pattern.
      */
     @Test
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void parsesTheInformationCorrectly() {
         final Map<String, String> parsed = new ParseableInformation(
             "red:10,black:20"
@@ -35,6 +35,7 @@ final class ParseableInformationTest {
      * ParseableInformation can throw an an exception when parsing wrong info.
      */
     @Test
+    @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
     void throwsAnExceptionWhenParsingSomethingWrong() {
         final String white = "white";
         try {

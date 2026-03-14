@@ -59,23 +59,20 @@ final class SizeDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
-            new Object[][] {
-                {1L, "1b", 0, 0, 0},
-                {123L, "  123b", 0, 6, 0},
-                {1024L, "1.000Kb", 0, 0, 3},
-                {5120L, "5Kb", 0, 0, 0},
-                {12_345L, "12.056Kb", 0, 0, 3},
-                {12_345L, "12.1Kb  ", FormattableFlags.LEFT_JUSTIFY, 8, 1},
-                {98_765_432L, "94.190MB", FormattableFlags.UPPERCASE, 0, 3},
-                {98_765_432L, "94.190Mb", 0, 0, 3},
-                {90L * 1024L * 1024L * 1024L, "90Gb", 0, 0, 0},
-                {13L * 1024L * 1024L * 1024L * 1024L, "13Tb", 0, 0, 0},
-                {33L * 1024L * 1024L * 1024L * 1024L * 1024L, "33Pb", 0, 0, 0},
-                {3L * 1024L * 1024L * 1024L * 1024L * 1024L * 1024L, "3Eb", 0, 0, 0},
-            }
+            new Object[] {1L, "1b", 0, 0, 0},
+            new Object[] {123L, "  123b", 0, 6, 0},
+            new Object[] {1024L, "1.000Kb", 0, 0, 3},
+            new Object[] {5120L, "5Kb", 0, 0, 0},
+            new Object[] {12_345L, "12.056Kb", 0, 0, 3},
+            new Object[] {12_345L, "12.1Kb  ", FormattableFlags.LEFT_JUSTIFY, 8, 1},
+            new Object[] {98_765_432L, "94.190MB", FormattableFlags.UPPERCASE, 0, 3},
+            new Object[] {98_765_432L, "94.190Mb", 0, 0, 3},
+            new Object[] {90L * 1024L * 1024L * 1024L, "90Gb", 0, 0, 0},
+            new Object[] {13L * 1024L * 1024L * 1024L * 1024L, "13Tb", 0, 0, 0},
+            new Object[] {33L * 1024L * 1024L * 1024L * 1024L * 1024L, "33Pb", 0, 0, 0},
+            new Object[] {3L * 1024L * 1024L * 1024L * 1024L * 1024L * 1024L, "3Eb", 0, 0, 0}
         );
     }
 

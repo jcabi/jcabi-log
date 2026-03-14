@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class DomDecorTest {
 
     @Test

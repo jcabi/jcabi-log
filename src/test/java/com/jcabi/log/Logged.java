@@ -52,7 +52,7 @@ public final class Logged {
 
     @Override
     public String toString() {
-        final StringBuilder format = new StringBuilder(0);
+        final StringBuilder format = new StringBuilder(16);
         format.append('%');
         if ((this.flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
             .LEFT_JUSTIFY) {

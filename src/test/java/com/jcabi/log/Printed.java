@@ -52,6 +52,7 @@ public final class Printed {
     }
 
     @Override
+    @SuppressWarnings("PMD.RelianceOnDefaultCharset")
     public String toString() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Formatter fmt = new Formatter(baos);

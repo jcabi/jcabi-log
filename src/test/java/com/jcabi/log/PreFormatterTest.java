@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link PreFormatter}.
  * @since 0.1
  */
+@SuppressWarnings({"PMD.UnitTestContainsTooManyAsserts", "PMD.UnnecessaryLocalRule"})
 final class PreFormatterTest {
 
     /**

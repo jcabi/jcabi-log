@@ -32,12 +32,6 @@ final class NanoDecor implements Formattable {
      * Public ctor.
      * @param nan The interval in nanoseconds
      */
-    @SuppressWarnings(
-        {
-            "PMD.NullAssignment",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-        }
-    )
     NanoDecor(final Long nan) {
         if (nan == null) {
             this.nano = null;
@@ -53,7 +47,7 @@ final class NanoDecor implements Formattable {
         if (this.nano == null) {
             formatter.format("NULL");
         } else {
-            final StringBuilder format = new StringBuilder(0);
+            final StringBuilder format = new StringBuilder(16);
             format.append('%');
             if ((flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
                 .LEFT_JUSTIFY) {
@@ -83,17 +77,17 @@ final class NanoDecor implements Formattable {
         if (this.nano < 1000.0) {
             number = this.nano;
             title = "ns";
-        } else if (this.nano < (double) (1000L * 1000L)) {
+        } else if (this.nano < 1000L * 1000L) {
             number = this.nano / 1000.0;
             title = "µs";
-        } else if (this.nano < (double) (1000L * 1000L * 1000L)) {
-            number = this.nano / (double) (1000L * 1000L);
+        } else if (this.nano < 1000L * 1000L * 1000L) {
+            number = this.nano / (1000L * 1000L);
             title = "ms";
-        } else if (this.nano < (double) (1000L * 1000L * 1000L * 60L)) {
-            number = this.nano / (double) (1000L * 1000L * 1000L);
+        } else if (this.nano < 1000L * 1000L * 1000L * 60L) {
+            number = this.nano / (1000L * 1000L * 1000L);
             title = "s";
         } else {
-            number = this.nano / (double) (1000L * 1000L * 1000L * 60L);
+            number = this.nano / (1000L * 1000L * 1000L * 60L);
             title = "min";
         }
         final String format;

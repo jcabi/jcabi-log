@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link ConversionPattern}.
  * @since 0.19
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
 final class ConversionPatternTest {
     /**
      * Control Sequence Indicator.

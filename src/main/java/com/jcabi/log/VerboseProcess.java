@@ -37,7 +37,7 @@ import java.util.logging.Level;
  *
  * @since 0.5
  */
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class VerboseProcess implements Closeable {
 
     /**
@@ -102,7 +102,6 @@ public final class VerboseProcess implements Closeable {
      * @param stderr Log level for stderr
      * @since 0.11
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public VerboseProcess(final Process prc, final Level stdout,
         final Level stderr) {
         if (prc == null) {
@@ -255,7 +254,7 @@ public final class VerboseProcess implements Closeable {
      * @param check TRUE if we should check for non-zero exit code
      * @return Full {@code stdout} of the process
      */
-    @SuppressWarnings("PMD.PrematureDeclaration")
+    @SuppressWarnings("PMD.UnnecessaryLocalRule")
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
         final VerboseProcess.Result result;

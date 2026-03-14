@@ -64,7 +64,7 @@ final class PreFormatter {
      * @return The list of arguments
      */
     public Object[] getArguments() {
-        return this.arguments.toArray(new Object[this.arguments.size()]);
+        return this.arguments.toArray(new Object[0]);
     }
 
     /**
@@ -73,7 +73,6 @@ final class PreFormatter {
      * @param args The list of arguments
      * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
-    @SuppressWarnings("PMD.ConfusingTernary")
     private void process(final CharSequence fmt, final Object... args) {
         this.arguments = new CopyOnWriteArrayList<>();
         final StringBuffer buf = new StringBuffer(fmt.length());
@@ -99,7 +98,6 @@ final class PreFormatter {
      * @param buf The string buffer
      * @return The result position
      */
-    @SuppressWarnings("PMD.ConfusingTernary")
     private int getPos(final Object[] args, final Matcher matcher, final StringBuffer buf) {
         int pos = 0;
         while (matcher.find()) {

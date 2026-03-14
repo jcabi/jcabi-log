@@ -49,7 +49,7 @@ class ConversionPattern {
         final Matcher matcher = ConversionPattern.METAS.matcher(
             remaining
         );
-        final StringBuffer buf = new StringBuffer(0);
+        final StringBuffer buf = new StringBuffer(64);
         while (matcher.find()) {
             final int argstart = matcher.end();
             final int argend = findArgumentEnd(remaining, argstart);

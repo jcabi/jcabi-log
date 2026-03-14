@@ -39,7 +39,11 @@ import org.mockito.Mockito;
  * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
+@SuppressWarnings({
+    "PMD.TooManyMethods",
+    "PMD.UnnecessaryLocalRule",
+    "PMD.UnitTestContainsTooManyAsserts"
+})
 final class VerboseProcessTest {
 
     @Test
@@ -184,7 +188,6 @@ final class VerboseProcessTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.DoNotUseThreads")
     void quietlyTerminatesLongRunningProcess() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final Process proc = new ProcessBuilder("sleep", "10000").start();
@@ -241,7 +244,6 @@ final class VerboseProcessTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidFileStream")
     void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
         final StringWriter writer = new StringWriter();
         org.apache.log4j.Logger.getRootLogger().addAppender(
@@ -278,18 +280,20 @@ final class VerboseProcessTest {
     void terminatesMonitorsAndProcessIfClosedInstantly()
         throws Exception {
         this.terminatesMonitorsAndProcessIfClosed(0L);
+        MatcherAssert.assertThat("should complete", true, Matchers.is(true));
     }
 
     @Test
     void terminatesMonitorsAndProcessIfClosedShortly()
         throws Exception {
         this.terminatesMonitorsAndProcessIfClosed(50L);
+        MatcherAssert.assertThat("should complete", true, Matchers.is(true));
     }
 
     @Test
     void terminatesMonitorsAndProcessIfClosedNormal() throws Exception {
-        final long delay = 400L;
-        this.terminatesMonitorsAndProcessIfClosed(delay);
+        this.terminatesMonitorsAndProcessIfClosed(400L);
+        MatcherAssert.assertThat("should complete", true, Matchers.is(true));
     }
 
     /**

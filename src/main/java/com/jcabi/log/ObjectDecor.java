@@ -40,9 +40,9 @@ final class ObjectDecor implements Formattable {
                 new ObjectDecor.ArrayFormatAction((Object[]) this.object).run()
             );
         } else {
-            final String output =
-                new ObjectDecor.ObjectContentsFormatAction(this.object).run();
-            formatter.format(output);
+            formatter.format(
+                new ObjectDecor.ObjectContentsFormatAction(this.object).run()
+            );
         }
     }
 
@@ -67,12 +67,12 @@ final class ObjectDecor implements Formattable {
         }
 
         @Override
-        @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+        @SuppressWarnings("PMD.UnnecessaryLocalRule")
         public String run() {
             final StringBuilder builder = new StringBuilder("[");
-            try (Formatter formatter = new Formatter(builder)) {
+            try (Formatter fmt = new Formatter(builder)) {
                 for (final Object obj : this.array) {
-                    new ObjectDecor(obj).formatTo(formatter, 0, 0, 0);
+                    new ObjectDecor(obj).formatTo(fmt, 0, 0, 0);
                     // @checkstyle MultipleStringLiteralsCheck (1 line)
                     builder.append(", ");
                 }

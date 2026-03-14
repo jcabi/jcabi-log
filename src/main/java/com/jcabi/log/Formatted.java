@@ -8,6 +8,7 @@ package com.jcabi.log;
  * Contract for a class that know how to format something.
  * @since 0.18
  */
+@FunctionalInterface
 interface Formatted {
 
     /**

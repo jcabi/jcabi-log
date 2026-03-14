@@ -76,17 +76,14 @@ final class FileDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
-            new Object[][] {
-                {null, "NULL", 0, 0, 0},
-                {"foo.txt", "foo.txt", 0, 0, 0},
-                {".", "./", 0, 0, 0},
-                {"/tmp", "/tmp", 0, 0, 0},
-                {new File("/tmp/x.txt"), "/tmp/x.txt", 0, 0, 0},
-                {Paths.get("/a/b/c.txt"), "/a/b/c.txt", 0, 0, 0},
-            }
+            new Object[] {null, "NULL", 0, 0, 0},
+            new Object[] {"foo.txt", "foo.txt", 0, 0, 0},
+            new Object[] {".", "./", 0, 0, 0},
+            new Object[] {"/tmp", "/tmp", 0, 0, 0},
+            new Object[] {new File("/tmp/x.txt"), "/tmp/x.txt", 0, 0, 0},
+            new Object[] {Paths.get("/a/b/c.txt"), "/a/b/c.txt", 0, 0, 0}
         );
     }
 }
