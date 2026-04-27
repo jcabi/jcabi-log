@@ -188,5 +188,4 @@ final class SupplierLoggerTest {
         logger.setLevel(level);
         return logger;
     }
-
 }

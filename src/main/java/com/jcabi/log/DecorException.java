@@ -6,7 +6,6 @@ package com.jcabi.log;
 
 /**
  * Exception if some problem with decor.
- *
  * @since 0.1
  */
 final class DecorException extends Exception {
@@ -17,23 +16,33 @@ final class DecorException extends Exception {
     private static final long serialVersionUID = 0x7526FA78EEDAC465L;
 
     /**
-     * Public ctor.
+     * Private ctor used by the factory methods.
+     * @param message Pre-formatted message
      * @param cause Cause of it
-     * @param format The message
-     * @param args Optional arguments
      */
-    DecorException(final Throwable cause, final String format,
-        final Object... args) {
-        super(String.format(format, args), cause);
+    private DecorException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 
     /**
-     * Public ctor.
-     * @param format The message
+     * Build an exception with a formatted message.
+     * @param format The message format
      * @param args Optional arguments
+     * @return New exception
      */
-    DecorException(final String format,  final Object... args) {
-        super(String.format(format, args));
+    static DecorException create(final String format, final Object... args) {
+        return new DecorException(String.format(format, args), null);
     }
 
+    /**
+     * Build an exception with a formatted message and a cause.
+     * @param cause Cause of it
+     * @param format The message format
+     * @param args Optional arguments
+     * @return New exception
+     */
+    static DecorException create(final Throwable cause, final String format,
+        final Object... args) {
+        return new DecorException(String.format(format, args), cause);
+    }
 }

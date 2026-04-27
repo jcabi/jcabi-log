@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Manager of all decors.
- *
  * @since 0.1
  */
 final class DecorsManager {
@@ -51,29 +50,28 @@ final class DecorsManager {
      * @return The decor
      * @throws DecorException If some problem
      */
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Formattable decor(final String key, final Object arg)
+    static Formattable decor(final String key, final Object arg)
         throws DecorException {
         final Class<? extends Formattable> type = DecorsManager.find(key);
         final Formattable decor;
         try {
             decor = (Formattable) DecorsManager.ctor(type).newInstance(arg);
         } catch (final InstantiationException ex) {
-            throw new DecorException(
+            throw DecorException.create(
                 ex,
                 "Can't instantiate %s(%s)",
                 type.getName(),
                 arg.getClass().getName()
             );
         } catch (final IllegalAccessException ex) {
-            throw new DecorException(
+            throw DecorException.create(
                 ex,
                 "Can't access %s(%s)",
                 type.getName(),
                 arg.getClass().getName()
             );
         } catch (final InvocationTargetException ex) {
-            throw new DecorException(
+            throw DecorException.create(
                 ex,
                 "Can't invoke %s(%s)",
                 type.getName(),
@@ -99,7 +97,7 @@ final class DecorsManager {
             try {
                 type = (Class<Formattable>) Class.forName(key);
             } catch (final ClassNotFoundException ex) {
-                throw new DecorException(
+                throw DecorException.create(
                     ex,
                     "Decor '%s' not found and class can't be instantiated",
                     key
@@ -119,7 +117,7 @@ final class DecorsManager {
         throws DecorException {
         final Constructor<?>[] ctors = type.getDeclaredConstructors();
         if (ctors.length != 1) {
-            throw new DecorException(
+            throw DecorException.create(
                 "%s should have just one one-arg ctor, but there are %d",
                 type.getName(),
                 ctors.length
@@ -127,12 +125,11 @@ final class DecorsManager {
         }
         final Constructor<?> ctor = ctors[0];
         if (ctor.getParameterTypes().length != 1) {
-            throw new DecorException(
+            throw DecorException.create(
                 "%s public ctor should have just once parameter",
                 type.getName()
             );
         }
         return ctor;
     }
-
 }

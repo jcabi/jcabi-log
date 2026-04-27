@@ -12,7 +12,6 @@ import java.util.Formatter;
 
 /**
  * Decorates File.
- *
  * @since 0.1
  */
 final class FileDecor implements Formattable {
@@ -57,5 +56,4 @@ final class FileDecor implements Formattable {
         }
         formatter.format("%s", writer);
     }
-
 }

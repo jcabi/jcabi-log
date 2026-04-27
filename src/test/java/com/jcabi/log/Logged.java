@@ -9,7 +9,6 @@ import java.util.FormattableFlags;
 
 /**
  * Logs decor.
- *
  * @since 0.1
  */
 public final class Logged {
@@ -72,5 +71,4 @@ public final class Logged {
         }
         return Logger.format(format.toString(), this.decor);
     }
-
 }

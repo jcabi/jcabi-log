@@ -89,7 +89,22 @@ public final class VerboseProcess implements Closeable {
      * @param builder Process builder to work with
      */
     public VerboseProcess(final ProcessBuilder builder) {
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(VerboseProcess.start(builder));
+    }
+
+    /**
+     * Public ctor, with a given process and logging levels for {@code stdout}
+     * and {@code stderr}.
+     * @param bdr Process builder to execute and monitor
+     * @param stdout Log level for stdout
+     * @param stderr Log level for stderr
+     * @since 0.12
+     */
+    public VerboseProcess(final ProcessBuilder bdr, final Level stdout,
+        final Level stderr) {
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
+        this(VerboseProcess.start(bdr), stdout, stderr);
     }
 
     /**
@@ -113,12 +128,12 @@ public final class VerboseProcess implements Closeable {
         if (stderr == null) {
             throw new IllegalArgumentException("stderr LEVEL can't be NULL");
         }
-        if (Level.ALL.equals(stdout)) {
+        if (stdout == Level.ALL) {
             throw new IllegalArgumentException(
                 "stdout LEVEL can't be set to ALL because it is intended only for internal configuration"
             );
         }
-        if (Level.ALL.equals(stderr)) {
+        if (stderr == Level.ALL) {
             throw new IllegalArgumentException(
                 "stderr LEVEL can't be set to ALL because it is intended only for internal configuration"
             );
@@ -127,19 +142,6 @@ public final class VerboseProcess implements Closeable {
         this.olevel = stdout;
         this.elevel = stderr;
         this.monitors = new Thread[VerboseProcess.N_MONITORS];
-    }
-
-    /**
-     * Public ctor, with a given process and logging levels for {@code stdout}
-     * and {@code stderr}.
-     * @param bdr Process builder to execute and monitor
-     * @param stdout Log level for stdout
-     * @param stderr Log level for stderr
-     * @since 0.12
-     */
-    public VerboseProcess(final ProcessBuilder bdr, final Level stdout,
-        final Level stderr) {
-        this(VerboseProcess.start(bdr), stdout, stderr);
     }
 
     /**
@@ -360,10 +362,10 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Stream monitor.
-     *
      * @since 0.1
      */
     private static final class Monitor implements Callable<Void> {
+
         /**
          * Stream to read.
          */
@@ -450,7 +452,6 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Class representing the result of a process.
-     *
      * @since 0.1
      */
     public static final class Result {
@@ -472,9 +473,9 @@ public final class VerboseProcess implements Closeable {
 
         /**
          * Result class constructor.
-         * @param code The exit code.
-         * @param stdout The {@code stdout} from the process.
-         * @param stderr The {@code stderr} from the process.
+         * @param code The exit code
+         * @param stdout The {@code stdout} from the process
+         * @param stderr The {@code stderr} from the process
          */
         Result(final int code, final String stdout, final String stderr) {
             this.exit = code;

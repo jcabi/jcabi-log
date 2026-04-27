@@ -48,11 +48,11 @@ final class ObjectDecor implements Formattable {
 
     /**
      * {@link PrivilegedAction} for obtaining array contents.
-     *
      * @since 0.1
      */
     private static final class ArrayFormatAction
-        implements PrivilegedAction<String>  {
+        implements PrivilegedAction<String> {
+
         /**
          * Array to format.
          */
@@ -63,11 +63,11 @@ final class ObjectDecor implements Formattable {
          * @param arr Array to format
          */
         ArrayFormatAction(final Object... arr) {
+            // @checkstyle ConstructorsCodeFreeCheck (1 line)
             this.array = Arrays.copyOf(arr, arr.length);
         }
 
         @Override
-        @SuppressWarnings("PMD.UnnecessaryLocalRule")
         public String run() {
             final StringBuilder builder = new StringBuilder("[");
             try (Formatter fmt = new Formatter(builder)) {
@@ -84,11 +84,11 @@ final class ObjectDecor implements Formattable {
 
     /**
      * {@link PrivilegedAction} for obtaining object contents.
-     *
      * @since 0.1
      */
     private static final class ObjectContentsFormatAction
         implements PrivilegedAction<String> {
+
         /**
          * Object to format.
          */

@@ -31,5 +31,4 @@ final class DecorsManagerTest {
             () -> DecorsManager.decor("non-existing-formatter", null)
         );
     }
-
 }

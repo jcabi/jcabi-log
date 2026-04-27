@@ -26,16 +26,15 @@ final class ListDecor implements Formattable {
      * @throws DecorException If some problem with it
      */
     ListDecor(final Object obj) throws DecorException {
+        // @checkstyle ConstructorsCodeFreeCheck (10 lines)
         if (obj == null || obj instanceof Collection) {
             this.list = Collection.class.cast(obj);
         } else if (obj instanceof Object[]) {
             this.list = Arrays.asList((Object[]) obj);
         } else {
-            throw new DecorException(
-                String.format(
-                    "Collection or array required, while %s provided",
-                    obj.getClass().getName()
-                )
+            throw DecorException.create(
+                "Collection or array required, while %s provided",
+                obj.getClass().getName()
             );
         }
     }
@@ -61,5 +60,4 @@ final class ListDecor implements Formattable {
         builder.append(']');
         formatter.format("%s", builder);
     }
-
 }

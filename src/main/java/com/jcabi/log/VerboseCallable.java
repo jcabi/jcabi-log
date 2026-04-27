@@ -62,7 +62,7 @@ public final class VerboseCallable<T> implements Callable<T> {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #call()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      */
     public VerboseCallable(final Callable<T> callable, final boolean swallow) {
         this(callable, swallow, true);
@@ -75,7 +75,7 @@ public final class VerboseCallable<T> implements Callable<T> {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #call()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      * @param vrbs Shall we report the entire
      *  stacktrace of the exception
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
@@ -107,7 +107,7 @@ public final class VerboseCallable<T> implements Callable<T> {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #call()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      */
     public VerboseCallable(final Runnable runnable, final boolean swallow) {
         this(runnable, swallow, true);
@@ -120,7 +120,7 @@ public final class VerboseCallable<T> implements Callable<T> {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #call()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      * @param vrbs Shall we report the entire
      *  stacktrace of the exception
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
@@ -194,5 +194,4 @@ public final class VerboseCallable<T> implements Callable<T> {
         }
         return tail;
     }
-
 }

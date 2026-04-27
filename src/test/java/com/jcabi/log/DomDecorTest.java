@@ -15,7 +15,6 @@ import org.w3c.dom.Document;
 
 /**
  * Test case for {@link DomDecor}.
- *
  * @since 0.1
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
@@ -45,5 +44,4 @@ final class DomDecorTest {
         }
         Mockito.verify(dest).append("NULL");
     }
-
 }

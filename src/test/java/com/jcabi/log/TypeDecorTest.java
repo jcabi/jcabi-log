@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link TypeDecor}.
- *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -50,9 +49,9 @@ final class TypeDecorTest {
      */
     private static Collection<Object[]> params() {
         return Arrays.asList(
-            new Object[] {"testing", "java.lang.String", 0, 0, 0},
+            new Object[] {"testing", String.class.getName(), 0, 0, 0},
             new Object[] {null, "NULL", 0, 0, 0},
-            new Object[] {1.0d, "java.lang.Double", 0, 0, 0}
+            new Object[] {1.0d, Double.class.getName(), 0, 0, 0}
         );
     }
 }

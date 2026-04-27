@@ -27,5 +27,4 @@ public class ControlSequenceIndicatorFormatted implements Formatted {
     public final String format() {
         return String.format(this.pattern, "\u001b\\[");
     }
-
 }

@@ -4,6 +4,7 @@
  */
 package com.jcabi.log;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -14,16 +15,24 @@ import java.util.concurrent.ConcurrentMap;
 public class Colors {
 
     /**
-     * Colors with names.
+     * Default color name to ANSI code mapping.
      */
-    private final transient ConcurrentMap<String, String> map;
+    private static final Map<String, String> DEFAULTS = Map.ofEntries(
+        Map.entry("black", "30"),
+        Map.entry("blue", "34"),
+        Map.entry("cyan", "36"),
+        Map.entry("green", "32"),
+        Map.entry("magenta", "35"),
+        Map.entry("red", "31"),
+        Map.entry("yellow", "33"),
+        Map.entry("white", "37")
+    );
 
     /**
-     * Public ctor.
+     * Colors with names.
      */
-    public Colors() {
-        this.map = Colors.colorMap();
-    }
+    private final transient ConcurrentMap<String, String> map =
+        new ConcurrentHashMap<>(Colors.DEFAULTS);
 
     /**
      * Add color to color map.
@@ -54,23 +63,5 @@ public class Colors {
             ansi = meta;
         }
         return ansi;
-    }
-
-    /**
-     * Color map.
-     * @return Map of colors
-     */
-    private static ConcurrentMap<String, String> colorMap() {
-        final ConcurrentMap<String, String> map =
-            new ConcurrentHashMap<>(0);
-        map.put("black", "30");
-        map.put("blue", "34");
-        map.put("cyan", "36");
-        map.put("green", "32");
-        map.put("magenta", "35");
-        map.put("red", "31");
-        map.put("yellow", "33");
-        map.put("white", "37");
-        return map;
     }
 }
