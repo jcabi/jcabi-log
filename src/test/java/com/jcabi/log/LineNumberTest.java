@@ -30,7 +30,7 @@ final class LineNumberTest {
 
     @Test
     @SuppressWarnings("PMD.UnnecessaryLocalRule")
-    void testLineNumber() throws Exception {
+    void rendersLineNumber() throws Exception {
         final PatternLayout layout = new PatternLayout();
         layout.setConversionPattern(LineNumberTest.CONV_PATTERN);
         final org.apache.log4j.Logger root = LogManager.getRootLogger();

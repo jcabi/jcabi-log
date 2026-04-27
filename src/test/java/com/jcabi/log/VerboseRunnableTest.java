@@ -151,5 +151,4 @@ final class VerboseRunnableTest {
             }
         }
     }
-
 }

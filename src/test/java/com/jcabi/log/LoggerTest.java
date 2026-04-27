@@ -4,7 +4,6 @@
  */
 package com.jcabi.log;
 
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
@@ -56,10 +55,15 @@ final class LoggerTest {
     @Test
     void providesOutputStream() throws Exception {
         try (
-            OutputStream stream = Logger.stream(Level.INFO, this);
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(stream, "UTF-8"))
+            PrintWriter writer = new PrintWriter(
+                new OutputStreamWriter(Logger.stream(Level.INFO, this), "UTF-8")
+            )
         ) {
-            writer.print("hello, \u20ac, how're\u040a?\nI'm fine, \u0000\u0007!\n");
+            writer.print(
+                String.format(
+                    "hello, \u20ac, how're\u040a?%nI'm fine, \u0000\u0007!%n"
+                )
+            );
             writer.flush();
         }
         MatcherAssert.assertThat("should provide output stream", true, Matchers.is(true));
@@ -116,5 +120,4 @@ final class LoggerTest {
             )
         );
     }
-
 }

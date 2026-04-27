@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link ObjectDecor}.
- *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -77,10 +76,10 @@ final class ObjectDecorTest {
 
     /**
      * Test class for displaying object contents.
-     *
      * @since 0.1
      */
     private static final class Foo {
+
         /**
          * The number.
          */
@@ -103,5 +102,4 @@ final class ObjectDecorTest {
             this.name = nme;
         }
     }
-
 }

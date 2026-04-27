@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
  */
 @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
 final class ConversionPatternTest {
+
     /**
      * Control Sequence Indicator.
      */
@@ -25,7 +26,7 @@ final class ConversionPatternTest {
     private static final Colors COLORS = new Colors();
 
     @Test
-    void testGenerateNoReplacement() {
+    void generatesNoReplacement() {
         MatcherAssert.assertThat(
             "should be empty",
             convert(""),
@@ -54,7 +55,7 @@ final class ConversionPatternTest {
     }
 
     @Test
-    void testGenerateEmpty() {
+    void generatesEmpty() {
         MatcherAssert.assertThat(
             "should generate empty",
             convert("%color{}"),
@@ -63,7 +64,7 @@ final class ConversionPatternTest {
     }
 
     @Test
-    void testGenerateSimple() {
+    void generatesSimple() {
         MatcherAssert.assertThat(
             "should generate simple",
             convert("%color{Hello World}"),
@@ -84,7 +85,7 @@ final class ConversionPatternTest {
     }
 
     @Test
-    void testGenerateCurlyBraces() {
+    void generatesCurlyBraces() {
         MatcherAssert.assertThat(
             "should generate curly braced",
             ConversionPatternTest.convert("%color{%c{1}}"),
@@ -130,8 +131,8 @@ final class ConversionPatternTest {
 
     /**
      * Wraps the given string in the expected ANSI color sequence.
-     * @param str Input string to wrap.
-     * @return Wrapped string.
+     * @param str Input string to wrap
+     * @return Wrapped string
      */
     private static String colorWrap(final String str) {
         return String.format(

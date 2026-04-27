@@ -44,7 +44,7 @@ class ConversionPattern {
      * Generates the conversion pattern.
      * @return Conversion pattern
      */
-    public String generate() {
+    String generate() {
         String remaining = this.pattern;
         final Matcher matcher = ConversionPattern.METAS.matcher(
             remaining
@@ -73,7 +73,7 @@ class ConversionPattern {
     /**
      * Find the matching closing curly brace while keeping any nested curly
      * brace pairs balanced.
-     * @param pattern Pattern to find the match in.
+     * @param pattern Pattern to find the match in
      * @param start Index of first character after the opening curly brace
      * @return Index of the closing curly brace, or -1 if not found
      */
@@ -105,5 +105,4 @@ class ConversionPattern {
     private static String csi() {
         return new ControlSequenceIndicatorFormatted("%s").format();
     }
-
 }

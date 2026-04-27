@@ -49,5 +49,4 @@ final class ExceptionDecorTest {
         }
         Mockito.verify(dest).append("NULL");
     }
-
 }

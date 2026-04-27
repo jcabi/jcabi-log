@@ -47,7 +47,7 @@ final class NanoDecorTest {
     }
 
     @Test
-    void testPrintsNullRight() {
+    void printsNullRight() {
         MatcherAssert.assertThat(
             "should prints null right",
             new Logged(new NanoDecor(null), 0, 0, 0),
@@ -81,5 +81,4 @@ final class NanoDecorTest {
             new Object[] {342_000_004_004_004L, "5700min", 0, 0, 0}
         );
     }
-
 }

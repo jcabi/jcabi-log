@@ -23,7 +23,7 @@ final class TextDecor implements Formattable {
     /**
      * Maximum length to show.
      */
-    public static final int MAX = 100;
+    static final int MAX = 100;
 
     /**
      * The object.
@@ -69,7 +69,6 @@ final class TextDecor implements Formattable {
             );
             result = output.toString();
         }
-        return result.replace("\n", "\\n");
+        return result.replace(String.format("%n"), "\\n");
     }
-
 }

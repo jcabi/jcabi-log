@@ -24,7 +24,6 @@ class ParseableInformation {
      * @param cont Content to be parsed
      */
     ParseableInformation(final String cont) {
-        super();
         this.content = cont;
     }
 
@@ -32,7 +31,7 @@ class ParseableInformation {
      * Parse the information.
      * @return A {@link Map} with a key,value pair os strings
      */
-    public final Map<String, String> information() {
+    final Map<String, String> information() {
         final Map<String, String> parsed = new HashMap<>(0);
         try {
             for (final String item : this.items()) {
@@ -41,12 +40,11 @@ class ParseableInformation {
             }
         } catch (final ArrayIndexOutOfBoundsException ex) {
             throw new IllegalStateException(
-                String.format(new StringBuilder(0)
-                    .append("Information is not using the pattern ")
-                    .append("KEY1:VALUE,KEY2:VALUE %s")
-                    .toString(),
+                String.format(
+                    "Information is not using the pattern KEY1:VALUE,KEY2:VALUE %s",
                     this.content
-                ), ex
+                ),
+                ex
             );
         }
         return parsed;

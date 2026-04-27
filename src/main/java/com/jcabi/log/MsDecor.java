@@ -33,6 +33,7 @@ final class MsDecor implements Formattable {
      * @param msec The interval in milliseconds
      */
     MsDecor(final Long msec) {
+        // @checkstyle ConstructorsCodeFreeCheck (5 lines)
         if (msec == null) {
             this.millis = null;
         } else {
@@ -101,5 +102,4 @@ final class MsDecor implements Formattable {
         }
         return String.format(format, number, title);
     }
-
 }

@@ -33,6 +33,7 @@ final class NanoDecor implements Formattable {
      * @param nan The interval in nanoseconds
      */
     NanoDecor(final Long nan) {
+        // @checkstyle ConstructorsCodeFreeCheck (5 lines)
         if (nan == null) {
             this.nano = null;
         } else {
@@ -98,5 +99,4 @@ final class NanoDecor implements Formattable {
         }
         return String.format(format, number, title);
     }
-
 }

@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 /**
  * Processor of formatting string and arguments, before sending it to
  * {@link String#format(String,Object[])}.
- *
  * @since 0.1
  */
 final class PreFormatter {
@@ -34,50 +33,34 @@ final class PreFormatter {
     /**
      * The formatting string.
      */
-    private transient String format;
+    private final transient String format;
 
     /**
      * List of arguments.
      */
-    private transient List<Object> arguments;
+    private final transient List<Object> arguments;
 
     /**
-     * Public ctor.
+     * Private ctor.
+     * @param fmt The pre-computed format string
+     * @param args The pre-computed argument list
+     */
+    private PreFormatter(final String fmt, final List<Object> args) {
+        this.format = fmt;
+        this.arguments = args;
+    }
+
+    /**
+     * Build a {@link PreFormatter} for the given format string and arguments.
      * @param fmt The formatting string
      * @param args The list of arguments
+     * @return Newly built pre-formatter
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
-    PreFormatter(final String fmt, final Object... args) {
-        this.process(fmt, args);
-    }
-
-    /**
-     * Get new formatting string.
-     * @return The formatting text
-     */
-    public String getFormat() {
-        return this.format;
-    }
-
-    /**
-     * Get new list of arguments.
-     * @return The list of arguments
-     */
-    public Object[] getArguments() {
-        return this.arguments.toArray(new Object[0]);
-    }
-
-    /**
-     * Process the data provided.
-     * @param fmt The formatting string
-     * @param args The list of arguments
-     * @checkstyle ExecutableStatementCountCheck (100 lines)
-     */
-    private void process(final CharSequence fmt, final Object... args) {
-        this.arguments = new CopyOnWriteArrayList<>();
+    static PreFormatter create(final String fmt, final Object... args) {
+        final List<Object> result = new CopyOnWriteArrayList<>();
         final StringBuffer buf = new StringBuffer(fmt.length());
         final Matcher matcher = PreFormatter.PATTERN.matcher(fmt);
-        final int pos = this.getPos(args, matcher, buf);
+        final int pos = PreFormatter.getPos(args, matcher, buf, result);
         if (pos < args.length) {
             throw new IllegalArgumentException(
                 String.format(
@@ -88,17 +71,37 @@ final class PreFormatter {
             );
         }
         matcher.appendTail(buf);
-        this.format = buf.toString();
+        return new PreFormatter(buf.toString(), result);
     }
 
     /**
-     * Get the position.
+     * Get new formatting string.
+     * @return The formatting text
+     */
+    String getFormat() {
+        return this.format;
+    }
+
+    /**
+     * Get new list of arguments.
+     * @return The list of arguments
+     */
+    Object[] getArguments() {
+        return this.arguments.toArray(new Object[0]);
+    }
+
+    /**
+     * Build the position-based replacement state for the given format and args.
      * @param args The list of arguments
      * @param matcher The matcher that finds matches
      * @param buf The string buffer
+     * @param into Destination list to fill with arguments
      * @return The result position
+     * @checkstyle ExecutableStatementCountCheck (100 lines)
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
-    private int getPos(final Object[] args, final Matcher matcher, final StringBuffer buf) {
+    private static int getPos(final Object[] args, final Matcher matcher,
+        final StringBuffer buf, final List<Object> into) {
         int pos = 0;
         while (matcher.find()) {
             final String group = matcher.group();
@@ -117,7 +120,7 @@ final class PreFormatter {
                     matcher.appendReplacement(
                         buf, Matcher.quoteReplacement(group)
                     );
-                    this.arguments.add(args[pos]);
+                    into.add(args[pos]);
                 } else {
                     matcher.appendReplacement(
                         buf,
@@ -126,13 +129,9 @@ final class PreFormatter {
                         )
                     );
                     try {
-                        this.arguments.add(
-                            DecorsManager.decor(decor, args[pos])
-                        );
+                        into.add(DecorsManager.decor(decor, args[pos]));
                     } catch (final DecorException ex) {
-                        this.arguments.add(
-                            String.format("[%s]", ex.getMessage())
-                        );
+                        into.add(String.format("[%s]", ex.getMessage()));
                     }
                 }
                 ++pos;
@@ -140,5 +139,4 @@ final class PreFormatter {
         }
         return pos;
     }
-
 }

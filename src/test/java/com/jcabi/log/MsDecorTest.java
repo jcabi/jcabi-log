@@ -16,7 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link MsDecor}.
- *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -47,7 +46,7 @@ final class MsDecorTest {
     }
 
     @Test
-    void testPrintsNullRight() {
+    void printsNullRight() {
         MatcherAssert.assertThat(
             "should prints null right",
             new Logged(new MsDecor(null), 0, 0, 0),

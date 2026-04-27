@@ -30,5 +30,4 @@ class DullyFormatted implements Formatted {
             ""
         );
     }
-
 }

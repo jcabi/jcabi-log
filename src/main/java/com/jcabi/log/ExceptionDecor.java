@@ -57,5 +57,4 @@ final class ExceptionDecor implements Formattable {
         }
         formatter.format("%s", text);
     }
-
 }
