@@ -16,5 +16,4 @@ interface Formatted {
      * @return Formatted version of something
      */
     String format();
-
 }

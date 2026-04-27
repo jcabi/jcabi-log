@@ -16,7 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link SizeDecor}.
- *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -47,7 +46,7 @@ final class SizeDecorTest {
     }
 
     @Test
-    void testPrintsNullRight() {
+    void printsNullRight() {
         MatcherAssert.assertThat(
             "should prints null right",
             new Logged(new SizeDecor(null), 0, 0, 0),
@@ -75,5 +74,4 @@ final class SizeDecorTest {
             new Object[] {3L * 1024L * 1024L * 1024L * 1024L * 1024L * 1024L, "3Eb", 0, 0, 0}
         );
     }
-
 }

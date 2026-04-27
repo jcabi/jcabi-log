@@ -24,6 +24,7 @@ final class SecretDecor implements Formattable {
      * @param scrt The secret
      */
     SecretDecor(final Object scrt) {
+        // @checkstyle ConstructorsCodeFreeCheck (5 lines)
         if (scrt == null) {
             this.secret = null;
         } else {
@@ -78,5 +79,4 @@ final class SecretDecor implements Formattable {
         }
         return out.toString();
     }
-
 }

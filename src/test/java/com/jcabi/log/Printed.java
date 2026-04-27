@@ -10,7 +10,6 @@ import java.util.Formatter;
 
 /**
  * Prints decor.
- *
  * @since 0.1
  */
 public final class Printed {
@@ -60,5 +59,4 @@ public final class Printed {
         fmt.flush();
         return baos.toString();
     }
-
 }

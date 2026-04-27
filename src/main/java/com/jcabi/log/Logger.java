@@ -93,7 +93,7 @@ public final class Logger {
         if (args.length == 0) {
             result = fmt;
         } else {
-            final PreFormatter pre = new PreFormatter(fmt, args);
+            final PreFormatter pre = PreFormatter.create(fmt, args);
             result = String.format(pre.getFormat(), pre.getArguments());
         }
         return result;
@@ -472,5 +472,4 @@ public final class Logger {
         }
         return logger;
     }
-
 }

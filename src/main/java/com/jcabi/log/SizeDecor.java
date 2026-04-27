@@ -97,5 +97,4 @@ final class SizeDecor implements Formattable {
         }
         return String.format(format, number, SizeDecor.SUFFIXES.get(power));
     }
-
 }

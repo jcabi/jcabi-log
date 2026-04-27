@@ -10,7 +10,7 @@ package com.jcabi.log;
  * @since 0.18
  * @checkstyle HideUtilityClassConstructorCheck (500 lines)
  */
-@SuppressWarnings({ "PMD.ProhibitPublicStaticMethods", "PMD.UseUtilityClass" })
+@SuppressWarnings("PMD.UseUtilityClass")
 final class SupplierLogger {
 
     /**
@@ -20,7 +20,7 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public static void trace(
+    static void trace(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isTraceEnabled(source)) {
             Logger.traceForced(source, msg, SupplierLogger.supplied(args));
@@ -34,7 +34,7 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public static void debug(
+    static void debug(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isDebugEnabled(source)) {
             Logger.debugForced(source, msg, SupplierLogger.supplied(args));
@@ -48,7 +48,7 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public static void info(
+    static void info(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isInfoEnabled(source)) {
             Logger.infoForced(source, msg, SupplierLogger.supplied(args));
@@ -62,7 +62,7 @@ final class SupplierLogger {
      * @param args List of {@link Supplier} arguments. Objects are going
      *  to be extracted from them and used for log message interpolation
      */
-    public static void warn(
+    static void warn(
         final Object source, final String msg, final Supplier<?>... args) {
         if (Logger.isWarnEnabled(source)) {
             Logger.warnForced(source, msg, SupplierLogger.supplied(args));

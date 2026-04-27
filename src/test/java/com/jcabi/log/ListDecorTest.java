@@ -7,6 +7,7 @@ package com.jcabi.log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Locale;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -15,7 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link ListDecor}.
- *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -59,7 +59,7 @@ final class ListDecorTest {
             new Object[] {new Object[] {"b", "c"}, "[\"b\", \"c\"]", 0, 0, 0},
             new Object[] {new Object[] {"foo", 2L}, "[\"foo\", \"2\"]", 0, 0, 0},
             new Object[] {new ArrayList<String>(0), "[]", 0, 0, 0},
-            new Object[] {Arrays.asList("x"), "[\"x\"]", 0, 0, 0},
+            new Object[] {Collections.singletonList("x"), "[\"x\"]", 0, 0, 0},
             new Object[] {Arrays.asList(1L, 2L), "[\"1\", \"2\"]", 0, 0, 0}
         );
     }

@@ -45,5 +45,4 @@ final class TypeDecor implements Formattable {
             formatter.format("%s", this.object.getClass().getName());
         }
     }
-
 }

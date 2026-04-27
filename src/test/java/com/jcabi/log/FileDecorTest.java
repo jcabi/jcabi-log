@@ -20,7 +20,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link FileDecor}.
- *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */

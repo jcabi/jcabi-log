@@ -70,5 +70,4 @@ final class VerboseThreadsTest {
         }
         MatcherAssert.assertThat("should log", true, Matchers.is(true));
     }
-
 }

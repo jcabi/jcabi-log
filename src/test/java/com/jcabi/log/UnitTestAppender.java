@@ -16,7 +16,7 @@ import org.apache.log4j.WriterAppender;
  * have log4j in the classpath anyway, for {@link MulticolorLayout}.
  * @since 0.18
  */
-final class UnitTestAppender extends WriterAppender {
+public final class UnitTestAppender extends WriterAppender {
 
     /**
      * OutputStream where this Appender writes.
@@ -24,20 +24,23 @@ final class UnitTestAppender extends WriterAppender {
     private final transient ByteArrayOutputStream logs;
 
     /**
+     * The appender's name.
+     */
+    private final transient String label;
+
+    /**
      * Ctor.
      * @param name The appender's name
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     UnitTestAppender(final String name) {
         super();
-        this.setName(name);
+        this.label = name;
         this.logs = new ByteArrayOutputStream();
     }
 
-    /**
-     * Prepares the appender for use.
-     */
+    @Override
     public void activateOptions() {
+        super.setName(this.label);
         this.setWriter(this.createWriter(this.logs));
         this.setLayout(new PatternLayout("%d %c{1} - %m%n"));
         super.activateOptions();
@@ -50,5 +53,4 @@ final class UnitTestAppender extends WriterAppender {
     public String output() {
         return new String(this.logs.toByteArray(), StandardCharsets.UTF_8);
     }
-
 }

@@ -20,5 +20,4 @@ public interface Supplier<T> {
      * @return A result
      */
     T get();
-
 }
