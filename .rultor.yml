@@ -21,4 +21,4 @@ release:
     git commit -am "${tag}"
     export MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
     mvn clean deploy -ntp -Pqulice,sonatype,jcabi -B -e -s ../settings.xml
-    mvn clean site-deploy -Psite -B -e -s ../settings.xml
+    mvn -ntp clean site-deploy -Psite -B -e -s ../settings.xml
