@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link PreFormatter}.
  * @since 0.1
  */
+@SuppressWarnings({"PMD.UnitTestContainsTooManyAsserts", "PMD.UnnecessaryLocalRule"})
 final class PreFormatterTest {
 
     /**
@@ -19,7 +20,7 @@ final class PreFormatterTest {
      */
     @Test
     void decoratesArguments() {
-        final PreFormatter pre = new PreFormatter(
+        final PreFormatter pre = PreFormatter.create(
             "%[com.jcabi.log.DecorMocker]-5.2f and %1$+.6f",
             1.0d
         );
@@ -41,7 +42,7 @@ final class PreFormatterTest {
     @Test
     void formatsEvenWithMissedDecors() {
         final PreFormatter pre =
-            new PreFormatter("ouch: %[missed]s", "test");
+            PreFormatter.create("ouch: %[missed]s", "test");
         MatcherAssert.assertThat(
             "should equal to 'ouch: %s'",
             pre.getFormat(),
@@ -60,7 +61,7 @@ final class PreFormatterTest {
     @Test
     void formatsWithDirectlyProvidedDecors() {
         final DecorMocker decor = new DecorMocker("a");
-        final PreFormatter pre = new PreFormatter("test: %s", decor);
+        final PreFormatter pre = PreFormatter.create("test: %s", decor);
         MatcherAssert.assertThat(
             "should equal to decor 'a'",
             pre.getArguments()[0],
@@ -75,7 +76,7 @@ final class PreFormatterTest {
     void handleNewLineSpecifier() {
         final String fmt = "%s%n%s";
         final Object[] args = {"new", "line"};
-        final PreFormatter pre = new PreFormatter(fmt, args);
+        final PreFormatter pre = PreFormatter.create(fmt, args);
         MatcherAssert.assertThat(
             "should equal to '%s%n%s'",
             pre.getFormat(),
@@ -95,7 +96,7 @@ final class PreFormatterTest {
     void handlePercentSpecifier() {
         final String fmt = "%s%%";
         final Object[] args = {"percent: "};
-        final PreFormatter pre = new PreFormatter(fmt, args);
+        final PreFormatter pre = PreFormatter.create(fmt, args);
         MatcherAssert.assertThat(
             "should equal to '%s%%'",
             pre.getFormat(),
@@ -107,5 +108,4 @@ final class PreFormatterTest {
             Matchers.is(args)
         );
     }
-
 }

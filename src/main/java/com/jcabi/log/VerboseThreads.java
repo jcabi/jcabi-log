@@ -54,7 +54,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @see VerboseRunnable
  * @since 0.1.2
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseThreads implements ThreadFactory {
 
     /**
@@ -100,6 +99,7 @@ public final class VerboseThreads implements ThreadFactory {
      * @param type Prefix will be build from this type name
      */
     public VerboseThreads(final Object type) {
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(type.getClass().getSimpleName(), true, 1);
     }
 
@@ -109,6 +109,7 @@ public final class VerboseThreads implements ThreadFactory {
      * @param type Prefix will be build from this type name
      */
     public VerboseThreads(final Class<?> type) {
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(type.getSimpleName(), true, 1);
     }
 
@@ -145,10 +146,10 @@ public final class VerboseThreads implements ThreadFactory {
 
     /**
      * Runnable decorator.
-     *
      * @since 0.1
      */
     private static final class Wrap implements Runnable {
+
         /**
          * Origin runnable.
          */
@@ -188,5 +189,4 @@ public final class VerboseThreads implements ThreadFactory {
             }
         }
     }
-
 }

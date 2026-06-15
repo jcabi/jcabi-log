@@ -28,7 +28,6 @@ import java.util.concurrent.Callable;
  * @since 0.1.3
  * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
-@SuppressWarnings("PMD.DoNotUseThreads")
 public final class VerboseRunnable implements Runnable {
 
     /**
@@ -70,7 +69,7 @@ public final class VerboseRunnable implements Runnable {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      * @since 0.1.10
      */
     public VerboseRunnable(final Callable<?> callable, final boolean swallow) {
@@ -84,7 +83,7 @@ public final class VerboseRunnable implements Runnable {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      * @param vrbs Shall we report the entire
      *  stacktrace of the exception
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
@@ -125,7 +124,7 @@ public final class VerboseRunnable implements Runnable {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      * @since 0.1.4
      */
     public VerboseRunnable(final Runnable runnable, final boolean swallow) {
@@ -139,13 +138,12 @@ public final class VerboseRunnable implements Runnable {
      *  ({@code TRUE}) or re-throw
      *  ({@code FALSE})? Exception swallowing means that {@link #run()}
      *  will never throw any exceptions (in any case all exceptions are logged
-     *  using {@link Logger}.
+     *  using {@link Logger}
      * @param vrbs Shall we report the entire
      *  stacktrace of the exception
      *  ({@code TRUE}) or just its message in one line ({@code FALSE})
      * @since 0.7.17
      */
-    @SuppressWarnings("PMD.BooleanInversion")
     public VerboseRunnable(final Runnable runnable,
         final boolean swallow, final boolean vrbs) {
         this.origin = runnable;
@@ -204,5 +202,4 @@ public final class VerboseRunnable implements Runnable {
         }
         return tail;
     }
-
 }

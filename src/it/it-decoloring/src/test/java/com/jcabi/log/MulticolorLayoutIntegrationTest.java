@@ -19,6 +19,7 @@ import org.mockito.Mockito;
  * by multiple threads at once)
  * @since 0.1
  */
+@SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")
 final class MulticolorLayoutIntegrationTest {
     /**
      * Conversation pattern for test case.

@@ -17,7 +17,6 @@ import org.w3c.dom.Node;
 
 /**
  * Decorates XML Document.
- *
  * @since 0.1
  */
 final class DomDecor implements Formattable {
@@ -38,14 +37,12 @@ final class DomDecor implements Formattable {
      * @param doc The document
      * @throws DecorException If some problem with it
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     DomDecor(final Object doc) throws DecorException {
+        // @checkstyle ConstructorsCodeFreeCheck (5 lines)
         if (doc != null && !(doc instanceof Node)) {
-            throw new DecorException(
-                String.format(
-                    "Instance of org.w3c.dom.Node required, while %s provided",
-                    doc.getClass().getName()
-                )
+            throw DecorException.create(
+                "Instance of org.w3c.dom.Node required, while %s provided",
+                doc.getClass().getName()
             );
         }
         this.node = (Node) doc;
@@ -73,5 +70,4 @@ final class DomDecor implements Formattable {
         }
         formatter.format("%s", writer);
     }
-
 }

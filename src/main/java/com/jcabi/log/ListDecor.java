@@ -25,18 +25,16 @@ final class ListDecor implements Formattable {
      * @param obj The object to format
      * @throws DecorException If some problem with it
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     ListDecor(final Object obj) throws DecorException {
+        // @checkstyle ConstructorsCodeFreeCheck (10 lines)
         if (obj == null || obj instanceof Collection) {
             this.list = Collection.class.cast(obj);
         } else if (obj instanceof Object[]) {
             this.list = Arrays.asList((Object[]) obj);
         } else {
-            throw new DecorException(
-                String.format(
-                    "Collection or array required, while %s provided",
-                    obj.getClass().getName()
-                )
+            throw DecorException.create(
+                "Collection or array required, while %s provided",
+                obj.getClass().getName()
             );
         }
     }
@@ -45,7 +43,7 @@ final class ListDecor implements Formattable {
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
-        final StringBuilder builder = new StringBuilder(0);
+        final StringBuilder builder = new StringBuilder(16);
         builder.append('[');
         if (this.list == null) {
             builder.append("NULL");
@@ -62,5 +60,4 @@ final class ListDecor implements Formattable {
         builder.append(']');
         formatter.format("%s", builder);
     }
-
 }

@@ -91,9 +91,9 @@ public final class Logger {
     public static String format(final String fmt, final Object... args) {
         final String result;
         if (args.length == 0) {
-            result = fmt;
+            result = Logger.expandNoArgSpecifiers(fmt);
         } else {
-            final PreFormatter pre = new PreFormatter(fmt, args);
+            final PreFormatter pre = PreFormatter.create(fmt, args);
             result = String.format(pre.getFormat(), pre.getArguments());
         }
         return result;
@@ -428,6 +428,45 @@ public final class Logger {
     }
 
     /**
+     * Expand the no-argument format specifiers {@code %n} and {@code %%}
+     * in a single left-to-right pass, leaving every other character intact.
+     *
+     * <p>This is used by {@link #format(String, Object...)} when no
+     * variable arguments are supplied. Without it, a user-friendly call
+     * such as {@code Logger.info(this, "Hello %n")} would log the literal
+     * text {@code "Hello %n"} instead of a line break, because the
+     * "no args" shortcut bypasses {@link String#format(String, Object[])}.
+     *
+     * @param fmt The format string
+     * @return The string with {@code %n} replaced by the system line
+     *  separator and {@code %%} replaced by a single {@code %}
+     */
+    private static String expandNoArgSpecifiers(final String fmt) {
+        final int length = fmt.length();
+        final StringBuilder out = new StringBuilder(length);
+        int idx = 0;
+        while (idx < length) {
+            final char chr = fmt.charAt(idx);
+            if (chr == '%' && idx + 1 < length) {
+                final char next = fmt.charAt(idx + 1);
+                if (next == 'n') {
+                    out.append(System.lineSeparator());
+                    idx += 2;
+                    continue;
+                }
+                if (next == '%') {
+                    out.append('%');
+                    idx += 2;
+                    continue;
+                }
+            }
+            out.append(chr);
+            idx += 1;
+        }
+        return out.toString();
+    }
+
+    /**
      * Set final static field in order to fix the %L log4j parameter.
      * @param field Field
      * @param value New value
@@ -462,14 +501,14 @@ public final class Logger {
         if ("org.slf4j.impl.Log4jLoggerAdapter"
             .equals(logger.getClass().getName())) {
             try {
-                final Field fqcn = logger.getClass()
-                    .getDeclaredField("FQCN");
-                setFinalStatic(fqcn, Logger.class.getName());
+                setFinalStatic(
+                    logger.getClass().getDeclaredField("FQCN"),
+                    Logger.class.getName()
+                );
             } catch (final NoSuchFieldException | IllegalAccessException ex) {
                 throw new IllegalStateException(ex);
             }
         }
         return logger;
     }
-
 }

@@ -23,6 +23,7 @@ public final class DecorMocker implements Formattable {
      * @param txt The text to output
      */
     public DecorMocker(final Object txt) {
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this.text = txt.toString();
     }
 
@@ -40,5 +41,4 @@ public final class DecorMocker implements Formattable {
             )
         );
     }
-
 }

@@ -23,13 +23,8 @@ final class SecretDecor implements Formattable {
      * Public ctor.
      * @param scrt The secret
      */
-    @SuppressWarnings(
-        {
-            "PMD.NullAssignment",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-        }
-    )
     SecretDecor(final Object scrt) {
+        // @checkstyle ConstructorsCodeFreeCheck (5 lines)
         if (scrt == null) {
             this.secret = null;
         } else {
@@ -84,5 +79,4 @@ final class SecretDecor implements Formattable {
         }
         return out.toString();
     }
-
 }

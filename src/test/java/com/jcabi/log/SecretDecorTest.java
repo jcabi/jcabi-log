@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link SecretDecor}.
- *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -49,15 +48,12 @@ final class SecretDecorTest {
      * Params for this parametrized test.
      * @return Array of arrays of params for ctor
      */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Collection<Object[]> params() {
         return Arrays.asList(
-            new Object[][] {
-                {"testing", "t***g", 0, 0, 0},
-                {"ouch", "o***h  ", FormattableFlags.LEFT_JUSTIFY, 7, 5},
-                {"x", " X***X", FormattableFlags.UPPERCASE, 6, 0},
-                {null, "NULL", FormattableFlags.UPPERCASE, 6, 0},
-            }
+            new Object[] {"testing", "t***g", 0, 0, 0},
+            new Object[] {"ouch", "o***h  ", FormattableFlags.LEFT_JUSTIFY, 7, 5},
+            new Object[] {"x", " X***X", FormattableFlags.UPPERCASE, 6, 0},
+            new Object[] {null, "NULL", FormattableFlags.UPPERCASE, 6, 0}
         );
     }
 }

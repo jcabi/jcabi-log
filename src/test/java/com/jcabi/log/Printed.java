@@ -10,7 +10,6 @@ import java.util.Formatter;
 
 /**
  * Prints decor.
- *
  * @since 0.1
  */
 public final class Printed {
@@ -52,6 +51,7 @@ public final class Printed {
     }
 
     @Override
+    @SuppressWarnings("PMD.RelianceOnDefaultCharset")
     public String toString() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final Formatter fmt = new Formatter(baos);
@@ -59,5 +59,4 @@ public final class Printed {
         fmt.flush();
         return baos.toString();
     }
-
 }

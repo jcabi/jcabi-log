@@ -32,13 +32,8 @@ final class MsDecor implements Formattable {
      * Public ctor.
      * @param msec The interval in milliseconds
      */
-    @SuppressWarnings(
-        {
-            "PMD.NullAssignment",
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors"
-        }
-    )
     MsDecor(final Long msec) {
+        // @checkstyle ConstructorsCodeFreeCheck (5 lines)
         if (msec == null) {
             this.millis = null;
         } else {
@@ -53,7 +48,7 @@ final class MsDecor implements Formattable {
         if (this.millis == null) {
             formatter.format("NULL");
         } else {
-            final StringBuilder format = new StringBuilder(0);
+            final StringBuilder format = new StringBuilder(16);
             format.append('%');
             if ((flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
                 .LEFT_JUSTIFY) {
@@ -83,20 +78,20 @@ final class MsDecor implements Formattable {
         if (this.millis < 1000.0) {
             number = this.millis;
             title = "ms";
-        } else if (this.millis < (double) (1000L * 60L)) {
+        } else if (this.millis < 1000L * 60L) {
             number = this.millis / 1000.0;
             title = "s";
-        } else if (this.millis < (double) (1000L * 60L * 60L)) {
-            number = this.millis / (double) (1000L * 60L);
+        } else if (this.millis < 1000L * 60L * 60L) {
+            number = this.millis / (1000L * 60L);
             title = "min";
-        } else if (this.millis < (double) (1000L * 60L * 60L * 24L)) {
-            number = this.millis / (double) (1000L * 60L * 60L);
+        } else if (this.millis < 1000L * 60L * 60L * 24L) {
+            number = this.millis / (1000L * 60L * 60L);
             title = "hr";
-        } else if (this.millis < (double) (1000L * 60L * 60L * 24L * 30L)) {
-            number = this.millis / (double) (1000L * 60L * 60L * 24L);
+        } else if (this.millis < 1000L * 60L * 60L * 24L * 30L) {
+            number = this.millis / (1000L * 60L * 60L * 24L);
             title = "days";
         } else {
-            number = this.millis / (double) (1000L * 60L * 60L * 24L * 30L);
+            number = this.millis / (1000L * 60L * 60L * 24L * 30L);
             title = "mon";
         }
         final String format;
@@ -107,5 +102,4 @@ final class MsDecor implements Formattable {
         }
         return String.format(format, number, title);
     }
-
 }

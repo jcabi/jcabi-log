@@ -9,7 +9,6 @@ import java.util.FormattableFlags;
 
 /**
  * Logs decor.
- *
  * @since 0.1
  */
 public final class Logged {
@@ -52,7 +51,7 @@ public final class Logged {
 
     @Override
     public String toString() {
-        final StringBuilder format = new StringBuilder(0);
+        final StringBuilder format = new StringBuilder(16);
         format.append('%');
         if ((this.flags & FormattableFlags.LEFT_JUSTIFY) == FormattableFlags
             .LEFT_JUSTIFY) {
@@ -72,5 +71,4 @@ public final class Logged {
         }
         return Logger.format(format.toString(), this.decor);
     }
-
 }

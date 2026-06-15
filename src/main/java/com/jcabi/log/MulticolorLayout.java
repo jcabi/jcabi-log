@@ -46,12 +46,12 @@ import org.apache.log4j.spi.LoggingEvent;
  *  &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
  *  &lt;artifactId&gt;jcabi-log&lt;/artifactId&gt;
  * &lt;/dependency&gt;</pre>
+ *
  * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
  * @see <a href="http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html">PatternLayout from LOG4J</a>
  * @see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How to use with Maven</a>
  * @since 0.1.10
  */
-@SuppressWarnings("PMD.NonStaticInitializer")
 public final class MulticolorLayout extends EnhancedPatternLayout {
 
     /**
@@ -87,11 +87,9 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Allow to overwrite or specify new ANSI color names
      * in a javascript map like format.
-     *
      * @param cols JavaScript like map of color names
      * @since 0.9
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setColors(final String cols) {
         final Map<String, String> parsed = new ParseableInformation(
             cols
@@ -110,7 +108,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * @param lev JavaScript like map of levels
      * @since 0.9
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
     public void setLevels(final String lev) {
         final Map<String, String> parsed = new ParseableLevelInformation(
             lev
@@ -170,12 +167,11 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
 
     /**
      * Should the logged text be colored or not.
-     * @return True if the coloring is enabled, or false otherwise.
+     * @return True if the coloring is enabled, or false otherwise
      */
     private static boolean isColoringEnabled() {
         return !"false".equals(
             System.getProperty(MulticolorLayout.COLORING_PROPERTY)
         );
     }
-
 }

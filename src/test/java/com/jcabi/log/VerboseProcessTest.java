@@ -30,7 +30,6 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link VerboseProcess}.
- *
  * @since 0.1
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
  *  sure how to fix them, but they should be fixed. They fail on some
@@ -39,16 +38,20 @@ import org.mockito.Mockito;
  * @checkstyle MultipleStringLiterals (500 lines)
  * @checkstyle ClassDataAbstractionCoupling (200 lines)
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
+@SuppressWarnings({
+    "PMD.TooManyMethods",
+    "PMD.UnnecessaryLocalRule",
+    "PMD.UnitTestContainsTooManyAsserts"
+})
 final class VerboseProcessTest {
 
     @Test
     @Disabled
     void runsACommandLineScript() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        try (VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("echo", "hey \u20ac!").redirectErrorStream(true)
-        )) {
+        final ProcessBuilder builder = new ProcessBuilder("echo", "hey \u20ac!")
+            .redirectErrorStream(true);
+        try (VerboseProcess process = new VerboseProcess(builder)) {
             MatcherAssert.assertThat(
                 "should contains string '\u20ac!'",
                 process.stdout(),
@@ -61,12 +64,11 @@ final class VerboseProcessTest {
     @Disabled
     void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        try (VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder(
-                "/bin/bash", "-c",
-                "echo -n \u0442\u0435\u0441\u0442 | hexdump"
-            )
-        )) {
+        final ProcessBuilder builder = new ProcessBuilder(
+            "/bin/bash", "-c",
+            "echo -n \u0442\u0435\u0441\u0442 | hexdump"
+        );
+        try (VerboseProcess process = new VerboseProcess(builder)) {
             MatcherAssert.assertThat(
                 "should contains string '0000000 d1 82 d0 b5 d1 81 d1 82'",
                 process.stdout(),
@@ -78,10 +80,10 @@ final class VerboseProcessTest {
     @Test
     void runsACommandLineScriptWithException() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        try (VerboseProcess process = new VerboseProcess(
+        final ProcessBuilder builder =
             new ProcessBuilder("cat", "/non-existing-file.txt")
-                .redirectErrorStream(true)
-        )) {
+                .redirectErrorStream(true);
+        try (VerboseProcess process = new VerboseProcess(builder)) {
             try {
                 process.stdout();
                 Assertions.fail("exception expected");
@@ -99,9 +101,10 @@ final class VerboseProcessTest {
     void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final VerboseProcess.Result result;
-        try (VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("cat", "/non-existing-file.txt")
-        )) {
+        final ProcessBuilder builder = new ProcessBuilder(
+            "cat", "/non-existing-file.txt"
+        );
+        try (VerboseProcess process = new VerboseProcess(builder)) {
             result = process.waitFor();
         }
         MatcherAssert.assertThat(
@@ -119,9 +122,10 @@ final class VerboseProcessTest {
     @Test
     void handlesLongRunningCommand() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        try (VerboseProcess process = new VerboseProcess(
-            new ProcessBuilder("/bin/bash", "-c", "sleep 2; echo 'done'")
-        )) {
+        final ProcessBuilder builder = new ProcessBuilder(
+            "/bin/bash", "-c", "sleep 2; echo 'done'"
+        );
+        try (VerboseProcess process = new VerboseProcess(builder)) {
             MatcherAssert.assertThat(
                 "should starts with 'done'",
                 process.stdout(),
@@ -184,7 +188,6 @@ final class VerboseProcessTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.DoNotUseThreads")
     void quietlyTerminatesLongRunningProcess() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final Process proc = new ProcessBuilder("sleep", "10000").start();
@@ -228,9 +231,11 @@ final class VerboseProcessTest {
                 "cat", String.format("/non-existing-file-%s ", message)
             );
         }
-        try (VerboseProcess process = new VerboseProcess(
-            builder, Level.OFF, Level.WARNING
-        )) {
+        try (
+            VerboseProcess process = new VerboseProcess(
+                builder, Level.OFF, Level.WARNING
+            )
+        ) {
             process.stdoutQuietly();
         }
         MatcherAssert.assertThat(
@@ -241,25 +246,25 @@ final class VerboseProcessTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidFileStream")
     void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
         final StringWriter writer = new StringWriter();
         org.apache.log4j.Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         final Process prc = Mockito.mock(Process.class);
-        try (Closeable stdout = Files.newInputStream(File.createTempFile("temp", "test")
-            .toPath()
-        )) {
+        final File temp = File.createTempFile("temp", "test");
+        try (Closeable stdout = Files.newInputStream(temp.toPath())) {
             Mockito.doReturn(stdout).when(prc).getInputStream();
         }
         Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
             .when(prc).getErrorStream();
-        try (VerboseProcess process = new VerboseProcess(
-            prc,
-            Level.FINEST,
-            Level.FINEST
-        )) {
+        try (
+            VerboseProcess process = new VerboseProcess(
+                prc,
+                Level.FINEST,
+                Level.FINEST
+            )
+        ) {
             Logger.debug(
                 this,
                 "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
@@ -275,21 +280,21 @@ final class VerboseProcessTest {
     }
 
     @Test
-    void terminatesMonitorsAndProcessIfClosedInstantly()
-        throws Exception {
+    void terminatesMonitorsAndProcessIfClosedInstantly() throws Exception {
         this.terminatesMonitorsAndProcessIfClosed(0L);
+        MatcherAssert.assertThat("should complete", true, Matchers.is(true));
     }
 
     @Test
-    void terminatesMonitorsAndProcessIfClosedShortly()
-        throws Exception {
+    void terminatesMonitorsAndProcessIfClosedShortly() throws Exception {
         this.terminatesMonitorsAndProcessIfClosed(50L);
+        MatcherAssert.assertThat("should complete", true, Matchers.is(true));
     }
 
     @Test
     void terminatesMonitorsAndProcessIfClosedNormal() throws Exception {
-        final long delay = 400L;
-        this.terminatesMonitorsAndProcessIfClosed(delay);
+        this.terminatesMonitorsAndProcessIfClosed(400L);
+        MatcherAssert.assertThat("should complete", true, Matchers.is(true));
     }
 
     /**
@@ -302,17 +307,21 @@ final class VerboseProcessTest {
      */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
-        try (InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
-            InputStream error = new VerboseProcessTest.InfiniteInputStream('e')) {
+        try (
+            InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
+            InputStream error = new VerboseProcessTest.InfiniteInputStream('e')
+        ) {
             final Process prc = Mockito.mock(Process.class);
             Mockito.doReturn(input).when(prc).getInputStream();
             Mockito.doReturn(error).when(prc).getErrorStream();
             final StringWriter writer;
-            try (VerboseProcess process = new VerboseProcess(
-                prc,
-                Level.FINEST,
-                Level.FINEST
-            )) {
+            try (
+                VerboseProcess process = new VerboseProcess(
+                    prc,
+                    Level.FINEST,
+                    Level.FINEST
+                )
+            ) {
                 Logger.debug(
                     this,
                     "terminatesMntrsAndPrcssIfClosed delay=%d vrbPrc.hashCode=%s",
@@ -324,7 +333,9 @@ final class VerboseProcessTest {
                     new SimpleLayout(),
                     writer
                 );
-                appender.addFilter(new VrbPrcMonitorFilter(process));
+                appender.addFilter(
+                    new VerboseProcessTest.VrbPrcMonitorFilter(process)
+                );
                 org.apache.log4j.Logger.getLogger(
                     VerboseProcess.class
                 ).addAppender(appender);
@@ -350,10 +361,10 @@ final class VerboseProcessTest {
 
     /**
      * {@link InputStream} returning endless flow of characters.
-     *
      * @since 0.1
      */
     private final class InfiniteInputStream extends InputStream {
+
         /**
          * End of line.
          */
@@ -415,6 +426,7 @@ final class VerboseProcessTest {
      * @since 0.1
      */
     private final class VrbPrcMonitorFilter extends Filter {
+
         /**
          * Monitor's log message start.
          */
@@ -429,10 +441,12 @@ final class VerboseProcessTest {
          * Create filter for this process.
          *
          * <p>The messages from its monitor threads will be filtered in.
+         *
          * @param prc Process
          */
         VrbPrcMonitorFilter(final VerboseProcess prc) {
             super();
+            // @checkstyle ConstructorsCodeFreeCheck (1 line)
             this.hash = prc.hashCode();
         }
 
@@ -440,9 +454,10 @@ final class VerboseProcessTest {
         public int decide(final LoggingEvent event) {
             final String thread = event.getThreadName();
             final int decision;
-            if (thread.startsWith(VerboseProcessTest.VrbPrcMonitorFilter.THREADNAME_START
-                + this.hash
-            )) {
+            final String prefix =
+                VerboseProcessTest.VrbPrcMonitorFilter.THREADNAME_START
+                    + this.hash;
+            if (thread.startsWith(prefix)) {
                 decision = Filter.ACCEPT;
             } else {
                 decision = Filter.DENY;

@@ -37,7 +37,7 @@ import java.util.logging.Level;
  *
  * @since 0.5
  */
-@SuppressWarnings({ "PMD.DoNotUseThreads", "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class VerboseProcess implements Closeable {
 
     /**
@@ -89,45 +89,8 @@ public final class VerboseProcess implements Closeable {
      * @param builder Process builder to work with
      */
     public VerboseProcess(final ProcessBuilder builder) {
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(VerboseProcess.start(builder));
-    }
-
-    /**
-     * Public ctor, with a given process and logging levels for {@code stdout}
-     * and {@code stderr}. Neither {@code stdout} nor {@code stderr} cannot be
-     * set to {@link Level#ALL} because it is intended to be used only for
-     * internal configuration.
-     * @param prc Process to execute and monitor
-     * @param stdout Log level for stdout
-     * @param stderr Log level for stderr
-     * @since 0.11
-     */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
-    public VerboseProcess(final Process prc, final Level stdout,
-        final Level stderr) {
-        if (prc == null) {
-            throw new IllegalArgumentException("process can't be NULL");
-        }
-        if (stdout == null) {
-            throw new IllegalArgumentException("stdout LEVEL can't be NULL");
-        }
-        if (stderr == null) {
-            throw new IllegalArgumentException("stderr LEVEL can't be NULL");
-        }
-        if (Level.ALL.equals(stdout)) {
-            throw new IllegalArgumentException(
-                "stdout LEVEL can't be set to ALL because it is intended only for internal configuration"
-            );
-        }
-        if (Level.ALL.equals(stderr)) {
-            throw new IllegalArgumentException(
-                "stderr LEVEL can't be set to ALL because it is intended only for internal configuration"
-            );
-        }
-        this.process = prc;
-        this.olevel = stdout;
-        this.elevel = stderr;
-        this.monitors = new Thread[VerboseProcess.N_MONITORS];
     }
 
     /**
@@ -140,7 +103,45 @@ public final class VerboseProcess implements Closeable {
      */
     public VerboseProcess(final ProcessBuilder bdr, final Level stdout,
         final Level stderr) {
+        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(VerboseProcess.start(bdr), stdout, stderr);
+    }
+
+    /**
+     * Public ctor, with a given process and logging levels for {@code stdout}
+     * and {@code stderr}. Neither {@code stdout} nor {@code stderr} cannot be
+     * set to {@link Level#ALL} because it is intended to be used only for
+     * internal configuration.
+     * @param prc Process to execute and monitor
+     * @param stdout Log level for stdout
+     * @param stderr Log level for stderr
+     * @since 0.11
+     */
+    public VerboseProcess(final Process prc, final Level stdout,
+        final Level stderr) {
+        if (prc == null) {
+            throw new IllegalArgumentException("process can't be NULL");
+        }
+        if (stdout == null) {
+            throw new IllegalArgumentException("stdout LEVEL can't be NULL");
+        }
+        if (stderr == null) {
+            throw new IllegalArgumentException("stderr LEVEL can't be NULL");
+        }
+        if (stdout == Level.ALL) {
+            throw new IllegalArgumentException(
+                "stdout LEVEL can't be set to ALL because it is intended only for internal configuration"
+            );
+        }
+        if (stderr == Level.ALL) {
+            throw new IllegalArgumentException(
+                "stderr LEVEL can't be set to ALL because it is intended only for internal configuration"
+            );
+        }
+        this.process = prc;
+        this.olevel = stdout;
+        this.elevel = stderr;
+        this.monitors = new Thread[VerboseProcess.N_MONITORS];
     }
 
     /**
@@ -255,7 +256,7 @@ public final class VerboseProcess implements Closeable {
      * @param check TRUE if we should check for non-zero exit code
      * @return Full {@code stdout} of the process
      */
-    @SuppressWarnings("PMD.PrematureDeclaration")
+    @SuppressWarnings("PMD.UnnecessaryLocalRule")
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
         final VerboseProcess.Result result;
@@ -361,10 +362,10 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Stream monitor.
-     *
      * @since 0.1
      */
     private static final class Monitor implements Callable<Void> {
+
         /**
          * Stream to read.
          */
@@ -451,7 +452,6 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Class representing the result of a process.
-     *
      * @since 0.1
      */
     public static final class Result {
@@ -473,9 +473,9 @@ public final class VerboseProcess implements Closeable {
 
         /**
          * Result class constructor.
-         * @param code The exit code.
-         * @param stdout The {@code stdout} from the process.
-         * @param stderr The {@code stderr} from the process.
+         * @param code The exit code
+         * @param stdout The {@code stdout} from the process
+         * @param stderr The {@code stderr} from the process
          */
         Result(final int code, final String stdout, final String stderr) {
             this.exit = code;

@@ -14,7 +14,7 @@ import org.apache.log4j.Level;
  * some extra checks for {@code Level}s.
  * @since 0.18
  */
-class ParseableLevelInformation  {
+class ParseableLevelInformation {
 
     /**
      * Information content to be parsed.
@@ -33,8 +33,7 @@ class ParseableLevelInformation  {
      * Parse the level information.
      * @return A {@link Map} with key,value pair of strings
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
-    public final Map<String, String> information() {
+    final Map<String, String> information() {
         final Map<String, String> parsed = new ParseableInformation(
             this.content
         ).information();
@@ -50,5 +49,4 @@ class ParseableLevelInformation  {
         }
         return converted;
     }
-
 }

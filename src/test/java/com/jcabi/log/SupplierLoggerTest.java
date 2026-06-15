@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
  *  in multi-threading run. I don't know exactly how to fix them,
  *  but we need to fix and remove the "Ignore" annotations.
  */
-@SuppressWarnings("PMD.MoreThanOneLogger")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class SupplierLoggerTest {
 
     @Test
@@ -188,5 +188,4 @@ final class SupplierLoggerTest {
         logger.setLevel(level);
         return logger;
     }
-
 }

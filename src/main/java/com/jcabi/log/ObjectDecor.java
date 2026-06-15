@@ -40,19 +40,19 @@ final class ObjectDecor implements Formattable {
                 new ObjectDecor.ArrayFormatAction((Object[]) this.object).run()
             );
         } else {
-            final String output =
-                new ObjectDecor.ObjectContentsFormatAction(this.object).run();
-            formatter.format(output);
+            formatter.format(
+                new ObjectDecor.ObjectContentsFormatAction(this.object).run()
+            );
         }
     }
 
     /**
      * {@link PrivilegedAction} for obtaining array contents.
-     *
      * @since 0.1
      */
     private static final class ArrayFormatAction
-        implements PrivilegedAction<String>  {
+        implements PrivilegedAction<String> {
+
         /**
          * Array to format.
          */
@@ -63,16 +63,16 @@ final class ObjectDecor implements Formattable {
          * @param arr Array to format
          */
         ArrayFormatAction(final Object... arr) {
+            // @checkstyle ConstructorsCodeFreeCheck (1 line)
             this.array = Arrays.copyOf(arr, arr.length);
         }
 
         @Override
-        @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
         public String run() {
             final StringBuilder builder = new StringBuilder("[");
-            try (Formatter formatter = new Formatter(builder)) {
+            try (Formatter fmt = new Formatter(builder)) {
                 for (final Object obj : this.array) {
-                    new ObjectDecor(obj).formatTo(formatter, 0, 0, 0);
+                    new ObjectDecor(obj).formatTo(fmt, 0, 0, 0);
                     // @checkstyle MultipleStringLiteralsCheck (1 line)
                     builder.append(", ");
                 }
@@ -84,11 +84,11 @@ final class ObjectDecor implements Formattable {
 
     /**
      * {@link PrivilegedAction} for obtaining object contents.
-     *
      * @since 0.1
      */
     private static final class ObjectContentsFormatAction
         implements PrivilegedAction<String> {
+
         /**
          * Object to format.
          */
