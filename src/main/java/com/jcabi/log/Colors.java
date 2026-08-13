@@ -35,6 +35,13 @@ public class Colors {
         new ConcurrentHashMap<>(Colors.DEFAULTS);
 
     /**
+     * Public ctor.
+     */
+    public Colors() {
+        // nothing to initialize
+    }
+
+    /**
      * Add color to color map.
      * @param key Key to add
      * @param value Value to add

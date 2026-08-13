@@ -76,6 +76,13 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      */
     private final transient Colors colors = new Colors();
 
+    /**
+     * Public ctor.
+     */
+    public MulticolorLayout() {
+        // nothing to initialize
+    }
+
     @Override
     public void setConversionPattern(final String pattern) {
         this.base = pattern;

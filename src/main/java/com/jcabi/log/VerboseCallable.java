@@ -27,8 +27,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @param <T> Type of result
  * @see VerboseThreads
+ * @see <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  * @since 0.16
- * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
 public final class VerboseCallable<T> implements Callable<T> {
 

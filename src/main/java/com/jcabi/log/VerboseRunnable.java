@@ -25,8 +25,8 @@ import java.util.concurrent.Callable;
  * <p>This class is thread-safe.
  *
  * @see VerboseThreads
+ * @see <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  * @since 0.1.3
- * @link <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
  */
 public final class VerboseRunnable implements Runnable {
 
