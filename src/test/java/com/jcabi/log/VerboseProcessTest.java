@@ -251,26 +251,27 @@ final class VerboseProcessTest {
         org.apache.log4j.Logger.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
-        final Process prc = Mockito.mock(Process.class);
         final File temp = File.createTempFile("temp", "test");
-        try (Closeable stdout = Files.newInputStream(temp.toPath())) {
-            Mockito.doReturn(stdout).when(prc).getInputStream();
-        }
-        Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
-            .when(prc).getErrorStream();
-        try (
-            VerboseProcess process = new VerboseProcess(
-                prc,
-                Level.FINEST,
-                Level.FINEST
-            )
-        ) {
-            Logger.debug(
-                this,
-                "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
-                process.hashCode()
-            );
-            process.stdout();
+        try (Process prc = Mockito.mock(Process.class)) {
+            try (Closeable stdout = Files.newInputStream(temp.toPath())) {
+                Mockito.doReturn(stdout).when(prc).getInputStream();
+            }
+            Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
+                .when(prc).getErrorStream();
+            try (
+                VerboseProcess process = new VerboseProcess(
+                    prc,
+                    Level.FINEST,
+                    Level.FINEST
+                )
+            ) {
+                Logger.debug(
+                    this,
+                    "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
+                    process.hashCode()
+                );
+                process.stdout();
+            }
         }
         MatcherAssert.assertThat(
             "should contains 'Error reading from process stream'",
@@ -309,9 +310,9 @@ final class VerboseProcessTest {
         throws Exception {
         try (
             InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
-            InputStream error = new VerboseProcessTest.InfiniteInputStream('e')
+            InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
+            Process prc = Mockito.mock(Process.class)
         ) {
-            final Process prc = Mockito.mock(Process.class);
             Mockito.doReturn(input).when(prc).getInputStream();
             Mockito.doReturn(error).when(prc).getErrorStream();
             final StringWriter writer;

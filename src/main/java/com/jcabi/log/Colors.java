@@ -31,14 +31,13 @@ public class Colors {
     /**
      * Colors with names.
      */
-    private final transient ConcurrentMap<String, String> map =
-        new ConcurrentHashMap<>(Colors.DEFAULTS);
+    private final transient ConcurrentMap<String, String> map;
 
     /**
      * Public ctor.
      */
     public Colors() {
-        // nothing to initialize
+        this.map = new ConcurrentHashMap<>(Colors.DEFAULTS);
     }
 
     /**

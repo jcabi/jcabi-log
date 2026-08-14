@@ -60,10 +60,21 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     private static final String COLORING_PROPERTY = "com.jcabi.log.coloring";
 
     /**
+     * Default logging level to ANSI code mapping.
+     */
+    private static final Map<String, String> DEFAULTS = Map.ofEntries(
+        Map.entry(Level.TRACE.toString(), "2;33"),
+        Map.entry(Level.DEBUG.toString(), "2;37"),
+        Map.entry(Level.INFO.toString(), "0;37"),
+        Map.entry(Level.WARN.toString(), "0;33"),
+        Map.entry(Level.ERROR.toString(), "0;31"),
+        Map.entry(Level.FATAL.toString(), "0;35")
+    );
+
+    /**
      * Colors of levels.
      */
-    private final transient ConcurrentMap<String, String> levels =
-        MulticolorLayout.levelMap();
+    private final transient ConcurrentMap<String, String> levels;
 
     /**
      * Store original conversation pattern to be able
@@ -74,13 +85,14 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Color human readable data.
      */
-    private final transient Colors colors = new Colors();
+    private final transient Colors colors;
 
     /**
      * Public ctor.
      */
     public MulticolorLayout() {
-        // nothing to initialize
+        this.levels = new ConcurrentHashMap<>(MulticolorLayout.DEFAULTS);
+        this.colors = new Colors();
     }
 
     @Override
@@ -155,21 +167,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
             super.format(event),
             this.levels.get(event.getLevel().toString())
         );
-    }
-
-    /**
-     * Level map.
-     * @return Map of levels
-     */
-    private static ConcurrentMap<String, String> levelMap() {
-        final ConcurrentMap<String, String> map = new ConcurrentHashMap<>(0);
-        map.put(Level.TRACE.toString(), "2;33");
-        map.put(Level.DEBUG.toString(), "2;37");
-        map.put(Level.INFO.toString(), "0;37");
-        map.put(Level.WARN.toString(), "0;33");
-        map.put(Level.ERROR.toString(), "0;31");
-        map.put(Level.FATAL.toString(), "0;35");
-        return map;
     }
 
     /**
