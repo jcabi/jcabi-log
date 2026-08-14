@@ -7,6 +7,7 @@ package com.jcabi.log;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -113,7 +114,7 @@ final class VerboseRunnableTest {
         try {
             final AtomicReference<Thread> thread = new AtomicReference<>();
             final AtomicInteger runs = new AtomicInteger();
-            svc.scheduleWithFixedDelay(
+            final ScheduledFuture<?> future = svc.scheduleWithFixedDelay(
                 new VerboseRunnable(
                     () -> {
                         runs.addAndGet(1);
@@ -130,6 +131,7 @@ final class VerboseRunnableTest {
             while (thread.get() == null) {
                 TimeUnit.MILLISECONDS.sleep(1L);
             }
+            future.cancel(true);
             thread.get().interrupt();
             TimeUnit.SECONDS.sleep(1L);
             svc.shutdown();

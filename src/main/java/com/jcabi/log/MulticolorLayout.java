@@ -151,7 +151,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
      * Generate a dull {@code Formatted}.
      * @param event Event to be formatted
      * @return A {@link Formatted} to format the event
-     * @checkstyle NonStaticMethodCheck (10 lines)
      */
     private Formatted dullFormatting(final LoggingEvent event) {
         return new DullyFormatted(super.format(event));

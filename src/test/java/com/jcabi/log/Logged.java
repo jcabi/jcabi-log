@@ -39,7 +39,6 @@ public final class Logged {
      * @param flgs Flags
      * @param wdt Width
      * @param prcs Precision
-     * @checkstyle ParameterNumber (3 lines)
      */
     public Logged(final Formattable dcr,
         final int flgs, final int wdt, final int prcs) {

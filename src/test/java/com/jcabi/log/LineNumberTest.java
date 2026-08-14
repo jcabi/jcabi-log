@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for %L pattern.
- * If you change this class, you have to care about line number
- * in "com.jcabi.log.LineNumberTest:72"
+ * If you change {@link Logger}, you have to care about the line number
+ * in "com.jcabi.log.LineNumberTest:212"
  * @since 1.18
  */
 final class LineNumberTest {
@@ -29,7 +29,6 @@ final class LineNumberTest {
     private static final String CONV_PATTERN = "%c:%L";
 
     @Test
-    @SuppressWarnings("PMD.UnnecessaryLocalRule")
     void rendersLineNumber() throws Exception {
         final PatternLayout layout = new PatternLayout();
         layout.setConversionPattern(LineNumberTest.CONV_PATTERN);
@@ -43,10 +42,10 @@ final class LineNumberTest {
             Logger.info(this, "Test");
             TimeUnit.MILLISECONDS.sleep(1L);
             MatcherAssert.assertThat(
-                "should contains a 'com.jcabi.log.LineNumberTest:216'",
+                "should contains a 'com.jcabi.log.LineNumberTest:212'",
                 writer.toString(),
                 Matchers.containsString(
-                    "com.jcabi.log.LineNumberTest:216"
+                    "com.jcabi.log.LineNumberTest:212"
                 )
             );
         } finally {

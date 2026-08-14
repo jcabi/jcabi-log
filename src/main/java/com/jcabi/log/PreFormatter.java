@@ -97,8 +97,6 @@ final class PreFormatter {
      * @param buf The string buffer
      * @param into Destination list to fill with arguments
      * @return The result position
-     * @checkstyle ExecutableStatementCountCheck (100 lines)
-     * @checkstyle ParameterNumberCheck (5 lines)
      */
     private static int getPos(final Object[] args, final Matcher matcher,
         final StringBuffer buf, final List<Object> into) {

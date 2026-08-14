@@ -41,14 +41,15 @@ final class DomDecor implements Formattable {
         // @checkstyle ConstructorsCodeFreeCheck (5 lines)
         if (doc != null && !(doc instanceof Node)) {
             throw DecorException.create(
-                "Instance of org.w3c.dom.Node required, while %s provided",
-                doc.getClass().getName()
+                String.format(
+                    "Instance of org.w3c.dom.Node required, while %s provided",
+                    doc.getClass().getName()
+                )
             );
         }
         this.node = (Node) doc;
     }
 
-    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

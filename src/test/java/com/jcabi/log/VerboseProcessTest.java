@@ -35,11 +35,8 @@ import org.mockito.Mockito;
  *  sure how to fix them, but they should be fixed. They fail on some
  *  machines, while run perfectly on others. They also fail when being
  *  executed from IntelliJ.
- * @checkstyle MultipleStringLiterals (500 lines)
- * @checkstyle ClassDataAbstractionCoupling (200 lines)
  */
 @SuppressWarnings({
-    "PMD.TooManyMethods",
     "PMD.UnnecessaryLocalRule",
     "PMD.UnitTestContainsTooManyAsserts"
 })
@@ -49,13 +46,13 @@ final class VerboseProcessTest {
     @Disabled
     void runsACommandLineScript() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final ProcessBuilder builder = new ProcessBuilder("echo", "hey \u20ac!")
+        final ProcessBuilder builder = new ProcessBuilder("echo", "hey €!")
             .redirectErrorStream(true);
         try (VerboseProcess process = new VerboseProcess(builder)) {
             MatcherAssert.assertThat(
-                "should contains string '\u20ac!'",
+                "should contains string '€!'",
                 process.stdout(),
-                Matchers.containsString("\u20ac!")
+                Matchers.containsString("€!")
             );
         }
     }
@@ -66,7 +63,7 @@ final class VerboseProcessTest {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final ProcessBuilder builder = new ProcessBuilder(
             "/bin/bash", "-c",
-            "echo -n \u0442\u0435\u0441\u0442 | hexdump"
+            "echo -n тест | hexdump"
         );
         try (VerboseProcess process = new VerboseProcess(builder)) {
             MatcherAssert.assertThat(
@@ -252,26 +249,25 @@ final class VerboseProcessTest {
             new WriterAppender(new SimpleLayout(), writer)
         );
         final File temp = File.createTempFile("temp", "test");
-        try (Process prc = Mockito.mock(Process.class)) {
-            try (Closeable stdout = Files.newInputStream(temp.toPath())) {
-                Mockito.doReturn(stdout).when(prc).getInputStream();
-            }
-            Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
-                .when(prc).getErrorStream();
-            try (
-                VerboseProcess process = new VerboseProcess(
-                    prc,
-                    Level.FINEST,
-                    Level.FINEST
-                )
-            ) {
-                Logger.debug(
-                    this,
-                    "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
-                    process.hashCode()
-                );
-                process.stdout();
-            }
+        final Process prc = Mockito.mock(Process.class);
+        try (Closeable stdout = Files.newInputStream(temp.toPath())) {
+            Mockito.doReturn(stdout).when(prc).getInputStream();
+        }
+        Mockito.doReturn(new ByteArrayInputStream(new byte[0]))
+            .when(prc).getErrorStream();
+        try (
+            VerboseProcess process = new VerboseProcess(
+                prc,
+                Level.FINEST,
+                Level.FINEST
+            )
+        ) {
+            Logger.debug(
+                this,
+                "#logsErrorWhenUnderlyingStreamIsClosed(): vrbPrc.hashCode=%s",
+                process.hashCode()
+            );
+            process.stdout();
         }
         MatcherAssert.assertThat(
             "should contains 'Error reading from process stream'",
@@ -304,14 +300,13 @@ final class VerboseProcessTest {
      * @param delay Time in milliseconds between usage of vrbcPrc starts and
      *  its close() issued
      * @throws Exception If something goes wrong
-     * @checkstyle ExecutableStatementCountCheck (100 lines)
      */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
+        final Process prc = Mockito.mock(Process.class);
         try (
             InputStream input = new VerboseProcessTest.InfiniteInputStream('i');
-            InputStream error = new VerboseProcessTest.InfiniteInputStream('e');
-            Process prc = Mockito.mock(Process.class)
+            InputStream error = new VerboseProcessTest.InfiniteInputStream('e')
         ) {
             Mockito.doReturn(input).when(prc).getInputStream();
             Mockito.doReturn(error).when(prc).getErrorStream();
@@ -361,7 +356,7 @@ final class VerboseProcessTest {
      * {@link InputStream} returning endless flow of characters.
      * @since 0.1
      */
-    private final class InfiniteInputStream extends InputStream {
+    private static final class InfiniteInputStream extends InputStream {
 
         /**
          * End of line.
@@ -410,6 +405,17 @@ final class VerboseProcessTest {
         }
 
         @Override
+        public int read(final byte[] bytes, final int off, final int len)
+            throws IOException {
+            int done = 0;
+            while (done < len) {
+                bytes[off + done] = (byte) this.read();
+                ++done;
+            }
+            return done;
+        }
+
+        @Override
         public void close() {
             this.closed = true;
         }
@@ -423,7 +429,7 @@ final class VerboseProcessTest {
      *
      * @since 0.1
      */
-    private final class VrbPrcMonitorFilter extends Filter {
+    private static final class VrbPrcMonitorFilter extends Filter {
 
         /**
          * Monitor's log message start.

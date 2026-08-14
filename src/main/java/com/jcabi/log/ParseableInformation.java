@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Converts items inside a string like K1:V1,K2:V2 - where K is for key and V
@@ -13,6 +14,11 @@ import java.util.Map;
  * @since 0.18
  */
 class ParseableInformation {
+
+    /**
+     * Splits the content into items.
+     */
+    private static final Pattern SPLIT_ITEMS = Pattern.compile(",");
 
     /**
      * Information content to be parsed.
@@ -35,10 +41,12 @@ class ParseableInformation {
         final Map<String, String> parsed = new HashMap<>(0);
         try {
             for (final String item : this.items()) {
-                final String[] values = item.split(":");
-                parsed.put(values[0], values[1]);
+                final int split = item.indexOf(':');
+                parsed.put(
+                    item.substring(0, split), item.substring(split + 1)
+                );
             }
-        } catch (final ArrayIndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             throw new IllegalStateException(
                 String.format(
                     "Information is not using the pattern KEY1:VALUE,KEY2:VALUE %s",
@@ -56,6 +64,6 @@ class ParseableInformation {
      * @return An array of items
      */
     private String[] items() {
-        return this.content.split(",");
+        return ParseableInformation.SPLIT_ITEMS.split(this.content);
     }
 }

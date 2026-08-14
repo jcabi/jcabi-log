@@ -50,7 +50,6 @@ final class ListDecorTest {
      * @return Array of arrays of params for ctor
      */
     private static Collection<Object[]> params() {
-        // @checkstyle MultipleStringLiterals (10 lines)
         return Arrays.asList(
             new Object[] {null, "[NULL]", 0, 0, 0},
             new Object[] {new String[] {}, "[]", 0, 0, 0},
@@ -58,7 +57,7 @@ final class ListDecorTest {
             new Object[] {new Long[] {2L, 1L}, "[\"2\", \"1\"]", 0, 0, 0},
             new Object[] {new Object[] {"b", "c"}, "[\"b\", \"c\"]", 0, 0, 0},
             new Object[] {new Object[] {"foo", 2L}, "[\"foo\", \"2\"]", 0, 0, 0},
-            new Object[] {new ArrayList<String>(0), "[]", 0, 0, 0},
+            new Object[] {new ArrayList<>(0), "[]", 0, 0, 0},
             new Object[] {Collections.singletonList("x"), "[\"x\"]", 0, 0, 0},
             new Object[] {Arrays.asList(1L, 2L), "[\"1\", \"2\"]", 0, 0, 0}
         );

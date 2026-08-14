@@ -16,7 +16,7 @@ final class DecorException extends Exception {
     private static final long serialVersionUID = 0x7526FA78EEDAC465L;
 
     /**
-     * Private ctor used by the factory methods.
+     * Ctor.
      * @param message Pre-formatted message
      * @param cause Cause of it
      */
@@ -25,24 +25,21 @@ final class DecorException extends Exception {
     }
 
     /**
-     * Build an exception with a formatted message.
-     * @param format The message format
-     * @param args Optional arguments
+     * Build an exception without a cause.
+     * @param message Pre-formatted message
      * @return New exception
      */
-    static DecorException create(final String format, final Object... args) {
-        return new DecorException(String.format(format, args), null);
+    static DecorException create(final String message) {
+        return new DecorException(message, null);
     }
 
     /**
-     * Build an exception with a formatted message and a cause.
+     * Build an exception with a cause.
      * @param cause Cause of it
-     * @param format The message format
-     * @param args Optional arguments
+     * @param message Pre-formatted message
      * @return New exception
      */
-    static DecorException create(final Throwable cause, final String format,
-        final Object... args) {
-        return new DecorException(String.format(format, args), cause);
+    static DecorException create(final Throwable cause, final String message) {
+        return new DecorException(message, cause);
     }
 }

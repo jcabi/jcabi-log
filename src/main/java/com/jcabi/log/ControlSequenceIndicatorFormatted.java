@@ -25,6 +25,6 @@ public class ControlSequenceIndicatorFormatted implements Formatted {
 
     @Override
     public final String format() {
-        return String.format(this.pattern, "\u001b\\[");
+        return String.format(this.pattern, "\033\\[");
     }
 }

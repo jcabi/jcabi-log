@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import org.slf4j.LoggerFactory;
 
@@ -69,11 +70,6 @@ public final class Logger {
      * Empty array of objects.
      */
     private static final Object[] EMPTY = {};
-
-    /**
-     * UTF-8.
-     */
-    private static final String UTF_8 = "UTF-8";
 
     /**
      * This is utility class.
@@ -384,16 +380,16 @@ public final class Logger {
                 if (data == '\n') {
                     Logger.log(
                         level, source,
-                        this.buffer.toString(Logger.UTF_8)
+                        this.buffer.toString(StandardCharsets.UTF_8)
                     );
                     this.buffer.reset();
-                } else if (data >= 0x20 && data <= 0x7f) {
+                } else if (data >= 0x20 && data <= 0x7F) {
                     this.buffer.write(data);
                 } else {
                     this.buffer.write(
                         String.format(
-                            "\\x%02x", data & 0xff
-                        ).getBytes(Logger.UTF_8)
+                            "\\x%02x", data & 0xFF
+                        ).getBytes(StandardCharsets.UTF_8)
                     );
                 }
             }
@@ -405,7 +401,7 @@ public final class Logger {
      * It is more efficient to use method referencing because the method
      * won't be called unless the specified logging level is enabled.
      *
-     * This saves you the effort of having to check if the level is enabled
+     * <p>This saves you the effort of having to check if the level is enabled
      * before calling the logging method.
      * E.g.
      * <pre>
@@ -472,7 +468,6 @@ public final class Logger {
      * @param value New value
      * @throws NoSuchFieldException If some problem
      * @throws IllegalAccessException If some problem
-     * @checkstyle ThrowsCountCheck (4 lines)
      */
     @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
     private static void setFinalStatic(final Field field, final Object value)

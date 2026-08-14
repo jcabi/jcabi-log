@@ -29,7 +29,6 @@ final class ObjectDecor implements Formattable {
         this.object = obj;
     }
 
-    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
@@ -63,7 +62,6 @@ final class ObjectDecor implements Formattable {
          * @param arr Array to format
          */
         ArrayFormatAction(final Object... arr) {
-            // @checkstyle ConstructorsCodeFreeCheck (1 line)
             this.array = Arrays.copyOf(arr, arr.length);
         }
 
@@ -73,7 +71,6 @@ final class ObjectDecor implements Formattable {
             try (Formatter fmt = new Formatter(builder)) {
                 for (final Object obj : this.array) {
                     new ObjectDecor(obj).formatTo(fmt, 0, 0, 0);
-                    // @checkstyle MultipleStringLiteralsCheck (1 line)
                     builder.append(", ");
                 }
             }
@@ -119,7 +116,6 @@ final class ObjectDecor implements Formattable {
                 } catch (final IllegalAccessException ex) {
                     throw new IllegalStateException(ex);
                 }
-                // @checkstyle MultipleStringLiteralsCheck (1 line)
                 builder.append(", ");
             }
             builder.replace(builder.length() - 2, builder.length(), "}");

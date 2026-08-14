@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import org.apache.log4j.LogManager;
@@ -56,12 +57,14 @@ final class LoggerTest {
     void providesOutputStream() throws Exception {
         try (
             PrintWriter writer = new PrintWriter(
-                new OutputStreamWriter(Logger.stream(Level.INFO, this), "UTF-8")
+                new OutputStreamWriter(
+                    Logger.stream(Level.INFO, this), StandardCharsets.UTF_8
+                )
             )
         ) {
             writer.print(
                 String.format(
-                    "hello, \u20ac, how're\u040a?%nI'm fine, \u0000\u0007!%n"
+                    "hello, €, how'reЊ?%nI'm fine, \0\007!%n"
                 )
             );
             writer.flush();

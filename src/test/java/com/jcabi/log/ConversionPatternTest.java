@@ -18,7 +18,7 @@ final class ConversionPatternTest {
     /**
      * Control Sequence Indicator.
      */
-    private static final String CSI = "\u001b\\[";
+    private static final String CSI = "\033\\[";
 
     /**
      * Default color map for testing.

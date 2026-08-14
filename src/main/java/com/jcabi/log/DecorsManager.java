@@ -59,23 +59,29 @@ final class DecorsManager {
         } catch (final InstantiationException ex) {
             throw DecorException.create(
                 ex,
-                "Can't instantiate %s(%s)",
-                type.getName(),
-                arg.getClass().getName()
+                String.format(
+                    "Can't instantiate %s(%s)",
+                    type.getName(),
+                    arg.getClass().getName()
+                )
             );
         } catch (final IllegalAccessException ex) {
             throw DecorException.create(
                 ex,
-                "Can't access %s(%s)",
-                type.getName(),
-                arg.getClass().getName()
+                String.format(
+                    "Can't access %s(%s)",
+                    type.getName(),
+                    arg.getClass().getName()
+                )
             );
         } catch (final InvocationTargetException ex) {
             throw DecorException.create(
                 ex,
-                "Can't invoke %s(%s)",
-                type.getName(),
-                arg.getClass().getName()
+                String.format(
+                    "Can't invoke %s(%s)",
+                    type.getName(),
+                    arg.getClass().getName()
+                )
             );
         }
         return decor;
@@ -99,8 +105,10 @@ final class DecorsManager {
             } catch (final ClassNotFoundException ex) {
                 throw DecorException.create(
                     ex,
-                    "Decor '%s' not found and class can't be instantiated",
-                    key
+                    String.format(
+                        "Decor '%s' not found and class can't be instantiated",
+                        key
+                    )
                 );
             }
         }
@@ -118,16 +126,20 @@ final class DecorsManager {
         final Constructor<?>[] ctors = type.getDeclaredConstructors();
         if (ctors.length != 1) {
             throw DecorException.create(
-                "%s should have just one one-arg ctor, but there are %d",
-                type.getName(),
-                ctors.length
+                String.format(
+                    "%s should have just one one-arg ctor, but there are %d",
+                    type.getName(),
+                    ctors.length
+                )
             );
         }
         final Constructor<?> ctor = ctors[0];
         if (ctor.getParameterTypes().length != 1) {
             throw DecorException.create(
-                "%s public ctor should have just once parameter",
-                type.getName()
+                String.format(
+                    "%s public ctor should have just once parameter",
+                    type.getName()
+                )
             );
         }
         return ctor;

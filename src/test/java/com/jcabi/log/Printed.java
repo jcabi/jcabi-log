@@ -4,7 +4,6 @@
  */
 package com.jcabi.log;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Formattable;
 import java.util.Formatter;
 
@@ -40,7 +39,6 @@ public final class Printed {
      * @param flgs Flags
      * @param wdt Width
      * @param prcs Precision
-     * @checkstyle ParameterNumber (3 lines)
      */
     public Printed(final Formattable dcr,
         final int flgs, final int wdt, final int prcs) {
@@ -51,12 +49,12 @@ public final class Printed {
     }
 
     @Override
-    @SuppressWarnings("PMD.RelianceOnDefaultCharset")
     public String toString() {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final Formatter fmt = new Formatter(baos);
-        this.decor.formatTo(fmt, this.flags, this.width, this.precision);
-        fmt.flush();
-        return baos.toString();
+        final StringBuilder text = new StringBuilder(0);
+        try (Formatter fmt = new Formatter(text)) {
+            this.decor.formatTo(fmt, this.flags, this.width, this.precision);
+            fmt.flush();
+        }
+        return text.toString();
     }
 }

@@ -33,13 +33,14 @@ final class ListDecor implements Formattable {
             this.list = Arrays.asList((Object[]) obj);
         } else {
             throw DecorException.create(
-                "Collection or array required, while %s provided",
-                obj.getClass().getName()
+                String.format(
+                    "Collection or array required, while %s provided",
+                    obj.getClass().getName()
+                )
             );
         }
     }
 
-    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {

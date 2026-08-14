@@ -74,11 +74,10 @@ final class TextDecorTest {
      * @return Array of arrays of params for ctor
      */
     private static Collection<Object[]> params() {
-        // @checkstyle MultipleStringLiterals (4 lines)
         return Arrays.asList(
             new Object[] {"simple text", "simple text", 0, 0, 0},
             new Object[] {null, "NULL", 0, 0, 0},
-            new Object[] {"\u0433!", "\u0433!", 0, 0, 0}
+            new Object[] {"г!", "г!", 0, 0, 0}
         );
     }
 }

@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.channels.Channels;
 import java.nio.channels.ClosedByInterruptException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -39,11 +39,6 @@ import java.util.logging.Level;
  */
 @SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class VerboseProcess implements Closeable {
-
-    /**
-     * Charset.
-     */
-    private static final String UTF_8 = "UTF-8";
 
     /**
      * Number of stream monitors.
@@ -89,7 +84,6 @@ public final class VerboseProcess implements Closeable {
      * @param builder Process builder to work with
      */
     public VerboseProcess(final ProcessBuilder builder) {
-        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(VerboseProcess.start(builder));
     }
 
@@ -103,7 +97,6 @@ public final class VerboseProcess implements Closeable {
      */
     public VerboseProcess(final ProcessBuilder bdr, final Level stdout,
         final Level stderr) {
-        // @checkstyle ConstructorsCodeFreeCheck (1 line)
         this(VerboseProcess.start(bdr), stdout, stderr);
     }
 
@@ -128,12 +121,13 @@ public final class VerboseProcess implements Closeable {
         if (stderr == null) {
             throw new IllegalArgumentException("stderr LEVEL can't be NULL");
         }
-        if (stdout == Level.ALL) {
+        // @checkstyle ConstructorsCodeFreeCheck (11 lines)
+        if (Level.ALL.equals(stdout)) {
             throw new IllegalArgumentException(
                 "stdout LEVEL can't be set to ALL because it is intended only for internal configuration"
             );
         }
-        if (stderr == Level.ALL) {
+        if (Level.ALL.equals(stderr)) {
             throw new IllegalArgumentException(
                 "stderr LEVEL can't be set to ALL because it is intended only for internal configuration"
             );
@@ -202,15 +196,11 @@ public final class VerboseProcess implements Closeable {
                 Logger.error(this, "#wait() failed");
             }
         }
-        try {
-            return new VerboseProcess.Result(
-                code,
-                stdout.toString(VerboseProcess.UTF_8),
-                stderr.toString(VerboseProcess.UTF_8)
-            );
-        } catch (final UnsupportedEncodingException ex) {
-            throw new IllegalStateException(ex);
-        }
+        return new VerboseProcess.Result(
+            code,
+            stdout.toString(StandardCharsets.UTF_8),
+            stderr.toString(StandardCharsets.UTF_8)
+        );
     }
 
     @Override
@@ -256,7 +246,6 @@ public final class VerboseProcess implements Closeable {
      * @param check TRUE if we should check for non-zero exit code
      * @return Full {@code stdout} of the process
      */
-    @SuppressWarnings("PMD.UnnecessaryLocalRule")
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
         final VerboseProcess.Result result;
@@ -337,7 +326,6 @@ public final class VerboseProcess implements Closeable {
      * @param level Logging level
      * @param name Name of this monitor. Used in logging as part of threadname
      * @return Thread which is monitoring
-     * @checkstyle ParameterNumber (6 lines)
      */
     private Thread monitor(final InputStream input,
         final CountDownLatch done,
@@ -392,7 +380,6 @@ public final class VerboseProcess implements Closeable {
          * @param latch Count down latch to signal when done
          * @param out Buffer to write to
          * @param lvl Logging level
-         * @checkstyle ParameterNumber (5 lines)
          */
         Monitor(final InputStream inp, final CountDownLatch latch,
             final OutputStream out, final Level lvl) {
@@ -406,10 +393,12 @@ public final class VerboseProcess implements Closeable {
         public Void call() throws Exception {
             try (
                 BufferedReader reader = new BufferedReader(
-                    Channels.newReader(Channels.newChannel(this.input), VerboseProcess.UTF_8)
+                    Channels.newReader(
+                        Channels.newChannel(this.input), StandardCharsets.UTF_8
+                    )
                 );
                 BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(this.output, VerboseProcess.UTF_8)
+                    new OutputStreamWriter(this.output, StandardCharsets.UTF_8)
                 )
             ) {
                 while (true) {

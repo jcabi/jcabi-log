@@ -32,7 +32,6 @@ final class SecretDecor implements Formattable {
         }
     }
 
-    // @checkstyle ParameterNumber (4 lines)
     @Override
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
