@@ -43,10 +43,6 @@ final class TypeDecorTest {
         );
     }
 
-    /**
-     * Params for this parametrized test.
-     * @return Array of arrays of params for ctor
-     */
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[] {"testing", String.class.getName(), 0, 0, 0},

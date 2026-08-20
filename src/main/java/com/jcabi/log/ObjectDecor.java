@@ -4,9 +4,6 @@
  */
 package com.jcabi.log;
 
-import java.lang.reflect.Field;
-import java.security.PrivilegedAction;
-import java.util.Arrays;
 import java.util.Formattable;
 import java.util.Formatter;
 
@@ -36,90 +33,12 @@ final class ObjectDecor implements Formattable {
             formatter.format("NULL");
         } else if (this.object.getClass().isArray()) {
             formatter.format(
-                new ObjectDecor.ArrayFormatAction((Object[]) this.object).run()
+                new ArrayFormatAction((Object[]) this.object).run()
             );
         } else {
             formatter.format(
-                new ObjectDecor.ObjectContentsFormatAction(this.object).run()
+                new ObjectContentsFormatAction(this.object).run()
             );
-        }
-    }
-
-    /**
-     * {@link PrivilegedAction} for obtaining array contents.
-     * @since 0.1
-     */
-    private static final class ArrayFormatAction
-        implements PrivilegedAction<String> {
-
-        /**
-         * Array to format.
-         */
-        private final transient Object[] array;
-
-        /**
-         * Constructor.
-         * @param arr Array to format
-         */
-        ArrayFormatAction(final Object... arr) {
-            this.array = Arrays.copyOf(arr, arr.length);
-        }
-
-        @Override
-        public String run() {
-            final StringBuilder builder = new StringBuilder("[");
-            try (Formatter fmt = new Formatter(builder)) {
-                for (final Object obj : this.array) {
-                    new ObjectDecor(obj).formatTo(fmt, 0, 0, 0);
-                    builder.append(", ");
-                }
-            }
-            builder.replace(builder.length() - 2, builder.length(), "]");
-            return builder.toString();
-        }
-    }
-
-    /**
-     * {@link PrivilegedAction} for obtaining object contents.
-     * @since 0.1
-     */
-    private static final class ObjectContentsFormatAction
-        implements PrivilegedAction<String> {
-
-        /**
-         * Object to format.
-         */
-        private final transient Object object;
-
-        /**
-         * Constructor.
-         * @param obj Object to format
-         */
-        ObjectContentsFormatAction(final Object obj) {
-            this.object = obj;
-        }
-
-        @Override
-        public String run() {
-            final StringBuilder builder = new StringBuilder("{");
-            for (final Field field
-                : this.object.getClass().getDeclaredFields()) {
-                field.setAccessible(true);
-                try {
-                    builder.append(
-                        String.format(
-                            "%s: \"%s\"",
-                            field.getName(),
-                            field.get(this.object)
-                        )
-                    );
-                } catch (final IllegalAccessException ex) {
-                    throw new IllegalStateException(ex);
-                }
-                builder.append(", ");
-            }
-            builder.replace(builder.length() - 2, builder.length(), "}");
-            return builder.toString();
         }
     }
 }

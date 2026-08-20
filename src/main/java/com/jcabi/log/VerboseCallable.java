@@ -176,11 +176,6 @@ public final class VerboseCallable<T> implements Callable<T> {
         return result;
     }
 
-    /**
-     * Make a tail of the error/warning message, using the exception thrown.
-     * @param throwable The exception/error caught
-     * @return The message to show in logs
-     */
     private String tail(final Throwable throwable) {
         final String tail;
         if (this.verbose) {

@@ -69,11 +69,6 @@ final class SupplierLogger {
         }
     }
 
-    /**
-     * Return the results of the given suppliers.
-     * @param args Suppliers
-     * @return Object array
-     */
     private static Object[] supplied(final Supplier<?>... args) {
         final Object[] supplied = new Object[args.length];
         for (int idx = 0; idx < supplied.length; ++idx) {

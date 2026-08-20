@@ -170,13 +170,6 @@ final class SupplierLoggerTest {
         );
     }
 
-    /**
-     * Builds a logger for each test method.
-     * @param name Logger's name
-     * @param appender Appender's name
-     * @param level Logging level
-     * @return Logger for test
-     */
     private org.apache.log4j.Logger loggerForTest(
         final String name, final String appender, final Level level) {
         final org.apache.log4j.Logger logger = org.apache.log4j.Logger

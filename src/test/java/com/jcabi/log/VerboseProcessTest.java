@@ -97,7 +97,7 @@ final class VerboseProcessTest {
     @Test
     void runsACommandLineScriptWithExceptionNoRedir() throws Exception {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
-        final VerboseProcess.Result result;
+        final Result result;
         final ProcessBuilder builder = new ProcessBuilder(
             "cat", "/non-existing-file.txt"
         );
@@ -294,13 +294,6 @@ final class VerboseProcessTest {
         MatcherAssert.assertThat("should complete", true, Matchers.is(true));
     }
 
-    /**
-     * VerboseProcess can terminate its monitors and underlying Process if
-     * closed after specified time since real usage.
-     * @param delay Time in milliseconds between usage of vrbcPrc starts and
-     *  its close() issued
-     * @throws Exception If something goes wrong
-     */
     private void terminatesMonitorsAndProcessIfClosed(final long delay)
         throws Exception {
         final Process prc = Mockito.mock(Process.class);

@@ -54,10 +54,6 @@ final class NanoDecorTest {
         );
     }
 
-    /**
-     * Params for this parametrized test.
-     * @return Array of arrays of params for ctor
-     */
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[] {13L, "13ns", 0, 0, -1},

@@ -54,10 +54,6 @@ final class SizeDecorTest {
         );
     }
 
-    /**
-     * Params for this parametrized test.
-     * @return Array of arrays of params for ctor
-     */
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[] {1L, "1b", 0, 0, 0},

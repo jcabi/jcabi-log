@@ -48,11 +48,6 @@ final class TextDecor implements Formattable {
         }
     }
 
-    /**
-     * Make it look pretty.
-     * @param text The text to prettify
-     * @return The result
-     */
     @SuppressWarnings("PMD.ConsecutiveAppendsShouldReuse")
     private static String pretty(final String text) {
         final String result;

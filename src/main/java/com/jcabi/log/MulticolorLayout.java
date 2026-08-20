@@ -147,20 +147,10 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         return formatted.format();
     }
 
-    /**
-     * Generate a dull {@code Formatted}.
-     * @param event Event to be formatted
-     * @return A {@link Formatted} to format the event
-     */
     private Formatted dullFormatting(final LoggingEvent event) {
         return new DullyFormatted(super.format(event));
     }
 
-    /**
-     * Generate a colorful {@code Formatted}.
-     * @param event Event to be formatted
-     * @return Text of a log event, probably colored with ANSI color codes
-     */
     private Formatted colorfulFormatting(final LoggingEvent event) {
         return new ColorfullyFormatted(
             super.format(event),
@@ -168,10 +158,6 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
         );
     }
 
-    /**
-     * Should the logged text be colored or not.
-     * @return True if the coloring is enabled, or false otherwise
-     */
     private static boolean isColoringEnabled() {
         return !"false".equals(
             System.getProperty(MulticolorLayout.COLORING_PROPERTY)

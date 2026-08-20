@@ -90,14 +90,6 @@ final class PreFormatter {
         return this.arguments.toArray(new Object[0]);
     }
 
-    /**
-     * Build the position-based replacement state for the given format and args.
-     * @param args The list of arguments
-     * @param matcher The matcher that finds matches
-     * @param buf The string buffer
-     * @param into Destination list to fill with arguments
-     * @return The result position
-     */
     private static int getPos(final Object[] args, final Matcher matcher,
         final StringBuffer buf, final List<Object> into) {
         int pos = 0;

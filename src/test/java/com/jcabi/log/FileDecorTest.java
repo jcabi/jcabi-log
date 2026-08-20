@@ -71,10 +71,6 @@ final class FileDecorTest {
         );
     }
 
-    /**
-     * Params for this parametrized test.
-     * @return Array of arrays of params for ctor
-     */
     private static Collection<Object[]> params() {
         return Arrays.asList(
             new Object[] {null, "NULL", 0, 0, 0},

@@ -4,18 +4,12 @@
  */
 package com.jcabi.log;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.channels.Channels;
-import java.nio.channels.ClosedByInterruptException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -176,7 +170,7 @@ public final class VerboseProcess implements Closeable {
      * @return Stdout produced by the process
      * @throws InterruptedException If interrupted in between
      */
-    public VerboseProcess.Result waitFor() throws InterruptedException {
+    public Result waitFor() throws InterruptedException {
         final CountDownLatch done = new CountDownLatch(
             VerboseProcess.N_MONITORS
         );
@@ -196,7 +190,7 @@ public final class VerboseProcess implements Closeable {
                 Logger.error(this, "#wait() failed");
             }
         }
-        return new VerboseProcess.Result(
+        return new Result(
             code,
             stdout.toString(StandardCharsets.UTF_8),
             stderr.toString(StandardCharsets.UTF_8)
@@ -218,11 +212,6 @@ public final class VerboseProcess implements Closeable {
         Logger.debug(this, "Underlying process destroyed");
     }
 
-    /**
-     * Start a process from the given builder.
-     * @param builder Process builder to work with
-     * @return Process started
-     */
     private static Process start(final ProcessBuilder builder) {
         if (builder == null) {
             throw new IllegalArgumentException("Builder can't be NULL");
@@ -241,14 +230,9 @@ public final class VerboseProcess implements Closeable {
         }
     }
 
-    /**
-     * Get standard output and check for non-zero exit code (if required).
-     * @param check TRUE if we should check for non-zero exit code
-     * @return Full {@code stdout} of the process
-     */
     private String stdout(final boolean check) {
         final long start = System.currentTimeMillis();
-        final VerboseProcess.Result result;
+        final Result result;
         try {
             result = this.waitFor();
         } catch (final InterruptedException ex) {
@@ -273,12 +257,6 @@ public final class VerboseProcess implements Closeable {
         return result.stdout();
     }
 
-    /**
-     * Launch monitors for the underlying process.
-     * @param done Latch that signals termination of all monitors
-     * @param stdout Stream to write the underlying process's output
-     * @param stderr Stream to wrint the underlying process's error output
-     */
     private void launchMonitors(
         final CountDownLatch done,
         final ByteArrayOutputStream stdout,
@@ -318,21 +296,12 @@ public final class VerboseProcess implements Closeable {
         }
     }
 
-    /**
-     * Monitor this input input.
-     * @param input Stream to monitor
-     * @param done Count down latch to signal when done
-     * @param output Buffer to write to
-     * @param level Logging level
-     * @param name Name of this monitor. Used in logging as part of threadname
-     * @return Thread which is monitoring
-     */
     private Thread monitor(final InputStream input,
         final CountDownLatch done,
         final OutputStream output, final Level level, final String name) {
         final Thread thread = new Thread(
             new VerboseRunnable(
-                new VerboseProcess.Monitor(input, done, output, level),
+                new Monitor(input, done, output, level),
                 false
             )
         );
@@ -346,154 +315,5 @@ public final class VerboseProcess implements Closeable {
         thread.setDaemon(true);
         thread.start();
         return thread;
-    }
-
-    /**
-     * Stream monitor.
-     * @since 0.1
-     */
-    private static final class Monitor implements Callable<Void> {
-
-        /**
-         * Stream to read.
-         */
-        private final transient InputStream input;
-
-        /**
-         * Latch to count down when done.
-         */
-        private final transient CountDownLatch done;
-
-        /**
-         * Buffer to save output.
-         */
-        private final transient OutputStream output;
-
-        /**
-         * Log level.
-         */
-        private final transient Level level;
-
-        /**
-         * Ctor.
-         * @param inp Stream to monitor
-         * @param latch Count down latch to signal when done
-         * @param out Buffer to write to
-         * @param lvl Logging level
-         */
-        Monitor(final InputStream inp, final CountDownLatch latch,
-            final OutputStream out, final Level lvl) {
-            this.input = inp;
-            this.done = latch;
-            this.output = out;
-            this.level = lvl;
-        }
-
-        @Override
-        public Void call() throws Exception {
-            try (
-                BufferedReader reader = new BufferedReader(
-                    Channels.newReader(
-                        Channels.newChannel(this.input), StandardCharsets.UTF_8
-                    )
-                );
-                BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(this.output, StandardCharsets.UTF_8)
-                )
-            ) {
-                while (true) {
-                    if (Thread.interrupted()) {
-                        Logger.debug(
-                            VerboseProcess.class,
-                            "Explicitly interrupting read from buffer"
-                        );
-                        break;
-                    }
-                    final String line = reader.readLine();
-                    if (line == null) {
-                        break;
-                    }
-                    Logger.log(
-                        this.level, VerboseProcess.class,
-                        ">> %s", line
-                    );
-                    writer.write(line);
-                    writer.newLine();
-                }
-            } catch (final ClosedByInterruptException ex) {
-                Thread.interrupted();
-                Logger.debug(
-                    VerboseProcess.class,
-                    "Monitor is interrupted in the expected way"
-                );
-            } catch (final IOException ex) {
-                Logger.error(
-                    VerboseProcess.class,
-                    "Error reading from process stream: %[exception]s",
-                    ex
-                );
-            } finally {
-                this.done.countDown();
-            }
-            return null;
-        }
-    }
-
-    /**
-     * Class representing the result of a process.
-     * @since 0.1
-     */
-    public static final class Result {
-
-        /**
-         * Returned code from the process.
-         */
-        private final transient int exit;
-
-        /**
-         * {@code stdout} from the process.
-         */
-        private final transient String out;
-
-        /**
-         * {@code stderr} from the process.
-         */
-        private final transient String err;
-
-        /**
-         * Result class constructor.
-         * @param code The exit code
-         * @param stdout The {@code stdout} from the process
-         * @param stderr The {@code stderr} from the process
-         */
-        Result(final int code, final String stdout, final String stderr) {
-            this.exit = code;
-            this.out = stdout;
-            this.err = stderr;
-        }
-
-        /**
-         * Get {@code code} from the process.
-         * @return Full {@code code} of the process
-         */
-        public int code() {
-            return this.exit;
-        }
-
-        /**
-         * Get {@code stdout} from the process.
-         * @return Full {@code stdout} of the process
-         */
-        public String stdout() {
-            return this.out;
-        }
-
-        /**
-         * Get {@code stderr} from the process.
-         * @return Full {@code stderr} of the process
-         */
-        public String stderr() {
-            return this.err;
-        }
     }
 }

@@ -70,13 +70,6 @@ class ConversionPattern {
         return buf.toString();
     }
 
-    /**
-     * Find the matching closing curly brace while keeping any nested curly
-     * brace pairs balanced.
-     * @param pattern Pattern to find the match in
-     * @param start Index of first character after the opening curly brace
-     * @return Index of the closing curly brace, or -1 if not found
-     */
     private static int findArgumentEnd(final String pattern, final int start) {
         int count = 1;
         int index = start;
@@ -98,10 +91,6 @@ class ConversionPattern {
         return index;
     }
 
-    /**
-     * Formats a string with a Control Sequence Information.
-     * @return Formatted string
-     */
     private static String csi() {
         return new ControlSequenceIndicatorFormatted("%s").format();
     }

@@ -127,7 +127,7 @@ public final class VerboseThreads implements ThreadFactory {
     @Override
     @SuppressWarnings("ThreadPriorityCheck")
     public Thread newThread(final Runnable runnable) {
-        final Thread thread = new Thread(new VerboseThreads.Wrap(runnable));
+        final Thread thread = new Thread(new Wrap(runnable));
         thread.setName(
             String.format(
                 "%s-%d",
@@ -141,51 +141,5 @@ public final class VerboseThreads implements ThreadFactory {
             (t, e) -> Logger.warn(this, "%[exception]s", e)
         );
         return thread;
-    }
-
-    /**
-     * Runnable decorator.
-     * @since 0.1
-     */
-    private static final class Wrap implements Runnable {
-
-        /**
-         * Origin runnable.
-         */
-        private final transient Runnable origin;
-
-        /**
-         * Ctor.
-         * @param runnable Origin runnable
-         */
-        Wrap(final Runnable runnable) {
-            this.origin = runnable;
-        }
-
-        @Override
-        @SuppressWarnings("PMD.AvoidCatchingGenericException")
-        public void run() {
-            try {
-                this.origin.run();
-                // @checkstyle IllegalCatch (1 line)
-            } catch (final RuntimeException ex) {
-                Logger.warn(
-                    this,
-                    "%s: %[exception]s",
-                    Thread.currentThread().getName(),
-                    ex
-                );
-                throw ex;
-                // @checkstyle IllegalCatch (1 line)
-            } catch (final Error error) {
-                Logger.error(
-                    this,
-                    "%s (error): %[exception]s",
-                    Thread.currentThread().getName(),
-                    error
-                );
-                throw error;
-            }
-        }
     }
 }

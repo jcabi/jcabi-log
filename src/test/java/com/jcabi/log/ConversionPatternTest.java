@@ -117,11 +117,6 @@ final class ConversionPatternTest {
         );
     }
 
-    /**
-     * Convenience method to generate conversion pattern for the tests.
-     * @param pat Pattern to be used
-     * @return Conversion pattern
-     */
     private static String convert(final String pat) {
         return new ConversionPattern(
             pat,
@@ -129,11 +124,6 @@ final class ConversionPatternTest {
         ).generate();
     }
 
-    /**
-     * Wraps the given string in the expected ANSI color sequence.
-     * @param str Input string to wrap
-     * @return Wrapped string
-     */
     private static String colorWrap(final String str) {
         return String.format(
             "%s?m%s%sm",

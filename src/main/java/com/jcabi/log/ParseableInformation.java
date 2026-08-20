@@ -58,11 +58,6 @@ class ParseableInformation {
         return parsed;
     }
 
-    /**
-     * Split the information using {@link ParseableInformation#SPLIT_ITEMS}
-     * pattern.
-     * @return An array of items
-     */
     private String[] items() {
         return ParseableInformation.SPLIT_ITEMS.split(this.content);
     }

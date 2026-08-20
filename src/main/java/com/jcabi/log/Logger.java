@@ -423,20 +423,6 @@ public final class Logger {
         return new SupplierLogger();
     }
 
-    /**
-     * Expand the no-argument format specifiers {@code %n} and {@code %%}
-     * in a single left-to-right pass, leaving every other character intact.
-     *
-     * <p>This is used by {@link #format(String, Object...)} when no
-     * variable arguments are supplied. Without it, a user-friendly call
-     * such as {@code Logger.info(this, "Hello %n")} would log the literal
-     * text {@code "Hello %n"} instead of a line break, because the
-     * "no args" shortcut bypasses {@link String#format(String, Object[])}.
-     *
-     * @param fmt The format string
-     * @return The string with {@code %n} replaced by the system line
-     *  separator and {@code %%} replaced by a single {@code %}
-     */
     private static String expandNoArgSpecifiers(final String fmt) {
         final int length = fmt.length();
         final StringBuilder out = new StringBuilder(length);
@@ -462,13 +448,6 @@ public final class Logger {
         return out.toString();
     }
 
-    /**
-     * Set final static field in order to fix the %L log4j parameter.
-     * @param field Field
-     * @param value New value
-     * @throws NoSuchFieldException If some problem
-     * @throws IllegalAccessException If some problem
-     */
     @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
     private static void setFinalStatic(final Field field, final Object value)
         throws NoSuchFieldException, IllegalAccessException {
@@ -479,11 +458,6 @@ public final class Logger {
         field.set(null, value);
     }
 
-    /**
-     * Get the instance of the logger for this particular caller.
-     * @param source Source of the logging operation
-     * @return The instance of {@code Logger} class
-     */
     private static org.slf4j.Logger logger(final Object source) {
         final org.slf4j.Logger logger;
         if (source instanceof Class) {

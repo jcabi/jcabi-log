@@ -76,11 +76,6 @@ final class SizeDecor implements Formattable {
         }
     }
 
-    /**
-     * Format the size, with suffix.
-     * @param precision The precision to use
-     * @return The formatted size
-     */
     private String formatSizeWithSuffix(final int precision) {
         int power = 0;
         double number = this.size;

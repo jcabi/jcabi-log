@@ -87,12 +87,6 @@ final class DecorsManager {
         return decor;
     }
 
-    /**
-     * Find decor.
-     * @param key Key for the formatter to be used to fmt the arguments
-     * @return The type of decor found
-     * @throws DecorException If some problem
-     */
     @SuppressWarnings("unchecked")
     private static Class<? extends Formattable> find(final String key)
         throws DecorException {
@@ -115,12 +109,6 @@ final class DecorsManager {
         return type;
     }
 
-    /**
-     * Get ctor of the type.
-     * @param type The type
-     * @return The ctor
-     * @throws DecorException If some problem
-     */
     private static Constructor<?> ctor(final Class<? extends Formattable> type)
         throws DecorException {
         final Constructor<?>[] ctors = type.getDeclaredConstructors();

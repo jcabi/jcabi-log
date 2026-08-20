@@ -58,11 +58,6 @@ final class SecretDecor implements Formattable {
         }
     }
 
-    /**
-     * Scramble it and make unreadable.
-     * @param text The text to scramble
-     * @return The result
-     */
     private static String scramble(final String text) {
         final StringBuilder out = new StringBuilder(10);
         if (text.isEmpty()) {
