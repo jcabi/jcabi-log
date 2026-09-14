@@ -18,16 +18,16 @@ import java.util.logging.Level;
  * Utility class for getting {@code stdout} from a running process
  * and logging it through SLF4J.
  *
- * <p>For example:
+ * <p>For example:</p>
  *
  * <pre> String name = new VerboseProcess(
  *   new ProcessBuilder("who", "am", "i")
  * ).stdout();</pre>
  *
  * <p>The class throws an exception if the process returns a non-zero exit
- * code.
+ * code.</p>
  *
- * <p>The class is thread-safe.
+ * <p>The class is thread-safe.</p>
  *
  * @since 0.5
  */
@@ -66,6 +66,7 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Public ctor.
+     *
      * @param prc The process to work with
      */
     public VerboseProcess(final Process prc) {
@@ -75,6 +76,7 @@ public final class VerboseProcess implements Closeable {
     /**
      * Public ctor (builder will be configured to redirect error input to
      * the {@code stdout} and will receive an empty {@code stdin}).
+     *
      * @param builder Process builder to work with
      */
     public VerboseProcess(final ProcessBuilder builder) {
@@ -84,6 +86,7 @@ public final class VerboseProcess implements Closeable {
     /**
      * Public ctor, with a given process and logging levels for {@code stdout}
      * and {@code stderr}.
+     *
      * @param bdr Process builder to execute and monitor
      * @param stdout Log level for stdout
      * @param stderr Log level for stderr
@@ -99,6 +102,7 @@ public final class VerboseProcess implements Closeable {
      * and {@code stderr}. Neither {@code stdout} nor {@code stderr} cannot be
      * set to {@link Level#ALL} because it is intended to be used only for
      * internal configuration.
+     *
      * @param prc Process to execute and monitor
      * @param stdout Log level for stdout
      * @param stderr Log level for stderr
@@ -139,7 +143,7 @@ public final class VerboseProcess implements Closeable {
      * <p>The method will check process exit code, and if it won't be equal
      * to zero a runtime exception will be thrown. A non-zero exit code
      * usually is an indicator of problem. If you want to ignore this code,
-     * use {@link #stdoutQuietly()} instead.
+     * use {@link #stdoutQuietly()} instead.</p>
      *
      * @return Full {@code stdout} of the process
      */
@@ -156,7 +160,7 @@ public final class VerboseProcess implements Closeable {
      * method will quietly return its output. The method is useful when
      * you're running a background process. You will kill it with
      * {@link Process#destroy()}, which usually will lead to a non-zero
-     * exit code, which you want to ignore.
+     * exit code, which you want to ignore.</p>
      *
      * @return Full {@code stdout} of the process
      * @since 0.10
@@ -167,6 +171,7 @@ public final class VerboseProcess implements Closeable {
 
     /**
      * Wait for the process to stop, logging its output in parallel.
+     *
      * @return Stdout produced by the process
      * @throws InterruptedException If interrupted in between
      */

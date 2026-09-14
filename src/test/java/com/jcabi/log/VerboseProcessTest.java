@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 import org.apache.log4j.spi.Filter;
@@ -30,6 +31,7 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link VerboseProcess}.
+ *
  * @since 0.1
  * @todo #18 Locale/encoding problem in two test methods here. I'm not
  *  sure how to fix them, but they should be fixed. They fail on some
@@ -137,18 +139,26 @@ final class VerboseProcessTest {
             RuntimeException.class,
             () -> {
                 final ProcessBuilder builder = null;
-                new VerboseProcess(builder);
+                try (VerboseProcess process = new VerboseProcess(builder)) {
+                    Logger.debug(this, "process=%s", process);
+                }
             }
         );
     }
 
     @Test
     void rejectsStdoutWithLevelAll() {
-        try {
-            new VerboseProcess(
+        try (
+            VerboseProcess process = new VerboseProcess(
                 Mockito.mock(Process.class), Level.ALL, Level.INFO
+            )
+        ) {
+            Assertions.fail(
+                String.format(
+                    "IllegalArgumentException expected: %d",
+                    process.hashCode()
+                )
             );
-            Assertions.fail("IllegalArgumentException expected");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 "should rejects stdout with ALL level",
@@ -165,11 +175,17 @@ final class VerboseProcessTest {
 
     @Test
     void rejectsStderrWithLevelAll() {
-        try {
-            new VerboseProcess(
+        try (
+            VerboseProcess process = new VerboseProcess(
                 Mockito.mock(Process.class), Level.INFO, Level.ALL
+            )
+        ) {
+            Assertions.fail(
+                String.format(
+                    "IllegalArgumentException expected here: %d",
+                    process.hashCode()
+                )
             );
-            Assertions.fail("IllegalArgumentException expected here");
         } catch (final IllegalArgumentException ex) {
             MatcherAssert.assertThat(
                 "should rejects stderr with ALL level",
@@ -216,7 +232,7 @@ final class VerboseProcessTest {
     @Test
     void stdoutQuietlyLogsErrors() {
         final StringWriter writer = new StringWriter();
-        org.apache.log4j.Logger.getRootLogger().addAppender(
+        LogManager.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         final ProcessBuilder builder;
@@ -245,7 +261,7 @@ final class VerboseProcessTest {
     @Test
     void logsErrorWhenUnderlyingStreamIsClosed() throws Exception {
         final StringWriter writer = new StringWriter();
-        org.apache.log4j.Logger.getRootLogger().addAppender(
+        LogManager.getRootLogger().addAppender(
             new WriterAppender(new SimpleLayout(), writer)
         );
         final File temp = File.createTempFile("temp", "test");
@@ -325,7 +341,7 @@ final class VerboseProcessTest {
                 appender.addFilter(
                     new VerboseProcessTest.VrbPrcMonitorFilter(process)
                 );
-                org.apache.log4j.Logger.getLogger(
+                LogManager.getLogger(
                     VerboseProcess.class
                 ).addAppender(appender);
                 process.stdoutQuietly();
@@ -347,14 +363,10 @@ final class VerboseProcessTest {
 
     /**
      * {@link InputStream} returning endless flow of characters.
+     *
      * @since 0.1
      */
     private static final class InfiniteInputStream extends InputStream {
-
-        /**
-         * End of line.
-         */
-        private static final int LINE_FEED = 0xA;
 
         /**
          * Character, endlessly repeated in the stream.
@@ -374,6 +386,7 @@ final class VerboseProcessTest {
         /**
          * Construct an InputStream returning endless combination of this
          * character and end of line.
+         *
          * @param character Character to return in the stream
          */
         InfiniteInputStream(final char character) {
@@ -389,7 +402,7 @@ final class VerboseProcessTest {
             final int next;
             if (this.feed) {
                 this.feed = false;
-                next = VerboseProcessTest.InfiniteInputStream.LINE_FEED;
+                next = 0xA;
             } else {
                 this.feed = true;
                 next = this.chr;
@@ -418,16 +431,11 @@ final class VerboseProcessTest {
      * Filter of log messages of {@link VerboseProcess}'s monitor threads.
      *
      * <p>It filters out messages of monitor threads, that doesn't belong to
-     * specific {@link VerboseProcess}.
+     * specific {@link VerboseProcess}.</p>
      *
      * @since 0.1
      */
     private static final class VrbPrcMonitorFilter extends Filter {
-
-        /**
-         * Monitor's log message start.
-         */
-        private static final String THREADNAME_START = "VrbPrc.Monitor-";
 
         /**
          * HashCode of {@link VerboseProcess} to filter.
@@ -437,7 +445,7 @@ final class VerboseProcessTest {
         /**
          * Create filter for this process.
          *
-         * <p>The messages from its monitor threads will be filtered in.
+         * <p>The messages from its monitor threads will be filtered in.</p>
          *
          * @param prc Process
          */
@@ -451,9 +459,9 @@ final class VerboseProcessTest {
         public int decide(final LoggingEvent event) {
             final String thread = event.getThreadName();
             final int decision;
-            final String prefix =
-                VerboseProcessTest.VrbPrcMonitorFilter.THREADNAME_START
-                    + this.hash;
+            final String prefix = String.format(
+                "VrbPrc.Monitor-%d", this.hash
+            );
             if (thread.startsWith(prefix)) {
                 decision = Filter.ACCEPT;
             } else {

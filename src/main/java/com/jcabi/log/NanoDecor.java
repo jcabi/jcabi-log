@@ -11,7 +11,7 @@ import java.util.Formatter;
 /**
  * Decorate time interval in nanoseconds.
  *
- * <p>For example:
+ * <p>For example:</p>
  *
  * <pre>
  * final long start = System.nanoTime();
@@ -30,6 +30,7 @@ final class NanoDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param nan The interval in nanoseconds
      */
     NanoDecor(final Long nan) {

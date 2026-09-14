@@ -7,6 +7,7 @@ package com.jcabi.log;
 /**
  * Logging methods which take {@link Supplier} arguments.
  * Used with Java 8 method referencing.
+ *
  * @since 0.18
  * @checkstyle HideUtilityClassConstructorCheck (500 lines)
  */
@@ -15,6 +16,7 @@ final class SupplierLogger {
 
     /**
      * Log one message, with {@code TRACE} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going
@@ -29,6 +31,7 @@ final class SupplierLogger {
 
     /**
      * Log one message, with {@code DEBUG} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going
@@ -43,6 +46,7 @@ final class SupplierLogger {
 
     /**
      * Log one message, with {@code INFO} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going
@@ -57,6 +61,7 @@ final class SupplierLogger {
 
     /**
      * Log one message, with {@code WARN} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of {@link Supplier} arguments. Objects are going

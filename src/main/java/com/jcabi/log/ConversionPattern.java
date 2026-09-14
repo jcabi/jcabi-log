@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 /**
  * Generates the conversion pattern.
+ *
  * @since 0.18
  */
 class ConversionPattern {
@@ -32,6 +33,7 @@ class ConversionPattern {
 
     /**
      * Constructor.
+     *
      * @param pat Pattern to be used
      * @param col Colors to be used
      */
@@ -42,6 +44,7 @@ class ConversionPattern {
 
     /**
      * Generates the conversion pattern.
+     *
      * @return Conversion pattern
      */
     String generate() {

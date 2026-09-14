@@ -9,6 +9,7 @@ import java.util.Formatter;
 
 /**
  * Prints decor.
+ *
  * @since 0.1
  */
 public final class Printed {
@@ -35,6 +36,7 @@ public final class Printed {
 
     /**
      * Public ctor.
+     *
      * @param dcr Decor
      * @param flgs Flags
      * @param wdt Width

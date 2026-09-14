@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
  * on some logging engine you can use this class, which transforms all
  * messages to SLF4J. This approach gives you a perfect decoupling of business
  * logic and logging mechanism. All methods in the class are called
- * statically, without the necessity to instantiate the class.
+ * statically, without the necessity to instantiate the class.</p>
  *
- * <p>Use it like this in any class, and in any package:
+ * <p>Use it like this in any class, and in any package:</p>
  *
  * <pre> package com.example.XXX;
  * import com.jcabi.log.Logger;
@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *   }
  * }</pre>
  *
- * <p>Or statically (pay attention to {@code MyClass.class}):
+ * <p>Or statically (pay attention to {@code MyClass.class}):</p>
  *
  * <pre> public class MyClass {
  *   public static void foo(Integer num) {
@@ -41,11 +41,11 @@ import org.slf4j.LoggerFactory;
  * }</pre>
  *
  * <p>Exact binding between SLF4J and logging facility has to be
- * specified in {@code pom.xml} of your project (or in classpath directly).
+ * specified in {@code pom.xml} of your project (or in classpath directly).</p>
  *
  * <p>For performance reasons in most cases before sending a
  * {@code TRACE} or {@code DEBUG} log message you may check whether this
- * logging level is enabled in the project, e.g.:
+ * logging level is enabled in the project, e.g.:</p>
  *
  * <pre> //...
  * if (Logger.isTraceEnabled(this)) {
@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  *
  * <p>There is only one reason to do so - if you want to save time spent on
  * preparing of the arguments. By default, such a call is made inside every
- * method of {@link Logger} class.
+ * method of {@link Logger} class.</p>
  *
  * @since 0.1
  */
@@ -80,6 +80,7 @@ public final class Logger {
 
     /**
      * Format one string.
+     *
      * @param fmt The format
      * @param args List of arbitrary arguments
      * @return Formatted string
@@ -97,6 +98,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code TRACE} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged
      * @since 0.7.11
@@ -107,6 +109,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code TRACE} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -123,6 +126,7 @@ public final class Logger {
     /**
      * Protocol one message, with {@code TRACE} priority level
      * without internal checking whether {@code TRACE} level is enabled.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -136,6 +140,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code DEBUG} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @since 0.7.11
@@ -146,6 +151,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code DEBUG} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -162,6 +168,7 @@ public final class Logger {
     /**
      * Protocol one message, with {@code DEBUG} priority level
      * without internal checking whether {@code DEBUG} level is enabled.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -175,6 +182,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code INFO} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged
      * @since 0.7.11
@@ -185,6 +193,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code INFO} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -201,6 +210,7 @@ public final class Logger {
     /**
      * Protocol one message, with {@code INFO} priority level
      * without internal checking whether {@code INFO} level is enabled.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -214,6 +224,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code WARN} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged
      * @since 0.7.11
@@ -224,6 +235,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code WARN} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -240,6 +252,7 @@ public final class Logger {
     /**
      * Protocol one message, with {@code WARN} priority level
      * without internal checking whether {@code WARN} level is enabled.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -253,6 +266,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code ERROR} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged
      * @since 0.7.11
@@ -263,6 +277,7 @@ public final class Logger {
 
     /**
      * Protocol one message, with {@code ERROR} priority level.
+     *
      * @param source The source of the logging operation
      * @param msg The text message to be logged, with meta-tags
      * @param args List of arguments
@@ -275,6 +290,7 @@ public final class Logger {
     /**
      * Validates whether {@code TRACE} priority level is enabled for
      * this particular logger.
+     *
      * @param source The source of the logging operation
      * @return Is it enabled?
      */
@@ -285,6 +301,7 @@ public final class Logger {
     /**
      * Validates whether {@code DEBUG} priority level is enabled for
      * this particular logger.
+     *
      * @param source The source of the logging operation
      * @return Is it enabled?
      */
@@ -295,6 +312,7 @@ public final class Logger {
     /**
      * Validates whether {@code INFO} priority level is enabled for
      * this particular logger.
+     *
      * @param source The source of the logging operation
      * @return Is it enabled?
      * @since 0.5
@@ -306,6 +324,7 @@ public final class Logger {
     /**
      * Validates whether {@code INFO} priority level is enabled for
      * this particular logger.
+     *
      * @param source The source of the logging operation
      * @return Is it enabled?
      * @since 0.5
@@ -316,6 +335,7 @@ public final class Logger {
 
     /**
      * Is the given logging level enabled?
+     *
      * @param level The level of logging
      * @param source The source of the logging operation
      * @return Is it enabled?
@@ -339,6 +359,7 @@ public final class Logger {
 
     /**
      * Log one line using the logging level specified.
+     *
      * @param level The level of logging
      * @param source The source of the logging operation
      * @param msg The text message to be logged
@@ -364,6 +385,7 @@ public final class Logger {
     /**
      * Returns an {@link OutputStream}, which converts all incoming data
      * into logging lines (separated by {@code \x0A} in UTF-8).
+     *
      * @param level The level of logging
      * @param source The source of the logging operation
      * @return Output stream directly pointed to the logging facility
@@ -403,7 +425,7 @@ public final class Logger {
      *
      * <p>This saves you the effort of having to check if the level is enabled
      * before calling the logging method.
-     * E.g.
+     * E.g.</p>
      * <pre>
      *     if (Logger.isDebugEnabled(this)) {
      *         Logger.debug(this, "Some %s", calculate());

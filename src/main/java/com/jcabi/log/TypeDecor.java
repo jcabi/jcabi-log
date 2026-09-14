@@ -10,7 +10,7 @@ import java.util.Formatter;
 /**
  * Decorator of a type.
  *
- * <p>For example:
+ * <p>For example:</p>
  *
  * <pre>
  * public void func(Object input) {
@@ -29,6 +29,7 @@ final class TypeDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param obj The object
      */
     TypeDecor(final Object obj) {

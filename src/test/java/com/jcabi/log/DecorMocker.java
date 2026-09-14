@@ -9,6 +9,7 @@ import java.util.Formatter;
 
 /**
  * Primitive decor, for testing only.
+ *
  * @since 0.1
  */
 public final class DecorMocker implements Formattable {
@@ -20,6 +21,7 @@ public final class DecorMocker implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param txt The text to output
      */
     public DecorMocker(final Object txt) {

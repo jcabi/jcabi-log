@@ -17,6 +17,7 @@ import org.w3c.dom.Node;
 
 /**
  * Decorates XML Document.
+ *
  * @since 0.1
  */
 final class DomDecor implements Formattable {
@@ -34,6 +35,7 @@ final class DomDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param doc The document
      * @throws DecorException If some problem with it
      */
@@ -51,6 +53,7 @@ final class DomDecor implements Formattable {
     }
 
     @Override
+    @SuppressWarnings("PMD.CloseInlineResourceRule")
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
         final StringWriter writer = new StringWriter();

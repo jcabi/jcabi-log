@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 /**
  * Class representing the result of a process.
+ *
  * @since 0.1
  */
 public final class Result {
@@ -27,6 +28,7 @@ public final class Result {
 
     /**
      * Result class constructor.
+     *
      * @param code The exit code
      * @param stdout The {@code stdout} from the process
      * @param stderr The {@code stderr} from the process
@@ -39,6 +41,7 @@ public final class Result {
 
     /**
      * Get {@code code} from the process.
+     *
      * @return Full {@code code} of the process
      */
     public int code() {
@@ -47,6 +50,7 @@ public final class Result {
 
     /**
      * Get {@code stdout} from the process.
+     *
      * @return Full {@code stdout} of the process
      */
     public String stdout() {
@@ -55,6 +59,7 @@ public final class Result {
 
     /**
      * Get {@code stderr} from the process.
+     *
      * @return Full {@code stderr} of the process
      */
     public String stderr() {

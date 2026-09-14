@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 /**
  * Exception if some problem with decor.
+ *
  * @since 0.1
  */
 final class DecorException extends Exception {
@@ -17,6 +18,7 @@ final class DecorException extends Exception {
 
     /**
      * Ctor.
+     *
      * @param message Pre-formatted message
      * @param cause Cause of it
      */
@@ -26,6 +28,7 @@ final class DecorException extends Exception {
 
     /**
      * Build an exception without a cause.
+     *
      * @param message Pre-formatted message
      * @return New exception
      */
@@ -35,6 +38,7 @@ final class DecorException extends Exception {
 
     /**
      * Build an exception with a cause.
+     *
      * @param cause Cause of it
      * @param message Pre-formatted message
      * @return New exception

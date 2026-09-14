@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 /**
  * Wrapper of {@link Runnable}, that logs all uncaught runtime exceptions.
  *
- * <p>You can use it with scheduled executor, for example:
+ * <p>You can use it with scheduled executor, for example:</p>
  *
  * <pre> Executors.newScheduledThreadPool(2).scheduleAtFixedRate(
  *   new VerboseRunnable(runnable, true), 1L, 1L, TimeUnit.SECONDS
@@ -20,9 +20,9 @@ import java.util.concurrent.Callable;
  * Two-arguments constructor can be used when you need to instruct the class
  * about what to do with the exception: either swallow it or escalate.
  * Sometimes it's very important to swallow exceptions. Otherwise an entire
- * thread may get stuck (like in the example above).
+ * thread may get stuck (like in the example above).</p>
  *
- * <p>This class is thread-safe.
+ * <p>This class is thread-safe.</p>
  *
  * @see VerboseThreads
  * @see <a href="http://www.ibm.com/developerworks/java/library/j-jtp05236/index.html">Java theory and practice: Dealing with InterruptedException</a>
@@ -47,6 +47,7 @@ public final class VerboseRunnable implements Runnable {
 
     /**
      * Default constructor, doesn't swallow exceptions.
+     *
      * @param runnable Runnable to wrap
      */
     public VerboseRunnable(final Runnable runnable) {
@@ -55,6 +56,7 @@ public final class VerboseRunnable implements Runnable {
 
     /**
      * Default constructor, doesn't swallow exceptions.
+     *
      * @param callable Callable to wrap
      * @since 0.7.17
      */
@@ -64,6 +66,7 @@ public final class VerboseRunnable implements Runnable {
 
     /**
      * Default constructor, doesn't swallow exceptions.
+     *
      * @param callable Callable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
@@ -78,6 +81,7 @@ public final class VerboseRunnable implements Runnable {
 
     /**
      * Default constructor.
+     *
      * @param callable Callable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
@@ -119,6 +123,7 @@ public final class VerboseRunnable implements Runnable {
 
     /**
      * Default constructor, with configurable behavior for exceptions.
+     *
      * @param runnable Runnable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
@@ -133,6 +138,7 @@ public final class VerboseRunnable implements Runnable {
 
     /**
      * Default constructor, with fully configurable behavior.
+     *
      * @param runnable Runnable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw

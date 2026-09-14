@@ -15,6 +15,7 @@ import org.w3c.dom.Document;
 
 /**
  * Test case for {@link DomDecor}.
+ *
  * @since 0.1
  */
 final class DomDecorTest {

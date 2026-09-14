@@ -14,6 +14,7 @@ import org.mockito.hamcrest.MockitoHamcrest;
 
 /**
  * Test case for {@link ExceptionDecor}.
+ *
  * @since 0.1
  */
 final class ExceptionDecorTest {

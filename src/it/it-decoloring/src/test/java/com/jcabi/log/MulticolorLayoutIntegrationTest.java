@@ -17,6 +17,7 @@ import org.mockito.Mockito;
  * be run with maven-invoker-plugin because they set the system property
  * com.jcabi.log.coloring, which interferes with other tests (tests are run
  * by multiple threads at once)
+ *
  * @since 0.1
  */
 @SuppressWarnings("PMD.UnitTestContainsTooManyAsserts")

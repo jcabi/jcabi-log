@@ -12,6 +12,7 @@ import org.apache.log4j.Level;
 /**
  * Parse information like {@code ParseInformation} does, but increments with
  * some extra checks for {@code Level}s.
+ *
  * @since 0.18
  */
 class ParseableLevelInformation {
@@ -23,6 +24,7 @@ class ParseableLevelInformation {
 
     /**
      * Constructor.
+     *
      * @param cont Content to be parsed
      */
     ParseableLevelInformation(final String cont) {
@@ -31,6 +33,7 @@ class ParseableLevelInformation {
 
     /**
      * Parse the level information.
+     *
      * @return A {@link Map} with key,value pair of strings
      */
     final Map<String, String> information() {

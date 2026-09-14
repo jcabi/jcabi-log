@@ -14,7 +14,7 @@ import org.apache.log4j.spi.LoggingEvent;
 /**
  * Multi-color layout for LOG4J.
  *
- * <p>Use it in your LOG4J configuration:
+ * <p>Use it in your LOG4J configuration:</p>
  *
  * <pre> log4j.rootLogger=INFO, CONSOLE
  * log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender
@@ -27,20 +27,20 @@ import org.apache.log4j.spi.LoggingEvent;
  * {@link EnhancedPatternLayout}. You can use {@code %color-red{...}} if you
  * want to use specifically red color for the wrapped piece of text. Supported
  * colors are: {@code red}, {@code blue}, {@code yellow}, {@code cyan},
- * {@code black}, and {@code white}.
+ * {@code black}, and {@code white}.</p>
  *
  * <p>Besides that you can specify any ANSI color you like with
  * {@code %color-<attr>;<bg>;<fg>{...}}, where
  * {@code <attr>} is a binary mask of attributes,
  * {@code <bg>} is a background color, and
  * {@code <fg>} is a foreground color. Read more about
- * <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>.
+ * <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>.</p>
  *
- * <p>This class or its parents are <b>not</b> serializable.
+ * <p>This class or its parents are <b>not</b> serializable.</p>
  *
  * <p>Maven dependency for this class is
  * (see <a href="http://www.jcabi.com/jcabi-log/multicolor.html">How
- * to use with Maven</a> instructions):
+ * to use with Maven</a> instructions):</p>
  *
  * <pre>&lt;dependency&gt;
  *  &lt;groupId&gt;com.jcabi&lt;/groupId&gt;
@@ -53,11 +53,6 @@ import org.apache.log4j.spi.LoggingEvent;
  * @since 0.1.10
  */
 public final class MulticolorLayout extends EnhancedPatternLayout {
-
-    /**
-     * Name of the property that is used to disable log coloring.
-     */
-    private static final String COLORING_PROPERTY = "com.jcabi.log.coloring";
 
     /**
      * Default logging level to ANSI code mapping.
@@ -106,6 +101,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Allow to overwrite or specify new ANSI color names
      * in a javascript map like format.
+     *
      * @param cols JavaScript like map of color names
      * @since 0.9
      */
@@ -124,6 +120,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
     /**
      * Allow to overwrite the ANSI color values for the log levels
      * in a javascript map like format.
+     *
      * @param lev JavaScript like map of levels
      * @since 0.9
      */
@@ -160,7 +157,7 @@ public final class MulticolorLayout extends EnhancedPatternLayout {
 
     private static boolean isColoringEnabled() {
         return !"false".equals(
-            System.getProperty(MulticolorLayout.COLORING_PROPERTY)
+            System.getProperty("com.jcabi.log.coloring")
         );
     }
 }

@@ -11,6 +11,7 @@ import java.util.Formatter;
 
 /**
  * Format list.
+ *
  * @since 0.1
  */
 final class ListDecor implements Formattable {
@@ -22,6 +23,7 @@ final class ListDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param obj The object to format
      * @throws DecorException If some problem with it
      */

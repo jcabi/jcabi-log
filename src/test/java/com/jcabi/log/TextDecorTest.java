@@ -20,6 +20,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link TextDecor}.
+ *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -58,7 +59,9 @@ final class TextDecorTest {
     void compressesLongText() {
         final Formattable fmt = new TextDecor(StringUtils.repeat('x', 1000));
         final StringBuilder output = new StringBuilder(100);
-        fmt.formatTo(new Formatter(output), 0, 0, 0);
+        try (Formatter formatter = new Formatter(output)) {
+            fmt.formatTo(formatter, 0, 0, 0);
+        }
         MatcherAssert.assertThat(
             "should compresses long text",
             output.length(),

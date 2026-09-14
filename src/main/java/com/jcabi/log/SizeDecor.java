@@ -12,14 +12,10 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Size decorator.
+ *
  * @since 0.1
  */
 final class SizeDecor implements Formattable {
-
-    /**
-     * Highest power supported by this SizeDecor.
-     */
-    private static final int MAX_POWER = 6;
 
     /**
      * Map of prefixes for powers of 1024.
@@ -44,6 +40,7 @@ final class SizeDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param sze The size
      */
     SizeDecor(final Long sze) {
@@ -79,7 +76,7 @@ final class SizeDecor implements Formattable {
     private String formatSizeWithSuffix(final int precision) {
         int power = 0;
         double number = this.size;
-        while (number / 1024.0 >= 1.0 && power < SizeDecor.MAX_POWER) {
+        while (number / 1024.0 >= 1.0 && power < 6) {
             number /= 1024.0;
             power += 1;
         }

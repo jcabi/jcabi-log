@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Manager of all decors.
+ *
  * @since 0.1
  */
 final class DecorsManager {
@@ -45,6 +46,7 @@ final class DecorsManager {
 
     /**
      * Get decor by key.
+     *
      * @param key Key for the formatter to be used to fmt the arguments
      * @param arg The arbument to supply
      * @return The decor

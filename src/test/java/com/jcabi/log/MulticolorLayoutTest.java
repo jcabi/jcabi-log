@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 
 /**
  * Test case for {@link MulticolorLayout}.
+ *
  * @since 0.1
  */
 final class MulticolorLayoutTest {

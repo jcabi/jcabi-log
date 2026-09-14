@@ -11,7 +11,7 @@ import java.util.Formatter;
 /**
  * Decorate time interval in milliseconds.
  *
- * <p>For example:
+ * <p>For example:</p>
  *
  * <pre>
  * final long start = System.currentTimeMillis();
@@ -30,6 +30,7 @@ final class MsDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param msec The interval in milliseconds
      */
     MsDecor(final Long msec) {

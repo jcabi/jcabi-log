@@ -13,7 +13,7 @@ import java.util.Formatter;
 /**
  * Decorates an exception.
  *
- * <p>For example:
+ * <p>For example:</p>
  *
  * <pre>
  * try {
@@ -35,6 +35,7 @@ final class ExceptionDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param trw The exception
      */
     ExceptionDecor(final Throwable trw) {
@@ -49,7 +50,9 @@ final class ExceptionDecor implements Formattable {
             text = "NULL";
         } else if ((flags & FormattableFlags.ALTERNATE) == 0) {
             final StringWriter writer = new StringWriter();
-            this.throwable.printStackTrace(new PrintWriter(writer));
+            try (PrintWriter out = new PrintWriter(writer)) {
+                this.throwable.printStackTrace(out);
+            }
             text = writer.toString();
         } else {
             text = this.throwable.getMessage();

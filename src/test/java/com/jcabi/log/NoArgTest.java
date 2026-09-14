@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
  * {@link Logger#format(String, Object...)} returns the format string as-is,
  * which means {@code %n} and {@code %%} are not expanded — a user calling
  * {@code Logger.info(this, "Hello %n")} sees the literal text {@code "Hello %n"}
- * in the log output instead of a line separator.
+ * in the log output instead of a line separator.</p>
  *
  * @since 1.18
  */

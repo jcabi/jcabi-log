@@ -12,6 +12,7 @@ import java.util.Formatter;
 
 /**
  * Decorates File.
+ *
  * @since 0.1
  */
 final class FileDecor implements Formattable {
@@ -23,6 +24,7 @@ final class FileDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param file The file
      */
     FileDecor(final Object file) {
@@ -30,6 +32,7 @@ final class FileDecor implements Formattable {
     }
 
     @Override
+    @SuppressWarnings("PMD.CloseInlineResourceRule")
     public void formatTo(final Formatter formatter, final int flags,
         final int width, final int precision) {
         final StringWriter writer = new StringWriter();

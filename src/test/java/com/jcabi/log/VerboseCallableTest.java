@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link VerboseCallable}.
+ *
  * @since 0.16
  */
 final class VerboseCallableTest {

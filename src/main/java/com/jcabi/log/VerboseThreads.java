@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>The factory should be used together
  * with executor services from {@code java.util.concurrent} package. Without
  * these "verbose" threads your runnable tasks will not report anything to
- * console once they die because of a runtime exception, for example:
+ * console once they die because of a runtime exception, for example:</p>
  *
  * <pre> Executors.newScheduledThreadPool(2).scheduleAtFixedRate(
  *   new Runnable() {
@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * because this
  * is how {@link java.util.concurrent.ScheduledExecutorService}
  * is behaving. This is how we solve
- * the problem with {@link VerboseThreads}:
+ * the problem with {@link VerboseThreads}:</p>
  *
  * <pre> ThreadFactory factory = new VerboseThreads();
  * Executors.newScheduledThreadPool(2, factory).scheduleAtFixedRate(
@@ -47,9 +47,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * );</pre>
  *
  * <p>Now, every runtime exception that is not caught inside your
- * {@link Runnable} will be reported to log (using {@link Logger}).
+ * {@link Runnable} will be reported to log (using {@link Logger}).</p>
  *
- * <p>This class is thread-safe.
+ * <p>This class is thread-safe.</p>
  *
  * @see VerboseRunnable
  * @since 0.1.2
@@ -87,6 +87,7 @@ public final class VerboseThreads implements ThreadFactory {
     /**
      * Detailed constructor, with a prefix of thread names (threads are daemons,
      * default thread priority is {@code 1}).
+     *
      * @param pfx Prefix for thread names
      */
     public VerboseThreads(final String pfx) {
@@ -96,6 +97,7 @@ public final class VerboseThreads implements ThreadFactory {
     /**
      * Detailed constructor, with a prefix of thread names (threads are daemons,
      * default thread priority is {@code 1}).
+     *
      * @param type Prefix will be build from this type name
      */
     public VerboseThreads(final Object type) {
@@ -105,6 +107,7 @@ public final class VerboseThreads implements ThreadFactory {
     /**
      * Detailed constructor, with a prefix of thread names (threads are daemons,
      * default thread priority is {@code 1}).
+     *
      * @param type Prefix will be build from this type name
      */
     public VerboseThreads(final Class<?> type) {
@@ -113,6 +116,7 @@ public final class VerboseThreads implements ThreadFactory {
 
     /**
      * Detailed constructor.
+     *
      * @param pfx Prefix for thread names
      * @param dmn Threads should be daemons?
      * @param prt Default priority for all threads

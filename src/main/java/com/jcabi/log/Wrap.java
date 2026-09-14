@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 /**
  * Runnable decorator.
+ *
  * @since 0.1
  */
 final class Wrap implements Runnable {
@@ -17,6 +18,7 @@ final class Wrap implements Runnable {
 
     /**
      * Ctor.
+     *
      * @param runnable Origin runnable
      */
     Wrap(final Runnable runnable) {

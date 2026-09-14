@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 /**
  * Replaces string format with a Control Sequence Indicator.
+ *
  * @since 0.18
  */
 public class ControlSequenceIndicatorFormatted implements Formatted {
@@ -17,6 +18,7 @@ public class ControlSequenceIndicatorFormatted implements Formatted {
 
     /**
      * Ctor.
+     *
      * @param pat Pattern to be used to find replacement points
      */
     public ControlSequenceIndicatorFormatted(final String pat) {

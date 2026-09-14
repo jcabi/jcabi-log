@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Wrapper of {@link Callable}, that logs all uncaught runtime exceptions.
  *
- * <p>You can use it with scheduled executor, for example:
+ * <p>You can use it with scheduled executor, for example:</p>
  *
  * <pre> Executors.newFixedThreadPool(1).submit(
  *   new VerboseCallable(callable, true)
@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
  * Two-arguments constructor can be used when you need to instruct the class
  * about what to do with the exception: either swallow it or escalate.
  * Sometimes it's very important to swallow exceptions. Otherwise an entire
- * thread may get stuck (like in the example above).
+ * thread may get stuck (like in the example above).</p>
  *
- * <p>This class is thread-safe.
+ * <p>This class is thread-safe.</p>
  *
  * @param <T> Type of result
  * @see VerboseThreads
@@ -49,6 +49,7 @@ public final class VerboseCallable<T> implements Callable<T> {
 
     /**
      * Default constructor, doesn't swallow exceptions.
+     *
      * @param callable Callable to wrap
      */
     public VerboseCallable(final Callable<T> callable) {
@@ -57,6 +58,7 @@ public final class VerboseCallable<T> implements Callable<T> {
 
     /**
      * Default constructor, doesn't swallow exceptions.
+     *
      * @param callable Callable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
@@ -70,6 +72,7 @@ public final class VerboseCallable<T> implements Callable<T> {
 
     /**
      * Default constructor.
+     *
      * @param runnable Runnable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
@@ -102,6 +105,7 @@ public final class VerboseCallable<T> implements Callable<T> {
 
     /**
      * Default constructor, with configurable behavior for exceptions.
+     *
      * @param runnable Runnable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw
@@ -115,6 +119,7 @@ public final class VerboseCallable<T> implements Callable<T> {
 
     /**
      * Default constructor, with fully configurable behavior.
+     *
      * @param callable Runnable to wrap
      * @param swallow Shall we swallow exceptions
      *  ({@code TRUE}) or re-throw

@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link ObjectDecor}.
+ *
  * @since 0.1
  * @checkstyle ParameterNumberCheck (500 lines)
  */
@@ -72,6 +73,7 @@ final class ObjectDecorTest {
 
     /**
      * Test class for displaying object contents.
+     *
      * @since 0.1
      */
     private static final class Foo {
@@ -90,6 +92,7 @@ final class ObjectDecorTest {
 
         /**
          * Ctor.
+         *
          * @param number The number
          * @param nme The name
          */

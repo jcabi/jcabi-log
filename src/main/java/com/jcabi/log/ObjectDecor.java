@@ -9,6 +9,7 @@ import java.util.Formatter;
 
 /**
  * Format internal structure of an object.
+ *
  * @since 0.1
  */
 final class ObjectDecor implements Formattable {
@@ -20,6 +21,7 @@ final class ObjectDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param obj The object to format
      */
     ObjectDecor(final Object obj) {

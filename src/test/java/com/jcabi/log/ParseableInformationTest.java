@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * ParseableInformation test case.
+ *
  * @since 0.18
  */
 final class ParseableInformationTest {

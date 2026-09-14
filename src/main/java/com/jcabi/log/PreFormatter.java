@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Processor of formatting string and arguments, before sending it to
  * {@link String#format(String,Object[])}.
+ *
  * @since 0.1
  */
 final class PreFormatter {
@@ -42,6 +43,7 @@ final class PreFormatter {
 
     /**
      * Private ctor.
+     *
      * @param fmt The pre-computed format string
      * @param args The pre-computed argument list
      */
@@ -52,6 +54,7 @@ final class PreFormatter {
 
     /**
      * Build a {@link PreFormatter} for the given format string and arguments.
+     *
      * @param fmt The formatting string
      * @param args The list of arguments
      * @return Newly built pre-formatter
@@ -76,6 +79,7 @@ final class PreFormatter {
 
     /**
      * Get new formatting string.
+     *
      * @return The formatting text
      */
     String getFormat() {
@@ -84,6 +88,7 @@ final class PreFormatter {
 
     /**
      * Get new list of arguments.
+     *
      * @return The list of arguments
      */
     Object[] getArguments() {

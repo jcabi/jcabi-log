@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 /**
  * Formats a log event using ANSI color codes.
+ *
  * @since 0.18
  */
 class ColorfullyFormatted implements Formatted {
@@ -22,6 +23,7 @@ class ColorfullyFormatted implements Formatted {
 
     /**
      * Constructor.
+     *
      * @param bas Basic string to be formatted
      * @param col Color to be used to paint the output
      */

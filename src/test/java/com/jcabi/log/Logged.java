@@ -9,6 +9,7 @@ import java.util.FormattableFlags;
 
 /**
  * Logs decor.
+ *
  * @since 0.1
  */
 public final class Logged {
@@ -35,6 +36,7 @@ public final class Logged {
 
     /**
      * Public ctor.
+     *
      * @param dcr Decor
      * @param flgs Flags
      * @param wdt Width

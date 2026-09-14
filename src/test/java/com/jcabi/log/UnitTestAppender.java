@@ -14,6 +14,7 @@ import org.apache.log4j.WriterAppender;
  * Log4j appender for unit tests. Normally, we could use
  * <a href="http://projects.lidalia.org.uk/slf4j-test/">slf4j-test</a>, but we
  * have log4j in the classpath anyway, for {@link MulticolorLayout}.
+ *
  * @since 0.18
  */
 public final class UnitTestAppender extends WriterAppender {
@@ -30,6 +31,7 @@ public final class UnitTestAppender extends WriterAppender {
 
     /**
      * Ctor.
+     *
      * @param name The appender's name
      */
     UnitTestAppender(final String name) {
@@ -48,6 +50,7 @@ public final class UnitTestAppender extends WriterAppender {
 
     /**
      * Return the logged messages.
+     *
      * @return String logs
      */
     public String output() {

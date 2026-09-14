@@ -10,7 +10,7 @@ import java.util.Formatter;
 /**
  * Decorator of a text.
  *
- * <p>For example:
+ * <p>For example:</p>
  *
  * <pre>public void func(Object input) {
  *   Logger.debug("Long input '%[text]s' provided", input);
@@ -32,6 +32,7 @@ final class TextDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param obj The object
      */
     TextDecor(final Object obj) {

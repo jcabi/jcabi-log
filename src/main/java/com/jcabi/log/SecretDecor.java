@@ -10,6 +10,7 @@ import java.util.Formatter;
 
 /**
  * Decorator of a secret text.
+ *
  * @since 0.1
  */
 final class SecretDecor implements Formattable {
@@ -21,6 +22,7 @@ final class SecretDecor implements Formattable {
 
     /**
      * Public ctor.
+     *
      * @param scrt The secret
      */
     SecretDecor(final Object scrt) {

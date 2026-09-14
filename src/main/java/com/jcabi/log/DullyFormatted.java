@@ -6,6 +6,7 @@ package com.jcabi.log;
 
 /**
  * Formats a log event without using ANSI color codes.
+ *
  * @since 0.18
  */
 class DullyFormatted implements Formatted {
@@ -17,6 +18,7 @@ class DullyFormatted implements Formatted {
 
     /**
      * Constructor.
+     *
      * @param bas String to be formatted
      */
     DullyFormatted(final String bas) {

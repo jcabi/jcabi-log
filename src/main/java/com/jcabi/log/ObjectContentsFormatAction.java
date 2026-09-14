@@ -9,6 +9,7 @@ import java.security.PrivilegedAction;
 
 /**
  * {@link PrivilegedAction} for obtaining object contents.
+ *
  * @since 0.1
  */
 final class ObjectContentsFormatAction
@@ -21,6 +22,7 @@ final class ObjectContentsFormatAction
 
     /**
      * Constructor.
+     *
      * @param obj Object to format
      */
     ObjectContentsFormatAction(final Object obj) {

@@ -18,20 +18,17 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for %L pattern.
  * If you change {@link Logger}, you have to care about the line number
- * in "com.jcabi.log.LineNumberTest:212"
+ * in "com.jcabi.log.LineNumberTest:222"
+ *
  * @since 1.18
  */
 final class LineNumberTest {
 
-    /**
-     * Conversation pattern for test case.
-     */
-    private static final String CONV_PATTERN = "%c:%L";
-
     @Test
     void rendersLineNumber() throws Exception {
         final PatternLayout layout = new PatternLayout();
-        layout.setConversionPattern(LineNumberTest.CONV_PATTERN);
+        layout.setConversionPattern("%c:%L");
+        // @checkstyle FullyQualifiedTypeCheck (1 line)
         final org.apache.log4j.Logger root = LogManager.getRootLogger();
         final Level level = root.getLevel();
         root.setLevel(Level.INFO);
@@ -42,10 +39,10 @@ final class LineNumberTest {
             Logger.info(this, "Test");
             TimeUnit.MILLISECONDS.sleep(1L);
             MatcherAssert.assertThat(
-                "should contains a 'com.jcabi.log.LineNumberTest:212'",
+                "should contains a 'com.jcabi.log.LineNumberTest:222'",
                 writer.toString(),
                 Matchers.containsString(
-                    "com.jcabi.log.LineNumberTest:212"
+                    "com.jcabi.log.LineNumberTest:222"
                 )
             );
         } finally {

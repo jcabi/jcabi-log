@@ -19,6 +19,7 @@ import java.util.logging.Level;
 
 /**
  * Stream monitor.
+ *
  * @since 0.1
  */
 final class Monitor implements Callable<Void> {
@@ -45,6 +46,7 @@ final class Monitor implements Callable<Void> {
 
     /**
      * Ctor.
+     *
      * @param inp Stream to monitor
      * @param latch Count down latch to signal when done
      * @param out Buffer to write to

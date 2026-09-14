@@ -5,6 +5,7 @@
 package com.jcabi.log;
 
 import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link SupplierLogger}.
+ *
  * @since 0.18
  * @todo #100:30min Some tests here are ignored since they conflict
  *  in multi-threading run. I don't know exactly how to fix them,
@@ -23,7 +25,7 @@ final class SupplierLoggerTest {
     void debugIsDisabled() {
         final String name = "nodebug";
         final String appender = "nodebugapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.ERROR
         );
         SupplierLogger.debug(
@@ -42,7 +44,7 @@ final class SupplierLoggerTest {
     void debugIsEnabled() {
         final String name = "debugen";
         final String appender = "debugapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.DEBUG
         );
         final String text = "test2";
@@ -61,7 +63,7 @@ final class SupplierLoggerTest {
     void traceIsDisabled() {
         final String name = "notrace";
         final String appender = "notraceapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.ERROR
         );
         SupplierLogger.trace(
@@ -79,7 +81,7 @@ final class SupplierLoggerTest {
     void traceIsEnabled() {
         final String name = "enabledtrace";
         final String appender = "traceapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.TRACE
         );
         final String text = "text4";
@@ -98,7 +100,7 @@ final class SupplierLoggerTest {
     void warnIsDisabled() {
         final String name = "nowarn";
         final String appender = "nowarnapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.ERROR
         );
         SupplierLogger.warn(
@@ -117,7 +119,7 @@ final class SupplierLoggerTest {
     void warnIsEnabled() {
         final String name = "enwarn";
         final String appender = "warnapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.WARN
         );
         final String text = "test6";
@@ -136,7 +138,7 @@ final class SupplierLoggerTest {
     void infoIsDisabled() {
         final String name = "noinfo";
         final String appender = "noinfoapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.WARN
         );
         SupplierLogger.info(
@@ -155,7 +157,7 @@ final class SupplierLoggerTest {
     void infoIsEnabled() {
         final String name = "withinfo";
         final String appender = "infoapp";
-        final org.apache.log4j.Logger logger = this.loggerForTest(
+        final Logger logger = this.loggerForTest(
             name, appender, Level.INFO
         );
         final String text = "text8";
@@ -170,9 +172,9 @@ final class SupplierLoggerTest {
         );
     }
 
-    private org.apache.log4j.Logger loggerForTest(
+    private Logger loggerForTest(
         final String name, final String appender, final Level level) {
-        final org.apache.log4j.Logger logger = org.apache.log4j.Logger
+        final Logger logger = Logger
             .getLogger(name);
         final UnitTestAppender app = new UnitTestAppender(appender);
         app.activateOptions();

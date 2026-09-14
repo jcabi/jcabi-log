@@ -10,6 +10,7 @@ import java.util.Formatter;
 
 /**
  * {@link PrivilegedAction} for obtaining array contents.
+ *
  * @since 0.1
  */
 final class ArrayFormatAction
@@ -22,6 +23,7 @@ final class ArrayFormatAction
 
     /**
      * Constructor.
+     *
      * @param arr Array to format
      */
     ArrayFormatAction(final Object... arr) {

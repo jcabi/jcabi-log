@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 /**
  * Converts items inside a string like K1:V1,K2:V2 - where K is for key and V
  * is for value - to a {@code Map} of string key and string value.
+ *
  * @since 0.18
  */
 class ParseableInformation {
@@ -27,6 +28,7 @@ class ParseableInformation {
 
     /**
      * Constructor.
+     *
      * @param cont Content to be parsed
      */
     ParseableInformation(final String cont) {
@@ -35,6 +37,7 @@ class ParseableInformation {
 
     /**
      * Parse the information.
+     *
      * @return A {@link Map} with a key,value pair os strings
      */
     final Map<String, String> information() {

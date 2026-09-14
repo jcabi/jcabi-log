@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Store human readable color data.
+ *
  * @since 0.18
  */
 public class Colors {
@@ -42,6 +43,7 @@ public class Colors {
 
     /**
      * Add color to color map.
+     *
      * @param key Key to add
      * @param value Value to add
      */
@@ -51,6 +53,7 @@ public class Colors {
 
     /**
      * Convert our text to ANSI color.
+     *
      * @param meta Meta text
      * @return ANSI color
      */
