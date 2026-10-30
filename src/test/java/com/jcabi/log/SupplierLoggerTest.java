@@ -8,16 +8,12 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link SupplierLogger}.
  *
  * @since 0.18
- * @todo #100:30min Some tests here are ignored since they conflict
- *  in multi-threading run. I don't know exactly how to fix them,
- *  but we need to fix and remove the "Ignore" annotations.
  */
 final class SupplierLoggerTest {
 
@@ -40,7 +36,6 @@ final class SupplierLoggerTest {
     }
 
     @Test
-    @Disabled
     void debugIsEnabled() {
         final String name = "debugen";
         final String appender = "debugapp";
@@ -115,7 +110,6 @@ final class SupplierLoggerTest {
     }
 
     @Test
-    @Disabled
     void warnIsEnabled() {
         final String name = "enwarn";
         final String appender = "warnapp";
@@ -153,7 +147,6 @@ final class SupplierLoggerTest {
     }
 
     @Test
-    @Disabled
     void infoIsEnabled() {
         final String name = "withinfo";
         final String appender = "infoapp";
