@@ -25,7 +25,6 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -33,10 +32,6 @@ import org.mockito.Mockito;
  * Test case for {@link VerboseProcess}.
  *
  * @since 0.1
- * @todo #18 Locale/encoding problem in two test methods here. I'm not
- *  sure how to fix them, but they should be fixed. They fail on some
- *  machines, while run perfectly on others. They also fail when being
- *  executed from IntelliJ.
  */
 @SuppressWarnings({
     "PMD.UnnecessaryLocalRule",
@@ -45,7 +40,6 @@ import org.mockito.Mockito;
 final class VerboseProcessTest {
 
     @Test
-    @Disabled
     void runsACommandLineScript() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final ProcessBuilder builder = new ProcessBuilder("echo", "hey €!")
@@ -60,18 +54,17 @@ final class VerboseProcessTest {
     }
 
     @Test
-    @Disabled
     void echosUnicodeCorrectly() {
         Assumptions.assumeFalse(SystemUtils.IS_OS_WINDOWS, "");
         final ProcessBuilder builder = new ProcessBuilder(
             "/bin/bash", "-c",
-            "echo -n тест | hexdump"
+            "echo -n тест | od -An -tx1 | tr -s ' '"
         );
         try (VerboseProcess process = new VerboseProcess(builder)) {
             MatcherAssert.assertThat(
-                "should contains string '0000000 d1 82 d0 b5 d1 81 d1 82'",
+                "should contains string 'd1 82 d0 b5 d1 81 d1 82'",
                 process.stdout(),
-                Matchers.containsString("0000000 d1 82 d0 b5 d1 81 d1 82")
+                Matchers.containsString("d1 82 d0 b5 d1 81 d1 82")
             );
         }
     }
