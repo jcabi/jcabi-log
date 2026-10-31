@@ -7,8 +7,6 @@ package com.jcabi.log;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import org.slf4j.LoggerFactory;
@@ -470,16 +468,6 @@ public final class Logger {
         return out.toString();
     }
 
-    @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
-    private static void setFinalStatic(final Field field, final Object value)
-        throws NoSuchFieldException, IllegalAccessException {
-        field.setAccessible(true);
-        final Field modifiers = Field.class.getDeclaredField("modifiers");
-        modifiers.setAccessible(true);
-        modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(null, value);
-    }
-
     private static org.slf4j.Logger logger(final Object source) {
         final org.slf4j.Logger logger;
         if (source instanceof Class) {
@@ -488,17 +476,6 @@ public final class Logger {
             logger = LoggerFactory.getLogger(String.class.cast(source));
         } else {
             logger = LoggerFactory.getLogger(source.getClass());
-        }
-        if ("org.slf4j.impl.Log4jLoggerAdapter"
-            .equals(logger.getClass().getName())) {
-            try {
-                setFinalStatic(
-                    logger.getClass().getDeclaredField("FQCN"),
-                    Logger.class.getName()
-                );
-            } catch (final NoSuchFieldException | IllegalAccessException ex) {
-                throw new IllegalStateException(ex);
-            }
         }
         return logger;
     }
