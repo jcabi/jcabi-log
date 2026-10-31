@@ -1,0 +1,3 @@
+# SPDX-FileCopyrightText: Copyright (c) 2012-2026 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
+org.slf4j.impl.FakeLog4jProvider

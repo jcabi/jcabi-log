@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for %L pattern.
  * If you change {@link Logger}, you have to care about the line number
- * in "com.jcabi.log.LineNumberTest:222"
+ * in "com.jcabi.log.LineNumberTest:220"
  *
  * @since 1.18
  */
@@ -39,10 +39,10 @@ final class LineNumberTest {
             Logger.info(this, "Test");
             TimeUnit.MILLISECONDS.sleep(1L);
             MatcherAssert.assertThat(
-                "should contains a 'com.jcabi.log.LineNumberTest:222'",
+                "should contains a 'com.jcabi.log.LineNumberTest:220'",
                 writer.toString(),
                 Matchers.containsString(
-                    "com.jcabi.log.LineNumberTest:222"
+                    "com.jcabi.log.LineNumberTest:220"
                 )
             );
         } finally {
