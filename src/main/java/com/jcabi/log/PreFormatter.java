@@ -22,7 +22,7 @@ final class PreFormatter {
      * Pattern used for matching format string arguments.
      */
     private static final Pattern PATTERN = Pattern.compile(
-        "%(\\d+\\$)?(\\[([A-Za-z\\-.0-9]+)])?[+\\-]?(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
+        "%(\\d+\\$)?(\\[([A-Za-z\\-.0-9]+)])?[-#+ 0,(]*(?:\\d*(?:\\.\\d+)?)?[a-zA-Z%]"
     );
 
     /**

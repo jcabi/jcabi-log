@@ -109,4 +109,19 @@ final class PreFormatterTest {
             Matchers.is(args)
         );
     }
+
+    /**
+     * PreFormatter can consume arguments of specifiers with any flag.
+     */
+    @Test
+    void consumesArgumentsOfSpecifiersWithAnyFlag() {
+        MatcherAssert.assertThat(
+            "should not lose arguments of flagged specifiers",
+            PreFormatter.create(
+                "%s of %,d, %#x, % d, %(d, %08.3f",
+                "part", 1_234_567L, 255, 42, -7, 3.14d
+            ).getArguments().length,
+            Matchers.equalTo(6)
+        );
+    }
 }
