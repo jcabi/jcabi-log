@@ -98,6 +98,7 @@ final class PreFormatter {
     private static int getPos(final Object[] args, final Matcher matcher,
         final StringBuffer buf, final List<Object> into) {
         int pos = 0;
+        int highest = 0;
         while (matcher.find()) {
             final String group = matcher.group();
             if (PreFormatter.NO_ARG_SPECIFIERS.contains(group)) {
@@ -109,6 +110,12 @@ final class PreFormatter {
                 if (matcher.group(1) != null) {
                     matcher.appendReplacement(
                         buf, Matcher.quoteReplacement(group)
+                    );
+                    highest = Math.max(
+                        highest,
+                        Integer.parseInt(
+                            matcher.group(1).replace("$", "")
+                        )
                     );
                     --pos;
                 } else if (decor == null) {
@@ -132,6 +139,8 @@ final class PreFormatter {
                 ++pos;
             }
         }
-        return pos;
+        final int count = Math.max(pos, highest);
+        into.addAll(Arrays.asList(args).subList(pos, count));
+        return count;
     }
 }
