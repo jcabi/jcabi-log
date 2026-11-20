@@ -4,6 +4,8 @@
  */
 package com.jcabi.log;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -27,5 +29,24 @@ final class VerboseCallableTest {
                 }
             ).call()
         );
+    }
+
+    /**
+     * VerboseCallable keeps the result when the thread is interrupted.
+     *
+     * @throws Exception If fails
+     */
+    @Test
+    void keepsResultWhenThreadInterrupted() throws Exception {
+        Thread.currentThread().interrupt();
+        try {
+            MatcherAssert.assertThat(
+                "interrupted thread must not discard a good result",
+                new VerboseCallable<Integer>(() -> 1, true).call(),
+                Matchers.equalTo(1)
+            );
+        } finally {
+            Thread.interrupted();
+        }
     }
 }
