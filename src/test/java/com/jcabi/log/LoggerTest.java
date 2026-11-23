@@ -14,6 +14,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Test case for {@link Logger}.
@@ -122,6 +124,28 @@ final class LoggerTest {
             Matchers.endsWith(
                 String.format(": %s, first again: %1$s %s", first, second)
             )
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = {
+            "%1$s and %2$s",
+            "%2$s and %1$s",
+            "%s, then %2$s",
+            "%2$s, then %s",
+            "%2$s, then %s and %s",
+            "%2$s and %2$s",
+            "%1$s%% %n%2$s",
+            "%2$10.2s and %1$s"
+        }
+    )
+    void formatsPositionalArguments(final String format) {
+        final Object[] args = {"first", "second"};
+        MatcherAssert.assertThat(
+            "should preserve arguments referenced by explicit indices",
+            Logger.format(format, args),
+            Matchers.equalTo(String.format(format, args))
         );
     }
 }
