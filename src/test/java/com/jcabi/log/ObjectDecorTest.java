@@ -67,7 +67,10 @@ final class ObjectDecorTest {
             },
             new Object[] {
                 new Object[] {new Object[] {null}}, "[[NULL", 0, 0, 0,
-            }
+            },
+            new Object[] {new int[] {1, 2, 3}, "[1, 2, 3]", 0, 0, 0},
+            new Object[] {new long[] {4L, 5L}, "[4, 5]", 0, 0, 0},
+            new Object[] {new boolean[] {true, false}, "[true, false]", 0, 0, 0}
         );
     }
 
