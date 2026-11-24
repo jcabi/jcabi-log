@@ -5,7 +5,6 @@
 package com.jcabi.log;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Wrapper of {@link Callable}, that logs all uncaught runtime exceptions.
@@ -172,11 +171,8 @@ public final class VerboseCallable<T> implements Callable<T> {
             }
             Logger.error(this, "Swallowed error: %s", this.tail(error));
         }
-        try {
-            TimeUnit.MICROSECONDS.sleep(1L);
-        } catch (final InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException(ex);
+        if (Thread.currentThread().isInterrupted()) {
+            Logger.warn(this, "Thread was interrupted during the call");
         }
         return result;
     }
