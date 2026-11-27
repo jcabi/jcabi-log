@@ -4,6 +4,7 @@
  */
 package com.jcabi.log;
 
+import java.lang.reflect.Array;
 import java.util.Formattable;
 import java.util.Formatter;
 
@@ -34,13 +35,29 @@ final class ObjectDecor implements Formattable {
         if (this.object == null) {
             formatter.format("NULL");
         } else if (this.object.getClass().isArray()) {
-            formatter.format(
-                new ArrayFormatAction((Object[]) this.object).run()
-            );
+            formatter.format(this.array());
         } else {
             formatter.format(
                 new ObjectContentsFormatAction(this.object).run()
             );
         }
+    }
+
+    private String array() {
+        final String formatted;
+        if (this.object.getClass().getComponentType().isPrimitive()) {
+            final int length = Array.getLength(this.object);
+            final StringBuilder builder = new StringBuilder("[");
+            for (int idx = 0; idx < length; ++idx) {
+                if (idx > 0) {
+                    builder.append(", ");
+                }
+                builder.append(Array.get(this.object, idx));
+            }
+            formatted = builder.append(']').toString();
+        } else {
+            formatted = new ArrayFormatAction((Object[]) this.object).run();
+        }
+        return formatted;
     }
 }
